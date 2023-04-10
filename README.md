@@ -45,17 +45,17 @@ Details about the content of this release are available in the release note [her
 
 | STM32H5 Applications                                |       Short Description      |
 |---------------------------------------------------- |----------------------------------------------------------------|
-| FreeRTOS_Mutex                                      | This application demonstrates the use of mutexes to serialize access to a shared resource. [readme](./Projects/NUCLEO-H563ZI/FreeRTOS_Mutex/README.md) |
-| FreeRTOS_MPU                                        | This application demonstrates the use of the MPU with FreeRTOS to control memory/peripheral access for tasks. [readme](./Projects/NUCLEO-H563ZI/FreeRTOS_MPU/README.md) |
-| FreeRTOS_Queues_ThreadFlags_TrustZone               | This application demonstrates the use of message queues, thread flags with CMSIS_RTOS2 API along with the use of FreeRTOS when the TrustZone feature is enabled (TZEN=1) [readme](./Projects/NUCLEO-H563ZI/FreeRTOS_Queues_ThreadFlags_TrustZone/README.md) |
-| FreeRTOS_Semaphore_LowPower                         | This application demonstrates the use of FreeRTOS tickless low power mode and semaphores[readme](./Projects/NUCLEO-H563ZI/FreeRTOS_Semaphore_LowPower/README.md) |
+| FreeRTOS_Mutex                                      | This application demonstrates the use of mutexes to serialize access to a shared resource. [readme](./Projects/NUCLEO-H563ZI/Applications/FreeRTOS_Mutex/README.md) |
+| FreeRTOS_MPU                                        | This application demonstrates the use of the MPU with FreeRTOS to control memory/peripheral access for tasks. [readme](./Projects/NUCLEO-H563ZI/Applications/FreeRTOS_MPU/README.md) |
+| FreeRTOS_Queues_ThreadFlags_TrustZone               | This application demonstrates the use of message queues, thread flags with CMSIS_RTOS2 API along with the use of FreeRTOS when the TrustZone feature is enabled (TZEN=1) [readme](./Projects/NUCLEO-H563ZI/Applications/FreeRTOS_Queues_ThreadFlags_TrustZone/README.md) |
+| FreeRTOS_Semaphore_LowPower                         | This application demonstrates the use of FreeRTOS tickless low power mode and semaphores[readme](./Projects/NUCLEO-H563ZI/Applications/FreeRTOS_Semaphore_LowPower/README.md) |
 
 | STM32U5 Applications                                |       Short Description      |
 |---------------------------------------------------- |----------------------------------------------------------------|
-| FreeRTOS_Mutex                                      | This application demonstrates the use of mutexes to serialize access to a shared resource. [readme](./Projects/NUCLEO-U575ZI-Q/FreeRTOS_Mutex/README.md) |
-| FreeRTOS_MPU                                        | This application demonstrates the use of the MPU with FreeRTOS to control memory/peripheral access for tasks. [readme](./Projects/NUCLEO-U575ZI-Q/FreeRTOS_MPU/README.md) |
-| FreeRTOS_Queues_ThreadFlags_TrustZone               | This application demonstrates the use of message queues, thread flags with CMSIS_RTOS2 API along with the use of FreeRTOS when the TrustZone feature is enabled (TZEN=1) [readme](./Projects/NUCLEO-U575ZI-Q/FreeRTOS_Queues_ThreadFlags_TrustZone/README.md) |
-| FreeRTOS_Semaphore_LowPower                         | This application demonstrates the use of FreeRTOS tickless low power mode and semaphores[readme](./Projects/NUCLEO-U575ZI-Q/FreeRTOS_Semaphore_LowPower/README.md) |
+| FreeRTOS_Mutex                                      | This application demonstrates the use of mutexes to serialize access to a shared resource. [readme](./Projects/NUCLEO-U575ZI-Q/Applications/FreeRTOS_Mutex/README.md) |
+| FreeRTOS_MPU                                        | This application demonstrates the use of the MPU with FreeRTOS to control memory/peripheral access for tasks. [readme](./Projects/NUCLEO-U575ZI-Q/Applications/FreeRTOS_MPU/README.md) |
+| FreeRTOS_Queues_ThreadFlags_TrustZone               | This application demonstrates the use of message queues, thread flags with CMSIS_RTOS2 API along with the use of FreeRTOS when the TrustZone feature is enabled (TZEN=1) [readme](./Projects/NUCLEO-U575ZI-Q/Applications/FreeRTOS_Queues_ThreadFlags_TrustZone/README.md) |
+| FreeRTOS_Semaphore_LowPower                         | This application demonstrates the use of FreeRTOS tickless low power mode and semaphores[readme](./Projects/NUCLEO-U575ZI-Q/Applications/FreeRTOS_Semaphore_LowPower/README.md) |
 
 ## Troubleshooting
 **Caution**  : The issues are  **strictly limited**  to submit problems or suggestions related to the software delivered in this repository.
