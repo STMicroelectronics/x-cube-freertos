@@ -277,7 +277,6 @@ void Receive_Thread(void *argument)
     /* Terminate ReceiveThread execution */
     osThreadTerminate(ReceiveThreadHandle);
   }
-
   /* USER CODE END ReceiveThread */
 }
 

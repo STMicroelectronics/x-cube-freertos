@@ -535,11 +535,6 @@
           <GroupName>Middlewares/RTOS2/CMSIS/RTOS2/Core/TZ_Non_Supported</GroupName>
           <Files>
             <File>
-              <FileName>mpu_wrappers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\Common\mpu_wrappers.c</FilePath>
-            </File>
-            <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../Middlewares/Third_Party/FreeRTOS/Source/croutine.c</FilePath>
@@ -588,6 +583,11 @@
               <FileName>cmsis_os2.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_wrappers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\Common\mpu_wrappers.c</FilePath>
             </File>
           </Files>
         </Group>

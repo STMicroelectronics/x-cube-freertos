@@ -16,10 +16,10 @@
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-* 
+*
  * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
-* 
+*
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,6 +31,36 @@
   @endverbatim
 
 =======
+
+### 19-May-2023 ###
+=========================
+  + FreeRTOS: Update to FreeRTOS v10.5.1
+
+  + Add portmacrocommon files:
+
+      - GCC/ARM_CM23_NTZ/non_secure/portmacrocommon.h
+      - GCC/ARM_CM23/non_secure/portmacrocommon.h
+      - GCC/ARM_CM33_NTZ/non_secure/portmacrocommon.h
+      - GCC/ARM_CM33/non_secure/portmacrocommon.h
+      - IAR/ARM_CM23_NTZ/non_secure/portmacrocommon.h
+      - IAR/ARM_CM23/non_secure/portmacrocommon.h
+      - IAR/ARM_CM33_NTZ/non_secure/portmacrocommon.h
+      - IAR/ARM_CM33/non_secure/portmacrocommon.h
+
+  + Delete ARM_CM7_MPU files :
+      - GCC/ARM_CM7_MPU/r0p1/port.c
+      - GCC/ARM_CM7_MPU/r0p1/portmacro.h
+      - GCC/ARM_CM7_MPU/ReadMe.txt
+      - IAR/ARM_CM7_MPU/r0p1/port.c
+      - IAR/ARM_CM7_MPU/r0p1/portasm.s
+      - IAR/ARM_CM7_MPU/r0p1/portmacro.h
+      - IAR/ARM_CM7_MPU/ReadMe.txt
+      - RVDS/ARM_CM7_MPU/r0p1/port.c
+      - RVDS/ARM_CM7_MPU/r0p1/portmacro.h
+      - RVDS/ARM_CM7_MPU/ReadMe.txt
+
+  + CMSIS_RTOS_V2: update against the latest CMSIS-FreeRTOS v10.5.1 release
+      - CMSIS_RTOS_V2/cmsis_os2.c
 
 ### 05-August-2022 ###
 =========================
@@ -44,12 +74,12 @@
       - IAR/ARM_CM7_MPU/r0p1/portmacro.h
       - RVDS/ARM_CM7_MPU/r0p1/port.c
       - RVDS/ARM_CM7_MPU/r0p1/portmacro.h
-  
+
   + CMSIS_RTOS_V2: update against the latest CMSIS-FreeRTOS v10.4.6 release
       - CMSIS_RTOS_V2/cmsis_os2.c
       - CMSIS_RTOS_V2/freertos_os2.h
 
-  + CMSIS_RTOS_V2: Remove the following files as cmsis_RTOS1 is no more supported 
+  + CMSIS_RTOS_V2: Remove the following files as cmsis_RTOS1 is no more supported
 (applications should use cmsis_os2.h file under Drivers/CMSIS/RTOS2/Include)
       - CMSIS_RTOS_V2/cmsis_os.h
       - CMSIS_RTOS_V2/cmsis_os2.h
@@ -68,7 +98,7 @@
 ### 20-July-2020 ###
 =========================
   + FreeRTOS: Update to FreeRTOS v10.3.1
-  
+
   + CMSIS_RTOS_V2: update against the latest CMSIS-FreeRTOS v10.3.0 release
       - CMSIS_RTOS_V2/cmsis_os2.c
       - CMSIS_RTOS_V2/freertos_mpool.h
@@ -91,7 +121,7 @@
       - IAR/ARM_CM33/non_secure/portmacro.h
       - IAR/ARM_CM33_NTZ/non_secure/port.c
       - IAR/ARM_CM33_NTZ/non_secure/portmacro.h
-  
+
   +  Fix MPU hardfault bug for Cortex-M4 MPU
       - GCC\ARM_CM4_MPU\port.c
       - IAR\ARM_CM4_MPU\port.c

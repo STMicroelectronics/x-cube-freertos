@@ -3,7 +3,7 @@
   ******************************************************************************
   * @file    partition_stm32u575xx.h
   * @author  MCD Application Team
-  * @brief   CMSIS STM32U575xx Device Initial Setup for Secure / Non-Secure Zones
+  * @brief   CMSIS STM32U575xxstm32u575xx.h Device Initial Setup for Secure / Non-Secure Zones
   *          for ARMCM33 based on CMSIS CORE partition_ARMCM33.h Template.
   *
   *          This file contains:
@@ -13,9 +13,9 @@
   *           - Setup Interrupt Target
   *
   ******************************************************************************/
-/*
+/**
   * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
-  * Portions Copyright (c) 2021 STMicroelectronics, all rights reserved
+  * Portions Copyright (c) 2022 STMicroelectronics, all rights reserved
   *
   * SPDX-License-Identifier: Apache-2.0
 
@@ -40,10 +40,10 @@
 /*
 //-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
 */
+
 /* USER CODE BEGIN 0 */
-/*
 // <e>Initialize Security Attribution Unit (SAU) CTRL register
-*/
+
 #define SAU_INIT_CTRL          1
 
 /*
@@ -59,7 +59,7 @@
 //   <i> Value for SAU->CTRL register bit ALLNS
 //   <i> When all Memory is Non-Secure (ALLNS is 1), IDAU can override memory map configuration.
 */
-#define SAU_INIT_CTRL_ALLNS   1
+#define SAU_INIT_CTRL_ALLNS  1
 
 /*
 // </e>
@@ -83,14 +83,11 @@
 /*
 //     <o>Start Address <0-0xFFFFFFE0>
 */
-
-#define SAU_INIT_START0     0x0C0FE000      /* start address of SAU region 0 */
-
+#define SAU_INIT_START0     0x0C0FE000     /* start address of SAU region 0 */
 /*
 //     <o>End Address <0x1F-0xFFFFFFFF>
 */
-#define SAU_INIT_END0       0x0C0FFFFF      /* end address of SAU region 0 */
-
+#define SAU_INIT_END0     0x0C0FFFFF     /* end address of SAU region 0 */
 /*
 //     <o>Region is
 //         <0=>Non-Secure
@@ -110,13 +107,11 @@
 /*
 //     <o>Start Address <0-0xFFFFFFE0>
 */
-#define SAU_INIT_START1     0x08100000      /* start address of SAU region 1 */
-
+#define SAU_INIT_START1     0x08100000     /* start address of SAU region 1 */
 /*
 //     <o>End Address <0x1F-0xFFFFFFFF>
 */
-#define SAU_INIT_END1       0x081FFFFF      /* end address of SAU region 1 */
-
+#define SAU_INIT_END1     0x081FFFFF     /* end address of SAU region 1 */
 /*
 //     <o>Region is
 //         <0=>Non-Secure
@@ -136,13 +131,11 @@
 /*
 //     <o>Start Address <0-0xFFFFFFE0>
 */
-#define SAU_INIT_START2     0x20040000      /* start address of SAU region 2 */
-
+#define SAU_INIT_START2     0x20040000     /* start address of SAU region 2 */
 /*
 //     <o>End Address <0x1F-0xFFFFFFFF>
 */
-#define SAU_INIT_END2       0x200BFFFF      /* end address of SAU region 2 */
-
+#define SAU_INIT_END2       0x200BFFFF     /* end address of SAU region 2 */
 /*
 //     <o>Region is
 //         <0=>Non-Secure
@@ -167,7 +160,7 @@
 /*
 //     <o>End Address <0x1F-0xFFFFFFFF>
 */
-#define SAU_INIT_END3       0x4FFFFFFF      /* end address of SAU region 3 */
+#define SAU_INIT_END3       0x4fffffff      /* end address of SAU region 3 */
 
 /*
 //     <o>Region is
@@ -189,12 +182,10 @@
 //     <o>Start Address <0-0xFFFFFFE0>
 */
 #define SAU_INIT_START4     0x60000000      /* start address of SAU region 4 */
-
 /*
 //     <o>End Address <0x1F-0xFFFFFFFF>
 */
-#define SAU_INIT_END4       0x9FFFFFFF      /* end address of SAU region 4 */
-
+#define SAU_INIT_END4       0x9FFFFFFF     /* end address of SAU region 4 */
 /*
 //     <o>Region is
 //         <0=>Non-Secure
@@ -377,6 +368,7 @@
 //   <e>Initialize ITNS 0 (Interrupts 0..31)
 */
 #define NVIC_INIT_ITNS0    1
+
 /*
 // Interrupts 0..31
 //   <o.0>  WWDG_IRQn             <0=> Secure state

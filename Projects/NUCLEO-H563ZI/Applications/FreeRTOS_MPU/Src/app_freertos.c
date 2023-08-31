@@ -171,11 +171,11 @@ void MX_FREERTOS_Init(void) {
   /* Create unprivileged threads */
   if(xTaskCreateRestricted(&TaskParameters[0], &TaskHandles[0] )!= pdPASS)
   {
-   Error_Handler();
+     Error_Handler();
   }
   if(xTaskCreateRestricted(&TaskParameters[1], &TaskHandles[1] )!= pdPASS)
   {
-   Error_Handler();
+     Error_Handler();
   }
   /* USER CODE END RTOS_THREADS */
 

@@ -41,7 +41,7 @@ Please note that the internal Flash is fully secure by default in TZEN=1 and Use
 
 #### <b>Expected success behavior</b>
 
-Successful operation is marked by a toggling Green LED then the Yellow LED.
+Successful operation is marked by turning on Green LED then the Yellow LED.
 
 Information about the application will be printed to the serial port.
 
@@ -88,7 +88,7 @@ Security, RTOS, FreeRTOS, TrustZone, Threading, GPIO, Message, Queues, ThreadFla
 ### <b>Hardware and Software environment</b>
 
   - This application runs on STM32H563xx devices with security enabled (TZEN=B4).
-  - This application has been tested with STMicroelectronics NUCLEO-H563ZI boards Revision: MB1404-H563ZI-A01.
+  - This application has been tested with STMicroelectronics NUCLEO-H563ZI boards Revision: MB1404-H563ZI-B02.
     and can be easily tailored to any other supported device and development board.
 
   - This application uses USART3 to display logs, the hyperterminal configuration is as follows:

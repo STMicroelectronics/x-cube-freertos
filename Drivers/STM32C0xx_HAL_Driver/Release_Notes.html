@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Release Notes for STM32CubeC0 HAL and LL drivers</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="_htmresc/mini-st_2020.css" />
+  <link rel="icon" type="image/x-icon" href="_htmresc/favicon.png" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="row">
+<div class="col-sm-12 col-lg-4">
+<center>
+<h1 id="release-notes-for-stm32cubec0-hal-and-ll-drivers">Release Notes
+for <mark>STM32CubeC0 HAL and LL drivers</mark></h1>
+<p>Copyright ©  2022 STMicroelectronics<br />
+</p>
+<a href="https://www.st.com" class="logo"><img
+src="_htmresc/st_logo_2020.png" alt="ST logo" /></a>
+</center>
+<h1 id="purpose">Purpose</h1>
+<p>The STM32Cube HAL and LL, an STM32 abstraction layer embedded
+software, ensure maximized portability across STM32 portfolio.</p>
+<p>The portable APIs layer provides a generic, multi instanced and
+simple set of APIs to interact with the upper layer (application,
+libraries and stacks). It is composed of native and extended APIs set.
+It is directly built around a generic architecture and allows the
+build-upon layers, like the middleware layer, to implement its functions
+without knowing in-depth the used STM32 device. This improves the
+library code reusability and guarantees an easy portability on other
+devices and STM32 families.</p>
+<p>The Low Layer (LL) drivers are part of the STM32Cube firmware HAL
+that provides a basic set of optimized and one-shot services. The Low
+layer drivers, contrary to the HAL ones are not fully portable across
+the STM32 families; the availability of some functions depends on the
+physical availability of the relative features on the product. The Low
+Layer (LL) drivers are designed to offer the following features:</p>
+<ul>
+<li>New set of inline functions for direct and atomic register
+access</li>
+<li>One-shot operations that can be used by the HAL drivers or from
+application level</li>
+<li>Full independence from HAL and standalone usage (without HAL
+drivers)</li>
+<li>Full features coverage of all the supported peripherals</li>
+</ul>
+</div>
+<section id="update-history" class="col-sm-12 col-lg-8">
+<h1>Update History</h1>
+<div class="collapse">
+<input type="checkbox" id="collapse-section3" checked aria-hidden="true">
+<label for="collapse-section3" checked aria-hidden="true">V1.1.0 /
+07-June-2023</label>
+<div>
+<h2 id="main-changes">Main Changes</h2>
+<ul>
+<li>Maintenance Release of STM32CubeC0 Firmware Package</li>
+</ul>
+<p><strong>HAL/LL Drivers</strong> updates</p>
+<ul>
+<li>HAL and LL drivers Maintenance Release for STM32C011xx / STM32C031xx
+devices</li>
+</ul>
+<p>– <strong>HAL Drivers</strong> updates</p>
+<ul>
+<li><strong>HAL RCC</strong> driver
+<ul>
+<li>Rename the following defines:
+<ul>
+<li>HSE_TIMEOUT_VALUE to RCC_HSE_TIMEOUT_VALUE</li>
+<li>HSI_TIMEOUT_VALUE to RCC_HSI_TIMEOUT_VALUE</li>
+<li>LSI_TIMEOUT_VALUE to RCC_LSI_TIMEOUT_VALUE</li>
+<li>CLOCKSWITCH_TIMEOUT_VALUE to RCC_CLOCKSWITCH_TIMEOUT_VALUE</li>
+</ul></li>
+</ul></li>
+<li><strong>HAL RTC</strong> driver
+<ul>
+<li>Add __HAL_RTC_IS_CALENDAR_INITIALIZED macro</li>
+</ul></li>
+<li><strong>HAL TIM</strong> driver
+<ul>
+<li>Add __HAL_TIM_SELECT_CCDMAREQUEST macro</li>
+</ul></li>
+<li><strong>HAL UART</strong> driver
+<ul>
+<li>Add (HAL_UART_RxEventTypeTypeDef RxEventType) to the
+__UART_HandleTypeDef structure</li>
+<li>Add following defines:
+<ul>
+<li>HAL_UART_RXEVENT_TC (Transfer Complete event)</li>
+<li>HAL_UART_RXEVENT_HT (Half Transfer event)</li>
+<li>HAL_UART_RXEVENT_IDLE (IDLE event)</li>
+</ul></li>
+<li>Add HAL_UARTEx_GetRxEventType() API to provide Rx Event type (to be
+called within the user implementation of Rx Event Callback)</li>
+</ul></li>
+<li><strong>HAL</strong> driver
+<ul>
+<li>Update HAL_SYSCFG_SetPinBinding() to handle properly setting of a
+pin biding (w/o overwriting existing pins binding settings).</li>
+<li>Update HAL_SYSCFG_GetPinBinding() to get a pin biding setting.</li>
+</ul></li>
+</ul>
+<p>– <strong>LL Drivers</strong> updates</p>
+<ul>
+<li><strong>LL SYSTEM</strong> driver
+<ul>
+<li>Add SYSTEM_LL_PINMUX_SOURCE following defines:
+<ul>
+<li>LL_PINMUX_SO8_PIN1, LL_PINMUX_SO8_PIN4, LL_PINMUX_SO8_PIN5,
+LL_PINMUX_SO8_PIN8, LL_PINMUX_WLCSP12_PINE2, LL_PINMUX_WLCSP12_PINF1 in
+case of device <strong>STM32C011xx</strong> device</li>
+<li>LL_PINMUX_WLCSP14_PINF2, LL_PINMUX_WLCSP14_PING3,
+LL_PINMUX_WLCSP14_PINJ1, LL_PINMUX_WLCSP14_PINH2,
+LL_PINMUX_WLCSP14_PING1, LL_PINMUX_WLCSP14_PINJ3 in case of device
+<strong>STM32C031xx</strong> device</li>
+</ul></li>
+<li>Update LL_SYSCFG_ConfigPinMux() and LL_SYSCFG_GetConfigPinMux()
+functions</li>
+<li>LL_SYSCFG_ConfigPinMux() API updated to handle properly setting of a
+pin binding (w/o overwriting existing pins biding settings).</li>
+<li>LL_SYSCFG_GetConfigPinMux() API updated to get a pin biding
+setting.</li>
+</ul></li>
+</ul>
+<h2 id="known-limitations">Known Limitations</h2>
+<p>N/A</p>
+<h2 id="backward-compatibility">Backward Compatibility</h2>
+<ul>
+<li>HAL_SYSCFG_GetPinBinding() and LL_SYSCFG_GetConfigPinMux() are
+updated.</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section2" aria-hidden="true">
+<label for="collapse-section2" checked aria-hidden="true">V1.0.1 /
+12-January-2023</label>
+<div>
+<h2 id="main-changes-1">Main Changes</h2>
+<ul>
+<li><p>Patch Release of STM32CubeC0 Firmware Package</p></li>
+<li><p>Update ADC HAL driver with proper internal sensor calibration
+implementation:</p>
+<ul>
+<li>Helper macro “__LL_ADC_CALC_TEMPERATURE()” is not available and
+macro “__LL_ADC_CALC_TEMPERATURE_TYP_PARAMS()” must be used.</li>
+</ul></li>
+<li><p>Update RCC LL driver by adding missing AHB Prescaler.</p></li>
+</ul>
+<h2 id="known-limitations-1">Known Limitations</h2>
+<p>N/A</p>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section1" aria-hidden="true">
+<label for="collapse-section1" checked aria-hidden="true">V1.0.0 /
+09-February-2022</label>
+<div>
+<h2 id="main-changes-2">Main Changes</h2>
+<p>First official release of HAL and LL drivers for STM32C031xx /
+STM32C011xx devices</p>
+<h2 id="known-limitations-2">Known Limitations</h2>
+<p>N/A</p>
+</div>
+</div>
+</section>
+</div>
+<footer class="sticky">
+<p>For complete documentation on STM32 Microcontrollers </mark> , visit:
+<span style="font-color: blue;"><a
+href="http://www.st.com/stm32">www.st.com/stm32</a></span></p>
+This release note uses up to date web standards and, for this reason,
+should not be opened with Internet Explorer but preferably with popular
+browsers such as Google Chrome, Mozilla Firefox, Opera or Microsoft
+Edge.
+</footer>
+</body>
+</html>

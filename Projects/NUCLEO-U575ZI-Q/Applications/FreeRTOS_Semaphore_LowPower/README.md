@@ -8,10 +8,11 @@ The thread blocks on a semaphore.
 This causes the system to start the low power timer and enter STOP mode.
 
 Once the timer expires, an interrupt is triggered and the CPU returns to RUN mode.
-The semaphore is released in the timer's interrupt handler. The thread resumes execution and 
+The semaphore is released in the timer's interrupt handler. The thread resumes execution and
 toggles the blue LED.
 
 The green LED is connected to PC7 which is configured to go HIGH whenever the system is in stop mode.
+In order to reduce power consumption, PC7 can be disabled.
 
 #### <b>Expected success behavior</b>
 Successful operation is marked by the blue LED toggling every second. The green LED should

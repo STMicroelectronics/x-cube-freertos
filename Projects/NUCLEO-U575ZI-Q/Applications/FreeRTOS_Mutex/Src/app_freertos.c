@@ -142,17 +142,18 @@ void Thread1_Entry(void *argument)
   /* Infinite loop */
   for(i = 0; i < 10; ++i)
   {
-#if EXAMPLE_USES_MUTEX
-  osMutexAcquire(MutexHandle, osWaitForever);
-  printf ("Thread1: Mutex Acquired!\n");
-#endif
+    #if EXAMPLE_USES_MUTEX
+      osMutexAcquire(MutexHandle, osWaitForever);
+      printf ("Thread1: Mutex Acquired!\n");
+    #endif
 
-  printf("Thread1 : This is message number %u\n", i+1);
+    printf("Thread1 : This is message number %u\n", i+1);
 
-#if EXAMPLE_USES_MUTEX
-  printf ("Thread1: Mutex Released!\n");
-  osMutexRelease(MutexHandle);
-#endif
+    #if EXAMPLE_USES_MUTEX
+      printf ("Thread1: Mutex Released!\n");
+      osMutexRelease(MutexHandle);
+    #endif
+
     HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
     osDelay(200);
   }

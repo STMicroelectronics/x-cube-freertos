@@ -41,7 +41,7 @@ Please note that the internal Flash is fully secure by default in TZEN=1 and Use
 
 #### <b>Expected success behavior</b>
 
-Successful operation is marked by a toggling Green LED then the Blue LED.
+Successful operation is marked by turning on Green LED then the Blue LED.
 
 Information about the application will be printed to the serial port.
 

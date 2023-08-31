@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2022 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -99,6 +99,15 @@ typedef struct {
 /* Kernel initialization state */
 static osKernelState_t KernelState = osKernelInactive;
 
+/* Get OS Tick count value */
+static uint32_t OS_Tick_GetCount (void);
+#if (configUSE_TICKLESS_IDLE == 0)
+/* Get OS Tick overflow status */
+static uint32_t OS_Tick_GetOverflow (void);
+#endif
+/* Get OS Tick interval */
+static uint32_t OS_Tick_GetInterval (void);
+
 /*
   Heap region definition used by heap_5 variant
 
@@ -118,7 +127,7 @@ static osKernelState_t KernelState = osKernelInactive;
     HeapRegion_t array.
   */
   #define HEAP_5_REGION_SETUP   1
-  
+
   #ifndef configHEAP_5_REGIONS
     #define configHEAP_5_REGIONS xHeapRegions
 
@@ -152,15 +161,19 @@ extern void xPortSysTickHandler (void);
 /*
   SysTick handler implementation that also clears overflow flag.
 */
+#if (USE_CUSTOM_SYSTICK_HANDLER_IMPLEMENTATION == 0)
 void SysTick_Handler (void) {
+#if (configUSE_TICKLESS_IDLE == 0)
   /* Clear overflow flag */
   SysTick->CTRL;
+#endif
 
   if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
     /* Call tick handler */
     xPortSysTickHandler();
   }
 }
+#endif
 #endif /* SysTick */
 
 /*
@@ -168,9 +181,9 @@ void SysTick_Handler (void) {
 */
 __STATIC_INLINE void SVC_Setup (void) {
 #if (__ARM_ARCH_7A__ == 0U)
-  /* Service Call interrupt might be configured before kernel start     */
-  /* and when its priority is lower or equal to BASEPRI, svc intruction */
-  /* causes a Hard Fault.                                               */
+  /* Service Call interrupt might be configured before kernel start      */
+  /* and when its priority is lower or equal to BASEPRI, svc instruction */
+  /* causes a Hard Fault.                                                */
   NVIC_SetPriority (SVCall_IRQn, 0U);
 #endif
 }
@@ -213,11 +226,22 @@ __STATIC_INLINE uint32_t IRQ_Context (void) {
 }
 
 /* Get OS Tick count value */
-static uint32_t OS_Tick_GetCount (void);
+static uint32_t OS_Tick_GetCount (void) {
+  uint32_t load = SysTick->LOAD;
+  return  (load - SysTick->VAL);
+}
+
+#if (configUSE_TICKLESS_IDLE == 0)
 /* Get OS Tick overflow status */
-static uint32_t OS_Tick_GetOverflow (void);
+static uint32_t OS_Tick_GetOverflow (void) {
+  return ((SysTick->CTRL >> 16) & 1U);
+}
+#endif
+
 /* Get OS Tick interval */
-static uint32_t OS_Tick_GetInterval (void);
+static uint32_t OS_Tick_GetInterval (void) {
+  return (SysTick->LOAD + 1U);
+}
 
 /* ==== Kernel Management Functions ==== */
 
@@ -464,26 +488,10 @@ uint32_t osKernelGetTickCount (void) {
   return (ticks);
 }
 
-/* Get OS Tick count value */
-static uint32_t OS_Tick_GetCount (void) {
-  uint32_t load = SysTick->LOAD;
-  return  (load - SysTick->VAL);
-}
-
-/* Get OS Tick overflow status */
-static uint32_t OS_Tick_GetOverflow (void) {
-  return ((SysTick->CTRL >> 16) & 1U);
-}
-
-/* Get OS Tick interval */
-static uint32_t OS_Tick_GetInterval (void) {
-  return (SysTick->LOAD + 1U);
-}
-
 /*
   Get the RTOS kernel tick frequency.
 */
- uint32_t osKernelGetTickFreq (void) {
+uint32_t osKernelGetTickFreq (void) {
   /* Return frequency in hertz */
   return (configTICK_RATE_HZ);
 }
@@ -495,6 +503,17 @@ uint32_t osKernelGetSysTimerCount (void) {
   uint32_t irqmask = IS_IRQ_MASKED();
   TickType_t ticks;
   uint32_t val;
+#if (configUSE_TICKLESS_IDLE != 0)
+  uint32_t val0;
+
+  /* Low Power Tickless Idle controls timer overflow flag and therefore      */
+  /* OS_Tick_GetOverflow may be non-functional. As a workaround a reference  */
+  /* time is measured here before disabling interrupts. Timer value overflow */
+  /* is then checked by comparing reference against latest time measurement. */
+  /* Timer count value returned by this method is less accurate but if an    */
+  /* overflow is missed, an invalid timer count would be returned.           */
+  val0 = OS_Tick_GetCount();
+#endif
 
   __disable_irq();
 
@@ -502,10 +521,17 @@ uint32_t osKernelGetSysTimerCount (void) {
   val   = OS_Tick_GetCount();
 
   /* Update tick count and timer value when timer overflows */
+#if (configUSE_TICKLESS_IDLE != 0)
+  if (val < val0) {
+    ticks++;
+  }
+#else
   if (OS_Tick_GetOverflow() != 0U) {
     val = OS_Tick_GetCount();
     ticks++;
   }
+#endif
+
   val += ticks * OS_Tick_GetInterval();
 
   if (irqmask == 0U) {
@@ -652,7 +678,7 @@ osThreadState_t osThreadGetState (osThreadId_t thread_id) {
       case eReady:     state = osThreadReady;      break;
       case eBlocked:
       case eSuspended: state = osThreadBlocked;    break;
-      case eDeleted:   state = osThreadTerminated; break;
+      case eDeleted:
       case eInvalid:
       default:         state = osThreadError;      break;
     }
@@ -1257,7 +1283,7 @@ osStatus_t osTimerStart (osTimerId_t timer_id, uint32_t ticks) {
   if (IRQ_Context() != 0U) {
     stat = osErrorISR;
   }
-  else if (hTimer == NULL) {
+  else if ((hTimer == NULL) || (ticks == 0U)) {
     stat = osErrorParameter;
   }
   else {
@@ -1442,7 +1468,9 @@ uint32_t osEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
     if (xEventGroupSetBitsFromISR (hEventGroup, (EventBits_t)flags, &yield) == pdFAIL) {
       rflags = (uint32_t)osErrorResource;
     } else {
-      rflags = flags;
+      /* Retrieve bits that are already set and add flags to be set in current call */
+      rflags  = xEventGroupGetBitsFromISR (hEventGroup);
+      rflags |= flags;
       portYIELD_FROM_ISR (yield);
     }
   #endif
@@ -1535,7 +1563,13 @@ uint32_t osEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t opti
     rflags = (uint32_t)osErrorParameter;
   }
   else if (IRQ_Context() != 0U) {
-    rflags = (uint32_t)osErrorISR;
+    if (timeout == 0U) {
+      /* Try semantic is not supported */
+      rflags = (uint32_t)osErrorISR;
+    } else {
+      /* Calling osEventFlagsWait from ISR with non-zero timeout is invalid */
+      rflags = (uint32_t)osFlagsErrorParameter;
+    }
   }
   else {
     if (options & osFlagsWaitAll) {
@@ -1901,7 +1935,7 @@ osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, cons
           #endif
         }
       }
-      
+
       #if (configQUEUE_REGISTRY_SIZE > 0)
       if (hSemaphore != NULL) {
         if ((attr != NULL) && (attr->name != NULL)) {

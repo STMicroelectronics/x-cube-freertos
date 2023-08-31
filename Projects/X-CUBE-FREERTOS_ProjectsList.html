@@ -98,6 +98,66 @@
 </tr>
 </table>
 
+<h2 id="applications"><b>NUCLEO-WBA52CG Applications</b></h2>
+<table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 43%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Applications</th>
+<th>Short Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FreeRTOS_MPU</td>
+<td>This application demonstrates the use of the MPU with FreeRTOS to control memory/peripheral access for tasks. It implements simple recovery mechanisms from prohibited memory accesses. <a href="./NUCLEO-WBA52CG/Applications/FreeRTOS_MPU/readme.html">more…</a></td>
+</tr>
+<tr class="even">
+<td>FreeRTOS_Mutex</td>
+<td>This application demonstrates the use of mutexes to serialize access to a shared resource. <a href="./NUCLEO-WBA52CG/Applications/FreeRTOS_Mutex/readme.html">more …</a></td>
+</tr>
+<tr class="odd">
+<td>FreeRTOS_Queues_ThreadFlags_TrustZone</td>
+<td>This application demonstrates the use of message queues, thread flags with CMSIS_RTOS2 API along with the use of FreeRTOS when the TrustZone feature is enabled (TZEN=1). <a href="./NUCLEO-WBA52CG/Applications/FreeRTOS_Queues_ThreadFlags_TrustZone/readme.html">more …</a></td>
+</tr>
+<tr class="even">
+<td>FreeRTOS_Semaphore_LowPower</td>
+<td>This application demonstrates the use of FreeRTOS tickless low power mode and semaphores. <a href="./NUCLEO-WBA52CG/Applications/FreeRTOS_Semaphore_LowPower/readme.html">more …</a></td>
+</tr>
+</table>
+
+<h2 id="applications"><b>NUCLEO-C031C6 Applications</b></h2>
+<table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 43%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Applications</th>
+<th>Short Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FreeRTOS_Mutex</td>
+<td>This application demonstrates the use of mutexes to serialize access to a shared resource. <a href="./NUCLEO-C031C6/Applications/FreeRTOS_Mutex/readme.html">more …</a></td>
+</tr>
+<tr class="even">
+<td>FreeRTOS_Queues_ThreadFlags</td>
+<td>This application demonstrates the use of message queues, thread flags with CMSIS_RTOS2 API. <a href="./NUCLEO-C031C6/Applications/FreeRTOS_Queues_ThreadFlags/readme.html">more …</a></td>
+</tr>
+<tr class="odd">
+<td>FreeRTOS_Semaphore_LowPower</td>
+<td>This application demonstrates the use of FreeRTOS tickless low power mode and semaphores. <a href="./NUCLEO-C031C6/Applications/FreeRTOS_Semaphore_LowPower/readme.html">more …</a></td>
+</tr>
+</table>
+
 <h3 id="notes"><b>Notes</b></h3>
 <ol type="1">
 <li>The FreeRTOS heap size configTOTAL_HEAP_SIZE defined in FreeRTOSConfig.h is set accordingly to the OS resources memory requirements of the application with +10% margin and rounded to the upper Kbyte boundary. For more details about FreeRTOS implementation on STM32Cube, please refer to UM1722 “Developing Applications on STM32Cube with RTOS”.</li>
