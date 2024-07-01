@@ -18,13 +18,11 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
-#include "FreeRTOS.h"
-#include "task.h"
-#include "main.h"
+#include "app_freertos.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "queue.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -79,9 +77,6 @@ static StackType_t Task2Stack[ 2 * configMINIMAL_STACK_SIZE ] __attribute__( ( a
 static uint8_t sharedMemory[ EXAMPLE_SHARED_MEMORY_SIZE ] __attribute__( ( aligned( 32 ) ) );
 
 
-static void Task1(void *argument);
-static void Task2(void *argument);
-
 static TaskHandle_t MainTaskHandle;
 static TaskHandle_t TaskHandles[NUMBER_OF_TASKS];
 
@@ -125,10 +120,8 @@ static const TaskParameters_t TaskParameters[NUMBER_OF_TASKS] =
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
-static void MainTask(void *argument);
-/* USER CODE END FunctionPrototypes */
 
-void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
+/* USER CODE END FunctionPrototypes */
 
 /**
   * @brief  FreeRTOS initialization

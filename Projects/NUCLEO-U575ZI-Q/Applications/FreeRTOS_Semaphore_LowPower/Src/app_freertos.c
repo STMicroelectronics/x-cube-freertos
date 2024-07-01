@@ -18,10 +18,8 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
-#include "FreeRTOS.h"
-#include "task.h"
-#include "main.h"
-#include "cmsis_os2.h"
+#include "app_freertos.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -63,10 +61,6 @@ const osSemaphoreAttr_t BinarySemaphore_attributes = {
 /* USER CODE BEGIN FunctionPrototypes */
 void SystemClock_Config(void);
 /* USER CODE END FunctionPrototypes */
-
-void MainThread_Entry(void *argument);
-
-void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* USER CODE BEGIN PREPOSTSLEEP */
 void PreSleepProcessing(uint32_t ulExpectedIdleTime)

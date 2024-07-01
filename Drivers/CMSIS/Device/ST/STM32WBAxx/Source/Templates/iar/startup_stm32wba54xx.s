@@ -102,7 +102,7 @@ __vector_table
         DCD     EXTI14_IRQHandler                ; EXTI Line14 interrupt
         DCD     EXTI15_IRQHandler                ; EXTI Line15 interrupt
         DCD     IWDG_IRQHandler                  ; IWDG global interrupt
-        DCD     SAES_IRQHandler                  ; Secure AES global interrupt 
+        DCD     SAES_IRQHandler                  ; Secure AES global interrupt
         DCD     GPDMA1_Channel0_IRQHandler       ; GPDMA1 Channel 0 global interrupt
         DCD     GPDMA1_Channel1_IRQHandler       ; GPDMA1 Channel 1 global interrupt
         DCD     GPDMA1_Channel2_IRQHandler       ; GPDMA1 Channel 2 global interrupt
@@ -144,6 +144,8 @@ __vector_table
         DCD     WKUP_IRQHandler                  ; PWR global WKUP pin interrupt
         DCD     HSEM_IRQHandler                  ; HSEM non-secure global interrupt
         DCD     HSEM_S_IRQHandler                ; HSEM secure global interrupt
+        DCD     WKUP_S_IRQHandler                ; PWR secure global WKUP pin interrupt
+        DCD     RCC_AUDIOSYNC_IRQHandler         ; RCC audio synchronization interrupt
 
 __Vectors_End
 
@@ -426,7 +428,7 @@ TIM2_IRQHandler
         PUBWEAK TIM3_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 TIM3_IRQHandler
-        B TIM3_IRQHandler          
+        B TIM3_IRQHandler
 
         PUBWEAK I2C1_EV_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
@@ -482,7 +484,7 @@ TIM17_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 COMP_IRQHandler
         B COMP_IRQHandler
-    
+
         PUBWEAK I2C3_EV_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 I2C3_EV_IRQHandler
@@ -506,7 +508,7 @@ TSC_IRQHandler
         PUBWEAK AES_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 AES_IRQHandler
-        B AES_IRQHandler        
+        B AES_IRQHandler
 
         PUBWEAK RNG_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
@@ -526,7 +528,7 @@ HASH_IRQHandler
         PUBWEAK PKA_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 PKA_IRQHandler
-        B PKA_IRQHandler        
+        B PKA_IRQHandler
 
         PUBWEAK SPI3_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
@@ -562,5 +564,15 @@ HSEM_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 HSEM_S_IRQHandler
         B HSEM_S_IRQHandler
+
+        PUBWEAK WKUP_S_IRQHandler
+        SECTION .text:CODE:NOROOT:REORDER(1)
+WKUP_S_IRQHandler
+        B WKUP_S_IRQHandler
+
+        PUBWEAK RCC_AUDIOSYNC_IRQHandler
+        SECTION .text:CODE:NOROOT:REORDER(1)
+RCC_AUDIOSYNC_IRQHandler
+        B RCC_AUDIOSYNC_IRQHandler
 
         END

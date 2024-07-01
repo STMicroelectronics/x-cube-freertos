@@ -25,8 +25,8 @@
     used by the PPP peripheral drivers and the user to start using the HAL.
     [..]
     The HAL contains two APIs' categories:
-         (+) Common HAL APIs
-         (+) Services HAL APIs
+         (+) Common HAL APIs (Version, Init, Tick)
+         (+) Services HAL APIs (DBGMCU, SYSCFG)
 
   @endverbatim
   ******************************************************************************
@@ -50,19 +50,20 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macros ------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
+/* Private function prototypes -----------------------------------------------*/
+
 /* Exported variables --------------------------------------------------------*/
 
 /** @defgroup HAL_Exported_Variables HAL Exported Variables
   * @{
   */
 __IO uint32_t uwTick;
-uint32_t uwTickPrio   = (1UL << __NVIC_PRIO_BITS); /* Invalid PRIO */
+uint32_t uwTickPrio            = (1UL << __NVIC_PRIO_BITS); /* Invalid priority */
 HAL_TickFreqTypeDef uwTickFreq = HAL_TICK_FREQ_DEFAULT;  /* 1KHz */
 /**
   * @}
   */
 
-/* Private function prototypes -----------------------------------------------*/
 /* Exported functions --------------------------------------------------------*/
 
 /** @defgroup HAL_Exported_Functions HAL Exported Functions
@@ -77,11 +78,10 @@ HAL_TickFreqTypeDef uwTickFreq = HAL_TICK_FREQ_DEFAULT;  /* 1KHz */
               ##### Initialization and de-initialization functions #####
  ===============================================================================
     [..]  This section provides functions allowing to:
-      (+) Initializes the Flash interface the NVIC allocation and initial clock
-          configuration. It initializes the systick also when timeout is needed
-          and the backup domain when enabled.
-      (+) De-Initializes common part of the HAL.
-      (+) Configure The time base source to have 1ms time base with a dedicated
+      (+) Initialize the Flash interface the NVIC allocation and initial time base
+          clock configuration.
+      (+) De-initialize common part of the HAL.
+      (+) Configure the time base source to have 1ms time base with a dedicated
           Tick interrupt priority.
         (++) SysTick timer is used by default as source of time base, but user
              can eventually implement his proper time base source (a general purpose
@@ -110,8 +110,8 @@ HAL_TickFreqTypeDef uwTickFreq = HAL_TICK_FREQ_DEFAULT;  /* 1KHz */
   * @note   HAL_Init() function is called at the beginning of program after reset and before
   *         the clock configuration.
   *
-  * @note   In the default implementation the System Timer (Systick) is used as source of time base.
-  *         The Systick configuration is based on HSI clock, as HSI is the clock
+  * @note   In the default implementation the System Timer (SysTick) is used as source of time base.
+  *         The SysTick configuration is based on HSI clock, as HSI is the clock
   *         used after a system Reset and the NVIC configuration is set to Priority group 4.
   *         Once done, time base tick starts incrementing: the tick variable counter is incremented
   *         each 1ms in the SysTick_Handler() interrupt handler.
@@ -131,6 +131,9 @@ HAL_StatusTypeDef HAL_Init(void)
   /* Ensure time base clock coherency */
   SystemCoreClockUpdate();
 
+  /* Select HCLK as SysTick clock source */
+  HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
+
   /* Initialize 1ms tick time base (default SysTick based on HSI clock after Reset) */
   if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK)
   {
@@ -145,8 +148,8 @@ HAL_StatusTypeDef HAL_Init(void)
 }
 
 /**
-  * @brief  This function de-Initializes common part of the HAL and stops the systick.
-  *         This function is optional.
+  * @brief De-initialize common part of the HAL and stop the source of time base.
+  * @note This function is optional.
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_DeInit(void)
@@ -181,29 +184,29 @@ HAL_StatusTypeDef HAL_DeInit(void)
 }
 
 /**
-  * @brief  Initializes the MSP.
+  * @brief  Initialize the MSP.
   * @retval None
   */
 __weak void HAL_MspInit(void)
 {
-  /* NOTE : This function Should not be modified, when the callback is needed,
+  /* NOTE : This function should not be modified, when the callback is needed,
             the HAL_MspInit could be implemented in the user file
    */
 }
 
 /**
-  * @brief  DeInitializes the MSP.
+  * @brief  DeInitialize the MSP.
   * @retval None
   */
 __weak void HAL_MspDeInit(void)
 {
-  /* NOTE : This function Should not be modified, when the callback is needed,
+  /* NOTE : This function should not be modified, when the callback is needed,
             the HAL_MspDeInit could be implemented in the user file
    */
 }
 
 /**
-  * @brief This function configures the source of the time base.
+  * @brief This function configures the source of the time base:
   *        The time source is configured to have 1ms time base with a dedicated
   *        Tick interrupt priority.
   * @note This function is called  automatically at the beginning of program after
@@ -215,33 +218,64 @@ __weak void HAL_MspDeInit(void)
   *       than the peripheral interrupt. Otherwise the caller ISR process will be blocked.
   *       The function is declared as __weak  to be overwritten  in case of other
   *       implementation  in user file.
-  * @param TickPriority: Tick interrupt priority.
+  * @param TickPriority  Tick interrupt priority.
   * @retval HAL status
   */
 __weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 {
+  uint32_t ticknumber = 0U;
+  uint32_t systicksel;
+
   /* Check uwTickFreq for MisraC 2012 (even if uwTickFreq is a enum type that don't take the value zero)*/
   if ((uint32_t)uwTickFreq == 0UL)
   {
     return HAL_ERROR;
   }
 
-  /* Configure the SysTick to have interrupt in 1ms time basis*/
-  if (HAL_SYSTICK_Config(SystemCoreClock / (1000UL / (uint32_t)uwTickFreq)) > 0U)
+  /* Check Clock source to calculate the tickNumber */
+  if(READ_BIT(SysTick->CTRL, SysTick_CTRL_CLKSOURCE_Msk) == SysTick_CTRL_CLKSOURCE_Msk)
+  {
+    /* HCLK selected as SysTick clock source */
+    ticknumber = SystemCoreClock / (1000UL / (uint32_t)uwTickFreq);
+  }
+  else
+  {
+    systicksel = __HAL_RCC_GET_SYSTICK_SOURCE();
+    switch (systicksel)
+    {
+      /* HCLK_DIV8 selected as SysTick clock source */
+      case RCC_SYSTICKCLKSOURCE_HCLK_DIV8:
+        /* Calculate tick value */
+        ticknumber = (SystemCoreClock / (8000UL / (uint32_t)uwTickFreq));
+        break;
+
+      /* LSI selected as SysTick clock source */
+      case RCC_SYSTICKCLKSOURCE_LSI:
+        /* Calculate tick value */
+        ticknumber = (LSI_VALUE / (1000UL / (uint32_t)uwTickFreq));
+        break;
+
+      /* LSE selected as SysTick clock source */
+      case RCC_SYSTICKCLKSOURCE_LSE:
+        /* Calculate tick value */
+        ticknumber = (LSE_VALUE / (1000UL / (uint32_t)uwTickFreq));
+        break;
+
+      default:
+        /* Nothing to do */
+        break;
+    }
+  }
+
+  /* Configure the SysTick */
+  if (HAL_SYSTICK_Config(ticknumber) > 0U)
   {
     return HAL_ERROR;
   }
 
   /* Configure the SysTick IRQ priority */
-  if (TickPriority < (1UL << __NVIC_PRIO_BITS))
-  {
-    HAL_NVIC_SetPriority(SysTick_IRQn, TickPriority, 0U);
-    uwTickPrio = TickPriority;
-  }
-  else
-  {
-    return HAL_ERROR;
-  }
+  HAL_NVIC_SetPriority(SysTick_IRQn, TickPriority, 0U);
+  uwTickPrio = TickPriority;
 
   /* Return function status */
   return HAL_OK;
@@ -251,7 +285,7 @@ __weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
   * @}
   */
 
-/** @defgroup HAL_Group2 HAL Control functions
+/** @defgroup HAL_Exported_Functions_Group2 HAL Control functions
   *  @brief    HAL Control functions
   *
 @verbatim
@@ -266,9 +300,6 @@ __weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
       (+) Get the HAL API driver version
       (+) Get the device identifier
       (+) Get the device revision identifier
-      (+) Enable/Disable Debug module during SLEEP mode
-      (+) Enable/Disable Debug module during STOP mode
-      (+) Enable/Disable Debug module during STANDBY mode
 
 @endverbatim
   * @{
@@ -278,7 +309,7 @@ __weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
   * @brief This function is called to increment a global variable "uwTick"
   *        used as application time base.
   * @note In the default implementation, this variable is incremented each 1ms
-  *       in Systick ISR.
+  *       in SysTick ISR.
   * @note This function is declared as __weak to be overwritten in case of other
   *      implementations in user file.
   * @retval None
@@ -289,7 +320,7 @@ __weak void HAL_IncTick(void)
 }
 
 /**
-  * @brief Provides a tick value in millisecond.
+  * @brief Provide a tick value in millisecond.
   * @note This function is declared as __weak to be overwritten in case of other
   *       implementations in user file.
   * @retval tick value
@@ -309,22 +340,29 @@ uint32_t HAL_GetTickPrio(void)
 }
 
 /**
-  * @brief Set new tick Freq.
-  * @retval Status
+  * @brief Set new tick frequency.
+  * @param Freq tick frequency
+  * @retval HAL status
   */
 HAL_StatusTypeDef HAL_SetTickFreq(HAL_TickFreqTypeDef Freq)
 {
   HAL_StatusTypeDef status  = HAL_OK;
-  assert_param(IS_TICKFREQ(Freq));
+  HAL_TickFreqTypeDef prevTickFreq;
 
   if (uwTickFreq != Freq)
   {
+    /* Back up uwTickFreq frequency */
+    prevTickFreq = uwTickFreq;
+
+    /* Update uwTickFreq global variable used by HAL_InitTick() */
+    uwTickFreq = Freq;
+
     /* Apply the new tick Freq  */
     status = HAL_InitTick(uwTickPrio);
-
-    if (status == HAL_OK)
+    if (status != HAL_OK)
     {
-      uwTickFreq = Freq;
+      /* Restore previous tick frequency */
+      uwTickFreq = prevTickFreq;
     }
   }
 
@@ -401,7 +439,7 @@ __weak void HAL_ResumeTick(void)
 }
 
 /**
-  * @brief  Returns the HAL revision
+  * @brief  Return the HAL revision.
   * @retval version : 0xXYZR (8bits for each decimal, R for RC)
   */
 uint32_t HAL_GetHalVersion(void)
@@ -410,16 +448,16 @@ uint32_t HAL_GetHalVersion(void)
 }
 
 /**
-  * @brief  Returns the device revision identifier.
+  * @brief  Return the device revision identifier.
   * @retval Device revision identifier
   */
 uint32_t HAL_GetREVID(void)
 {
-  return ((DBGMCU->IDCODE & DBGMCU_IDCODE_REV_ID) >> 16);
+  return ((DBGMCU->IDCODE & DBGMCU_IDCODE_REV_ID) >> DBGMCU_IDCODE_REV_ID_Pos);
 }
 
 /**
-  * @brief  Returns the device identifier.
+  * @brief  Return the device identifier.
   * @retval Device identifier
   */
 uint32_t HAL_GetDEVID(void)
@@ -456,7 +494,6 @@ uint32_t HAL_GetUIDw2(void)
 /**
   * @}
   */
-
 
 /** @defgroup HAL_Exported_Functions_Group3 HAL Debug functions
   *  @brief    HAL Debug functions
@@ -620,9 +657,8 @@ HAL_StatusTypeDef HAL_SYSCFG_GetLock(uint32_t *pItem)
   * @}
   */
 
-#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 
-
+#if defined(SYSCFG_SECCFGR_SYSCFGSEC)
 /** @defgroup HAL_Exported_Functions_Group6 HAL SYSCFG attributes management functions
   *  @brief SYSCFG attributes management functions.
   *
@@ -635,6 +671,7 @@ HAL_StatusTypeDef HAL_SYSCFG_GetLock(uint32_t *pItem)
   * @{
   */
 
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /**
   * @brief  Configure the SYSCFG item attribute(s).
   * @note   Available attributes are to secure SYSCFG items, so this function is
@@ -668,6 +705,8 @@ void HAL_SYSCFG_ConfigAttributes(uint32_t Item, uint32_t Attributes)
   SYSCFG_S->SECCFGR = tmp;
 }
 
+#endif /* __ARM_FEATURE_CMSE */
+
 /**
   * @brief  Get the attribute of a SYSCFG item.
   * @note   Available attributes are to secure SYSCFG items, so this function is
@@ -685,10 +724,10 @@ HAL_StatusTypeDef HAL_SYSCFG_GetConfigAttributes(uint32_t Item, uint32_t *pAttri
   }
 
   /* Check the parameters */
-  assert_param(IS_SYSCFG_ITEMS_ATTRIBUTES(Item));
+  assert_param(IS_SYSCFG_SINGLE_ITEMS_ATTRIBUTES(Item));
 
   /* Get the secure attribute state */
-  if ((SYSCFG_S->SECCFGR & Item) != 0U)
+  if ((SYSCFG->SECCFGR & Item) != 0U)
   {
     *pAttributes = SYSCFG_SEC;
   }
@@ -704,18 +743,18 @@ HAL_StatusTypeDef HAL_SYSCFG_GetConfigAttributes(uint32_t Item, uint32_t *pAttri
   * @}
   */
 
-#endif /* __ARM_FEATURE_CMSE */
+#endif /* SYSCFG_SECCFGR_SYSCFGSEC */
 
 /**
   * @}
   */
 
 #endif /* HAL_MODULE_ENABLED */
-/**
-  * @}
-  */
 
 /**
   * @}
   */
 
+/**
+  * @}
+  */

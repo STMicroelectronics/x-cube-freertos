@@ -32,6 +32,15 @@
 
 =======
 
+### 17-November-2023 ###
+=========================
+  + CMSIS_RTOS_V2: Restore cmsis_os.h file for backward comaptibility
+
+### 18-August-2023 ###
+=========================
+  + LICENSE update
+      - Add a LICENSE.md file at the root of the directory
+
 ### 19-May-2023 ###
 =========================
   + FreeRTOS: Update to FreeRTOS v10.5.1
@@ -415,7 +424,7 @@
           example : osMutex1Id = osRecursiveMutexCreate (osMutex(Mutex1));
 
       - Fix implementation of functions osSemaphoreWait(), osMutexRelease() and osMutexWait() by using the appropriate
-         freeRTOS “FromISR” APIs when called from an interrupt.
+         freeRTOS Â“FromISRÂ” APIs when called from an interrupt.
 
       - Fix compilation warning when the constant INCLUDE_eTaskGetState is not defined
 

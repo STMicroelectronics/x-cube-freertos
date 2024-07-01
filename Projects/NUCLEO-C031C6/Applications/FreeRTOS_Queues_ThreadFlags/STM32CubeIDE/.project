@@ -31,6 +31,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>FreeRTOS_Queues_ThreadFlags.ioc</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/FreeRTOS_Queues_ThreadFlags.ioc</locationURI>
+		</link>
+		<link>
 			<name>Doc/README.md</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/README.md</locationURI>

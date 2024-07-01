@@ -458,7 +458,7 @@
 //   <o.31> SPI3_IRQn             <0=> Secure state
 */
 
-#define NVIC_INIT_ITNS1_VAL      0x40000000
+#define NVIC_INIT_ITNS1_VAL      0x00100000
 
 /*
 //   </e>
@@ -474,8 +474,10 @@
 //   <o.0>  ICACHE_IRQn          <0=> Secure state
 //   <o.1>  ADC4_IRQn            <0=> Secure state
 //   <o.2>  RADIO_IRQn           <0=> Secure state
-//   <o.3>  HSEM_IRQn            <0=> Secure state
-//   <o.4>  HSEM_S_IRQn          <0=> Secure state
+//   <o.3>  WKUP_IRQn            <0=> Secure state
+//   <o.4>  HSEM_IRQn            <0=> Secure state
+//   <o.5>  HSEM_S_IRQn          <0=> Secure state
+//   <o.6>  WKUP_S_IRQn          <0=> Secure state
 */
 
 #define NVIC_INIT_ITNS2_VAL      0x00000000

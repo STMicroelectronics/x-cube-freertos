@@ -48,29 +48,25 @@
     [..]
     Setup SysTick Timer for time base.
 
-   (+) The HAL_SYSTICK_Config() function calls the SysTick_Config() function which
-       is a CMSIS function that:
-        (++) Configures the SysTick Reload register with value passed as function parameter.
-        (++) Configures the SysTick IRQ priority to the lowest value (0x0F).
+   (+) The SysTick clock source shall be configured with HAL_SYSTICK_CLKSourceConfig().
+
+   (+) The SysTick IRQ priority shall be configured with HAL_NVIC_SetPriority(SysTick_IRQn,...).
+       The HAL_NVIC_SetPriority() calls the CMSIS NVIC_SetPriority() function.
+
+   (+) The HAL_SYSTICK_Config() function:
+        (++) Configures the SysTick Reload register with the value passed as function parameter.
         (++) Resets the SysTick Counter register.
-        (++) Configures the SysTick Counter clock source to be Core Clock Source (HCLK).
         (++) Enables the SysTick Interrupt.
         (++) Starts the SysTick Counter.
-
-   (+) You can change the SysTick Clock source to be HCLK_Div8 by calling the macro
-       __HAL_CORTEX_SYSTICKCLK_CONFIG(SYSTICK_CLKSOURCE_HCLK_DIV8) just after the
-       HAL_SYSTICK_Config() function call. The __HAL_CORTEX_SYSTICKCLK_CONFIG() macro is defined
-       inside the stm32wbaxx_hal_cortex.h file.
-
-   (+) You can change the SysTick IRQ priority by calling the
-       HAL_NVIC_SetPriority(SysTick_IRQn,...) function just after the HAL_SYSTICK_Config() function
-       call. The HAL_NVIC_SetPriority() call the NVIC_SetPriority() function which is a CMSIS function.
 
    (+) To adjust the SysTick time base, use the following formula:
 
        Reload Value = SysTick Counter Clock (Hz) x  Desired Time base (s)
        (++) Reload Value is the parameter to be passed for HAL_SYSTICK_Config() function
        (++) Reload Value should not exceed 0xFFFFFF
+
+   (+) In case the HAL time base is the SysTick Timer, the HAL time base configuration must be completed
+       by calling the HAL_InitTick() function.
 
   @endverbatim
   ******************************************************************************
@@ -188,11 +184,11 @@ void HAL_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority, uint32_t Sub
 {
   uint32_t prioritygroup;
 
-  /* Check the parameters */
-  assert_param(IS_NVIC_SUB_PRIORITY(SubPriority));
-  assert_param(IS_NVIC_PREEMPTION_PRIORITY(PreemptPriority));
+  prioritygroup = (NVIC_GetPriorityGrouping() & 0x7U);
 
-  prioritygroup = NVIC_GetPriorityGrouping();
+  /* Check the parameters */
+  assert_param(IS_NVIC_SUB_PRIORITY(SubPriority, prioritygroup));
+  assert_param(IS_NVIC_PREEMPTION_PRIORITY(PreemptPriority, prioritygroup));
 
   NVIC_SetPriority(IRQn, NVIC_EncodePriority(prioritygroup, PreemptPriority, SubPriority));
 }
@@ -250,7 +246,23 @@ void HAL_NVIC_SystemReset(void)
   */
 uint32_t HAL_SYSTICK_Config(uint32_t TicksNumb)
 {
-  return SysTick_Config(TicksNumb);
+  if ((TicksNumb - 1UL) > SysTick_LOAD_RELOAD_Msk)
+  {
+    /* Reload value impossible */
+    return (1UL);
+  }
+
+  /* Set reload register */
+  WRITE_REG(SysTick->LOAD, (uint32_t)(TicksNumb - 1UL));
+
+  /* Load the SysTick Counter Value */
+  WRITE_REG(SysTick->VAL, 0UL);
+
+  /* Enable SysTick IRQ and SysTick Timer */
+  SET_BIT(SysTick->CTRL, (SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk));
+
+  /* Function successful */
+  return (0UL);
 }
 /**
   * @}
@@ -408,6 +420,45 @@ void HAL_SYSTICK_CLKSourceConfig(uint32_t CLKSource)
 }
 
 /**
+  * @brief  Get the SysTick clock source configuration.
+  * @retval  SysTick clock source that can be one of the following values:
+  *             @arg SYSTICK_CLKSOURCE_LSI: LSI clock selected as SysTick clock source.
+  *             @arg SYSTICK_CLKSOURCE_LSE: LSE clock selected as SysTick clock source.
+  *             @arg SYSTICK_CLKSOURCE_HCLK: AHB clock selected as SysTick clock source.
+  *             @arg SYSTICK_CLKSOURCE_HCLK_DIV8: AHB clock divided by 8 selected as SysTick clock source.
+  */
+uint32_t HAL_SYSTICK_GetCLKSourceConfig(void)
+{
+  uint32_t systick_source;
+
+  /* Read SysTick->CTRL register for internal or external clock source */
+  if(READ_BIT(SysTick->CTRL, SysTick_CTRL_CLKSOURCE_Msk) != 0U)
+  {
+    /* Internal clock source */
+    systick_source = SYSTICK_CLKSOURCE_HCLK;
+  }
+  else
+  {
+    /* External clock source, check the selected one in RCC */
+    switch (__HAL_RCC_GET_SYSTICK_SOURCE())
+    {
+      case RCC_SYSTICKCLKSOURCE_LSI:
+        systick_source = SYSTICK_CLKSOURCE_LSI;
+        break;
+
+      case RCC_SYSTICKCLKSOURCE_LSE:
+        systick_source = SYSTICK_CLKSOURCE_LSE;
+        break;
+
+      default: /* RCC_SYSTICKCLKSOURCE_HCLK_DIV8 */
+        systick_source = SYSTICK_CLKSOURCE_HCLK_DIV8;
+        break;
+    }
+  }
+  return systick_source;
+}
+
+/**
   * @brief  Handle SYSTICK interrupt request.
   * @retval None
   */
@@ -426,8 +477,6 @@ __weak void HAL_SYSTICK_Callback(void)
             the HAL_SYSTICK_Callback could be implemented in the user file
    */
 }
-
-#if (__MPU_PRESENT == 1)
 
 /**
   * @brief  Enable the MPU.
@@ -454,6 +503,22 @@ void HAL_MPU_Enable(uint32_t MPU_Control)
   /* Data Synchronization and Instruction Synchronization Barriers to ensure MPU configuration */
   __DSB(); /* Ensure that the subsequent instruction is executed only after the write to memory */
   __ISB(); /* Flush and refill pipeline with updated MPU configuration settings */
+}
+
+/**
+  * @brief  Enable the MPU Region.
+  * @retval None
+  */
+void HAL_MPU_EnableRegion(uint32_t RegionNumber)
+{
+  /* Check the parameters */
+  assert_param(IS_MPU_REGION_NUMBER(RegionNumber));
+
+  /* Set the Region number */
+  MPU->RNR = RegionNumber;
+
+  /* Enable the Region */
+  SET_BIT(MPU->RLAR, MPU_RLAR_EN_Msk);
 }
 
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
@@ -483,6 +548,21 @@ void HAL_MPU_Enable_NS(uint32_t MPU_Control)
   __DSB(); /* Ensure that the subsequent instruction is executed only after the write to memory */
   __ISB(); /* Flush and refill pipeline with updated MPU configuration settings */
 }
+
+/**
+  * @brief  Enable the non-secure MPU Region.
+  * @retval None
+  */
+void HAL_MPU_EnableRegion_NS(uint32_t RegionNumber)
+{
+  assert_param(IS_MPU_REGION_NUMBER(RegionNumber));
+
+  /* Set the Region number */
+  MPU_NS->RNR = RegionNumber;
+
+  /* Enable the Region */
+  SET_BIT(MPU_NS->RLAR, MPU_RLAR_EN_Msk);
+}
 #endif /* __ARM_FEATURE_CMSE */
 
 /**
@@ -505,6 +585,22 @@ void HAL_MPU_Disable(void)
   __ISB(); /* Flush and refill pipeline with updated MPU configuration settings */
 }
 
+/**
+  * @brief  Disable the MPU Region.
+  * @retval None
+  */
+void HAL_MPU_DisableRegion(uint32_t RegionNumber)
+{
+  /* Check the parameters */
+  assert_param(IS_MPU_REGION_NUMBER(RegionNumber));
+
+  /* Set the Region number */
+  MPU->RNR = RegionNumber;
+
+  /* Disable the Region */
+  CLEAR_BIT(MPU->RLAR, MPU_RLAR_EN_Msk);
+}
+
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 void HAL_MPU_Disable_NS(void)
 {
@@ -521,7 +617,24 @@ void HAL_MPU_Disable_NS(void)
   __DSB(); /* Ensure that the subsequent instruction is executed only after the write to memory */
   __ISB(); /* Flush and refill pipeline with updated MPU configuration settings */
 }
+
+/**
+  * @brief  Disable the non-secure MPU Region.
+  * @retval None
+  */
+void HAL_MPU_DisableRegion_NS(uint32_t RegionNumber)
+{
+  /* Check the parameters */
+  assert_param(IS_MPU_REGION_NUMBER(RegionNumber));
+
+  /* Set the Region number */
+  MPU_NS->RNR = RegionNumber;
+
+  /* Disable the Region */
+  CLEAR_BIT(MPU_NS->RLAR, MPU_RLAR_EN_Msk);
+}
 #endif /* __ARM_FEATURE_CMSE */
+
 /**
   * @brief  Initialize and configure the Region and the memory to be protected.
   * @param  MPU_RegionInit: Pointer to a MPU_Region_InitTypeDef structure that contains
@@ -551,6 +664,10 @@ static void MPU_ConfigRegion(MPU_Type *MPUx, MPU_Region_InitTypeDef *MPU_RegionI
   /* Check the parameters */
   assert_param(IS_MPU_REGION_NUMBER(MPU_RegionInit->Number));
   assert_param(IS_MPU_REGION_ENABLE(MPU_RegionInit->Enable));
+  assert_param(IS_MPU_INSTRUCTION_ACCESS(MPU_RegionInit->DisableExec));
+  assert_param(IS_MPU_REGION_PERMISSION_ATTRIBUTE(MPU_RegionInit->AccessPermission));
+  assert_param(IS_MPU_ACCESS_SHAREABLE(MPU_RegionInit->IsShareable));
+  assert_param(IS_MPU_ATTRIBUTES_NUMBER(MPU_RegionInit->AttributesIndex));
 
   /* Follow ARM recommendation with Data Memory Barrier prior to MPU configuration */
   __DMB();
@@ -558,27 +675,17 @@ static void MPU_ConfigRegion(MPU_Type *MPUx, MPU_Region_InitTypeDef *MPU_RegionI
   /* Set the Region number */
   MPUx->RNR = MPU_RegionInit->Number;
 
-  if (MPU_RegionInit->Enable != MPU_REGION_DISABLE)
-  {
-    /* Check the parameters */
-    assert_param(IS_MPU_INSTRUCTION_ACCESS(MPU_RegionInit->DisableExec));
-    assert_param(IS_MPU_REGION_PERMISSION_ATTRIBUTE(MPU_RegionInit->AccessPermission));
-    assert_param(IS_MPU_ACCESS_SHAREABLE(MPU_RegionInit->IsShareable));
+   /* Disable the Region */
+  CLEAR_BIT(MPUx->RLAR, MPU_RLAR_EN_Msk);
 
-    MPUx->RBAR = (((uint32_t)MPU_RegionInit->BaseAddress               & 0xFFFFFFE0U)  |
-                  ((uint32_t)MPU_RegionInit->IsShareable           << MPU_RBAR_SH_Pos)  |
-                  ((uint32_t)MPU_RegionInit->AccessPermission      << MPU_RBAR_AP_Pos)  |
-                  ((uint32_t)MPU_RegionInit->DisableExec           << MPU_RBAR_XN_Pos));
+  MPUx->RBAR = (((uint32_t)MPU_RegionInit->BaseAddress & 0xFFFFFFE0U)  |
+                ((uint32_t)MPU_RegionInit->IsShareable      << MPU_RBAR_SH_Pos)  |
+                ((uint32_t)MPU_RegionInit->AccessPermission << MPU_RBAR_AP_Pos)  |
+                ((uint32_t)MPU_RegionInit->DisableExec      << MPU_RBAR_XN_Pos));
 
-    MPUx->RLAR = (((uint32_t)MPU_RegionInit->LimitAddress                    & 0xFFFFFFE0U) |
-                  ((uint32_t)MPU_RegionInit->AttributesIndex       << MPU_RLAR_AttrIndx_Pos) |
-                  ((uint32_t)MPU_RegionInit->Enable                << MPU_RLAR_EN_Pos));
-  }
-  else
-  {
-    MPUx->RBAR = 0U;
-    MPUx->RLAR = 0U;
-  }
+  MPUx->RLAR = (((uint32_t)MPU_RegionInit->LimitAddress & 0xFFFFFFE0U) |
+                ((uint32_t)MPU_RegionInit->AttributesIndex << MPU_RLAR_AttrIndx_Pos) |
+                ((uint32_t)MPU_RegionInit->Enable          << MPU_RLAR_EN_Pos));
 }
 /**
   * @brief  Initialize and configure the memory attributes.
@@ -634,8 +741,6 @@ static void MPU_ConfigMemoryAttributes(MPU_Type *MPUx, MPU_Attributes_InitTypeDe
   attr_values &=  ~(0xFFU << (attr_number * 8U));
   *(mair) = attr_values | ((uint32_t)MPU_AttributesInit->Attributes << (attr_number * 8U));
 }
-
-#endif /* __MPU_PRESENT */
 
 /**
   * @}

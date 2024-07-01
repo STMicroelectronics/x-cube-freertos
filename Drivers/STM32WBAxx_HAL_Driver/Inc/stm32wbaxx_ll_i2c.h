@@ -356,9 +356,9 @@ typedef struct
   * @{
   */
 #if defined(I2C1)
-#define LL_I2C_TRIG_GRP1                   (0x10000000U)         /*!< Trigger Group for I2C1 */
-#endif /* I2C1 */
-#define LL_I2C_TRIG_GRP2                   (0x20000000U)         /*!< Trigger Group for I2C3 */
+#define LL_I2C_TRIG_GRP1                   (0x10000000U)         /*!< Trigger Group for I2C1, I2C2 */
+#endif /* I2C1, I2C2 */
+#define LL_I2C_TRIG_GRP2                   (0x20000000U)         /*!< Trigger Group for I2C3, I2C4 */
 
 #if defined(I2C_TRIG_GRP1)
 #define LL_I2C_GRP1_GPDMA_CH0_TCF_TRG      (uint32_t)(LL_I2C_TRIG_GRP1 | (0x00000000U))
@@ -2317,11 +2317,18 @@ __STATIC_INLINE uint32_t LL_I2C_GetSlaveAddr(const I2C_TypeDef *I2Cx)
 __STATIC_INLINE void LL_I2C_HandleTransfer(I2C_TypeDef *I2Cx, uint32_t SlaveAddr, uint32_t SlaveAddrSize,
                                            uint32_t TransferSize, uint32_t EndMode, uint32_t Request)
 {
+  /* Declaration of tmp to prevent undefined behavior of volatile usage */
+  uint32_t tmp = ((uint32_t)(((uint32_t)SlaveAddr & I2C_CR2_SADD) | \
+                             ((uint32_t)SlaveAddrSize & I2C_CR2_ADD10) | \
+                             (((uint32_t)TransferSize << I2C_CR2_NBYTES_Pos) & I2C_CR2_NBYTES) | \
+                             (uint32_t)EndMode | (uint32_t)Request) & (~0x80000000U));
+
+  /* update CR2 register */
   MODIFY_REG(I2Cx->CR2, I2C_CR2_SADD | I2C_CR2_ADD10 |
              (I2C_CR2_RD_WRN & (uint32_t)(Request >> (31U - I2C_CR2_RD_WRN_Pos))) |
              I2C_CR2_START | I2C_CR2_STOP | I2C_CR2_RELOAD |
              I2C_CR2_NBYTES | I2C_CR2_AUTOEND | I2C_CR2_HEAD10R,
-             SlaveAddr | SlaveAddrSize | (TransferSize << I2C_CR2_NBYTES_Pos) | EndMode | Request);
+             tmp);
 }
 
 /**

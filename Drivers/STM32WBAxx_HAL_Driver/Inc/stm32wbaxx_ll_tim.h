@@ -671,10 +671,10 @@ typedef struct
 /** @defgroup TIM_LL_EC_COUNTERMODE Counter Mode
   * @{
   */
-#define LL_TIM_COUNTERMODE_UP                  0x00000000U          /*!<Counter used as upcounter */
+#define LL_TIM_COUNTERMODE_UP                  0x00000000U          /*!< Counter used as upcounter */
 #define LL_TIM_COUNTERMODE_DOWN                TIM_CR1_DIR          /*!< Counter used as downcounter */
 #define LL_TIM_COUNTERMODE_CENTER_DOWN         TIM_CR1_CMS_0        /*!< The counter counts up and down alternatively. Output compare interrupt flags of output channels  are set only when the counter is counting down. */
-#define LL_TIM_COUNTERMODE_CENTER_UP           TIM_CR1_CMS_1        /*!<The counter counts up and down alternatively. Output compare interrupt flags of output channels  are set only when the counter is counting up */
+#define LL_TIM_COUNTERMODE_CENTER_UP           TIM_CR1_CMS_1        /*!< The counter counts up and down alternatively. Output compare interrupt flags of output channels  are set only when the counter is counting up */
 #define LL_TIM_COUNTERMODE_CENTER_UP_DOWN      TIM_CR1_CMS          /*!< The counter counts up and down alternatively. Output compare interrupt flags of output channels  are set only when the counter is counting up or down. */
 /**
   * @}
@@ -756,6 +756,15 @@ typedef struct
   */
 #endif /* USE_FULL_LL_DRIVER */
 
+/** Legacy definitions for compatibility purpose
+@cond 0
+  */
+#define LL_TIM_OCMODE_ASSYMETRIC_PWM1 LL_TIM_OCMODE_ASYMMETRIC_PWM1
+#define LL_TIM_OCMODE_ASSYMETRIC_PWM2 LL_TIM_OCMODE_ASYMMETRIC_PWM2
+/**
+@endcond
+  */
+
 /** @defgroup TIM_LL_EC_OCMODE Output Configuration Mode
   * @{
   */
@@ -771,8 +780,8 @@ typedef struct
 #define LL_TIM_OCMODE_RETRIG_OPM2              (TIM_CCMR1_OC1M_3 | TIM_CCMR1_OC1M_0)                    /*!<Retrigerrable OPM mode 2*/
 #define LL_TIM_OCMODE_COMBINED_PWM1            (TIM_CCMR1_OC1M_3 | TIM_CCMR1_OC1M_2)                    /*!<Combined PWM mode 1*/
 #define LL_TIM_OCMODE_COMBINED_PWM2            (TIM_CCMR1_OC1M_3 | TIM_CCMR1_OC1M_0 | TIM_CCMR1_OC1M_2) /*!<Combined PWM mode 2*/
-#define LL_TIM_OCMODE_ASSYMETRIC_PWM1          (TIM_CCMR1_OC1M_3 | TIM_CCMR1_OC1M_1 | TIM_CCMR1_OC1M_2) /*!<Asymmetric PWM mode 1*/
-#define LL_TIM_OCMODE_ASSYMETRIC_PWM2          (TIM_CCMR1_OC1M_3 | TIM_CCMR1_OC1M)                      /*!<Asymmetric PWM mode 2*/
+#define LL_TIM_OCMODE_ASYMMETRIC_PWM1          (TIM_CCMR1_OC1M_3 | TIM_CCMR1_OC1M_1 | TIM_CCMR1_OC1M_2) /*!<Asymmetric PWM mode 1*/
+#define LL_TIM_OCMODE_ASYMMETRIC_PWM2          (TIM_CCMR1_OC1M_3 | TIM_CCMR1_OC1M)                      /*!<Asymmetric PWM mode 2*/
 #define LL_TIM_OCMODE_PULSE_ON_COMPARE         (TIM_CCMR2_OC3M_3 | TIM_CCMR2_OC3M_1)                    /*!<Pulse on Compare mode */
 #define LL_TIM_OCMODE_DIRECTION_OUTPUT         (TIM_CCMR2_OC3M_3 | TIM_CCMR2_OC3M_1 | TIM_CCMR2_OC3M_0) /*!<Direction output mode */
 /**
@@ -956,8 +965,8 @@ typedef struct
 #define LL_TIM_TS_ITR0                         0x00000000U                                                     /*!< Internal Trigger 0 (ITR0) is used as trigger input */
 #define LL_TIM_TS_ITR1                         TIM_SMCR_TS_0                                                   /*!< Internal Trigger 1 (ITR1) is used as trigger input */
 #define LL_TIM_TS_ITR2                         TIM_SMCR_TS_1                                                   /*!< Internal Trigger 2 (ITR2) is used as trigger input */
-#define LL_TIM_TS_ITR7                         (TIM_SMCR_TS_0 | TIM_SMCR_TS_1 | TIM_SMCR_TS_3)                 /*!< Internal Trigger 7 (ITR7) is used as trigger input */
-#define LL_TIM_TS_ITR8                         (TIM_SMCR_TS_2 | TIM_SMCR_TS_3)                                 /*!< Internal Trigger 8 (ITR8) is used as trigger input */
+#define LL_TIM_TS_ITR7                         (TIM_SMCR_TS_0 | TIM_SMCR_TS_1 | TIM_SMCR_TS_3)                 /*!< Internal Trigger 7 (ITR7) is used as trigger input   */
+#define LL_TIM_TS_ITR8                         (TIM_SMCR_TS_2 | TIM_SMCR_TS_3)                                 /*!< Internal Trigger 8 (ITR8) is used as trigger input   */
 #define LL_TIM_TS_TI1F_ED                      TIM_SMCR_TS_2                                                   /*!< TI1 Edge Detector (TI1F_ED) is used as trigger input */
 #define LL_TIM_TS_TI1FP1                       (TIM_SMCR_TS_2 | TIM_SMCR_TS_0)                                 /*!< Filtered Timer Input 1 (TI1FP1) is used as trigger input */
 #define LL_TIM_TS_TI2FP2                       (TIM_SMCR_TS_2 | TIM_SMCR_TS_1)                                 /*!< Filtered Timer Input 2 (TI12P2) is used as trigger input */
@@ -1050,7 +1059,6 @@ typedef struct
 #endif /* COMP1 && COMP2 */
 #define LL_TIM_TIM3_ETRSOURCE_HSI          TIM_AF1_ETRSEL_2                                          /*!< ETR input is connected to HSI */
 #define LL_TIM_TIM3_ETRSOURCE_TIM2_ETR     TIM_AF1_ETRSEL_3                                          /*!< ETR input is connected to TIM2 ETR */
-#define LL_TIM_TIM3_ETRSOURCE_TIM4_ETR     (TIM_AF1_ETRSEL_3 | TIM_AF1_ETRSEL_0)                     /*!< ETR input is connected to TIM4 ETR */
 #define LL_TIM_TIM3_ETRSOURCE_ADC4_AWD1    (TIM_AF1_ETRSEL_3 | TIM_AF1_ETRSEL_1 | TIM_AF1_ETRSEL_0)  /*!< ADC1 analog watchdog 1 */
 #define LL_TIM_TIM3_ETRSOURCE_ADC4_AWD2    (TIM_AF1_ETRSEL_3 | TIM_AF1_ETRSEL_2)                     /*!< ADC1 analog watchdog 2 */
 #define LL_TIM_TIM3_ETRSOURCE_ADC4_AWD3    (TIM_AF1_ETRSEL_3 | TIM_AF1_ETRSEL_2 | TIM_AF1_ETRSEL_0)  /*!< ADC1 analog watchdog 3 */
@@ -1186,6 +1194,15 @@ typedef struct
 #define LL_TIM_BREAK2_AFMODE_BIDIRECTIONAL     TIM_BDTR_BK2BID         /*!< Break2 input BRK2 in bidirectional mode */
 /**
   * @}
+  */
+
+/** Legacy definitions for compatibility purpose
+@cond 0
+  */
+#define LL_TIM_ReArmBRK(_PARAM_)
+#define LL_TIM_ReArmBRK2(_PARAM_)
+/**
+@endcond
   */
 
 /** @defgroup TIM_LL_EC_DMABURST_BASEADDR DMA Burst Base Address
@@ -2113,6 +2130,17 @@ __STATIC_INLINE void LL_TIM_CC_DisablePreload(TIM_TypeDef *TIMx)
 }
 
 /**
+  * @brief  Indicates whether the capture/compare control bits (CCxE, CCxNE and OCxM) preload is enabled.
+  * @rmtoll CR2          CCPC          LL_TIM_CC_IsEnabledPreload
+  * @param  TIMx Timer instance
+  * @retval State of bit (1 or 0).
+  */
+__STATIC_INLINE uint32_t LL_TIM_CC_IsEnabledPreload(const TIM_TypeDef *TIMx)
+{
+  return ((READ_BIT(TIMx->CR2, TIM_CR2_CCPC) == (TIM_CR2_CCPC)) ? 1UL : 0UL);
+}
+
+/**
   * @brief  Set the updated source of the capture/compare control bits (CCxE, CCxNE and OCxM).
   * @note Macro IS_TIM_COMMUTATION_EVENT_INSTANCE(TIMx) can be used to check
   *       whether or not a timer instance is able to generate a commutation event.
@@ -2348,8 +2376,8 @@ __STATIC_INLINE void LL_TIM_OC_ConfigOutput(TIM_TypeDef *TIMx, uint32_t Channel,
   *         @arg @ref LL_TIM_OCMODE_RETRIG_OPM2
   *         @arg @ref LL_TIM_OCMODE_COMBINED_PWM1
   *         @arg @ref LL_TIM_OCMODE_COMBINED_PWM2
-  *         @arg @ref LL_TIM_OCMODE_ASSYMETRIC_PWM1
-  *         @arg @ref LL_TIM_OCMODE_ASSYMETRIC_PWM2
+  *         @arg @ref LL_TIM_OCMODE_ASYMMETRIC_PWM1
+  *         @arg @ref LL_TIM_OCMODE_ASYMMETRIC_PWM2
   *         @arg @ref LL_TIM_OCMODE_PULSE_ON_COMPARE   (for channel 3 or channel 4 only)
   *         @arg @ref LL_TIM_OCMODE_DIRECTION_OUTPUT   (for channel 3 or channel 4 only)
   * @retval None
@@ -2390,8 +2418,8 @@ __STATIC_INLINE void LL_TIM_OC_SetMode(TIM_TypeDef *TIMx, uint32_t Channel, uint
   *         @arg @ref LL_TIM_OCMODE_RETRIG_OPM2
   *         @arg @ref LL_TIM_OCMODE_COMBINED_PWM1
   *         @arg @ref LL_TIM_OCMODE_COMBINED_PWM2
-  *         @arg @ref LL_TIM_OCMODE_ASSYMETRIC_PWM1
-  *         @arg @ref LL_TIM_OCMODE_ASSYMETRIC_PWM2
+  *         @arg @ref LL_TIM_OCMODE_ASYMMETRIC_PWM1
+  *         @arg @ref LL_TIM_OCMODE_ASYMMETRIC_PWM2
   *         @arg @ref LL_TIM_OCMODE_PULSE_ON_COMPARE   (for channel 3 or channel 4 only)
   *         @arg @ref LL_TIM_OCMODE_DIRECTION_OUTPUT   (for channel 3 or channel 4 only)
   */
@@ -3795,7 +3823,6 @@ __STATIC_INLINE void LL_TIM_ConfigETR(TIM_TypeDef *TIMx, uint32_t ETRPolarity, u
   *            @arg @ref LL_TIM_TIM3_ETRSOURCE_COMP2   (*)
   *            @arg @ref LL_TIM_TIM3_ETRSOURCE_HSI
   *            @arg @ref LL_TIM_TIM3_ETRSOURCE_TIM2_ETR
-  *            @arg @ref LL_TIM_TIM3_ETRSOURCE_TIM4_ETR
   *            @arg @ref LL_TIM_TIM3_ETRSOURCE_ADC4_AWD1
   *            @arg @ref LL_TIM_TIM3_ETRSOURCE_ADC4_AWD2
   *            @arg @ref LL_TIM_TIM3_ETRSOURCE_ADC4_AWD3
@@ -3975,18 +4002,6 @@ __STATIC_INLINE void LL_TIM_DisarmBRK(TIM_TypeDef *TIMx)
 }
 
 /**
-  * @brief  Re-arm the break input (when it operates in bidirectional mode).
-  * @note  The Break input is automatically armed as soon as MOE bit is set.
-  * @rmtoll BDTR         BKDSRM        LL_TIM_ReArmBRK
-  * @param  TIMx Timer instance
-  * @retval None
-  */
-__STATIC_INLINE void LL_TIM_ReArmBRK(TIM_TypeDef *TIMx)
-{
-  CLEAR_BIT(TIMx->BDTR, TIM_BDTR_BKDSRM);
-}
-
-/**
   * @brief  Enable the break 2 function.
   * @note Macro IS_TIM_BKIN2_INSTANCE(TIMx) can be used to check whether or not
   *       a timer instance provides a second break input.
@@ -4073,18 +4088,6 @@ __STATIC_INLINE void LL_TIM_ConfigBRK2(TIM_TypeDef *TIMx, uint32_t Break2Polarit
 __STATIC_INLINE void LL_TIM_DisarmBRK2(TIM_TypeDef *TIMx)
 {
   SET_BIT(TIMx->BDTR, TIM_BDTR_BK2DSRM);
-}
-
-/**
-  * @brief  Re-arm the break 2 input (when it operates in bidirectional mode).
-  * @note  The Break 2 input is automatically armed as soon as MOE bit is set.
-  * @rmtoll BDTR         BK2DSRM       LL_TIM_ReArmBRK2
-  * @param  TIMx Timer instance
-  * @retval None
-  */
-__STATIC_INLINE void LL_TIM_ReArmBRK2(TIM_TypeDef *TIMx)
-{
-  CLEAR_BIT(TIMx->BDTR, TIM_BDTR_BK2DSRM);
 }
 
 /**
@@ -4806,6 +4809,8 @@ __STATIC_INLINE uint32_t LL_TIM_IsEnabledHSE32(const TIM_TypeDef *TIMx)
   * @brief  Set the OCREF clear input source
   * @note The OCxREF signal of a given channel can be cleared when a high level is applied on the OCREF_CLR_INPUT
   * @note This function can only be used in Output compare and PWM modes.
+  * @note Macro IS_TIM_OCCS_INSTANCE(TIMx) can be used to check whether
+  *       or not a timer instance can configure OCREF clear input source.
   * @rmtoll SMCR          OCCS                LL_TIM_SetOCRefClearInputSource
   * @rmtoll AF2           OCRSEL              LL_TIM_SetOCRefClearInputSource
   * @param  TIMx Timer instance

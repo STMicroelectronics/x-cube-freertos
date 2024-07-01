@@ -146,6 +146,8 @@ __Vectors       DCD     __initial_sp               ; Top of Stack
                 DCD     WKUP_IRQHandler            ; PWR global WKUP pin interrupt
                 DCD     HSEM_IRQHandler            ; HSEM non-secure global interrupt
                 DCD     HSEM_S_IRQHandler          ; HSEM secure global interrupt
+                DCD     WKUP_S_IRQHandler          ; PWR secure global WKUP pin interrupt
+                DCD     RCC_AUDIOSYNC_IRQHandler   ; RCC audio synchronization interrupt
 __Vectors_End
 
 __Vectors_Size  EQU     __Vectors_End - __Vectors
@@ -274,10 +276,10 @@ Default_Handler PROC
                 EXPORT  LPTIM2_IRQHandler          [WEAK]
                 EXPORT  TIM16_IRQHandler           [WEAK]
                 EXPORT  TIM17_IRQHandler           [WEAK]
-				EXPORT  COMP_IRQHandler            [WEAK]
+                EXPORT  COMP_IRQHandler            [WEAK]
                 EXPORT  I2C3_EV_IRQHandler         [WEAK]
                 EXPORT  I2C3_ER_IRQHandler         [WEAK]
-				EXPORT  SAI1_IRQHandler            [WEAK]
+                EXPORT  SAI1_IRQHandler            [WEAK]
                 EXPORT  TSC_IRQHandler             [WEAK]
                 EXPORT  AES_IRQHandler             [WEAK]
                 EXPORT  RNG_IRQHandler             [WEAK]
@@ -291,6 +293,8 @@ Default_Handler PROC
                 EXPORT  WKUP_IRQHandler            [WEAK]
                 EXPORT  HSEM_IRQHandler            [WEAK]
                 EXPORT  HSEM_S_IRQHandler          [WEAK]
+                EXPORT  WKUP_S_IRQHandler          [WEAK]
+                EXPORT  RCC_AUDIOSYNC_IRQHandler   [WEAK]
 
 WWDG_IRQHandler
 PVD_IRQHandler
@@ -362,6 +366,8 @@ RADIO_IRQHandler
 WKUP_IRQHandler
 HSEM_IRQHandler
 HSEM_S_IRQHandler
+WKUP_S_IRQHandler
+RCC_AUDIOSYNC_IRQHandler
                 B       .
 
                 ENDP

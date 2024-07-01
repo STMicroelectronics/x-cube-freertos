@@ -75,6 +75,7 @@ static void MX_ICACHE_Init(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
   /* Enable SecureFault handler (HardFault is default) */
   SCB->SHCSR |= SCB_SHCSR_SECUREFAULTENA_Msk;
@@ -112,6 +113,7 @@ int main(void)
   NonSecure_Init();
 
   /* Non-secure software does not return, this code is not executed */
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
