@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspace>
+    <project>
+        <path>$WS_DIR$\FSBL\FSBL.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\AppliSecure\FreeRTOS_Queues_ThreadFlags_TrustZone_s.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\AppliNonSecure\FreeRTOS_Queues_ThreadFlags_TrustZone_ns.ewp</path>
+    </project>
+    <batchBuild />
+</workspace>

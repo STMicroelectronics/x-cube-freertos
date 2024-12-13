@@ -53,13 +53,13 @@
           (DAC_TRIGGER_T1_TRGO, DAC_TRIGGER_T2_TRGO...)
 
       (#) Low Power Timers TRGO: LPTIM1 and LPTIM3
-          (DAC_TRIGGER_LPTIM1_OUT, DAC_TRIGGER_LPTIM3_OUT)
+          (DAC_TRIGGER_LPTIM1_CH1, DAC_TRIGGER_LPTIM3_CH1)
 
       (#) Software using DAC_TRIGGER_SOFTWARE
     [..]
   The trigger selection depends on the PWR mode:
   in stop0, stop1 and stop2 we should select DAC_TRIGGER_EXT_IT9,
-    DAC_TRIGGER_LPTIM1_OUT or DAC_TRIGGER_LPTIM3_OUT.The other triggers
+    DAC_TRIGGER_LPTIM1_CH1 or DAC_TRIGGER_LPTIM3_CH1.The other triggers
   are not functional.
 
       *** DAC Buffer mode feature ***
@@ -1262,6 +1262,14 @@ HAL_StatusTypeDef HAL_DAC_ConfigChannel(DAC_HandleTypeDef *hdac,
     assert_param(IS_DAC_SAMPLETIME(sConfig->DAC_SampleAndHoldConfig.DAC_SampleTime));
     assert_param(IS_DAC_HOLDTIME(sConfig->DAC_SampleAndHoldConfig.DAC_HoldTime));
     assert_param(IS_DAC_REFRESHTIME(sConfig->DAC_SampleAndHoldConfig.DAC_RefreshTime));
+  }
+  else
+  {
+    /* In case of mode normal and buffer disabled, connection to both on chip periph and external pin is not possible */
+    if (sConfig->DAC_OutputBuffer == DAC_OUTPUTBUFFER_DISABLE)
+    {
+      assert_param(sConfig->DAC_ConnectOnChipPeripheral != DAC_CHIPCONNECT_BOTH);
+    }
   }
   assert_param(IS_DAC_CHANNEL(Channel));
   assert_param(IS_FUNCTIONAL_STATE(sConfig->DAC_DMADoubleDataMode));

@@ -9,27 +9,31 @@ The application creates one Privileged mode task using xTaskCreate():
                 Displays information about the faults and takes corrective actions.
 It also has User mode tasks created using the xTaskCreateRestricted() API:
 
-  - 'Task1': Has read only access to shared memory
-             Attempts an illegal write to the shared memory only once
-             Toggles the green LED
-  - 'Task2': Has read only access to shared memory
-             Attempts an illegal write to the shared memory periodically
-             Toggles the yellow LED
+  - 'Task1': Has read only access to shared memory.
+             Attempts an illegal write to the shared memory only once.
+             Toggles the green LED.
+  - 'Task2': Has read only access to shared memory.
+             Attempts an illegal write to the shared memory periodically.
+             Toggles the yellow LED.
 The application will try to recover from MemManage fault exception for each task until EXAMPLE_FAULT_COUNT_THRESHOLD is reached for that task. At that point the task will be suspended to
 avoid further exceptions.
 
 #### <b>Expected success behavior</b>
+
 Successful operation is marked by a toggling green led light.
 The yellow LED will toggle `EXAMPLE_FAULT_COUNT_THRESHOLD` times.
 Information about the faults will be printed to the serial port.
 
 #### <b>Error behaviors</b>
+
 On failure, the red led is ON.
 
 #### <b>Assumptions if any</b>
+
 None
 
 #### <b>Known limitations</b>
+
 None
 
 ### <b>Notes</b>
@@ -49,18 +53,20 @@ For more details about FreeRTOS implementation on STM32Cube, please refer to UM1
 on STM32Cube with RTOS".
 
 ### <b>Keywords</b>
+
 FreeRTOS, RTOS, MPU, Threading
 
 ### <b>Hardware and Software environment</b>
+
   - This application runs on STM32H563xx devices.
-  - This application has been tested with STMicroelectronics NUCLEO-H563ZI board MB1404 Rev. B02
+  - This application has been tested with STMicroelectronics NUCLEO-H563ZI board MB1404 Rev. C01
     and can be easily tailored to any other supported device and development board.
   - This application uses USART3 to display logs, the hyperterminal configuration is as follows:
-      - BaudRate = 115200 baud
-      - Word Length = 8 Bits
-      - Stop Bit = 1
-      - Parity = none
-      - Flow control = None
+    - BaudRate = 115200 baud
+    - Word Length = 8 Bits
+    - Stop Bit = 1
+    - Parity = None
+    - Flow control = None
 
 ### <b>How to use it ?</b>
 In order to make the program work, you must do the following :

@@ -89,7 +89,8 @@
 
 #define RCC_GET_MCO_GPIO_INDEX(__RCC_MCOx__) (((__RCC_MCOx__) & RCC_MCO_GPIOPORT_MASK) >> RCC_MCO_GPIOPORT_POS)
 
-#define RCC_GET_MCO_GPIO_PORT(__RCC_MCOx__)  (((IOPORT_BASE) + ((0x00000400UL) * RCC_GET_MCO_GPIO_INDEX((__RCC_MCOx__)))))
+#define RCC_GET_MCO_GPIO_PORT(__RCC_MCOx__)  \
+  (((IOPORT_BASE) + ((0x00000400UL) * RCC_GET_MCO_GPIO_INDEX((__RCC_MCOx__)))))
 
 #define RCC_PLL_OSCSOURCE_CONFIG(__HAL_RCC_PLLSOURCE__) \
   (MODIFY_REG(RCC->PLLCFGR, RCC_PLLCFGR_PLLSRC, (__HAL_RCC_PLLSOURCE__)))
@@ -1152,7 +1153,7 @@ void HAL_RCC_MCOConfig(uint32_t RCC_MCOx, uint32_t RCC_MCOSource, uint32_t RCC_M
   }
   else
   {
-   /* unexpected case: added to resolve MISRA 15.7 rule */
+    /* unexpected case: added to resolve MISRA 15.7 rule */
   }
 }
 

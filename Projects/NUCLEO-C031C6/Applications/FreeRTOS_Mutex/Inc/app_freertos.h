@@ -18,8 +18,8 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __APP_FREERTOS_H__
-#define __APP_FREERTOS_H__
+#ifndef __APP_FREERTOS_H
+#define __APP_FREERTOS_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -76,4 +76,4 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 #ifdef __cplusplus
 }
 #endif
-#endif /* __APP_FREERTOS_H__ */
+#endif /* __APP_FREERTOS_H */

@@ -7,28 +7,28 @@ The application creates 4 Tasks and 1 Queue:
 
   - 'ProducerThread': Sends message (incrementing value "ProducerValue") to the queue.
 
-  - 'ConsumerThread': Gets message from the queue
-                      Checks if it's the correct message (ProducerValue == ConsumerValue)
-                      Toggles LED_GREEN
+  - 'ConsumerThread': Gets message from the queue.
+                      Checks if it's the correct message (ProducerValue == ConsumerValue).
+                      Toggles LED_GREEN.
 
-  - 'GenThread': Waits for the message on the queue to reach a specific "GenerationValue"
-                 Sets ReceiveThread' flag to 1
+  - 'GenThread': Waits for the message on the queue to reach a specific "GenerationValue".
+                 Sets ReceiveThread' flag to 1.
 
-  - 'ReceiveThread': Waits for the thread flag settings
-                     Toggles SECURE LED_YELLOW
+  - 'ReceiveThread': Waits for the thread flag settings.
+                     Toggles SECURE LED_YELLOW.
 
     It is to note that 'ReceiveThread' is a non-secure FreeRTOS task that toggles a secure IO with HAL GPIO via a non-secure callable API provided by the secure application.
     The secure IO is PB.07 which corresponds to LED2 (LED_YELLOW).
 
 This project is composed of two sub-projects:
 
-- one for the secure application part (FreeRTOS_Queues_ThreadFlags_TrustZone_S)
-- one for the non-secure application part (FreeRTOS_Queues_ThreadFlags_TrustZone_NS).
+- One for the secure application part (FreeRTOS_Queues_ThreadFlags_TrustZone_S).
+- One for the non-secure application part (FreeRTOS_Queues_ThreadFlags_TrustZone_NS).
 
 Please remember that on system with security enabled:
 
-- the system always boots in secure and the secure application is responsible for launching the non-secure application.
-- the SystemInit() function in secure application sets up the SAU/IDAU, FPU and secure/non-secure interrupts allocations defined in partition_stm32u575xx.h file.
+- The system always boots in secure and the secure application is responsible for launching the non-secure application.
+- The SystemInit() function in secure application sets up the SAU/IDAU, FPU and secure/non-secure interrupts allocations defined in partition_stm32u575xx.h file.
 
 This project shows how to switch between secure and non-secure applications thanks to the system isolation performed to split the internal Flash and internal SRAM memories into two halves:
 
@@ -41,21 +41,24 @@ Please note that the internal Flash is fully secure by default in TZEN=1 and Use
 
 #### <b>Expected success behavior</b>
 
-Successful operation is marked by turning on Green LED then the Yellow LED.
+Successful operation is marked by turning ON green LED then the yellow LED.
 
 Information about the application will be printed to the serial port.
 
 #### <b>Error behaviors</b>
 
-On failure, the Red Led is ON.
+On failure, the red LED starts toggling.
 
 #### <b>Assumptions if any</b>
+
 None
 
 #### <b>Known limitations</b>
+
 None
 
 ### <b>Notes</b>
+
 The following sequence is needed to disable TrustZone:
 
   - Boot from user Flash memory:
@@ -75,6 +78,7 @@ The following sequence is needed to disable TrustZone:
 Please refer to AN5347 for more details.
 
 #### <b>FreeRTOS usage hints</b>
+
 The FreeRTOS heap size configTOTAL_HEAP_SIZE defined in FreeRTOSConfig.h is set accordingly to the
 OS resources memory requirements of the application with +10% margin and rounded to the upper Kbyte boundary.
 
@@ -88,23 +92,22 @@ Security, RTOS, FreeRTOS, TrustZone, Threading, GPIO, Message, Queues, ThreadFla
 ### <b>Hardware and Software environment</b>
 
   - This application runs on STM32H563xx devices with security enabled (TZEN=B4).
-  - This application has been tested with STMicroelectronics NUCLEO-H563ZI boards Revision: MB1404-H563ZI-B02.
+  - This application has been tested with STMicroelectronics NUCLEO-H563ZI boards revision: MB1404-H563ZI-C01
     and can be easily tailored to any other supported device and development board.
 
   - This application uses USART3 to display logs, the hyperterminal configuration is as follows:
 
-      - BaudRate = 115200 baud
-      - Word Length = 8 Bits
-      - Stop Bit = 1
-      - Parity = none
-      - Flow control = None
+    - BaudRate = 115200 baud
+    - Word Length = 8 Bits
+    - Stop Bit = 1
+    - Parity = None
+    - Flow control = None
 
   - User Option Bytes requirement (with STM32CubeProgrammer tool)
 
       - TZEN = B4                           System with TrustZone-M enabled
       - SECWM1_PSTRT=0x0  SECWM1_PEND=0x7F  All 128 pages of internal Flash Bank1 set as secure
       - SECWM2_PSTRT=0x1  SECWM2_PEND=0x0   No page of internal Flash Bank2 set as secure, hence Bank2 non-secure
-
 
 ### <b>How to use it ?</b>
 
@@ -124,8 +127,7 @@ IAR
  - Set the "FreeRTOS_Queues_ThreadFlags_TrustZone_S" as active application (Set as Active)
  - Flash the secure binary with Project->Download->Download active application
    (this shall download the \Secure_nsclib\FreeRTOS_Queues_ThreadFlags_TrustZone_S.out to flash memory)
- - Run the example
-
+ - Run the application
 
 MDK-ARM
 
@@ -140,8 +142,7 @@ MDK-ARM
  - Select the FreeRTOS_Queues_ThreadFlags_TrustZone_S project as Active Project (Set as Active Project)
  - Load the secure binary (F8)
    (this shall download the \MDK-ARM\FreeRTOS_Queues_ThreadFlags_TrustZone_s\Exe\Project_s.axf to flash memory)
- - Run the example
-
+ - Run the application
 
 STM32CubeIDE
 
@@ -153,4 +154,4 @@ STM32CubeIDE
    - Double click on "STM32 Cortex-M C/C++ Application"
    - Select  "Startup" >  "Add" >
      - Select the FreeRTOS_Queues_ThreadFlags_TrustZone_NS project
- - Click Debug/Run to debug/run the example
+ - Click Debug/Run to debug/run the application

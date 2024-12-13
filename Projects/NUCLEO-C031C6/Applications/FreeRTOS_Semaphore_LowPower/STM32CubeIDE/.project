@@ -31,11 +31,6 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>FreeRTOS_Semaphore_LowPower.ioc</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/FreeRTOS_Semaphore_LowPower.ioc</locationURI>
-		</link>
-		<link>
 			<name>Doc/README.md</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/README.md</locationURI>

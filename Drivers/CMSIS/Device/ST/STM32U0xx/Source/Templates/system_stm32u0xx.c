@@ -179,7 +179,10 @@ const uint32_t MSIRangeTable[12] = {100000U,   200000U,   400000U,   800000U,  1
 
 void SystemInit(void)
 {
-
+#ifdef ENABLE_DBG_SWEN
+uint32_t tmp_seccr;
+uint32_t tmp_optr;
+#endif /* ENABLE_DBG_SWEN */
   /* Configure the Vector Table location add offset address ------------------*/
 #ifdef VECT_TAB_SRAM
   SCB->VTOR = SRAM1_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM */
@@ -189,9 +192,11 @@ void SystemInit(void)
 
 /* Software workaround added to keep Debug enabled after Boot_Lock activation and RDP=1  */
 #ifdef ENABLE_DBG_SWEN
-  if (((FLASH->SECR & FLASH_SECR_BOOT_LOCK) == FLASH_SECR_BOOT_LOCK)           \
-      && (((FLASH->OPTR & FLASH_OPTR_RDP) != 0xCCU)                            \
-          && ((FLASH->OPTR & FLASH_OPTR_RDP) != 0xAAU)))
+  tmp_seccr = FLASH->SECR;
+  tmp_optr = FLASH->OPTR;
+  if (((tmp_seccr & FLASH_SECR_BOOT_LOCK) == FLASH_SECR_BOOT_LOCK)         \
+      && (((tmp_optr & FLASH_OPTR_RDP) != 0xCCU)                           \
+      && ((tmp_optr & FLASH_OPTR_RDP) != 0xAAU)))
   {
     FLASH->ACR |= FLASH_ACR_DBG_SWEN;  /* Debug access software enabled to avoid the chip
                                           to be locked when RDP=1 and Boot_Lock=1        */
@@ -257,6 +262,10 @@ void SystemCoreClockUpdate(void)
     msirange = (RCC->CR & RCC_CR_MSIRANGE) >> 4U;
   }
   /* MSI frequency range in HZ*/
+  if (msirange > 11U)
+  {
+    msirange = 0U;
+  }
   msirange = MSIRangeTable[msirange];
 
   /* Get SYSCLK source -------------------------------------------------------*/
@@ -318,7 +327,7 @@ void SystemCoreClockUpdate(void)
   }
   /* Compute HCLK clock frequency --------------------------------------------*/
   /* Get HCLK prescaler */
-  tmp = AHBPrescTable[((RCC->CFGR & RCC_CFGR_HPRE) >> 4U) & 0xFU];
+  tmp = AHBPrescTable[((RCC->CFGR & RCC_CFGR_HPRE) >> RCC_CFGR_HPRE_Pos) & 0xFU];
   /* HCLK clock frequency */
   SystemCoreClock >>= tmp;
 }

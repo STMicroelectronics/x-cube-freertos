@@ -50,16 +50,16 @@ LED1 (LED_BLUE).</p></li>
 </ul>
 <p>This project is composed of two sub-projects:</p>
 <ul>
-<li>one for the secure application part
-(FreeRTOS_Queues_ThreadFlags_TrustZone_S)</li>
-<li>one for the non-secure application part
+<li>One for the secure application part
+(FreeRTOS_Queues_ThreadFlags_TrustZone_S).</li>
+<li>One for the non-secure application part
 (FreeRTOS_Queues_ThreadFlags_TrustZone_NS).</li>
 </ul>
 <p>Please remember that on system with security enabled:</p>
 <ul>
-<li>the system always boots in secure and the secure application is
+<li>The system always boots in secure and the secure application is
 responsible for launching the non-secure application.</li>
-<li>the SystemInit() function in secure application sets up the
+<li>The SystemInit() function in secure application sets up the
 SAU/IDAU, FPU and secure/non-secure interrupts allocations defined in
 partition_stm32u575xx.h file.</li>
 </ul>
@@ -140,7 +140,7 @@ configuration is as follows:</p>
 <li>BaudRate = 115200 baud</li>
 <li>Word Length = 8 Bits</li>
 <li>Stop Bit = 1</li>
-<li>Parity = none</li>
+<li>Parity = None</li>
 <li>Flow control = None</li>
 </ul></li>
 <li><p>User Option Bytes requirement (with STM32CubeProgrammer tool)</p>
@@ -173,7 +173,7 @@ application (Set as Active)</li>
 <li>Flash the secure binary with Project-&gt;Download-&gt;Download
 active application (this shall download the
 _nsclib_Queues_ThreadFlags_TrustZone_S.out to flash memory)</li>
-<li>Run the example</li>
+<li>Run the application</li>
 </ul>
 <p>MDK-ARM</p>
 <ul>
@@ -191,7 +191,7 @@ Active Project (Set as Active Project)</li>
 Project (Set as Active Project)</li>
 <li>Load the secure binary (F8) (this shall download the
 -ARM_Queues_ThreadFlags_TrustZone_s_s.axf to flash memory)</li>
-<li>Run the example</li>
+<li>Run the application</li>
 </ul>
 <p>STM32CubeIDE</p>
 <ul>
@@ -215,7 +215,7 @@ active build configuration
 <li>Select the FreeRTOS_Queues_ThreadFlags_TrustZone_NS project</li>
 </ul></li>
 </ul></li>
-<li>Click Debug/Run to debug/run the example</li>
+<li>Click Debug/Run to debug/run the application</li>
 </ul>
 </section>
 </div>

@@ -1130,12 +1130,14 @@ HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pD
       return  HAL_ERROR;
     }
 
+#if defined(USART_DMAREQUESTS_SW_WA)
     /* Disable the UART DMA Tx request if enabled */
     if (HAL_IS_BIT_SET(huart->Instance->CR3, USART_CR3_DMAT))
     {
       CLEAR_BIT(huart->Instance->CR3, USART_CR3_DMAT);
     }
 
+#endif /* USART_DMAREQUESTS_SW_WA */
     huart->ErrorCode = HAL_UART_ERROR_NONE;
     huart->gState = HAL_UART_STATE_BUSY_TX;
 
@@ -1227,12 +1229,14 @@ HAL_StatusTypeDef HAL_UART_Receive(UART_HandleTypeDef *huart, uint8_t *pData, ui
       return  HAL_ERROR;
     }
 
+#if defined(USART_DMAREQUESTS_SW_WA)
     /* Disable the UART DMA Rx request if enabled */
     if (HAL_IS_BIT_SET(huart->Instance->CR3, USART_CR3_DMAR))
     {
       CLEAR_BIT(huart->Instance->CR3, USART_CR3_DMAR);
     }
 
+#endif /* USART_DMAREQUESTS_SW_WA */
     huart->ErrorCode = HAL_UART_ERROR_NONE;
     huart->RxState = HAL_UART_STATE_BUSY_RX;
     huart->ReceptionType = HAL_UART_RECEPTION_STANDARD;
@@ -1312,12 +1316,14 @@ HAL_StatusTypeDef HAL_UART_Transmit_IT(UART_HandleTypeDef *huart, const uint8_t 
       return HAL_ERROR;
     }
 
+#if defined(USART_DMAREQUESTS_SW_WA)
     /* Disable the UART DMA Tx request if enabled */
     if (HAL_IS_BIT_SET(huart->Instance->CR3, USART_CR3_DMAT))
     {
       CLEAR_BIT(huart->Instance->CR3, USART_CR3_DMAT);
     }
 
+#endif /* USART_DMAREQUESTS_SW_WA */
     huart->pTxBuffPtr  = pData;
     huart->TxXferSize  = Size;
     huart->TxXferCount = Size;
@@ -1389,12 +1395,14 @@ HAL_StatusTypeDef HAL_UART_Receive_IT(UART_HandleTypeDef *huart, uint8_t *pData,
     /* Set Reception type to Standard reception */
     huart->ReceptionType = HAL_UART_RECEPTION_STANDARD;
 
+#if defined(USART_DMAREQUESTS_SW_WA)
     /* Disable the UART DMA Rx request if enabled */
     if (HAL_IS_BIT_SET(huart->Instance->CR3, USART_CR3_DMAR))
     {
       CLEAR_BIT(huart->Instance->CR3, USART_CR3_DMAR);
     }
 
+#endif /* USART_DMAREQUESTS_SW_WA */
     if (!(IS_LPUART_INSTANCE(huart->Instance)))
     {
       /* Check that USART RTOEN bit is set */
@@ -1444,6 +1452,11 @@ HAL_StatusTypeDef HAL_UART_Transmit_DMA(UART_HandleTypeDef *huart, const uint8_t
     huart->ErrorCode = HAL_UART_ERROR_NONE;
     huart->gState = HAL_UART_STATE_BUSY_TX;
 
+#if defined(USART_DMAREQUESTS_SW_WA)
+    /* Clear the TC flag in the ICR register */
+    __HAL_UART_CLEAR_FLAG(huart, UART_CLEAR_TCF);
+
+#endif /* USART_DMAREQUESTS_SW_WA */
     if (huart->hdmatx != NULL)
     {
       /* Set the UART DMA transfer complete callback */
@@ -1506,9 +1519,11 @@ HAL_StatusTypeDef HAL_UART_Transmit_DMA(UART_HandleTypeDef *huart, const uint8_t
         return HAL_ERROR;
       }
     }
+#if !defined(USART_DMAREQUESTS_SW_WA)
     /* Clear the TC flag in the ICR register */
     __HAL_UART_CLEAR_FLAG(huart, UART_CLEAR_TCF);
 
+#endif /* USART_DMAREQUESTS_SW_WA */
     /* Enable the DMA transfer for transmit request by setting the DMAT bit
     in the UART CR3 register */
     ATOMIC_SET_BIT(huart->Instance->CR3, USART_CR3_DMAT);
@@ -1773,6 +1788,11 @@ HAL_StatusTypeDef HAL_UART_Abort(UART_HandleTypeDef *huart)
   /* Abort the UART DMA Tx channel if enabled */
   if (HAL_IS_BIT_SET(huart->Instance->CR3, USART_CR3_DMAT))
   {
+#if !defined(USART_DMAREQUESTS_SW_WA)
+    /* Disable the UART DMA Tx request if enabled */
+    ATOMIC_CLEAR_BIT(huart->Instance->CR3, USART_CR3_DMAT);
+
+#endif /* !USART_DMAREQUESTS_SW_WA */
     /* Abort the UART DMA Tx channel : use blocking DMA Abort API (no callback) */
     if (huart->hdmatx != NULL)
     {
@@ -1796,6 +1816,11 @@ HAL_StatusTypeDef HAL_UART_Abort(UART_HandleTypeDef *huart)
   /* Abort the UART DMA Rx channel if enabled */
   if (HAL_IS_BIT_SET(huart->Instance->CR3, USART_CR3_DMAR))
   {
+#if !defined(USART_DMAREQUESTS_SW_WA)
+    /* Disable the UART DMA Rx request if enabled */
+    ATOMIC_CLEAR_BIT(huart->Instance->CR3, USART_CR3_DMAR);
+
+#endif /* !USART_DMAREQUESTS_SW_WA */
     /* Abort the UART DMA Rx channel : use blocking DMA Abort API (no callback) */
     if (huart->hdmarx != NULL)
     {
@@ -1865,6 +1890,11 @@ HAL_StatusTypeDef HAL_UART_AbortTransmit(UART_HandleTypeDef *huart)
   /* Abort the UART DMA Tx channel if enabled */
   if (HAL_IS_BIT_SET(huart->Instance->CR3, USART_CR3_DMAT))
   {
+#if !defined(USART_DMAREQUESTS_SW_WA)
+    /* Disable the UART DMA Tx request if enabled */
+    ATOMIC_CLEAR_BIT(huart->Instance->CR3, USART_CR3_DMAT);
+
+#endif /* !USART_DMAREQUESTS_SW_WA */
     /* Abort the UART DMA Tx channel : use blocking DMA Abort API (no callback) */
     if (huart->hdmatx != NULL)
     {
@@ -1929,6 +1959,11 @@ HAL_StatusTypeDef HAL_UART_AbortReceive(UART_HandleTypeDef *huart)
   /* Abort the UART DMA Rx channel if enabled */
   if (HAL_IS_BIT_SET(huart->Instance->CR3, USART_CR3_DMAR))
   {
+#if !defined(USART_DMAREQUESTS_SW_WA)
+    /* Disable the UART DMA Rx request if enabled */
+    ATOMIC_CLEAR_BIT(huart->Instance->CR3, USART_CR3_DMAR);
+
+#endif /* !USART_DMAREQUESTS_SW_WA */
     /* Abort the UART DMA Rx channel : use blocking DMA Abort API (no callback) */
     if (huart->hdmarx != NULL)
     {
@@ -2030,6 +2065,11 @@ HAL_StatusTypeDef HAL_UART_Abort_IT(UART_HandleTypeDef *huart)
   /* Abort the UART DMA Tx channel if enabled */
   if (HAL_IS_BIT_SET(huart->Instance->CR3, USART_CR3_DMAT))
   {
+#if !defined(USART_DMAREQUESTS_SW_WA)
+    /* Disable DMA Tx at UART level */
+    ATOMIC_CLEAR_BIT(huart->Instance->CR3, USART_CR3_DMAT);
+
+#endif /* !USART_DMAREQUESTS_SW_WA */
     /* Abort the UART DMA Tx channel : use non blocking DMA Abort API (callback) */
     if (huart->hdmatx != NULL)
     {
@@ -2051,6 +2091,11 @@ HAL_StatusTypeDef HAL_UART_Abort_IT(UART_HandleTypeDef *huart)
   /* Abort the UART DMA Rx channel if enabled */
   if (HAL_IS_BIT_SET(huart->Instance->CR3, USART_CR3_DMAR))
   {
+#if !defined(USART_DMAREQUESTS_SW_WA)
+    /* Disable the UART DMA Rx request if enabled */
+    ATOMIC_CLEAR_BIT(huart->Instance->CR3, USART_CR3_DMAR);
+
+#endif /* !USART_DMAREQUESTS_SW_WA */
     /* Abort the UART DMA Rx channel : use non blocking DMA Abort API (callback) */
     if (huart->hdmarx != NULL)
     {
@@ -2139,6 +2184,11 @@ HAL_StatusTypeDef HAL_UART_AbortTransmit_IT(UART_HandleTypeDef *huart)
   /* Abort the UART DMA Tx channel if enabled */
   if (HAL_IS_BIT_SET(huart->Instance->CR3, USART_CR3_DMAT))
   {
+#if !defined(USART_DMAREQUESTS_SW_WA)
+    /* Disable the UART DMA Tx request if enabled */
+    ATOMIC_CLEAR_BIT(huart->Instance->CR3, USART_CR3_DMAT);
+
+#endif /* !USART_DMAREQUESTS_SW_WA */
     /* Abort the UART DMA Tx channel : use non blocking DMA Abort API (callback) */
     if (huart->hdmatx != NULL)
     {
@@ -2235,6 +2285,11 @@ HAL_StatusTypeDef HAL_UART_AbortReceive_IT(UART_HandleTypeDef *huart)
   /* Abort the UART DMA Rx channel if enabled */
   if (HAL_IS_BIT_SET(huart->Instance->CR3, USART_CR3_DMAR))
   {
+#if !defined(USART_DMAREQUESTS_SW_WA)
+    /* Disable the UART DMA Rx request if enabled */
+    ATOMIC_CLEAR_BIT(huart->Instance->CR3, USART_CR3_DMAR);
+
+#endif /* !USART_DMAREQUESTS_SW_WA */
     /* Abort the UART DMA Rx channel : use non blocking DMA Abort API (callback) */
     if (huart->hdmarx != NULL)
     {
@@ -2416,6 +2471,11 @@ void HAL_UART_IRQHandler(UART_HandleTypeDef *huart)
         /* Abort the UART DMA Rx channel if enabled */
         if (HAL_IS_BIT_SET(huart->Instance->CR3, USART_CR3_DMAR))
         {
+#if !defined(USART_DMAREQUESTS_SW_WA)
+          /* Disable the UART DMA Rx request if enabled */
+          ATOMIC_CLEAR_BIT(huart->Instance->CR3, USART_CR3_DMAR);
+
+#endif /* !USART_DMAREQUESTS_SW_WA */
           /* Abort the UART DMA Rx channel */
           if (huart->hdmarx != NULL)
           {
@@ -2504,6 +2564,12 @@ void HAL_UART_IRQHandler(UART_HandleTypeDef *huart)
           ATOMIC_CLEAR_BIT(huart->Instance->CR1, USART_CR1_PEIE);
           ATOMIC_CLEAR_BIT(huart->Instance->CR3, USART_CR3_EIE);
 
+#if !defined(USART_DMAREQUESTS_SW_WA)
+          /* Disable the DMA transfer for the receiver request by resetting the DMAR bit
+             in the UART CR3 register */
+          ATOMIC_CLEAR_BIT(huart->Instance->CR3, USART_CR3_DMAR);
+
+#endif /* !USART_DMAREQUESTS_SW_WA */
           /* At end of Rx process, restore huart->RxState to Ready */
           huart->RxState = HAL_UART_STATE_READY;
           huart->ReceptionType = HAL_UART_RECEPTION_STANDARD;
@@ -2525,6 +2591,28 @@ void HAL_UART_IRQHandler(UART_HandleTypeDef *huart)
         /*Call legacy weak Rx Event callback*/
         HAL_UARTEx_RxEventCallback(huart, (huart->RxXferSize - huart->RxXferCount));
 #endif /* (USE_HAL_UART_REGISTER_CALLBACKS) */
+      }
+      else
+      {
+        /* If DMA is in Circular mode, Idle event is to be reported to user
+           even if occurring after a Transfer Complete event from DMA */
+        if (nb_remaining_rx_data == huart->RxXferSize)
+        {
+          if (huart->hdmarx->Mode == DMA_LINKEDLIST_CIRCULAR)
+          {
+            /* Initialize type of RxEvent that correspond to RxEvent callback execution;
+               In this case, Rx Event type is Idle Event */
+            huart->RxEventType = HAL_UART_RXEVENT_IDLE;
+
+#if (USE_HAL_UART_REGISTER_CALLBACKS == 1)
+            /*Call registered Rx Event callback*/
+            huart->RxEventCallback(huart, huart->RxXferSize);
+#else
+            /*Call legacy weak Rx Event callback*/
+            HAL_UARTEx_RxEventCallback(huart, huart->RxXferSize);
+#endif /* (USE_HAL_UART_REGISTER_CALLBACKS) */
+          }
+        }
       }
       return;
     }
@@ -3697,6 +3785,12 @@ static void UART_DMATransmitCplt(DMA_HandleTypeDef *hdma)
   {
     huart->TxXferCount = 0U;
 
+#if !defined(USART_DMAREQUESTS_SW_WA)
+    /* Disable the DMA transfer for transmit request by resetting the DMAT bit
+       in the UART CR3 register */
+    ATOMIC_CLEAR_BIT(huart->Instance->CR3, USART_CR3_DMAT);
+
+#endif /* !USART_DMAREQUESTS_SW_WA */
     /* Enable the UART Transmit Complete Interrupt */
     ATOMIC_SET_BIT(huart->Instance->CR1, USART_CR1_TCIE);
   }
@@ -3749,6 +3843,12 @@ static void UART_DMAReceiveCplt(DMA_HandleTypeDef *hdma)
     ATOMIC_CLEAR_BIT(huart->Instance->CR1, USART_CR1_PEIE);
     ATOMIC_CLEAR_BIT(huart->Instance->CR3, USART_CR3_EIE);
 
+#if !defined(USART_DMAREQUESTS_SW_WA)
+    /* Disable the DMA transfer for the receiver request by resetting the DMAR bit
+       in the UART CR3 register */
+    ATOMIC_CLEAR_BIT(huart->Instance->CR3, USART_CR3_DMAR);
+
+#endif /* !USART_DMAREQUESTS_SW_WA */
     /* At end of Rx process, restore huart->RxState to Ready */
     huart->RxState = HAL_UART_STATE_READY;
 
@@ -3875,7 +3975,6 @@ static void UART_DMAAbortOnError(DMA_HandleTypeDef *hdma)
 {
   UART_HandleTypeDef *huart = (UART_HandleTypeDef *)(hdma->Parent);
   huart->RxXferCount = 0U;
-  huart->TxXferCount = 0U;
 
 #if (USE_HAL_UART_REGISTER_CALLBACKS == 1)
   /*Call registered error callback*/
@@ -4547,6 +4646,7 @@ static void UART_RxISR_8BIT_FIFOEN(UART_HandleTypeDef *huart)
           HAL_UART_RxCpltCallback(huart);
 #endif /* USE_HAL_UART_REGISTER_CALLBACKS */
         }
+        break;
       }
     }
 
@@ -4711,6 +4811,7 @@ static void UART_RxISR_16BIT_FIFOEN(UART_HandleTypeDef *huart)
           HAL_UART_RxCpltCallback(huart);
 #endif /* USE_HAL_UART_REGISTER_CALLBACKS */
         }
+        break;
       }
     }
 

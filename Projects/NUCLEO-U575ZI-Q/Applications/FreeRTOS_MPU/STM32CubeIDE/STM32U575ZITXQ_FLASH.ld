@@ -35,16 +35,16 @@
 /* Entry Point */
 ENTRY(Reset_Handler)
 
-_estack = ORIGIN(RAM) + LENGTH(RAM);	/* end of "RAM" Ram type memory */
+_estack = ORIGIN(RAM) + LENGTH(RAM);    /* end of "RAM" Ram type memory */
 
-_Min_Heap_Size = 0x200;	/* required amount of heap  */
-_Min_Stack_Size = 0x400;	/* required amount of stack */
+_Min_Heap_Size = 0x200;  /* required amount of heap  */
+_Min_Stack_Size = 0x400; /* required amount of stack */
 
 /* Memories definition */
 MEMORY
 {
-  RAM	(xrw)	: ORIGIN = 0x20000000,	LENGTH = 192K
-  FLASH	(rx)	: ORIGIN = 0x8000000,	LENGTH = 2048K
+  RAM   (xrw)   : ORIGIN = 0x20000000,  LENGTH = 192K
+  FLASH (rx)    : ORIGIN = 0x8000000,   LENGTH = 2048K
 }
 
 /* Initial 32K Flash is used to store kernel functions and
@@ -59,13 +59,13 @@ __SRAM_segment_start__                = ORIGIN( RAM );
 __SRAM_segment_end__                  = __SRAM_segment_start__ + LENGTH( RAM );
 
 __privileged_functions_start__        = __FLASH_segment_start__;
-__privileged_functions_end__          = __FLASH_segment_start__ + __privileged_functions_region_size__;
+__privileged_functions_end__          = __FLASH_segment_start__ + __privileged_functions_region_size__ - 1;
 
 __privileged_sram_start__             = __SRAM_segment_start__;
-__privileged_sram_end__               = __SRAM_segment_start__ + __privileged_data_region_size__;
+__privileged_sram_end__               = __SRAM_segment_start__ + __privileged_data_region_size__ - 1;
 
-__unprivileged_flash_start__		  = 0x08008F00;
-__unprivileged_flash_end__			  = __FLASH_segment_end__;
+__unprivileged_flash_start__          = 0x08008F00;
+__unprivileged_flash_end__            = __FLASH_segment_end__;
 /* Sections */
 SECTIONS
 {

@@ -17,8 +17,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef STM32U5xx_HAL_CONF_H
-#define STM32U5xx_HAL_CONF_H
+#ifndef __STM32U5xx_HAL_CONF_H
+#define __STM32U5xx_HAL_CONF_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -502,5 +502,5 @@ void assert_failed(uint8_t *file, uint32_t line);
 }
 #endif
 
-#endif /* STM32U5xx_HAL_CONF_H */
+#endif /* __STM32U5xx_HAL_CONF_H */
 

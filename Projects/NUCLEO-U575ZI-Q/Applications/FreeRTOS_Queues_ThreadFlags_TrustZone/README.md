@@ -12,7 +12,7 @@ The application creates 4 Tasks and 1 Queue:
                       Toggles LED_GREEN
 
   - 'GenThread': Waits for the message on the queue to reach a specific "GenerationValue"
-                 Sets ReceiveThread' flag to 1
+                 Sets ReceiveThread flag to 1
 
   - 'ReceiveThread': Waits for the thread flag settings
                      Toggles SECURE LED_BLUE
@@ -47,7 +47,7 @@ Information about the application will be printed to the serial port.
 
 #### <b>Error behaviors</b>
 
-On failure, the Red Led is ON.
+On failure, the Red LED is ON.
 
 #### <b>Assumptions if any</b>
 None
@@ -86,15 +86,15 @@ Security, RTOS, FreeRTOS, TrustZone, Threading, GPIO, Message, Queues, ThreadFla
 ### <b>Hardware and Software environment</b>
 
   - This application runs on STM32U575xx devices with security enabled (TZEN=1).
-  - This application has been tested with STMicroelectronics NUCLEO-U575ZI board MB1549 Rev. C01
+  - This application has been tested with STMicroelectronics NUCLEO-U575ZI board MB1549 Rev.C01
     and can be easily tailored to any other supported device and development board.
 
   - This application uses USART1 to display logs, the hyperterminal configuration is as follows:
 
-      - BaudRate = 115200 baud
+      - BaudRate = 115200 Baud
       - Word Length = 8 Bits
       - Stop Bit = 1
-      - Parity = none
+      - Parity = None
       - Flow control = None
 
   - User Option Bytes requirement (with STM32CubeProgrammer tool)

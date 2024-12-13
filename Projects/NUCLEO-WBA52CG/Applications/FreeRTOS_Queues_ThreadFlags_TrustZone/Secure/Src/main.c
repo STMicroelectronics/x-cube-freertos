@@ -97,11 +97,12 @@ int main(void)
   MX_ICACHE_Init();
   /* USER CODE BEGIN 2 */
 
+  /* USER CODE END 2 */
+
   /* Secure SysTick should rather be suspended before calling non-secure  */
   /* in order to avoid wake-up from sleep mode entered by non-secure      */
   /* The Secure SysTick shall be resumed on non-secure callable functions */
   HAL_SuspendTick();
-  /* USER CODE END 2 */
 
   /*************** Setup and jump to non-secure *******************************/
 
@@ -281,6 +282,10 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* Infinite loop */
+  while (1)
+  {
+  }
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

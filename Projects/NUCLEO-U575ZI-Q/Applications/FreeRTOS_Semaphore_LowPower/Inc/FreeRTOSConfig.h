@@ -1,6 +1,6 @@
 /* USER CODE BEGIN Header */
 /*
- * FreeRTOS Kernel V10.5.1
+ * FreeRTOS Kernel V10.6.2
  * Portion Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  * Portion Copyright (C) 2019 StMicroelectronics, Inc.  All Rights Reserved.
  *
@@ -28,8 +28,8 @@
  */
 /* USER CODE END Header */
 
-#ifndef FREERTOS_CONFIG_H
-#define FREERTOS_CONFIG_H
+#ifndef __FREERTOS_CONFIG_H
+#define __FREERTOS_CONFIG_H
 
 /*-----------------------------------------------------------
  * Application specific definitions.
@@ -80,6 +80,7 @@ extern uint32_t SystemCoreClock;
 #define configQUEUE_REGISTRY_SIZE                8
 #define configUSE_RECURSIVE_MUTEXES              1
 #define configUSE_COUNTING_SEMAPHORES            1
+#define configENABLE_BACKWARD_COMPATIBILITY      0
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION  0
 #define configUSE_TICKLESS_IDLE                  1
 #define configUSE_TASK_NOTIFICATIONS             1
@@ -131,10 +132,10 @@ to exclude the API function. */
 
 /* Cortex-M specific definitions. */
 #ifdef __NVIC_PRIO_BITS
- /* __BVIC_PRIO_BITS will be specified when CMSIS is being used. */
- #define configPRIO_BITS         __NVIC_PRIO_BITS
+/* __BVIC_PRIO_BITS will be specified when CMSIS is being used. */
+#define configPRIO_BITS         __NVIC_PRIO_BITS
 #else
- #define configPRIO_BITS         4
+#define configPRIO_BITS         4
 #endif
 
 /* The lowest interrupt priority that can be used in a call to a "set priority"
@@ -183,4 +184,4 @@ placed into the low power state respectively. */
 #define configPOST_SLEEP_PROCESSING                       PostSleepProcessing
 #endif /* configUSE_TICKLESS_IDLE == 1 */
 
-#endif /* FREERTOS_CONFIG_H */
+#endif /* __FREERTOS_CONFIG_H */

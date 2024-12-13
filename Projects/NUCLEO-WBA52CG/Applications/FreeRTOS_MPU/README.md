@@ -25,7 +25,7 @@ avoid further exceptions.
 
 #### <b>Expected success behavior</b>
 
-Successful operation is marked by a toggling green led light.
+Successful operation is marked by a toggling green LED light.
 The blue LED will toggle `EXAMPLE_FAULT_COUNT_THRESHOLD` times.
 
 Information about the faults will be printed to the serial port.
@@ -35,12 +35,15 @@ Information about the faults will be printed to the serial port.
 On failure, the red LED starts toggling while the green LED and blue LED are switched OFF.
 
 #### <b>Assumptions if any</b>
+
 None
 
 #### <b>Known limitations</b>
+
 None
 
 ### <b>Notes</b>
+
 1- When used with the MPU, FreeRTOS requires various regions to be defined in the linker file.
 For more information, refer to the linker files in the example as well as the FreeRTOS Documentation/Blog:
 
@@ -50,6 +53,7 @@ For more information, refer to the linker files in the example as well as the Fr
 In particular, unprivileged task stacks must comply with these requirements.
 
 #### <b>FreeRTOS usage hints</b>
+
 The FreeRTOS heap size configTOTAL_HEAP_SIZE defined in FreeRTOSConfig.h is set accordingly to the
 OS resources memory requirements of the application with +10% margin and rounded to the upper Kbyte boundary.
 
@@ -68,12 +72,11 @@ FreeRTOS, RTOS, MPU, Threading
 
   - This application uses USART1 to display logs, the hyperterminal configuration is as follows:
 
-      - BaudRate = 115200 baud
-      - Word Length = 8 Bits
-      - Stop Bit = 1
-      - Parity = none
-      - Flow control = None
-
+    - BaudRate = 115200 baud
+    - Word Length = 8 Bits
+    - Stop Bit = 1
+    - Parity = None
+    - Flow control = None
 
 ### <b>How to use it ?</b>
 

@@ -110,7 +110,7 @@ int main(void)
   /* Init scheduler */
   osKernelInitialize();
 
-  /* Call init function for freertos objects (in cmsis_os2.c) */
+  /* Call init function for freertos objects (in app_freertos.c) */
   MX_FREERTOS_Init();
 
   /* Start scheduler */
@@ -137,6 +137,8 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+
+  __HAL_FLASH_SET_LATENCY(FLASH_LATENCY_1);
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
@@ -238,7 +240,7 @@ static void MX_GPIO_Init(void)
 PUTCHAR_PROTOTYPE
 {
   /* Place your implementation of fputc here */
-  /* e.g. write a character to the USART1 and Loop until the end of transmission */
+  /* e.g. write a character to the USART2 and Loop until the end of transmission */
   HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
 
   return ch;
@@ -299,6 +301,10 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* Infinite loop */
+  while(1)
+  {
+  }
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

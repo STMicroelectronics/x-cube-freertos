@@ -11,5 +11,9 @@
 | STM32C0xx HAL                   | STMicroelectronics                                    | BSD-3-Clause |
 | STM32U0xx CMSIS                 | ARM Limited - STMicroelectronics                      | Apache-2.0 |
 | STM32U0xx HAL                   | STMicroelectronics                                    | BSD-3-Clause |
+| STM32U3xx CMSIS                 | ARM Limited - STMicroelectronics                      | Apache-2.0 |
+| STM32U3xx HAL                   | STMicroelectronics                                    | BSD-3-Clause |
+| STM32N6xx CMSIS                 | ARM Limited - STMicroelectronics                      | Apache-2.0 |
+| STM32N6xx HAL                   | STMicroelectronics                                    | BSD-3-Clause |
 | Application Projects            | STMicroelectronics                                    | SLA0044  |
 | FreeRTOS kernel                 | Amazon.com, Inc. or its affiliates                    | MIT          |

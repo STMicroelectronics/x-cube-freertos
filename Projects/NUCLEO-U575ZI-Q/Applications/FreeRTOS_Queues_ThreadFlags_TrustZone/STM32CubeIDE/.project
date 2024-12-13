@@ -16,14 +16,49 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>FreeRTOS_Queues_ThreadFlags_TrustZone.ioc</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/FreeRTOS_Queues_ThreadFlags_TrustZone.ioc</locationURI>
-		</link>
-		<link>
 			<name>Doc/README.md</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/README.md</locationURI>
+		</link>
+		<link>
+			<name>Application/User/app_freertos.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/NonSecure/Src/app_freertos.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/main.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/NonSecure/Src/main.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/secure_nsc.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Secure/Src/secure_nsc.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/stm32u5xx_hal_msp.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Secure/Src/stm32u5xx_hal_msp.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/stm32u5xx_hal_timebase_tim.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/NonSecure/Src/stm32u5xx_hal_timebase_tim.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/stm32u5xx_it.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/NonSecure/Src/stm32u5xx_it.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/CMSIS/system_stm32u5xx_ns.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/NonSecure/Src/system_stm32u5xx_ns.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/CMSIS/system_stm32u5xx_s.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Secure/Src/system_stm32u5xx_s.c</locationURI>
 		</link>
 		<link>
 			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_hal.c</name>
@@ -114,6 +149,91 @@
 			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_hal_tim_ex.c</name>
 			<type>1</type>
 			<locationURI>PARENT-5-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_tim_ex.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_hal_uart.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_uart.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_hal_uart_ex.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_uart_ex.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/RTOS2/CMSIS/RTOS2/Core/TZ_Non_Secure/cmsis_os2.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/RTOS2/CMSIS/RTOS2/Core/TZ_Non_Secure/croutine.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/croutine.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/RTOS2/CMSIS/RTOS2/Core/TZ_Non_Secure/event_groups.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/RTOS2/CMSIS/RTOS2/Core/TZ_Non_Secure/list.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/list.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/RTOS2/CMSIS/RTOS2/Core/TZ_Non_Secure/port.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33/non_secure/port.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/RTOS2/CMSIS/RTOS2/Core/TZ_Non_Secure/portasm.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33/non_secure/portasm.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/RTOS2/CMSIS/RTOS2/Core/TZ_Non_Secure/queue.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/queue.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/RTOS2/CMSIS/RTOS2/Core/TZ_Non_Secure/stream_buffer.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/RTOS2/CMSIS/RTOS2/Core/TZ_Non_Secure/tasks.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/tasks.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/RTOS2/CMSIS/RTOS2/Core/TZ_Non_Secure/timers.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/timers.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/RTOS2/CMSIS/RTOS2/Core/TZ_Secure/secure_context.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33/secure/secure_context.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/RTOS2/CMSIS/RTOS2/Core/TZ_Secure/secure_context_port.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33/secure/secure_context_port.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/RTOS2/CMSIS/RTOS2/Core/TZ_Secure/secure_heap.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33/secure/secure_heap.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/RTOS2/CMSIS/RTOS2/Core/TZ_Secure/secure_init.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33/secure/secure_init.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/RTOS2/CMSIS/RTOS2/Heap/Heap_4/heap_4.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

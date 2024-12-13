@@ -39,7 +39,7 @@ to a shared resource.</p>
 <p>The mutex is created before the threads using it are scheduled. Each
 thread will try to acquire it before outputting characters to the serial
 port. Once the mutex is acquired, the thread will proceed to printing
-its message, and then immediately releases it.</p>
+its message, then immediately releases it.</p>
 <p>If the mutex is not used, the two threads will try to use “printf” at
 almost the same time. This will result in either thread winning over the
 other or both threads interrupting each other.</p>
@@ -81,10 +81,10 @@ other supported device and development board.</p></li>
 <li><p>This application uses USART1 to display output, the hyperterminal
 configuration is as follows:</p>
 <ul>
-<li>BaudRate = 115200 baud</li>
+<li>BaudRate = 115200 Baud</li>
 <li>Word Length = 8 Bits</li>
 <li>Stop Bit = 1</li>
-<li>Parity = none</li>
+<li>Parity = None</li>
 <li>Flow control = None</li>
 </ul></li>
 </ul>

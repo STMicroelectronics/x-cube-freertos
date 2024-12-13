@@ -14,10 +14,6 @@ define symbol __ICFEDIT_size_cstack__ = 0x400;
 define symbol __ICFEDIT_size_heap__   = 0x200;
 /**** End of ICF editor section. ###ICF###*/
 
-
-
-
-
 /* Flash Organization
  *  1. Privileged Code:
  *      Start   : 0x08000000

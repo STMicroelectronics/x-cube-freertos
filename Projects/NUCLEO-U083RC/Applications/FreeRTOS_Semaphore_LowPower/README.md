@@ -51,7 +51,7 @@ FreeRTOS, RTOS, LowPower, EXTI, Semaphore, Threading
       - BaudRate = 115200 baud
       - Word Length = 8 Bits
       - Stop Bit = 1
-      - Parity = none
+      - Parity = None
       - Flow control = None
 
 

@@ -15,7 +15,7 @@
   *******************************************************************************
   * @attention
   *
-  * Copyright (c) 2022 STMicroelectronics.
+  * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -118,6 +118,7 @@ Infinite_Loop:
 ******************************************************************************/
    .section .isr_vector,"a",%progbits
   .type g_pfnVectors, %object
+  .size g_pfnVectors, .-g_pfnVectors
 
 
 g_pfnVectors:
@@ -169,8 +170,6 @@ g_pfnVectors:
   .word  0                                 /* reserved                     */
   .word  0                                 /* reserved                     */
   .word  0                                 /* reserved                     */
-
-  .size g_pfnVectors, .-g_pfnVectors
 /*******************************************************************************
 *
 * Provide weak aliases for each Exception handler to the Default_Handler.

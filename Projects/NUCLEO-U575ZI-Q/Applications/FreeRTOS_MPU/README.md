@@ -25,14 +25,14 @@ avoid further exceptions.
 
 #### <b>Expected success behavior</b>
 
-Successful operation is marked by a toggling green led light.
+Successful operation is marked by a toggling green LED light.
 The blue LED will toggle `EXAMPLE_FAULT_COUNT_THRESHOLD` times.
 
 Information about the faults will be printed to the serial port.
 
 #### <b>Error behaviors</b>
 
-On failure, the red led is ON.
+On failure, the red LED is ON.
 
 #### <b>Assumptions if any</b>
 None
@@ -63,15 +63,15 @@ FreeRTOS, RTOS, MPU, Threading
 ### <b>Hardware and Software environment</b>
 
   - This application runs on STM32U575xx devices.
-  - This application has been tested with STMicroelectronics NUCLEO-U575ZI board MB1549 Rev. C01
+  - This application has been tested with STMicroelectronics NUCLEO-U575ZI board MB1549 Rev.C01
     and can be easily tailored to any other supported device and development board.
 
   - This application uses USART1 to display logs, the hyperterminal configuration is as follows:
 
-      - BaudRate = 115200 baud
+      - BaudRate = 115200 Baud
       - Word Length = 8 Bits
       - Stop Bit = 1
-      - Parity = none
+      - Parity = None
       - Flow control = None
 
 

@@ -5,7 +5,7 @@
 ;*                      This module performs:
 ;*                      - Set the initial SP
 ;*                      - Set the initial PC == __iar_program_start,
-;*                      - Set the vector table entries with the exceptions ISR 
+;*                      - Set the vector table entries with the exceptions ISR
 ;*                        address
 ;*                      - Branches to main in the C library (which eventually
 ;*                        calls main()).
@@ -14,7 +14,7 @@
 ;******************************************************************************
 ;* @attention
 ;*
-;* Copyright (c) 2022 STMicroelectronics.
+;* Copyright (c) 2023 STMicroelectronics.
 ;* All rights reserved.
 ;*
 ;* This software is licensed under terms that can be found in the LICENSE file

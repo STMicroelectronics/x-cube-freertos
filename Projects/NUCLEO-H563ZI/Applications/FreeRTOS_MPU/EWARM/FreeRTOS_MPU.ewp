@@ -592,7 +592,7 @@
                 </option>
                 <option>
                     <name>AOutputFile</name>
-                    <state></state>
+                    <state>$FILE_BNAME$.o</state>
                 </option>
                 <option>
                     <name>ALimitErrorsCheck</name>
@@ -609,6 +609,7 @@
                 <option>
                     <name>AUserIncludes</name>
                     <state>$PROJ_DIR$/../Inc</state>
+                    <state>$PROJ_DIR$/../../../../../Middlewares/Third_Party/FreeRTOS/Source/include</state>
                 </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>
@@ -990,7 +991,7 @@
                 </option>
                 <option>
                     <name>IlinkTrustzoneImportLibraryOut</name>
-                    <state></state>
+                    <state>FreeRTOS_MPU_import_lib.o</state>
                 </option>
                 <option>
                     <name>OILinkExtraOption</name>
@@ -1185,6 +1186,18 @@
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\Common\mpu_wrappers.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\Common\mpu_wrappers_v2.c</name>
+                    <excluded>
+                        <configuration>FreeRTOS_MPU</configuration>
+                    </excluded>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM33_NTZ\non_secure\mpu_wrappers_v2_asm.S</name>
+                    <excluded>
+                        <configuration>FreeRTOS_MPU</configuration>
+                    </excluded>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM33_NTZ\non_secure\port.c</name>

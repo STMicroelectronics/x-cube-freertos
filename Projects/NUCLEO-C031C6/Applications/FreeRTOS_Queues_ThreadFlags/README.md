@@ -18,24 +18,28 @@ The application creates 4 Tasks and 1 Queue:
 
 #### <b>Expected success behavior</b>
 
-Successful operation is marked by turning on Green LED.
+Successful operation is marked by turning ON Green LED.
 
 Information about the application will be printed to the serial port.
 
 #### <b>Error behaviors</b>
 
-On failure, the green LED is turned off and an error message is printed to the serial port.
+On failure, the green LED is turned OFF and an error message is printed to the serial port.
 
 #### <b>Assumptions if any</b>
+
 None
 
 #### <b>Known limitations</b>
+
 None
 
 ### <b>Notes</b>
+
 None
 
 #### <b>FreeRTOS usage hints</b>
+
 The FreeRTOS heap size configTOTAL_HEAP_SIZE defined in FreeRTOSConfig.h is set accordingly to the
 OS resources memory requirements of the application with +10% margin and rounded to the upper Kbyte boundary.
 
@@ -49,17 +53,16 @@ FreeRTOS, Threading, GPIO, Message, Queues, ThreadFlags
 ### <b>Hardware and Software environment</b>
 
   - This application runs on STM32C031C6Tx devices.
-  - This application has been tested with STMicroelectronics NUCLEO-C031C6 board MB1717 Rev. B01
+  - This application has been tested with STMicroelectronics NUCLEO-C031C6 board MB1717 Rev. B02
     and can be easily tailored to any other supported device and development board.
 
   - This application uses USART2 to display output, the hyperterminal configuration is as follows:
 
-      - BaudRate = 115200 baud
-      - Word Length = 8 Bits
-      - Stop Bit = 1
-      - Parity = none
-      - Flow control = None
-
+    - BaudRate = 115200 baud
+    - Word Length = 8 Bits
+    - Stop Bit = 1
+    - Parity = None
+    - Flow control = None
 
 ### <b>How to use it ?</b>
 

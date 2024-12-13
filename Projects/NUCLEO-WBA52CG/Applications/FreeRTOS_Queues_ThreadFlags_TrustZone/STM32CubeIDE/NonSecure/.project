@@ -107,31 +107,6 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32WBAxx_HAL_Driver/Src/stm32wbaxx_hal_gpio.c</locationURI>
 		</link>
 		<link>
-			<name>Drivers/STM32WBAxx_HAL_Driver/stm32wbaxx_hal_gtzc.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32WBAxx_HAL_Driver/Src/stm32wbaxx_hal_gtzc.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32WBAxx_HAL_Driver/stm32wbaxx_hal_hsem.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32WBAxx_HAL_Driver/Src/stm32wbaxx_hal_hsem.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32WBAxx_HAL_Driver/stm32wbaxx_hal_i2c.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32WBAxx_HAL_Driver/Src/stm32wbaxx_hal_i2c.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32WBAxx_HAL_Driver/stm32wbaxx_hal_i2c_ex.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32WBAxx_HAL_Driver/Src/stm32wbaxx_hal_i2c_ex.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32WBAxx_HAL_Driver/stm32wbaxx_hal_icache.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32WBAxx_HAL_Driver/Src/stm32wbaxx_hal_icache.c</locationURI>
-		</link>
-		<link>
 			<name>Drivers/STM32WBAxx_HAL_Driver/stm32wbaxx_hal_pwr.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32WBAxx_HAL_Driver/Src/stm32wbaxx_hal_pwr.c</locationURI>

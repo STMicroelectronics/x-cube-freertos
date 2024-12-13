@@ -31,7 +31,13 @@ extern "C" {
   * @{
   */
 
-#if defined (TIM1) || defined (TIM2) || defined (TIM3) || defined (TIM6) ||  defined (TIM7) || defined (TIM15) || defined (TIM16)
+#if defined (TIM1)  \
+ || defined (TIM2)  \
+ || defined (TIM3)  \
+ || defined (TIM6)  \
+ || defined (TIM7)  \
+ || defined (TIM15) \
+ || defined (TIM16)
 
 /** @defgroup TIM_LL TIM
   * @{

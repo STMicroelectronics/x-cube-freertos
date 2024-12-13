@@ -881,6 +881,7 @@ uint32_t LL_RCC_GetADCClockFreq(uint32_t ADCxSource)
           adc_frequency = RCC_PLL_GetFreqDomain_PLLP();
         }
       }
+      break;
     case LL_RCC_ADC_CLKSOURCE_NONE:          /* No clock used as ADC clock source */
       adc_frequency = LL_RCC_PERIPH_FREQUENCY_NO;
       break;

@@ -123,10 +123,10 @@ void MX_FREERTOS_Init(void) {
 }
 /* USER CODE BEGIN Header_Thread1_Entry */
 /**
-* @brief Function implementing the Thread1 thread.
-* @param argument: Not used
-* @retval None
-*/
+  * @brief Function implementing the Thread1 thread.
+  * @param argument: Not used
+  * @retval None
+  */
 /* USER CODE END Header_Thread1_Entry */
 void Thread1_Entry(void *argument)
 {
@@ -161,10 +161,10 @@ void Thread1_Entry(void *argument)
 
 /* USER CODE BEGIN Header_Thread2_Entry */
 /**
-* @brief Function implementing the Thread2 thread.
-* @param argument: Not used
-* @retval None
-*/
+  * @brief Function implementing the Thread2 thread.
+  * @param argument: Not used
+  * @retval None
+  */
 /* USER CODE END Header_Thread2_Entry */
 void Thread2_Entry(void *argument)
 {
@@ -175,15 +175,15 @@ void Thread2_Entry(void *argument)
   for(i = 0; i < 10; ++i)
   {
     #if EXAMPLE_USES_MUTEX
-      osMutexAcquire(MutexHandle, osWaitForever);
-      printf ("Thread2: Mutex Acquired!\n");
+    osMutexAcquire(MutexHandle, osWaitForever);
+    printf ("Thread2: Mutex Acquired!\n");
     #endif
 
     printf("Thread2 : This is message number %u\n", i+1);
 
     #if EXAMPLE_USES_MUTEX
-      printf ("Thread2: Mutex Released!\n");
-      osMutexRelease(MutexHandle);
+    printf ("Thread2: Mutex Released!\n");
+    osMutexRelease(MutexHandle);
     #endif
 
     HAL_GPIO_TogglePin(LED_BLUE_GPIO_Port, LED_BLUE_Pin);

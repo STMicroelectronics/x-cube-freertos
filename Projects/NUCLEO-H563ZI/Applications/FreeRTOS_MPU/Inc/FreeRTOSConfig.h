@@ -1,6 +1,6 @@
 /* USER CODE BEGIN Header */
 /*
- * FreeRTOS Kernel V10.5.1
+ * FreeRTOS Kernel V10.6.2
  * Portion Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  * Portion Copyright (C) 2019 StMicroelectronics, Inc.  All Rights Reserved.
  *
@@ -28,8 +28,8 @@
  */
 /* USER CODE END Header */
 
-#ifndef FREERTOS_CONFIG_H
-#define FREERTOS_CONFIG_H
+#ifndef __FREERTOS_CONFIG_H
+#define __FREERTOS_CONFIG_H
 
 /*-----------------------------------------------------------
  * Application specific definitions.
@@ -57,6 +57,9 @@ extern uint32_t SystemCoreClock;
 #endif /* CMSIS_device_header */
 
 /*-------------------- STM32H5 specific defines -------------------*/
+
+#define configUSE_MPU_WRAPPERS_V1                1
+
 #define configENABLE_TRUSTZONE                   0
 #define configRUN_FREERTOS_SECURE_ONLY           0
 #define configENABLE_FPU                         0
@@ -166,4 +169,4 @@ header file. */
 /* Section where parameter definitions can be added (for instance, to override default ones in FreeRTOS.h) */
 /* USER CODE END Defines */
 
-#endif /* FREERTOS_CONFIG_H */
+#endif /* __FREERTOS_CONFIG_H */

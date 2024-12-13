@@ -113,7 +113,7 @@
 
 /* Definitions for GTZC TZSC & TZIC ALL register values */
 /* TZSC1 / TZIC1 instances */
-#if defined (STM32WBA54xx) || defined (STM32WBA55xx)
+#if defined (STM32WBA54xx) || defined (STM32WBA55xx) || defined(STM32WBA5Mxx)
 #define TZSC1_SECCFGR1_ALL       (0x000222C3UL)
 #define TZSC1_SECCFGR2_ALL       (0x018F00EBUL)
 #define TZSC1_SECCFGR3_ALL       (0x01C17858UL)
@@ -123,7 +123,7 @@
 #define TZSC1_SECCFGR2_ALL       (0x010F006BUL)
 #define TZSC1_SECCFGR3_ALL       (0x00C17858UL)
 #define TZIC1_IER4_ALL           (0xC3C0EF87UL)
-#endif /* STM32WBA54xx || STM32WBA55xx */
+#endif /* STM32WBA54xx || STM32WBA55xx || STM32WBA5Mxx */
 
 #define TZSC1_PRIVCFGR1_ALL      TZSC1_SECCFGR1_ALL
 #define TZSC1_PRIVCFGR2_ALL      TZSC1_SECCFGR2_ALL
@@ -1287,7 +1287,7 @@ HAL_StatusTypeDef HAL_GTZC_TZIC_GetFlag(uint32_t PeriphId, uint32_t *pFlag)
     }
 
     reg_value = READ_REG(GTZC_TZIC->SR4);
-    for (i = 96U; i < 128U; i++)
+    for (i = 96U; i < GTZC_TZIC_PERIPH_NUMBER; i++)
     {
       pFlag[i] = (reg_value & (1UL << (i - 96U))) >> (i - 96U);
     }

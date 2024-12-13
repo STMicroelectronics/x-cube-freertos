@@ -35,15 +35,19 @@ The yellow LED and green LED will toggle every second.
 On failure, the red LED is ON.
 
 #### <b>Assumptions if any</b>
+
 None
 
 #### <b>Known limitations</b>
+
 None
 
 ### <b>Notes</b>
+
 None
 
 #### <b>FreeRTOS usage hints</b>
+
 The FreeRTOS heap size configTOTAL_HEAP_SIZE defined in FreeRTOSConfig.h is set accordingly to the
 OS resources memory requirements of the application with +10% margin and rounded to the upper Kbyte boundary.
 
@@ -57,17 +61,16 @@ FreeRTOS, Mutex
 ### <b>Hardware and Software environment</b>
 
   - This application runs on STM32H563xx devices.
-  - This application has been tested with STMicroelectronics NUCLEO-H563ZI board MB1404 Rev. B02
+  - This application has been tested with STMicroelectronics NUCLEO-H563ZI board MB1404 Rev. C01
     and can be easily tailored to any other supported device and development board.
 
   - This application uses USART3 to display output, the hyperterminal configuration is as follows:
 
-      - BaudRate = 115200 baud
-      - Word Length = 8 Bits
-      - Stop Bit = 1
-      - Parity = none
-      - Flow control = None
-
+    - BaudRate = 115200 baud
+    - Word Length = 8 Bits
+    - Stop Bit = 1
+    - Parity = None
+    - Flow control = None
 
 ### <b>How to use it ?</b>
 

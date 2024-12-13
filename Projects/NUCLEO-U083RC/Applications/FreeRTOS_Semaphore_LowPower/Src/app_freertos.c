@@ -124,10 +124,10 @@ void MX_FREERTOS_Init(void) {
 }
 /* USER CODE BEGIN Header_MainThread_Entry */
 /**
-* @brief Function implementing the MainThread thread.
-* @param argument: Not used
-* @retval None
-*/
+  * @brief Function implementing the MainThread thread.
+  * @param argument: Not used
+  * @retval None
+  */
 /* USER CODE END Header_MainThread_Entry */
 void MainThread_Entry(void *argument)
 {

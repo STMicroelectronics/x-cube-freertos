@@ -1,6 +1,6 @@
 # STM32CubeU0 CMSIS Device MCU Component
 
-![latest tag](https://img.shields.io/github/v/tag/STMicroelectronics/cmsis_device_h5.svg?color=brightgreen)
+![latest tag](https://img.shields.io/github/v/tag/STMicroelectronics/cmsis_device_u0.svg?color=brightgreen)
 
 ## Overview
 
@@ -23,15 +23,13 @@ This **cmsis_device_u0** MCU component repo is one element of the STM32CubeU0 MC
 
 ## Release note
 
+Details about the content of this release are available in the release note [here](https://htmlpreview.github.io/?https://github.com/STMicroelectronics/cmsis_device_u0/blob/main/Release_Notes.html).
 
 ## Compatibility information
 
-In this table, you can find the successive versions of this CMSIS Device component, in-line with the corresponding versions of the full MCU package:
+It is **crucial** that you use a consistent set of versions for the CMSIS Core - CMSIS Device, as mentioned in [this](https://htmlpreview.github.io/?https://github.com/STMicroelectronics/STM32CubeU0/blob/main/Release_Notes.html) release note.
 
-CMSIS Device U0 | CMSIS Core      | Was delivered in the full MCU package
---------------- | --------------- | -------------------------------------
-Tag v1.0.0      | Tag v5.9.0      | Tag v1.0.0 (and following, if any, till next CMSIS tag)
-
+The full **STM32CubeU0** MCU package is available [here](https://github.com/STMicroelectronics/STM32CubeU0).
 
 
 ## Troubleshooting

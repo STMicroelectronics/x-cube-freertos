@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<ProjectWorkspace xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_mpw.xsd">
+
+  <SchemaVersion>1.0</SchemaVersion>
+
+  <Header>### uVision Project, (C) Keil Software</Header>
+
+  <WorkspaceName>FreeRTOS_Queues_ThreadFlags_TrustZone</WorkspaceName>
+
+  <project>
+    <PathAndName>.\FSBL\FSBL.uvprojx</PathAndName>
+    <NodeIsActive>1</NodeIsActive>
+  </project>
+
+  <project>
+    <PathAndName>.\AppliSecure\FreeRTOS_Queues_ThreadFlags_TrustZone_s.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\AppliNonSecure\FreeRTOS_Queues_ThreadFlags_TrustZone_ns.uvprojx</PathAndName>
+  </project>
+
+</ProjectWorkspace>

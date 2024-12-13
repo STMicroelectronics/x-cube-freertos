@@ -60,10 +60,10 @@ __SRAM_segment_start__                = ORIGIN( RAM );
 __SRAM_segment_end__                  = __SRAM_segment_start__ + LENGTH( RAM );
 
 __privileged_functions_start__        = __FLASH_segment_start__;
-__privileged_functions_end__          = __FLASH_segment_start__ + __privileged_functions_region_size__;
+__privileged_functions_end__          = __FLASH_segment_start__ + __privileged_functions_region_size__ - 1;
 
 __privileged_sram_start__             = __SRAM_segment_start__;
-__privileged_sram_end__               = __SRAM_segment_start__ + __privileged_data_region_size__;
+__privileged_sram_end__               = __SRAM_segment_start__ + __privileged_data_region_size__ - 1;
 
 __unprivileged_flash_start__	      = 0x08009000;
 __unprivileged_flash_end__	      = __FLASH_segment_end__;

@@ -42,9 +42,9 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 {
   RCC_ClkInitTypeDef    clkconfig;
   uint32_t              uwTimclock, uwAPB1Prescaler;
-
   uint32_t              uwPrescalerValue;
   uint32_t              pFLatency;
+
   HAL_StatusTypeDef     status;
 
   /* Enable TIM6 clock */

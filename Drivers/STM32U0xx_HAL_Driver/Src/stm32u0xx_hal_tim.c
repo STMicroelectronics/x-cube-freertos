@@ -4586,7 +4586,6 @@ HAL_StatusTypeDef HAL_TIM_DMABurst_WriteStart(TIM_HandleTypeDef *htim, uint32_t 
                                             ((BurstLength) >> 8U) + 1U);
 
 
-
   return status;
 }
 

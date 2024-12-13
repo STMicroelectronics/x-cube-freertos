@@ -29,10 +29,10 @@
 /* USER CODE BEGIN PTD */
 typedef struct
 {
-  uint32_t      address;
-  uint32_t      handle;
-  uint32_t      psp;
-}FaultInfo_t;
+  uint32_t address;
+  uint32_t handle;
+  uint32_t psp;
+} FaultInfo_t;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -181,57 +181,28 @@ void MX_FREERTOS_Init(void) {
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
 /**
-* @brief Function implementing the MainTask thread.
-*        It is responsible for montitoring other threads.
-* @param argument: Not used
-* @retval None
-*/
+  * @brief Function implementing the MainTask thread.
+  *        It is responsible for montitoring other threads.
+  * @param argument: Not used
+  * @retval None
+  */
 void MainTask(void *argument)
 {
   UNUSED(argument);
 
   FaultInfo_t fault;
-  uint8_t nextInstructionOffset = 2U;
-  uint32_t* returnAddress;
-  uint16_t instruction;
 
   for(;;)
   {
     xQueueReceive(fault_queue, &fault, portMAX_DELAY);
+
+    printf("\tTask name: %s\n", pcTaskGetName((TaskHandle_t) fault.handle));
 
     printf("------------------------------\n");
 
     /* Handle MPU exceptions */
     for(int i = 0; i < NUMBER_OF_TASKS; ++i)
     {
-      if((TaskHandle_t)fault.handle == TaskHandles[i])
-      {
-        /* Increment fault count for task */
-        ++fault_count[i];
-
-        /* Display info about fault */
-        printf("MemManage fault occurred\r\n");
-        printf("\tAddress: 0x%X\n", (unsigned int) fault.address);
-        printf("\tTask name: %s\n", pcTaskGetName((TaskHandle_t) fault.handle));
-
-        returnAddress = (uint32_t*)fault.psp + RETURN_ADDRESS_OFFSET;
-
-        /* Identify if the instruction which caused the issue
-         *is 16 or 32 bit wide */
-        instruction = *(uint16_t*)(*(uint32_t*)returnAddress);
-        if((instruction & INSTRUCTION_32BIT_Msk) == INSTRUCTION_32BIT_Msk)
-        {
-            nextInstructionOffset = 4U;
-        }
-        else
-        {
-            nextInstructionOffset = 2U;
-        }
-
-        /* Move to next instruction */
-        *returnAddress += nextInstructionOffset;
-
-
         /* Delete task if it has caused too many faults*/
         if(fault_count[i] == EXAMPLE_FAULT_COUNT_THRESHOLD)
         {
@@ -241,18 +212,14 @@ void MainTask(void *argument)
                   pcTaskGetName(TaskHandles[i]),
                   EXAMPLE_FAULT_COUNT_THRESHOLD);
         }
-        break;
-      }
     }
-    printf("------------------------------\n");
   }
 }
-
 /**
-* @brief Function implementing the Task1 thread.
-* @param argument: Not used
-* @retval None
-*/
+  * @brief Function implementing the Task1 thread.
+  * @param argument: Not used
+  * @retval None
+  */
 void Task1(void *argument)
 {
   UNUSED(argument);
@@ -274,10 +241,10 @@ void Task1(void *argument)
 }
 
 /**
-* @brief Function implementing the Task2 thread.
-* @param argument: Not used
-* @retval None
-*/
+  * @brief Function implementing the Task2 thread.
+  * @param argument: Not used
+  * @retval None
+  */
 void Task2(void *argument)
 {
   UNUSED(argument);
@@ -293,19 +260,22 @@ void Task2(void *argument)
   }
 }
 
-
 /* We need to use the original FreeRTOS xTaskGetCurrentTaskHandle
  * function instead of the one defined in mpu_wrapper.c */
 #undef xTaskGetCurrentTaskHandle
 TaskHandle_t xTaskGetCurrentTaskHandle( void );
 
 /**
-* @brief MemManage fault receovery
-* @retval None
-*/
+  * @brief MemManage fault recovery
+  * @retval None
+  */
 void MemManage_Recover(void)
 {
   FaultInfo_t current_fault;
+
+  uint8_t nextInstructionOffset = 2U;
+  uint32_t* returnAddress;
+  uint16_t instruction;
 
   /* Log the offending thread */
   current_fault.address  = SCB->MMFAR;
@@ -318,6 +288,39 @@ void MemManage_Recover(void)
    * the MMFAR register.*/
   SET_BIT(SCB->CFSR,SCB_CFSR_DACCVIOL_Msk);
 
+  for(int i = 0; i < NUMBER_OF_TASKS; ++i)
+    {
+      if((TaskHandle_t)current_fault.handle == TaskHandles[i])
+      {
+        /* Increment fault count for task */
+        ++fault_count[i];
+
+        /* Display info about fault */
+        printf("MemManage fault occurred\r\n");
+        printf("\tAddress: 0x%X\n", (unsigned int) current_fault.address);
+        printf("\tCurrent Task Handle: %p\n", xTaskGetCurrentTaskHandle());
+
+        returnAddress = (uint32_t*)current_fault.psp + RETURN_ADDRESS_OFFSET;
+
+        /* Identify if the instruction which caused the issue
+         *is 16 or 32 bit wide */
+        instruction = *(uint16_t*)(*(uint32_t*)returnAddress);
+        if((instruction & INSTRUCTION_32BIT_Msk) == INSTRUCTION_32BIT_Msk)
+        {
+            nextInstructionOffset = 4U;
+        }
+        else
+        {
+            nextInstructionOffset = 2U;
+        }
+
+        /* Move to next instruction */
+        *returnAddress += nextInstructionOffset;
+
+        break;
+      }
+    }
+
   /* Send Fault info to Main task */
   xQueueSendToBackFromISR(fault_queue, &current_fault, NULL);
 
@@ -328,4 +331,3 @@ void MemManage_Recover(void)
 }
 
 /* USER CODE END Application */
-

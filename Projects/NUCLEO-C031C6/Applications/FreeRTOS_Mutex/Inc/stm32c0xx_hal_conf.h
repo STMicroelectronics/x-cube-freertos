@@ -9,7 +9,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -20,8 +20,8 @@
   */
 /* USER CODE END Header */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef STM32C0xx_HAL_CONF_H
-#define STM32C0xx_HAL_CONF_H
+#ifndef __STM32C0xx_HAL_CONF_H
+#define __STM32C0xx_HAL_CONF_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -59,7 +59,6 @@ extern "C" {
 #define HAL_FLASH_MODULE_ENABLED
 #define HAL_PWR_MODULE_ENABLED
 #define HAL_CORTEX_MODULE_ENABLED
-
 /* ########################## Register Callbacks selection ############################## */
 /**
   * @brief Set below the peripheral configuration  to "1U" to add the support
@@ -270,6 +269,6 @@ void assert_failed(uint8_t *file, uint32_t line);
 }
 #endif
 
-#endif /* STM32C0xx_HAL_CONF_H */
+#endif /* __STM32C0xx_HAL_CONF_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -91,9 +91,10 @@ const osMessageQueueAttr_t osQueue_attributes = {
   * @param  None
   * @retval None
   */
-void MX_FREERTOS_Init(void) {
+void MX_FREERTOS_Init(void)
+{
   /* USER CODE BEGIN Init */
-  printf("/************ FreeRTOS_Queues_ThreadFlags_TrustZone app started: ************/\n\n");
+  printf("/************ FreeRTOS_Queues_ThreadFlags_TrustZone app started ************/\n\n");
   /* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -136,10 +137,10 @@ void MX_FREERTOS_Init(void) {
 }
 /* USER CODE BEGIN Header_Producer_Thread */
 /**
-* @brief Function implementing the ProducerThread thread.
-* @param argument: Not used
-* @retval None
-*/
+  * @brief Function implementing the ProducerThread thread.
+  * @param argument: Not used
+  * @retval None
+  */
 /* USER CODE END Header_Producer_Thread */
 void Producer_Thread(void *argument)
 {
@@ -170,10 +171,10 @@ void Producer_Thread(void *argument)
 
 /* USER CODE BEGIN Header_Consumer_Thread */
 /**
-* @brief Function implementing the ConsumerThread thread.
-* @param argument: Not used
-* @retval None
-*/
+  * @brief Function implementing the ConsumerThread thread.
+  * @param argument: Not used
+  * @retval None
+  */
 /* USER CODE END Header_Consumer_Thread */
 void Consumer_Thread(void *argument)
 {
@@ -208,10 +209,10 @@ void Consumer_Thread(void *argument)
 
 /* USER CODE BEGIN Header_Gen_Thread */
 /**
-* @brief Function implementing the GenThread thread.
-* @param argument: Not used
-* @retval None
-*/
+  * @brief Function implementing the GenThread thread.
+  * @param argument: Not used
+  * @retval None
+  */
 /* USER CODE END Header_Gen_Thread */
 void Gen_Thread(void *argument)
 {
@@ -227,12 +228,12 @@ void Gen_Thread(void *argument)
     }
     else
     {
-      /* Check if it’s the correct message */
+      /* Check if itâ€™s the correct message */
       printf("GenThread: getting the msg from queue & checking if the GEN_VALUE is reached\n");
       if(osQueueMsg == GEN_VALUE)
       {
-        /* Set ReceiveThread' flag to 1 */
-        printf("GenThread: GenerationValue reached -> Set ReceiveThread' flag to 1\n\n");
+        /* Set ReceiveThread flag to 1 */
+        printf("GenThread: GenerationValue reached -> Set ReceiveThread flag to 1\n\n");
         osThreadFlagsSet(ReceiveThreadHandle, 0x0001U);
       }
     }
@@ -257,8 +258,8 @@ void Receive_Thread(void *argument)
   portALLOCATE_SECURE_CONTEXT (configMINIMAL_SECURE_STACK_SIZE);
   for (;;)
   {
-    /* Wait forever until thread flag 1 is set */
-    printf("ReceiveThread: Wait until thread flag 1 is set\n\n");
+    /* Wait forever until thread flag is set to 1*/
+    printf("ReceiveThread: Wait until thread flag is set to 1\n\n");
     osThreadFlagsWait(0x0001U, osFlagsWaitAny, osWaitForever);
 
     /* Toggle secure LED2 (LED_BLUE) */

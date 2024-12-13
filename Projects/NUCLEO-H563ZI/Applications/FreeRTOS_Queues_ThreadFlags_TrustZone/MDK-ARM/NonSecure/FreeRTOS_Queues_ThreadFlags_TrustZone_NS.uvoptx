@@ -95,7 +95,7 @@
         <tRmem>1</tRmem>
         <tRfunc>1</tRfunc>
         <tRbox>1</tRbox>
-        <tRtrace>1</tRtrace>
+        <tRtrace>0</tRtrace>
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
         <sRunDeb>0</sRunDeb>
@@ -120,7 +120,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>UL2V8M</Key>
-          <Name>UL2V8M(-S0 -C0 -P0 -FD20000000 -FC1000 -FN2 -FF0STM32H5xx_2M_0C00 -FS0C000000 -FL0200000 -FF1STM32H5xx_2M_0800 -FS18000000 -FL1200000 -FP0($$Device:STM32H563ZITx$CMSIS\Flash\STM32H5xx_2M_0C00.FLM) -FP1($$Device:STM32H563ZITx$CMSIS\Flash\STM32H5xx_2M_0800.FLM))</Name>
+          <Name>UL2V8M(-S0 -C0 -P0 -FD20000000 -FC8000 -FN2 -FF0STM32H5xx_2M_0800 -FS08000000 -FL0200000 -FF1STM32H5xx_2M_0C00 -FS1C000000 -FL1200000 -FP0($$Device:STM32H563ZITx$CMSIS\Flash\STM32H5xx_2M_0800.FLM) -FP1($$Device:STM32H563ZITx$CMSIS\Flash\STM32H5xx_2M_0C00.FLM))</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -173,7 +173,7 @@
       <pMultCmdsp></pMultCmdsp>
       <DebugDescription>
         <Enable>1</Enable>
-        <EnableFlashSeq>1</EnableFlashSeq>
+        <EnableFlashSeq>0</EnableFlashSeq>
         <EnableLog>0</EnableLog>
         <Protocol>2</Protocol>
         <DbgClock>10000000</DbgClock>

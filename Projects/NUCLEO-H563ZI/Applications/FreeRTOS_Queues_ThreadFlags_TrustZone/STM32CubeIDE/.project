@@ -16,11 +16,6 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>FreeRTOS_Queues_ThreadFlags_TrustZone.ioc</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/FreeRTOS_Queues_ThreadFlags_TrustZone.ioc</locationURI>
-		</link>
-		<link>
 			<name>Doc/README.md</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/README.md</locationURI>
@@ -84,16 +79,6 @@
 			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_hal_rcc_ex.c</name>
 			<type>1</type>
 			<locationURI>PARENT-5-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_hal_tim.c</name>
-			<type>1</type>
-			<locationURI>PARENT-5-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_hal_tim_ex.c</name>
-			<type>1</type>
-			<locationURI>PARENT-5-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

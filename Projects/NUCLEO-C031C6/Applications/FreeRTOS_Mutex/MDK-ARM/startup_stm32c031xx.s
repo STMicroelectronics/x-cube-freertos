@@ -11,10 +11,10 @@
 ;*                      After Reset the CortexM0 processor is in Thread mode,
 ;*                      priority is Privileged, and the Stack is set to Main.
 ;* <<< Use Configuration Wizard in Context Menu >>>
-;****************************************************************************** 
+;******************************************************************************
 ;* @attention
 ;*
-;* Copyright (c) 2022 STMicroelectronics.
+;* Copyright (c) 2023 STMicroelectronics.
 ;* All rights reserved.
 ;*
 ;* This software is licensed under terms that can be found in the LICENSE file

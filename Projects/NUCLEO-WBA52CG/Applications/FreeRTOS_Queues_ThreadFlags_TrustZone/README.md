@@ -22,13 +22,13 @@ The application creates 4 Tasks and 1 Queue:
 
 This project is composed of two sub-projects:
 
-- one for the secure application part (FreeRTOS_Queues_ThreadFlags_TrustZone_S)
-- one for the non-secure application part (FreeRTOS_Queues_ThreadFlags_TrustZone_NS).
+- One for the secure application part (FreeRTOS_Queues_ThreadFlags_TrustZone_S).
+- One for the non-secure application part (FreeRTOS_Queues_ThreadFlags_TrustZone_NS).
 
 Please remember that on system with security enabled:
 
-- the system always boots in secure and the secure application is responsible for launching the non-secure application.
-- the SystemInit() function in secure application sets up the SAU/IDAU, FPU and secure/non-secure interrupts allocations defined in partition_stm32u575xx.h file.
+- The system always boots in secure and the secure application is responsible for launching the non-secure application.
+- The SystemInit() function in secure application sets up the SAU/IDAU, FPU and secure/non-secure interrupts allocations defined in partition_stm32u575xx.h file.
 
 This project shows how to switch between secure and non-secure applications thanks to the system isolation performed to split the internal Flash and internal SRAM memories into two halves:
 
@@ -50,12 +50,15 @@ Information about the application will be printed to the serial port.
 On failure, the red LED starts toggling while the green LED and blue LED are switched OFF.
 
 #### <b>Assumptions if any</b>
+
 None
 
 #### <b>Known limitations</b>
+
 None
 
 ### <b>Notes</b>
+
 The following sequence is needed to disable TrustZone:
 
   - Boot from user Flash memory:
@@ -73,6 +76,7 @@ The following sequence is needed to disable TrustZone:
 Please refer to AN5347 for more details.
 
 #### <b>FreeRTOS usage hints</b>
+
 The FreeRTOS heap size configTOTAL_HEAP_SIZE defined in FreeRTOSConfig.h is set accordingly to the
 OS resources memory requirements of the application with +10% margin and rounded to the upper Kbyte boundary.
 
@@ -91,17 +95,16 @@ Security, RTOS, FreeRTOS, TrustZone, Threading, GPIO, Message, Queues, ThreadFla
 
   - This application uses USART1 to display logs, the hyperterminal configuration is as follows:
 
-      - BaudRate = 115200 baud
-      - Word Length = 8 Bits
-      - Stop Bit = 1
-      - Parity = none
-      - Flow control = None
+    - BaudRate = 115200 baud
+    - Word Length = 8 Bits
+    - Stop Bit = 1
+    - Parity = None
+    - Flow control = None
 
   - User Option Bytes requirement (with STM32CubeProgrammer tool)
 
-      - TZEN = 1                            System with TrustZone-M enabled
+      - TZEN = 1                           System with TrustZone-M enabled
       - SECWM_PSTRT=0x0  SECWM1_PEND=0x3F  Only first 64 pages of Flash set as secure
-
 
 ### <b>How to use it ?</b>
 
@@ -121,8 +124,7 @@ IAR
  - Set the "FreeRTOS_Queues_ThreadFlags_TrustZone_S" as active application (Set as Active)
  - Flash the secure binary with Project->Download->Download active application
    (this shall download the \Secure_nsclib\FreeRTOS_Queues_ThreadFlags_TrustZone_S.out to flash memory)
- - Run the example
-
+ - Run the application
 
 MDK-ARM
 
@@ -137,8 +139,7 @@ MDK-ARM
  - Select the FreeRTOS_Queues_ThreadFlags_TrustZone_S project as Active Project (Set as Active Project)
  - Load the secure binary (F8)
    (this shall download the \MDK-ARM\FreeRTOS_Queues_ThreadFlags_TrustZone_s\Exe\Project_s.axf to flash memory)
- - Run the example
-
+ - Run the application
 
 STM32CubeIDE
 
@@ -150,4 +151,4 @@ STM32CubeIDE
    - Double click on "STM32 Cortex-M C/C++ Application"
    - Select  "Startup" >  "Add_" >
      - Select the FreeRTOS_Queues_ThreadFlags_TrustZone_NS project
- - Click Debug/Run to debug/run the example
+ - Click Debug/Run to debug/run the application

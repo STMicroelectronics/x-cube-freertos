@@ -12,7 +12,7 @@ The application has two threads:
 
 The mutex is created before the threads using it are scheduled. Each thread will try to acquire it
 before outputting characters to the serial port. Once the mutex is acquired, the thread will proceed
-to printing its message, and then immediately releases it.
+to printing its message, then immediately releases it.
 
 If the mutex is not used, the two threads will try to use "printf" at almost the same time. This will
 result in either thread winning over the other or both threads interrupting each other.
@@ -62,10 +62,10 @@ FreeRTOS, Mutex
 
   - This application uses USART1 to display output, the hyperterminal configuration is as follows:
 
-      - BaudRate = 115200 baud
+      - BaudRate = 115200 Baud
       - Word Length = 8 Bits
       - Stop Bit = 1
-      - Parity = none
+      - Parity = None
       - Flow control = None
 
 

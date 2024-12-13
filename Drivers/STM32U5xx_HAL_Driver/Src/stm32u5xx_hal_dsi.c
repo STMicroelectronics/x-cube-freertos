@@ -463,6 +463,9 @@ HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi, DSI_PLLInitTypeDef *PLLI
                             ((PLLInit->PLLIDF) << DSI_WRPCR_PLL_IDF_Pos) | \
                             ((PLLInit->PLLODF) << DSI_WRPCR_PLL_ODF_Pos));
 
+  /* Set PLL Tuning */
+  DSI_SetWrapperPLLTuning(hdsi, PLLInit);
+
   /* Enable the DSI PLL */
   __HAL_DSI_PLL_ENABLE(hdsi);
 
@@ -497,9 +500,6 @@ HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi, DSI_PLLInitTypeDef *PLLI
   /************************ Set D-PHY Band Control registers ******************************/
   /* Set Band Control Frequency and LPX Offset */
   DSI_ConfigBandControl(hdsi);
-
-  /* Set PLL Tuning */
-  DSI_SetWrapperPLLTuning(hdsi, PLLInit);
 
   hdsi->Instance->PCTLR |= DSI_PCTLR_CKE;
 
@@ -1808,14 +1808,14 @@ HAL_StatusTypeDef HAL_DSI_LongWrite(DSI_HandleTypeDef *hdsi,
                                     uint32_t Mode,
                                     uint32_t NbParams,
                                     uint32_t Param1,
-                                    uint8_t *ParametersTable)
+                                    const uint8_t *ParametersTable)
 {
   uint32_t uicounter;
   uint32_t nbBytes;
   uint32_t count;
   uint32_t tickstart;
   uint32_t fifoword;
-  uint8_t *pparams = ParametersTable;
+  const uint8_t *pparams = ParametersTable;
 
   /* Process locked */
   __HAL_LOCK(hdsi);
@@ -2861,7 +2861,7 @@ HAL_StatusTypeDef HAL_DSI_ForceTXStopMode(DSI_HandleTypeDef *hdsi, uint32_t Lane
   *               the configuration information for the DSI.
   * @retval HAL state
   */
-HAL_DSI_StateTypeDef HAL_DSI_GetState(DSI_HandleTypeDef *hdsi)
+HAL_DSI_StateTypeDef HAL_DSI_GetState(const DSI_HandleTypeDef *hdsi)
 {
   return hdsi->State;
 }
@@ -2872,7 +2872,7 @@ HAL_DSI_StateTypeDef HAL_DSI_GetState(DSI_HandleTypeDef *hdsi)
   *               the configuration information for the DSI.
   * @retval DSI Error Code
   */
-uint32_t HAL_DSI_GetError(DSI_HandleTypeDef *hdsi)
+uint32_t HAL_DSI_GetError(const DSI_HandleTypeDef *hdsi)
 {
   /* Get the error code */
   return hdsi->ErrorCode;

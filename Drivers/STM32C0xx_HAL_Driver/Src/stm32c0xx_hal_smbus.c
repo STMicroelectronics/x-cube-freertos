@@ -1950,7 +1950,7 @@ static HAL_StatusTypeDef SMBUS_Master_ISR(SMBUS_HandleTypeDef *hsmbus, uint32_t 
         /* Increment Buffer pointer */
         hsmbus->pBuffPtr++;
 
-        if ((hsmbus->XferSize > 0U))
+        if (hsmbus->XferSize > 0U)
         {
           hsmbus->XferSize--;
           hsmbus->XferCount--;
@@ -2378,7 +2378,7 @@ static HAL_StatusTypeDef SMBUS_Slave_ISR(SMBUS_HandleTypeDef *hsmbus, uint32_t S
         /* Increment Buffer pointer */
         hsmbus->pBuffPtr++;
 
-        if ((hsmbus->XferSize > 0U))
+        if (hsmbus->XferSize > 0U)
         {
           hsmbus->XferSize--;
           hsmbus->XferCount--;
@@ -2610,8 +2610,11 @@ static void SMBUS_ITErrorHandler(SMBUS_HandleTypeDef *hsmbus)
     __HAL_SMBUS_CLEAR_FLAG(hsmbus, SMBUS_FLAG_PECERR);
   }
 
-  /* Flush TX register */
-  SMBUS_Flush_TXDR(hsmbus);
+  if (hsmbus->ErrorCode != HAL_SMBUS_ERROR_NONE)
+  {
+    /* Flush TX register */
+    SMBUS_Flush_TXDR(hsmbus);
+  }
 
   /* Store current volatile hsmbus->ErrorCode, misra rule */
   tmperror = hsmbus->ErrorCode;

@@ -28,20 +28,26 @@ If the `EXAMPLE_USES_MUTEX` is set to 1, each thread will display 10 messages id
 and the message number , for a total of 20 messages. Additional messages will be printed to displayed when
 the mutex is acquired or released.
 
+Success behavior is marked by toggling the green LED.
+
 #### <b>Error behaviors</b>
 
-On failure, the green LED is turned off and an error message is printed to the serial port.
+On failure, the green LED is turned OFF and an error message is printed to the serial port.
 
 #### <b>Assumptions if any</b>
+
 None
 
 #### <b>Known limitations</b>
+
 None
 
 ### <b>Notes</b>
+
 None
 
 #### <b>FreeRTOS usage hints</b>
+
 The FreeRTOS heap size configTOTAL_HEAP_SIZE defined in FreeRTOSConfig.h is set accordingly to the
 OS resources memory requirements of the application with +10% margin and rounded to the upper Kbyte boundary.
 
@@ -60,12 +66,11 @@ FreeRTOS, Mutex, Threading
 
   - This application uses USART2 to display output, the hyperterminal configuration is as follows:
 
-      - BaudRate = 115200 baud
-      - Word Length = 8 Bits
-      - Stop Bit = 1
-      - Parity = none
-      - Flow control = None
-
+    - BaudRate = 115200 baud
+    - Word Length = 8 Bits
+    - Stop Bit = 1
+    - Parity = None
+    - Flow control = None
 
 ### <b>How to use it ?</b>
 

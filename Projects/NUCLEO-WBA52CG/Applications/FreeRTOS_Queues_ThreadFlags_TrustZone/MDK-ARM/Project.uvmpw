@@ -8,14 +8,14 @@
   <WorkspaceName></WorkspaceName>
 
   <project>
-    <PathAndName>.\Secure\FreeRTOS_Queues_ThreadFlags_TrustZone_S.uvprojx</PathAndName>
-    <NodeIsActive>1</NodeIsActive>
+    <PathAndName>.\NonSecure\FreeRTOS_Queues_ThreadFlags_TrustZone_NS.uvprojx</PathAndName>
     <NodeIsExpanded>1</NodeIsExpanded>
     <NodeIsCheckedInBatchBuild>1</NodeIsCheckedInBatchBuild>
   </project>
 
   <project>
-    <PathAndName>.\NonSecure\FreeRTOS_Queues_ThreadFlags_TrustZone_NS.uvprojx</PathAndName>
+    <PathAndName>.\Secure\FreeRTOS_Queues_ThreadFlags_TrustZone_S.uvprojx</PathAndName>
+    <NodeIsActive>1</NodeIsActive>
     <NodeIsExpanded>1</NodeIsExpanded>
     <NodeIsCheckedInBatchBuild>1</NodeIsCheckedInBatchBuild>
   </project>

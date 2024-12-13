@@ -138,7 +138,9 @@
 
 #define IS_LL_RCC_RNG_CLKSOURCE(__VALUE__)      (((__VALUE__) == LL_RCC_RNG_CLKSOURCE))
 
+#if defined(USB_DRD_FS)
 #define IS_LL_RCC_USB_CLKSOURCE(__VALUE__)      (((__VALUE__) == LL_RCC_USB_CLKSOURCE))
+#endif /* USB_DRD_FS */
 
 #define IS_LL_RCC_ADCDAC_CLKSOURCE(__VALUE__)   (((__VALUE__) == LL_RCC_ADCDAC_CLKSOURCE))
 
@@ -2096,6 +2098,7 @@ uint32_t LL_RCC_GetI3CClockFreq(uint32_t I3CxSource)
         }
         break;
 
+
       case LL_RCC_I3C2_CLKSOURCE_NONE:    /* No Clock used for I3C2 */
         break;
 
@@ -2837,6 +2840,7 @@ uint32_t LL_RCC_GetRNGClockFreq(uint32_t RNGxSource)
   return rng_frequency;
 }
 
+#if defined(USB_DRD_FS)
 /**
   * @brief  Return USBx clock frequency
   * @param  USBxSource This parameter can be one of the following values:
@@ -2881,7 +2885,18 @@ uint32_t LL_RCC_GetUSBClockFreq(uint32_t USBxSource)
         }
       }
       break;
-#endif /* LL_RCC_USB_CLKSOURCE_PLL3 */
+#else
+    case LL_RCC_USB_CLKSOURCE_PLL2Q:          /* PLL2 Q clock used as USB clock source */
+      if (LL_RCC_PLL2_IsReady() != 0U)
+      {
+        if (LL_RCC_PLL2Q_IsEnabled() != 0U)
+        {
+          LL_RCC_GetPLL2ClockFreq(&PLL_Clocks);
+          usb_frequency = PLL_Clocks.PLL_Q_Frequency;
+        }
+      }
+      break;
+#endif /* LL_RCC_USB_CLKSOURCE_PLL3Q */
 
     case LL_RCC_USB_CLKSOURCE_HSI48:         /* HSI48 clock used as USB clock source */
       if (LL_RCC_HSI48_IsReady() == 1U)
@@ -2897,6 +2912,7 @@ uint32_t LL_RCC_GetUSBClockFreq(uint32_t USBxSource)
 
   return usb_frequency;
 }
+#endif /* USB_DRD_FS */
 
 /**
   * @brief  Return ADCxDAC clock frequency

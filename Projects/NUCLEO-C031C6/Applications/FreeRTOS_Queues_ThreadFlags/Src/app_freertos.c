@@ -136,15 +136,15 @@ void MX_FREERTOS_Init(void) {
 }
 /* USER CODE BEGIN Header_Producer_Thread */
 /**
-* @brief Function implementing the ProducerThread thread.
-* @param argument: Not used
-* @retval None
-*/
+  * @brief Function implementing the ProducerThread thread.
+  * @param argument: Not used
+  * @retval None
+  */
 /* USER CODE END Header_Producer_Thread */
 void Producer_Thread(void *argument)
 {
   /* USER CODE BEGIN ProducerThread */
-
+  /* Infinite loop */
   for(;;)
   {
     if (ProducerValue < PRODUCER_MAX_VALUE)
@@ -170,16 +170,16 @@ void Producer_Thread(void *argument)
 
 /* USER CODE BEGIN Header_Consumer_Thread */
 /**
-* @brief Function implementing the ConsumerThread thread.
-* @param argument: Not used
-* @retval None
-*/
+  * @brief Function implementing the ConsumerThread thread.
+  * @param argument: Not used
+  * @retval None
+  */
 /* USER CODE END Header_Consumer_Thread */
 void Consumer_Thread(void *argument)
 {
   /* USER CODE BEGIN ConsumerThread */
   uint32_t osQueueMsg = 0;
-
+  /* Infinite loop */
   for(;;)
   {
     /* Get the message from the queue */
@@ -191,7 +191,7 @@ void Consumer_Thread(void *argument)
     else
     {
       /* Check if it is the correct message */
-      printf("ConsumerThread: getting the msg from queue & checking if it's the correct msg\n");
+      printf("ConsumerThread: getting the msg from queue & checking if it's the correct msg\r\n");
       if(osQueueMsg == CONSUMER_VALUE)
       {
         printf("ConsumerThread: correct msg verified\n\n");
@@ -205,16 +205,16 @@ void Consumer_Thread(void *argument)
 
 /* USER CODE BEGIN Header_Gen_Thread */
 /**
-* @brief Function implementing the GenThread thread.
-* @param argument: Not used
-* @retval None
-*/
+  * @brief Function implementing the GenThread thread.
+  * @param argument: Not used
+  * @retval None
+  */
 /* USER CODE END Header_Gen_Thread */
 void Gen_Thread(void *argument)
 {
   /* USER CODE BEGIN GenThread */
   uint32_t osQueueMsg = 0;
-
+  /* Infinite loop */
   for(;;)
   {
     /* Get the message from the queue */
@@ -224,8 +224,8 @@ void Gen_Thread(void *argument)
     }
     else
     {
-      /* Check if it’s the correct message */
-      printf("GenThread: getting the msg from queue & checking if the GEN_VALUE is reached\n");
+      /* Check if itâ€™s the correct message */
+      printf("GenThread: getting the msg from queue & checking if the GEN_VALUE is reached\r\n");
       if(osQueueMsg == GEN_VALUE)
       {
         /* Set ReceiveThread' flag to 1 */
@@ -242,15 +242,16 @@ void Gen_Thread(void *argument)
 
 /* USER CODE BEGIN Header_Receive_Thread */
 /**
-* @brief Function implementing the ReceiveThread thread.
-* @param argument: Not used
-* @retval None
-*/
+  * @brief Function implementing the ReceiveThread thread.
+  * @param argument: Not used
+  * @retval None
+  */
 /* USER CODE END Header_Receive_Thread */
 void Receive_Thread(void *argument)
 {
   /* USER CODE BEGIN ReceiveThread */
-  for (;;)
+  /* Infinite loop */
+  for(;;)
   {
     /* Wait forever until thread flag 1 is set */
     printf("ReceiveThread: Wait until thread flag 1 is set\n\n");

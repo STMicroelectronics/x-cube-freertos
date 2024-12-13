@@ -34,8 +34,8 @@
  */
 /* USER CODE END Header */
 
-#ifndef PARTITION_STM32WBA52XX_H
-#define PARTITION_STM32WBA52XX_H
+#ifndef __PARTITION_STM32WBA52XX_H
+#define __PARTITION_STM32WBA52XX_H
 
 /*
 //-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
@@ -593,4 +593,4 @@ __STATIC_INLINE void TZ_SAU_Setup (void)
 }
 /* USER CODE END 2 */
 
-#endif  /* PARTITION_STM32WBA52XX_H */
+#endif  /* __PARTITION_STM32WBA52XX_H */

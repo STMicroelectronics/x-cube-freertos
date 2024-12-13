@@ -10,13 +10,13 @@
       <TargetName>FreeRTOS_Queues_ThreadFlags_TrustZone_S</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
+      <pCCUsed>6210000::V6.21::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32U575ZITx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32U5xx_DFP.2.0.3</PackID>
+          <PackID>Keil.STM32U5xx_DFP.2.2.4</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x30000000-0x3003FFFF) IROM(0x0C000000-0xC0FDFFF) IROM2(0x0C0FE000-0xC0FFFFF) CLOCK(8000000) FPU3(SFPU) CPUTYPE("Cortex-M33") ELITTLE TZ DSP</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -430,6 +430,16 @@
           <GroupName>Drivers/STM32U5xx_HAL_Driver</GroupName>
           <Files>
             <File>
+              <FileName>stm32u5xx_hal_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32u5xx_hal_tim_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_tim_ex.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32u5xx_hal_cortex.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_cortex.c</FilePath>
@@ -509,16 +519,6 @@
               <FileType>1</FileType>
               <FilePath>../../../../../Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_icache.c</FilePath>
             </File>
-            <File>
-              <FileName>stm32u5xx_hal_tim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_tim.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32u5xx_hal_tim_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_tim_ex.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -566,8 +566,8 @@
   <RTE>
     <apis/>
     <components>
-      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="4.3.0" condition="CMSIS Core">
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0"/>
+      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.6.0" condition="ARMv6_7_8-M Device">
+        <package name="CMSIS" schemaVersion="1.7.7" url="http://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
         <targetInfos>
           <targetInfo name="FreeRTOS_Queues_ThreadFlags_TrustZone_S"/>
         </targetInfos>

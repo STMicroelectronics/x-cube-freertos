@@ -113,7 +113,9 @@ extern "C" {
   * @brief   AF 6 selection
   */
 #define GPIO_AF6_SPI2          ((uint8_t)0x06)  /*!< SPI2 Alternate Function mapping */
+#if defined (SPI3)
 #define GPIO_AF6_SPI3          ((uint8_t)0x06)  /*!< SPI3 Alternate Function mapping */
+#endif /* SPI3 */
 #define GPIO_AF6_COMP1         ((uint8_t)0x06)  /*!< COMP1 Alternate Function mapping */
 #if defined(LPUART3)
 #define GPIO_AF6_LPUART3       ((uint8_t)0x06)  /*!< LPUART3 Alternate Function mapping */

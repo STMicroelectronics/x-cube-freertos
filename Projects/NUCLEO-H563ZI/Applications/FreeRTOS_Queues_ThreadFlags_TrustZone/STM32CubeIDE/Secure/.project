@@ -131,16 +131,6 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c</locationURI>
 		</link>
 		<link>
-			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_hal_tim.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_hal_tim_ex.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c</locationURI>
-		</link>
-		<link>
 			<name>Middlewares/RTOS2/CMSIS/RTOS2/Core/TZ_Secure/secure_context.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33/secure/secure_context.c</locationURI>

@@ -108,6 +108,7 @@ void HAL_LPTIM_MspInit(LPTIM_HandleTypeDef* hlptim)
   /* USER CODE BEGIN LPTIM4_MspInit 1 */
 
   /* USER CODE END LPTIM4_MspInit 1 */
+
   }
 
 }

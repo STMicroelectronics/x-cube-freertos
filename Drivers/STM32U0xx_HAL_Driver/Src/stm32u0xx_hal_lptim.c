@@ -2252,6 +2252,8 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Ch
   */
 HAL_StatusTypeDef HAL_LPTIM_IC_Stop_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Channel)
 {
+  HAL_StatusTypeDef status = HAL_OK;
+
   /* Check the parameters */
   assert_param(IS_LPTIM_INPUT_CAPTURE_INSTANCE(hlptim->Instance));
   assert_param(IS_LPTIM_CCX_INSTANCE(hlptim->Instance, Channel));
@@ -2278,23 +2280,27 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Stop_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Cha
       __HAL_LPTIM_DISABLE_IT(hlptim, LPTIM_IT_CC4);
       break;
     default:
-      return HAL_ERROR;
+      status = HAL_ERROR;
       break;
   }
-  /* Disable capture */
-  __HAL_LPTIM_CAPTURE_COMPARE_DISABLE(hlptim, Channel);
 
-  /* Disable the Peripheral */
-  __HAL_LPTIM_DISABLE(hlptim);
+  if (status != HAL_ERROR)
+  {
+    /* Disable capture */
+    __HAL_LPTIM_CAPTURE_COMPARE_DISABLE(hlptim, Channel);
 
-  /* Set the LPTIM channel state */
-  LPTIM_CHANNEL_STATE_SET(hlptim, Channel, HAL_LPTIM_CHANNEL_STATE_READY);
+    /* Disable the Peripheral */
+    __HAL_LPTIM_DISABLE(hlptim);
 
-  /* Set the LPTIM state */
-  hlptim->State = HAL_LPTIM_STATE_READY;
+    /* Set the LPTIM channel state */
+    LPTIM_CHANNEL_STATE_SET(hlptim, Channel, HAL_LPTIM_CHANNEL_STATE_READY);
+
+    /* Set the LPTIM state */
+    hlptim->State = HAL_LPTIM_STATE_READY;
+  }
 
   /* Return function status */
-  return HAL_OK;
+  return status;
 }
 
 /**
@@ -2456,6 +2462,8 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Start_DMA(LPTIM_HandleTypeDef *hlptim, uint32_t C
   */
 HAL_StatusTypeDef HAL_LPTIM_IC_Stop_DMA(LPTIM_HandleTypeDef *hlptim, uint32_t Channel)
 {
+  HAL_StatusTypeDef status = HAL_OK;
+
   /* Check the parameters */
   assert_param(IS_LPTIM_DMA_INSTANCE(hlptim->Instance));
   assert_param(IS_LPTIM_CCX_INSTANCE(hlptim->Instance, Channel));
@@ -2489,24 +2497,27 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Stop_DMA(LPTIM_HandleTypeDef *hlptim, uint32_t Ch
       (void)HAL_DMA_Abort_IT(hlptim->hdma[LPTIM_DMA_ID_CC4]);
       break;
     default:
-      return HAL_ERROR;
+      status = HAL_ERROR;
       break;
   }
 
-  /* Disable capture */
-  __HAL_LPTIM_CAPTURE_COMPARE_DISABLE(hlptim, Channel);
+  if (status != HAL_ERROR)
+  {
+    /* Disable capture */
+    __HAL_LPTIM_CAPTURE_COMPARE_DISABLE(hlptim, Channel);
 
-  /* Disable the Peripheral */
-  __HAL_LPTIM_DISABLE(hlptim);
+    /* Disable the Peripheral */
+    __HAL_LPTIM_DISABLE(hlptim);
 
-  /* Set the LPTIM channel state */
-  LPTIM_CHANNEL_STATE_SET(hlptim, Channel, HAL_LPTIM_CHANNEL_STATE_READY);
+    /* Set the LPTIM channel state */
+    LPTIM_CHANNEL_STATE_SET(hlptim, Channel, HAL_LPTIM_CHANNEL_STATE_READY);
 
-  /* Set the LPTIM state */
-  hlptim->State = HAL_LPTIM_STATE_READY;
+    /* Set the LPTIM state */
+    hlptim->State = HAL_LPTIM_STATE_READY;
+  }
 
   /* Return function status */
-  return HAL_OK;
+  return status;
 }
 /**
   * @}

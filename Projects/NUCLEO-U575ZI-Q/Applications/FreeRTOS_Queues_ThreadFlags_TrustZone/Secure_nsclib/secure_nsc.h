@@ -20,8 +20,8 @@
 
 /* USER CODE BEGIN Non_Secure_CallLib_h */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef SECURE_NSC_H
-#define SECURE_NSC_H
+#ifndef __SECURE_NSC_H
+#define __SECURE_NSC_H
 
 /* Includes ------------------------------------------------------------------*/
 #include <stdint.h>
@@ -42,6 +42,6 @@ typedef enum
 void SECURE_RegisterCallback(SECURE_CallbackIDTypeDef CallbackId, void *func);
 void SECURE_LEDToggle(void);
 
-#endif /* SECURE_NSC_H */
+#endif /* __SECURE_NSC_H */
 /* USER CODE END Non_Secure_CallLib_h */
 

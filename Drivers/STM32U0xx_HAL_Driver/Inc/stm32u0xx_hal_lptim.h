@@ -610,30 +610,38 @@ typedef  void (*pLPTIM_CallbackTypeDef)(LPTIM_HandleTypeDef *hlptim);  /*!< poin
   * @param  __HANDLE__ LPTIM handle
   * @retval None
   */
-#define __HAL_LPTIM_DISABLE(__HANDLE__)                             \
-  do {                                                              \
-    if (IS_LPTIM_CC4_INSTANCE((__HANDLE__)->Instance) == 1UL)             \
-    {                                                               \
-      if ((((__HANDLE__)->Instance->CCMR1 & LPTIM_CCMR1_CC1E) == 0UL)     \
-          && (((__HANDLE__)->Instance->CCMR1 & LPTIM_CCMR1_CC2E) == 0UL)  \
-          && (((__HANDLE__)->Instance->CCMR2 & LPTIM_CCMR2_CC3E) == 0UL)  \
-          && (((__HANDLE__)->Instance->CCMR2 & LPTIM_CCMR2_CC4E) == 0UL)) \
-      {                                                             \
-        CLEAR_BIT((__HANDLE__)->Instance->CR, LPTIM_CR_ENABLE);           \
-      }                                                             \
-    }                                                               \
-    else if (IS_LPTIM_CC2_INSTANCE((__HANDLE__)->Instance) == 1UL)        \
-    {                                                               \
-      if ((((__HANDLE__)->Instance->CCMR1 & LPTIM_CCMR1_CC1E) == 0UL)     \
-          && (((__HANDLE__)->Instance->CCMR1 & LPTIM_CCMR1_CC2E) == 0UL)) \
-      {                                                             \
-        CLEAR_BIT((__HANDLE__)->Instance->CR, LPTIM_CR_ENABLE);           \
-      }                                                             \
-    }                                                               \
-    else                                                            \
-    {                                                               \
-      CLEAR_BIT((__HANDLE__)->Instance->CR, LPTIM_CR_ENABLE);             \
-    }                                                               \
+#define __HAL_LPTIM_DISABLE(__HANDLE__)                                        \
+  do {                                                                         \
+    if (IS_LPTIM_CC4_INSTANCE((__HANDLE__)->Instance) == 1UL)                  \
+    {                                                                          \
+      if (((__HANDLE__)->Instance->CCMR1 & LPTIM_CCMR1_CC1E) == 0UL)           \
+      {                                                                        \
+        if (((__HANDLE__)->Instance->CCMR1 & LPTIM_CCMR1_CC2E) == 0UL)         \
+        {                                                                      \
+          if (((__HANDLE__)->Instance->CCMR2 & LPTIM_CCMR2_CC3E) == 0UL)       \
+          {                                                                    \
+            if (((__HANDLE__)->Instance->CCMR2 & LPTIM_CCMR2_CC4E) == 0UL)     \
+            {                                                                  \
+              CLEAR_BIT((__HANDLE__)->Instance->CR, LPTIM_CR_ENABLE);          \
+            }                                                                  \
+          }                                                                    \
+        }                                                                      \
+      }                                                                        \
+    }                                                                          \
+    else if (IS_LPTIM_CC2_INSTANCE((__HANDLE__)->Instance) == 1UL)             \
+    {                                                                          \
+      if (((__HANDLE__)->Instance->CCMR1 & LPTIM_CCMR1_CC1E) == 0UL)           \
+      {                                                                        \
+        if (((__HANDLE__)->Instance->CCMR1 & LPTIM_CCMR1_CC2E) == 0UL)         \
+        {                                                                      \
+          CLEAR_BIT((__HANDLE__)->Instance->CR, LPTIM_CR_ENABLE);              \
+        }                                                                      \
+      }                                                                        \
+    }                                                                          \
+    else                                                                       \
+    {                                                                          \
+      CLEAR_BIT((__HANDLE__)->Instance->CR, LPTIM_CR_ENABLE);                  \
+    }                                                                          \
   } while(0)
 
 /**
@@ -1179,9 +1187,6 @@ HAL_LPTIM_StateTypeDef HAL_LPTIM_GetState(const LPTIM_HandleTypeDef *hlptim);
 
 #define IS_LPTIM_COUNTER_SOURCE(__SOURCE__)     (((__SOURCE__) == LPTIM_COUNTERSOURCE_INTERNAL) || \
                                                  ((__SOURCE__) == LPTIM_COUNTERSOURCE_EXTERNAL))
-
-#define IS_LPTIM_AUTORELOAD(__AUTORELOAD__)     ((0x00000001UL <= (__AUTORELOAD__)) &&\
-                                                 ((__AUTORELOAD__) <= 0x0000FFFFUL))
 
 #define IS_LPTIM_COMPARE(__COMPARE__)           ((__COMPARE__) <= 0x0000FFFFUL)
 
