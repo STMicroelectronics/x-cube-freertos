@@ -13,18 +13,20 @@ With FreeRTOS complementing the extensive STM32Cube ecosystem providing free dev
 
 One of the following toolchains:
 
-- IAR Embedded Workbench for ARM (EWARM) toolchain 9.20.1 + ST-LINKV3, toolchain 9.20.4 + ST-LINKV3 and toolchain 9.40.1 + ST-LINKV3 
-- [STM32CubeIDE V1.17.0](https://www.st.com/en/development-tools/stm32cubeide.html)  + ST-LINKV3
+- IAR Embedded Workbench for ARM (EWARM) toolchain 9.20.1 + ST-LINKV3 for STM32U5, STM32H5, STM32WBA, STM32C0 and STM32U0
+- IAR Embedded Workbench for ARM (EWARM) toolchain 9.20.4 + ST-LINKV3 for STM32U3
+- IAR Embedded Workbench for ARM (EWARM) toolchain 9.40.1 + ST-LINKV3 for STM32N6
+- [STM32CubeIDE V1.18.1](https://www.st.com/en/development-tools/stm32cubeide.html)  + ST-LINKV3
 - RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.39 + ST-LINKV3
 
 ## Supported Devices and Boards by applications
 - [NUCLEO-U575ZI-Q](https://www.st.com/en/evaluation-tools/nucleo-u575zi-q.html) *(MB1549C)*
 - [NUCLEO-H563ZI](https://www.st.com/en/evaluation-tools/nucleo-h563zi.html) *(MB1404-B02)*
-- [NUCLEO-WBA52CG](https://www.st.com/en/evaluation-tools/nucleo-wba52cg.html) *(MB1845)*
+- [NUCLEO-WBA55CG](https://www.st.com/en/evaluation-tools/nucleo-wba55cg.html) *(MB1803)*
 - [NUCLEO-C031C6](https://www.st.com/en/evaluation-tools/nucleo-c031c6.html) *(MB1717)*
 - [NUCLEO-U083RC](https://www.st.com/en/evaluation-tools/nucleo-u083rc.html) *(MB1932)*
-- [NUCLEO-N657X0-Q] *(MB1940)*
-- [NUCLEO-U385RG-Q] *(MB1841)*
+- [NUCLEO-N657X0-Q](https://www.st.com/en/evaluation-tools/nucleo-n657x0-q.html) *(MB1940)*
+- [NUCLEO-U385RG-Q](https://www.st.com/en/evaluation-tools/nucleo-h7s3l8.html) *(MB1841)*
 
 ## Repository structure
 The STMicroelectronics GitHub X-CUBE-FREERTOS repository consists of the following repositories:
@@ -62,10 +64,10 @@ Details about the content of this release are available in the release note [her
 
 | STM32WBA Applications                               |       Short Description      |
 |---------------------------------------------------- |----------------------------------------------------------------|
-| FreeRTOS_Mutex                                      | This application demonstrates the use of mutexes to serialize access to a shared resource. [readme](./Projects/NUCLEO-WBA52CG/Applications/FreeRTOS_Mutex/README.md) |
-| FreeRTOS_MPU                                        | This application demonstrates the use of the MPU with FreeRTOS to control memory/peripheral access for tasks. [readme](./Projects/NUCLEO-WBA52CG/Applications/FreeRTOS_MPU/README.md) |
-| FreeRTOS_Queues_ThreadFlags_TrustZone               | This application demonstrates the use of message queues, thread flags with CMSIS_RTOS2 API along with the use of FreeRTOS when the TrustZone feature is enabled (TZEN=1) [readme](./Projects/NUCLEO-WBA52CG/Applications/FreeRTOS_Queues_ThreadFlags_TrustZone/README.md) |
-| FreeRTOS_Semaphore_LowPower                         | This application demonstrates the use of FreeRTOS tickless low power mode and semaphores[readme](./Projects/NUCLEO-WBA52CG/Applications/FreeRTOS_Semaphore_LowPower/README.md) |
+| FreeRTOS_Mutex                                      | This application demonstrates the use of mutexes to serialize access to a shared resource. [readme](./Projects/NUCLEO-WBA55CG/Applications/FreeRTOS_Mutex/README.md) |
+| FreeRTOS_MPU                                        | This application demonstrates the use of the MPU with FreeRTOS to control memory/peripheral access for tasks. [readme](./Projects/NUCLEO-WBA55CG/Applications/FreeRTOS_MPU/README.md) |
+| FreeRTOS_Queues_ThreadFlags_TrustZone               | This application demonstrates the use of message queues, thread flags with CMSIS_RTOS2 API along with the use of FreeRTOS when the TrustZone feature is enabled (TZEN=1) [readme](./Projects/NUCLEO-WBA55CG/Applications/FreeRTOS_Queues_ThreadFlags_TrustZone/README.md) |
+| FreeRTOS_Semaphore_LowPower                         | This application demonstrates the use of FreeRTOS tickless low power mode and semaphores[readme](./Projects/NUCLEO-WBA55CG/Applications/FreeRTOS_Semaphore_LowPower/README.md) |
 
 | STM32C0 Applications                                |       Short Description      |
 |---------------------------------------------------- |----------------------------------------------------------------|

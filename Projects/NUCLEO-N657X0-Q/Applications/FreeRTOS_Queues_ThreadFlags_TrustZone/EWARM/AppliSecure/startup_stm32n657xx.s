@@ -54,6 +54,7 @@
 
         DATA
 __vector_table
+
         DCD     sfe(CSTACK)
         DCD     Reset_Handler              ; Reset Handler
 
@@ -281,6 +282,7 @@ __Vectors_Size  EQU   __Vectors_End - __Vectors
         PUBWEAK Reset_Handler
         SECTION .text:CODE:NOROOT:REORDER(2)
 Reset_Handler
+
         LDR     R0, =sfb(CSTACK)
         MSR     MSPLIM, R0               ; Set Stack Pointer Limit
         LDR     SP, =sfe(CSTACK)         ; Set Stack Pointer

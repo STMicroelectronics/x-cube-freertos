@@ -90,11 +90,12 @@ void HAL_LPTIM_MspInit(LPTIM_HandleTypeDef* hlptim)
   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
   if(hlptim->Instance==LPTIM2)
   {
-  /* USER CODE BEGIN LPTIM2_MspInit 0 */
+    /* USER CODE BEGIN LPTIM2_MspInit 0 */
 
-  /* USER CODE END LPTIM2_MspInit 0 */
+    /* USER CODE END LPTIM2_MspInit 0 */
 
-  /* Initializes the peripherals clock */
+  /** Initializes the peripherals clock
+  */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_LPTIM2;
     PeriphClkInit.Lptim2ClockSelection = RCC_LPTIM2CLKSOURCE_LSI;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -106,7 +107,7 @@ void HAL_LPTIM_MspInit(LPTIM_HandleTypeDef* hlptim)
     __HAL_RCC_LPTIM2_CLK_ENABLE();
 
     __HAL_RCC_GPIOC_CLK_ENABLE();
-    /* LPTIM2 GPIO Configuration
+    /**LPTIM2 GPIO Configuration
     PC3     ------> LPTIM2_ETR
     */
     GPIO_InitStruct.Pin = GPIO_PIN_3;
@@ -119,9 +120,9 @@ void HAL_LPTIM_MspInit(LPTIM_HandleTypeDef* hlptim)
     /* LPTIM2 interrupt Init */
     HAL_NVIC_SetPriority(LPTIM2_IRQn, 5, 0);
     HAL_NVIC_EnableIRQ(LPTIM2_IRQn);
-  /* USER CODE BEGIN LPTIM2_MspInit 1 */
+    /* USER CODE BEGIN LPTIM2_MspInit 1 */
 
-  /* USER CODE END LPTIM2_MspInit 1 */
+    /* USER CODE END LPTIM2_MspInit 1 */
 
   }
 
@@ -137,22 +138,22 @@ void HAL_LPTIM_MspDeInit(LPTIM_HandleTypeDef* hlptim)
 {
   if(hlptim->Instance==LPTIM2)
   {
-  /* USER CODE BEGIN LPTIM2_MspDeInit 0 */
+    /* USER CODE BEGIN LPTIM2_MspDeInit 0 */
 
-  /* USER CODE END LPTIM2_MspDeInit 0 */
+    /* USER CODE END LPTIM2_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_LPTIM2_CLK_DISABLE();
 
-    /* LPTIM2 GPIO Configuration
+    /**LPTIM2 GPIO Configuration
     PC3     ------> LPTIM2_ETR
     */
     HAL_GPIO_DeInit(GPIOC, GPIO_PIN_3);
 
     /* LPTIM2 interrupt DeInit */
     HAL_NVIC_DisableIRQ(LPTIM2_IRQn);
-  /* USER CODE BEGIN LPTIM2_MspDeInit 1 */
+    /* USER CODE BEGIN LPTIM2_MspDeInit 1 */
 
-  /* USER CODE END LPTIM2_MspDeInit 1 */
+    /* USER CODE END LPTIM2_MspDeInit 1 */
   }
 
 }

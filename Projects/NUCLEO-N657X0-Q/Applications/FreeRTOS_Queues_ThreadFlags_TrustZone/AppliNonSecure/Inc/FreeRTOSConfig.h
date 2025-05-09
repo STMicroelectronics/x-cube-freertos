@@ -28,8 +28,8 @@
  */
 /* USER CODE END Header */
 
-#ifndef FREERTOS_CONFIG_H
-#define FREERTOS_CONFIG_H
+#ifndef __FREERTOS_CONFIG_H
+#define __FREERTOS_CONFIG_H
 
 /*-----------------------------------------------------------
  * Application specific definitions.
@@ -57,13 +57,11 @@ extern uint32_t SystemCoreClock;
 #endif /* CMSIS_device_header */
 
 /*-------------------- STM32N6 specific defines -------------------*/
-#define configENABLE_TRUSTZONE                  1
-#define configRUN_FREERTOS_SECURE_ONLY          0
-#define configENABLE_FPU                        0
-#define configENABLE_MPU                        0
-#define configENABLE_MVE                        0
-
-
+#define configENABLE_TRUSTZONE                   1
+#define configRUN_FREERTOS_SECURE_ONLY           0
+#define configENABLE_FPU                         0
+#define configENABLE_MPU                         0
+#define configENABLE_MVE                         0
 #define configUSE_PREEMPTION                     1
 #define configSUPPORT_STATIC_ALLOCATION          1
 #define configSUPPORT_DYNAMIC_ALLOCATION         1
@@ -122,7 +120,7 @@ to exclude the API function. */
 #define INCLUDE_vTaskDelete                  1
 #define INCLUDE_vTaskCleanUpResources        0
 #define INCLUDE_vTaskSuspend                 1
-#define INCLUDE_vTaskDelayUntil              1
+#define INCLUDE_xTaskDelayUntil              1
 #define INCLUDE_vTaskDelay                   1
 #define INCLUDE_xTaskGetSchedulerState       1
 #define INCLUDE_xTimerPendFunctionCall       1
@@ -134,7 +132,7 @@ to exclude the API function. */
 
 /* Cortex-M specific definitions. */
 #ifdef __NVIC_PRIO_BITS
- /* __BVIC_PRIO_BITS will be specified when CMSIS is being used. */
+ /* __NVIC_PRIO_BITS will be specified when CMSIS is being used. */
  #define configPRIO_BITS         __NVIC_PRIO_BITS
 #else
  #define configPRIO_BITS         4
@@ -163,10 +161,17 @@ header file. */
 #define configASSERT( x ) if ((x) == 0) {taskDISABLE_INTERRUPTS(); for( ;; );}
 /* USER CODE END 1 */
 
-#define SysTick_Handler xPortSysTickHandler
+/* Definitions that map the FreeRTOS port interrupt handlers to their CMSIS
+standard names. */
+#define vPortSVCHandler    SVC_Handler
+#define xPortPendSVHandler PendSV_Handler
+
+/* IMPORTANT: After 10.3.1 update, Systick_Handler comes from NVIC (if SYS timebase = systick), otherwise from cmsis_os2.c */
+
+#define USE_CUSTOM_SYSTICK_HANDLER_IMPLEMENTATION 1
 
 /* USER CODE BEGIN Defines */
 /* Section where parameter definitions can be added (for instance, to override default ones in FreeRTOS.h) */
 /* USER CODE END Defines */
 
-#endif /* FREERTOS_CONFIG_H */
+#endif /* __FREERTOS_CONFIG_H */

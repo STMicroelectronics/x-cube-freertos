@@ -18,7 +18,7 @@ If the mutex is not used, the two threads will try to use "printf" at almost the
 result in either thread winning over the other or both threads interrupting each other.
 
 The user can observe the effect of not using a mutex to protect printf by setting the
-`EXAMPLE_USES_MUTEX` define in Src/app_freertos.c to 0.
+`EXAMPLE_USES_MUTEX` define in FSBL/Src/app_freertos.c to 0.
 
 ####  <b>Expected success behavior</b>
 
@@ -28,11 +28,11 @@ If the `EXAMPLE_USES_MUTEX` is set to 1, each thread will display 10 messages id
 and the message number , for a total of 20 messages. Additional messages will be printed to displayed when
 the mutex is acquired or released.
 
-The blue LED and yellow LED will toggle every second.
+The blue LED and green LED will toggle every second.
 
 #### <b>Error behaviors</b>
 
-On failure, the red LED toggles every second while the blue LED and yellow LED are turned OFF.
+On failure, the red LED toggles every second while the blue LED and green LED are turned OFF.
 An Error message is printed on the hyperterminal.
 
 #### <b>Assumptions if any</b>
@@ -54,7 +54,7 @@ OS resources memory requirements of the application with +10% margin and rounded
 For more details about FreeRTOS implementation on STM32Cube, please refer to UM1722 "Developing Applications
 on STM32Cube with RTOS".
 
-TrustZone is enabled by default in STM32N6 devices. When FreeRTOS is to be run in the secure world, 
+TrustZone is enabled by default in STM32N6 devices. When FreeRTOS is to be run in the secure world,
 the `configENABLE_TRUSTZONE` must be set to 0, and `configRUN_FREERTOS_SECURE_ONLY` must be set to 1. in FreeRTOSConfig.h
 
 ### <b>Keywords</b>
@@ -84,9 +84,9 @@ In order to make the program work, you must do the following :
 
 Next, this program can be run in boot from flash mode. This can be done by following the instructions below:
 
- - Resort to CubeProgrammer to add a header to the generated binary FreeRTOS_Mutex.bin with the following command
-      - *STM32MP_SigningTool_CLI.exe -bin FreeRTOS_Mutex.bin -nk -of 0x80000000 -t fsbl -o FreeRTOS_Mutex-trusted.bin -hv 2.3 -dump FreeRTOS_Mutex-trusted.bin*
-   - The resulting binary is FreeRTOS_Mutex-trusted.bin.
- - Next, in resorting again to CubeProgrammer, load the binary and its header (FreeRTOS_Mutex_trusted.bin) in Nucleo board external Flash at address 0x7000'0000.
+ - Resort to CubeProgrammer to add a header to the generated binary FreeRTOS_Mutex_FSBL.bin with the following command
+      - *STM32MP_SigningTool_CLI.exe -bin FreeRTOS_Mutex_FSBL.bin -nk -of 0x80000000 -t fsbl -o FreeRTOS_Mutex_FSBL-trusted.bin -hv 2.3 -dump FreeRTOS_Mutex_FSBL-trusted.bin*
+   - The resulting binary is FreeRTOS_Mutex_FSBL-trusted.bin.
+ - Next, in resorting again to CubeProgrammer, load the binary and its header (FreeRTOS_Mutex_FSBL_trusted.bin) in Nucleo board external Flash at address 0x7000'0000.
  - Set the boot mode in boot from external Flash (BOOT0 switch position is 1-2 and BOOT1 switch position is 1-2).
  - Unplug the board then plug it again. The code then executes in boot from external Flash mode.

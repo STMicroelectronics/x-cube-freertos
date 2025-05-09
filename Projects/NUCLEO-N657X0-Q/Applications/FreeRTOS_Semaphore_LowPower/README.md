@@ -66,9 +66,9 @@ In order to make the program work, you must do the following :
 
 Next, this program can be run in boot from flash mode. This can be done by following the instructions below:
 
- - Resort to CubeProgrammer to add a header to the generated binary FreeRTOS_Semaphore_LowPower.bin with the following command
-   - STM32_SigningTool_CLI.exe -bin FreeRTOS_Semaphore_LowPower.bin -nk -of 0x80000000 -t fsbl -o FreeRTOS_Semaphore_LowPower-trusted.bin -hv 2.3 -dump FreeRTOS_Semaphore_LowPower-trusted.bin
-   - The resulting binary is FreeRTOS_Semaphore_LowPower-trusted.bin.
- - Next, in resorting again to CubeProgrammer, load the binary and its header (FreeRTOS_Semaphore_LowPower-trusted.bin) in Nucleo board external Flash at address 0x7000'0000.
+ - Resort to CubeProgrammer to add a header to the generated binary FreeRTOS_Semaphore_LowPower_FSBL.bin with the following command
+   - STM32_SigningTool_CLI.exe -bin FreeRTOS_Semaphore_LowPower_FSBL.bin -nk -of 0x80000000 -t fsbl -o FreeRTOS_Semaphore_LowPower_FSBL-trusted.bin -hv 2.3 -dump FreeRTOS_Semaphore_LowPower_FSBL-trusted.bin
+   - The resulting binary is FreeRTOS_Semaphore_LowPower_FSBL-trusted.bin.
+ - Next, in resorting again to CubeProgrammer, load the binary and its header (FreeRTOS_Semaphore_LowPower_FSBL-trusted.bin) in Nucleo board external Flash at address 0x7000'0000.
  - Set the boot mode in boot from external Flash (BOOT0 switch position is 1-2 and BOOT1 switch position is 1-2).
  - Unplug the board then plug it again. The code then executes in boot from external Flash mode.

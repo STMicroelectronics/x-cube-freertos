@@ -77,19 +77,19 @@ void HAL_MspInit(void)
 }
 
 /**
-* @brief LPTIM MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hlptim: LPTIM handle pointer
-* @retval None
-*/
+  * @brief LPTIM MSP Initialization
+  * This function configures the hardware resources used in this example
+  * @param hlptim: LPTIM handle pointer
+  * @retval None
+  */
 void HAL_LPTIM_MspInit(LPTIM_HandleTypeDef* hlptim)
 {
   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   if(hlptim->Instance==LPTIM4)
   {
-  /* USER CODE BEGIN LPTIM4_MspInit 0 */
+    /* USER CODE BEGIN LPTIM4_MspInit 0 */
 
-  /* USER CODE END LPTIM4_MspInit 0 */
+    /* USER CODE END LPTIM4_MspInit 0 */
 
   /** Initializes the peripherals clock
   */
@@ -105,35 +105,35 @@ void HAL_LPTIM_MspInit(LPTIM_HandleTypeDef* hlptim)
     /* LPTIM4 interrupt Init */
     HAL_NVIC_SetPriority(LPTIM4_IRQn, 5, 0);
     HAL_NVIC_EnableIRQ(LPTIM4_IRQn);
-  /* USER CODE BEGIN LPTIM4_MspInit 1 */
+    /* USER CODE BEGIN LPTIM4_MspInit 1 */
 
-  /* USER CODE END LPTIM4_MspInit 1 */
+    /* USER CODE END LPTIM4_MspInit 1 */
 
   }
 
 }
 
 /**
-* @brief LPTIM MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hlptim: LPTIM handle pointer
-* @retval None
-*/
+  * @brief LPTIM MSP De-Initialization
+  * This function freeze the hardware resources used in this example
+  * @param hlptim: LPTIM handle pointer
+  * @retval None
+  */
 void HAL_LPTIM_MspDeInit(LPTIM_HandleTypeDef* hlptim)
 {
   if(hlptim->Instance==LPTIM4)
   {
-  /* USER CODE BEGIN LPTIM4_MspDeInit 0 */
+    /* USER CODE BEGIN LPTIM4_MspDeInit 0 */
 
-  /* USER CODE END LPTIM4_MspDeInit 0 */
+    /* USER CODE END LPTIM4_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_LPTIM4_CLK_DISABLE();
 
     /* LPTIM4 interrupt DeInit */
     HAL_NVIC_DisableIRQ(LPTIM4_IRQn);
-  /* USER CODE BEGIN LPTIM4_MspDeInit 1 */
+    /* USER CODE BEGIN LPTIM4_MspDeInit 1 */
 
-  /* USER CODE END LPTIM4_MspDeInit 1 */
+    /* USER CODE END LPTIM4_MspDeInit 1 */
   }
 
 }

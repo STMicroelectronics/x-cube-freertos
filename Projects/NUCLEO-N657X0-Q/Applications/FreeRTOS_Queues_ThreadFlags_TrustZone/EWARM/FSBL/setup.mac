@@ -4,7 +4,7 @@
 execUserSetup()
 {
     /* Re-load image partially erased by IAR reset */
-    __loadImage("$EXE_DIR$\\Project.out", 0, 0);
+    __loadImage("$EXE_DIR$\\FreeRTOS_Queues_ThreadFlags_TrustZone_FSBL.out", 0, 0);
 
     __restoreSoftwareBreakpoints();
 

@@ -1,8 +1,8 @@
+/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    main.c
-  * @author  GPM Application Team
-  * @brief   Main program body through the HAL API
+  * @file           : main.c
+  * @brief          : Main program body
   ******************************************************************************
   * @attention
   *
@@ -15,64 +15,85 @@
   *
   ******************************************************************************
   */
-
+/* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "extmem.h"
+#include "extmem_manager.h"
 
-/** @addtogroup STM32N6xx_HAL_Examples
-  * @{
-  */
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
 
-/** @addtogroup Tx_SecureLEDToggle_TrustZone_FSBL
-  * @{
-  */
+/* USER CODE END Includes */
 
-XSPI_HandleTypeDef       hxspi2;
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
 
-/* Private typedefs ----------------------------------------------------------*/
-/* Private defines -----------------------------------------------------------*/
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
 #define XSPI2_MAP_ADDRESS 0x70000000
-/* Private macros ------------------------------------------------------------*/
-/* Private variables ---------------------------------------------------------*/
-/* Private function prototypes -----------------------------------------------*/
-static void SystemClock_Config(void);
-void Error_Handler(void);
-static void MX_XSPI2_Init(void);
+/* USER CODE END PD */
 
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
+
+XSPI_HandleTypeDef hxspi2;
+
+/* USER CODE BEGIN PV */
+
+/* USER CODE END PV */
+
+/* Private function prototypes -----------------------------------------------*/
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+static void MX_XSPI2_Init(void);
+static void MX_BSEC_Init(void);
+/* USER CODE BEGIN PFP */
 #ifndef NO_OTP_FUSE
 static int32_t OTP_Config(void);
 #endif
-/* Private functions ---------------------------------------------------------*/
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+
+/* USER CODE END 0 */
+
 /**
-  * @brief  Main program
-  * @param  None
-  * @retval None
+  * @brief  The application entry point.
+  * @retval int
   */
 int main(void)
 {
-  /* Enable I-Cache-----------------------------------------------------------*/
+
+  /* USER CODE BEGIN 1 */
+
+  /* USER CODE END 1 */
+
+  /* Enable the CPU Cache */
+
+  /* Enable I-Cache---------------------------------------------------------*/
   SCB_EnableICache();
 
-  /* Enable D-Cache-----------------------------------------------------------*/
+  /* Enable D-Cache---------------------------------------------------------*/
   SCB_EnableDCache();
 
   /* MCU Configuration--------------------------------------------------------*/
-
-  /* STM32N6xx HAL library initialization:
-       - Systick timer is configured by default as source of time base, but user
-             can eventually implement his proper time base source (a general purpose
-             timer for example or other time source), keeping in mind that Time base
-             duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and
-             handled in milliseconds basis.
-       - Set NVIC Group Priority to 4
-       - Low Level Initialization
-     */
   HAL_Init();
+
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
 
   /* Configure the system clock */
   SystemClock_Config();
 
+  /* USER CODE BEGIN SysInit */
 #ifndef NO_OTP_FUSE
   /* Set OTP fuses for XSPI IO pins speed optimization */
   if(OTP_Config() != 0){
@@ -80,52 +101,40 @@ int main(void)
   }
 #endif /* NO_OTP_FUSE */
 
-  /* Add your application code here */
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
   MX_XSPI2_Init();
+  MX_BSEC_Init();
+  MX_EXTMEM_MANAGER_Init();
+  /* USER CODE BEGIN 2 */
 
-  /* Initialise the serial memory */
-  MX_EXTMEM_Init();
+  /* USER CODE END 2 */
 
-  BOOT_Application();
-  /* We should never get here as execution is now from user application */
-  while(1)
+  /* Launch the application */
+  if (BOOT_OK != BOOT_Application())
   {
-    __NOP();
+    Error_Handler();
   }
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+  while (1)
+  {
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+  }
+  /* USER CODE END 3 */
 }
+/* USER CODE BEGIN CLK 1 */
+/* USER CODE END CLK 1 */
 
 /**
-  * @brief  System Clock Configuration
-  *         The system Clock is configured as follows :
-  *            CPU Clock source               = IC1_CK
-  *            System bus Clock source        = IC2_IC6_IC11_CK
-  *            CPUCLK (sysa_ck) (Hz)          = 600000000
-  *            SYSCLK AXI (sysb_ck) (Hz)      = 400000000
-  *            SYSCLK NPU (sysc_ck) (Hz)      = 600000000
-  *            SYSCLK AXISRAM3/4/5/6 (sysd_ck) (Hz) = 600000000
-  *            HCLKx(Hz)                      = 200000000
-  *            PCLKx(Hz)                      = 200000000
-  *            AHB Prescaler                  = 2
-  *            APB1 Prescaler                 = 1
-  *            APB2 Prescaler                 = 1
-  *            APB4 Prescaler                 = 1
-  *            APB5 Prescaler                 = 1
-  *            PLL1 State                     = ON
-  *            PLL1 clock source              = HSI
-  *            PLL1 M                         = 4
-  *            PLL1 N                         = 75
-  *            PLL1 P1                        = 1
-  *            PLL1 P2                        = 1
-  *            PLL1 FRACN                     = 0
-  *            PLL2 State                     = BYPASS
-  *            PLL2 clock source              = HSI
-  *            PLL3 State                     = BYPASS
-  *            PLL3 clock source              = HSI
-  *            PLL4 State                     = BYPASS
-  *            PLL4 clock source              = HSI
+  * @brief System Clock Configuration
   * @retval None
   */
-static void SystemClock_Config(void)
+void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
@@ -152,11 +161,11 @@ static void SystemClock_Config(void)
   }
 
   /** Get current CPU/System buses clocks configuration and if necessary switch
-  * to intermediate HSI clock to ensure target clock can be set
+ to intermediate HSI clock to ensure target clock can be set
   */
   HAL_RCC_GetClockConfig(&RCC_ClkInitStruct);
   if ((RCC_ClkInitStruct.CPUCLKSource == RCC_CPUCLKSOURCE_IC1) ||
-      (RCC_ClkInitStruct.SYSCLKSource == RCC_SYSCLKSOURCE_IC2_IC6_IC11))
+     (RCC_ClkInitStruct.SYSCLKSource == RCC_SYSCLKSOURCE_IC2_IC6_IC11))
   {
     RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_CPUCLK | RCC_CLOCKTYPE_SYSCLK);
     RCC_ClkInitStruct.CPUCLKSource = RCC_CPUCLKSOURCE_HSI;
@@ -215,6 +224,98 @@ static void SystemClock_Config(void)
   }
 }
 
+/**
+  * @brief BSEC Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_BSEC_Init(void)
+{
+
+  /* USER CODE BEGIN BSEC_Init 0 */
+
+  /* USER CODE END BSEC_Init 0 */
+
+  /* USER CODE BEGIN BSEC_Init 1 */
+
+  /* USER CODE END BSEC_Init 1 */
+  /* USER CODE BEGIN BSEC_Init 2 */
+
+  /* USER CODE END BSEC_Init 2 */
+
+}
+
+/**
+  * @brief XSPI2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_XSPI2_Init(void)
+{
+
+  /* USER CODE BEGIN XSPI2_Init 0 */
+
+  /* USER CODE END XSPI2_Init 0 */
+
+  XSPIM_CfgTypeDef sXspiManagerCfg = {0};
+
+  /* USER CODE BEGIN XSPI2_Init 1 */
+
+  /* USER CODE END XSPI2_Init 1 */
+  /* XSPI2 parameter configuration*/
+  hxspi2.Instance = XSPI2;
+  hxspi2.Init.FifoThresholdByte = 4;
+  hxspi2.Init.MemoryMode = HAL_XSPI_SINGLE_MEM;
+  hxspi2.Init.MemoryType = HAL_XSPI_MEMTYPE_MACRONIX;
+  hxspi2.Init.MemorySize = HAL_XSPI_SIZE_32GB;
+  hxspi2.Init.ChipSelectHighTimeCycle = 2;
+  hxspi2.Init.FreeRunningClock = HAL_XSPI_FREERUNCLK_DISABLE;
+  hxspi2.Init.ClockMode = HAL_XSPI_CLOCK_MODE_0;
+  hxspi2.Init.WrapSize = HAL_XSPI_WRAP_NOT_SUPPORTED;
+  hxspi2.Init.ClockPrescaler = 0;
+  hxspi2.Init.SampleShifting = HAL_XSPI_SAMPLE_SHIFT_NONE;
+  hxspi2.Init.DelayHoldQuarterCycle = HAL_XSPI_DHQC_ENABLE;
+  hxspi2.Init.ChipSelectBoundary = HAL_XSPI_BONDARYOF_NONE;
+  hxspi2.Init.MaxTran = 0;
+  hxspi2.Init.Refresh = 0;
+  hxspi2.Init.MemorySelect = HAL_XSPI_CSSEL_NCS1;
+  if (HAL_XSPI_Init(&hxspi2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sXspiManagerCfg.nCSOverride = HAL_XSPI_CSSEL_OVR_NCS1;
+  sXspiManagerCfg.IOPort = HAL_XSPIM_IOPORT_2;
+  sXspiManagerCfg.Req2AckTime = 1;
+  if (HAL_XSPIM_Config(&hxspi2, &sXspiManagerCfg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN XSPI2_Init 2 */
+
+  /* USER CODE END XSPI2_Init 2 */
+
+}
+
+/**
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_GPIO_Init(void)
+{
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+
+  /* USER CODE END MX_GPIO_Init_1 */
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPION_CLK_ENABLE();
+
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+
+  /* USER CODE END MX_GPIO_Init_2 */
+}
+
+/* USER CODE BEGIN 4 */
 
 #ifndef NO_OTP_FUSE
 /**
@@ -285,39 +386,7 @@ static int32_t OTP_Config(void)
   return retr;
 }
 #endif
-
-
-/**
-  * @brief XSPI2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_XSPI2_Init(void)
-{
-  hxspi2.Instance = XSPI2;
-
-  /* XSPI initialization */
-  hxspi2.Init.FifoThresholdByte       = 4U;
-  hxspi2.Init.MemoryMode              = HAL_XSPI_SINGLE_MEM;
-  hxspi2.Init.MemoryType              = HAL_XSPI_MEMTYPE_MACRONIX;
-  hxspi2.Init.MemorySize              = HAL_XSPI_SIZE_32GB;
-  hxspi2.Init.ChipSelectHighTimeCycle = 2U;
-  hxspi2.Init.FreeRunningClock        = HAL_XSPI_FREERUNCLK_DISABLE;
-  hxspi2.Init.ClockMode               = HAL_XSPI_CLOCK_MODE_0;
-  hxspi2.Init.WrapSize                = HAL_XSPI_WRAP_NOT_SUPPORTED;
-  hxspi2.Init.ClockPrescaler          = 0U;
-  hxspi2.Init.SampleShifting          = HAL_XSPI_SAMPLE_SHIFT_NONE;
-  hxspi2.Init.DelayHoldQuarterCycle   = HAL_XSPI_DHQC_ENABLE;
-  hxspi2.Init.ChipSelectBoundary      = HAL_XSPI_BONDARYOF_NONE;
-  hxspi2.Init.MaxTran                 = 0U;
-  hxspi2.Init.Refresh                 = 0U;
-  hxspi2.Init.MemorySelect            = HAL_XSPI_CSSEL_NCS1;
-
-  if (HAL_XSPI_Init(&hxspi2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-}
+/* USER CODE END 4 */
 
 /**
   * @brief  This function is executed in case of error occurrence.
@@ -325,10 +394,11 @@ static void MX_XSPI2_Init(void)
   */
 void Error_Handler(void)
 {
-  /* User may add here some code to deal with this error */
-  while(1)
+  /* USER CODE BEGIN Error_Handler_Debug */
+  while (1)
   {
   }
+  /* USER CODE END Error_Handler_Debug */
 }
 
 #ifdef  USE_FULL_ASSERT
@@ -341,20 +411,9 @@ void Error_Handler(void)
   */
 void assert_failed(uint8_t *file, uint32_t line)
 {
+  /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-
-  /* Infinite loop */
-  while (1)
-  {
-  }
+  /* USER CODE END 6 */
 }
-#endif
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
+#endif /* USE_FULL_ASSERT */

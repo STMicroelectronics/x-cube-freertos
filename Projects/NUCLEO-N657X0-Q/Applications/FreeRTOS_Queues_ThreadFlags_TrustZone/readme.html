@@ -68,13 +68,13 @@ to be run in the secure world, the <code>configENABLE_TRUSTZONE</code>
 must be set to 0, and <code>configRUN_FREERTOS_SECURE_ONLY</code> must
 be set to 1. in FreeRTOSConfig.h</p>
 <h3 id="keywords"><b>Keywords</b></h3>
-<p>FreeRTOS, Threading, GPIO, Message, Queues, ThreadFlags</p>
+<p>FreeRTOS, Threading, GPIO, Message, Queues, ThreadFlags, TrustZone, TZEN</p>
 <h3 id="hardware-and-software-environment"><b>Hardware and Software
 environment</b></h3>
 <ul>
 <li><p>This application runs on STM32N657xx devices.</p></li>
 <li><p>This application has been tested with STMicroelectronics
-NUCLEO-N657X0-Q board MB1940 Rev. A03 and can be easily tailored to any
+NUCLEO-N657X0-Q board MB1940 Rev. C01 and can be easily tailored to any
 other supported device and development board.</p></li>
 <li><p>This application uses USART1 to display output, the hyperterminal
 configuration is as follows:</p>
@@ -93,59 +93,63 @@ configuration is as follows:</p>
 BOOT0 switch position doesn’t matter).</li>
 <li>Open your preferred toolchain</li>
 <li>Select first the FSBL workspace</li>
-<li>Rebuild all files from sub-project FSBL (if no modification is done
-on FSBL project, this step can be done only once)</li>
-<li>Select the FreeRTOS_Queues_ThreadFlags_TrustZone_s workspace</li>
+<li>Rebuild all files from sub-project FreeRTOS_Queues_ThreadFlags_TrustZone_FSBL (if
+no modification is done on FreeRTOS_Queues_ThreadFlags_TrustZone_FSBL project, this
+step can be done only once)</li>
+<li>Select the FreeRTOS_Queues_ThreadFlags_TrustZone_S workspace</li>
 <li>Rebuild all files from sub-project
-FreeRTOS_Queues_ThreadFlags_TrustZone_s</li>
-<li>Select the FreeRTOS_Queues_ThreadFlags_TrustZone_ns workspace</li>
+FreeRTOS_Queues_ThreadFlags_TrustZone_S</li>
+<li>Select the FreeRTOS_Queues_ThreadFlags_TrustZone_NS workspace</li>
 <li>Rebuild all files from sub-project
-FreeRTOS_Queues_ThreadFlags_TrustZone_ns</li>
+FreeRTOS_Queues_ThreadFlags_TrustZone_NS</li>
 <li>Resort to CubeProgrammer to add a header to the generated App_Secure
-binary FreeRTOS_Queues_ThreadFlags_TrustZone_s.bin with the following
+binary FreeRTOS_Queues_ThreadFlags_TrustZone_S.bin with the following
 command
 <ul>
 <li><em>STM32_SigningTool_CLI.exe -bin
-FreeRTOS_Queues_ThreadFlags_TrustZone_s.bin -nk -of 0x80000000 -t fsbl
--o FreeRTOS_Queues_ThreadFlags_TrustZone_s-trusted.bin -hv 2.3 -dump
-FreeRTOS_Queues_ThreadFlags_TrustZone_s-trusted.bin</em></li>
+FreeRTOS_Queues_ThreadFlags_TrustZone_S.bin -nk -of 0x80000000 -t fsbl -o
+FreeRTOS_Queues_ThreadFlags_TrustZone_S-trusted.bin -hv 2.3 -dump
+FreeRTOS_Queues_ThreadFlags_TrustZone_S-trusted.bin</em></li>
 <li>The resulting binary is
-FreeRTOS_Queues_ThreadFlags_TrustZone_s-trusted.bin.</li>
+FreeRTOS_Queues_ThreadFlags_TrustZone_S-trusted.bin.</li>
 </ul></li>
 <li>Do the same with App_NonSecure
 <ul>
 <li><em>STM32_SigningTool_CLI.exe -bin
-FreeRTOS_Queues_ThreadFlags_TrustZone_ns.bin -nk -of 0x80000000 -t fsbl
--o FreeRTOS_Queues_ThreadFlags_TrustZone_ns-trusted.bin -hv 2.3 -dump
-FreeRTOS_Queues_ThreadFlags_TrustZone_ns-trusted.bin</em></li>
+FreeRTOS_Queues_ThreadFlags_TrustZone_NS.bin -nk -of 0x80000000 -t fsbl -o
+FreeRTOS_Queues_ThreadFlags_TrustZone_NS-trusted.bin -hv 2.3 -dump
+FreeRTOS_Queues_ThreadFlags_TrustZone_NS-trusted.bin</em></li>
 <li>The resulting binary is
-FreeRTOS_Queues_ThreadFlags_TrustZone_ns-trusted.bin.</li>
+FreeRTOS_Queues_ThreadFlags_TrustZone_NS-trusted.bin.</li>
 </ul></li>
 <li>Next, in resorting again to CubeProgrammer, load the secure
 application binary and its header
-(FreeRTOS_Queues_ThreadFlags_TrustZone_s-trusted.bin) in Nucleo board
+(FreeRTOS_Queues_ThreadFlags_TrustZone_S-trusted.bin) in Nucleo board
 external Flash at address 0x7010’0000 and the non-secure application
 binary and its header
-(FreeRTOS_Queues_ThreadFlags_TrustZone_ns-trusted.bin) at address
+(FreeRTOS_Queues_ThreadFlags_TrustZone_NS-trusted.bin) at address
 0x7018’0000.</li>
 </ul>
 <p>To run the template with boot in development mode,</p>
 <ul>
-<li>Load the FSBL binary in internal RAM using the IDE</li>
+<li>Load the FreeRTOS_Queues_ThreadFlags_TrustZone_FSBL binary in internal RAM using
+the IDE</li>
 <li>Run the example</li>
 </ul>
 <p>To run the template in boot from flash mode,</p>
 <ul>
 <li>Resort to CubeProgrammer to add a header to the generated binary
-FSBL.bin with the following command
+FreeRTOS_Queues_ThreadFlags_TrustZone_FSBL.bin with the following command
 <ul>
-<li><em>STM32_SigningTool_CLI.exe -bin FSBL.bin -nk -of 0x80000000 -t
-fsbl -o FSBL-trusted.bin -hv 2.3 -dump FSBL-trusted.bin</em></li>
-<li>The resulting binary is FSBL-trusted.bin.</li>
+<li><em>STM32_SigningTool_CLI.exe -bin FreeRTOS_Queues_ThreadFlags_TrustZone_FSBL.bin
+-nk -of 0x80000000 -t fsbl -o FreeRTOS_Queues_ThreadFlags_TrustZone_FSBL-trusted.bin
+-hv 2.3 -dump FreeRTOS_Queues_ThreadFlags_TrustZone_FSBL-trusted.bin</em></li>
+<li>The resulting binary is
+FreeRTOS_Queues_ThreadFlags_TrustZone_FSBL-trusted.bin.</li>
 </ul></li>
-<li>With CubeProgrammer, load the FSBL binary and its header
-(FSBL-trusted.bin) in Nucleo board external Flash at address
-0x7000’0000.</li>
+<li>With CubeProgrammer, load the FreeRTOS_Queues_ThreadFlags_TrustZone_FSBL binary
+and its header (FreeRTOS_Queues_ThreadFlags_TrustZone_FSBL-trusted.bin) in Nucleo
+board external Flash at address 0x7000’0000.</li>
 <li>Set the boot mode in boot from external Flash (BOOT0 switch position
 is 1-2 and BOOT1 switch position is 1-2).</li>
 <li>Press the reset button. The code then executes in boot from Flash

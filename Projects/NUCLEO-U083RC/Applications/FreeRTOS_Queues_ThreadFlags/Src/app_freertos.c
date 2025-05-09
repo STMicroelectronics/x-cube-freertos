@@ -224,7 +224,7 @@ void Gen_Thread(void *argument)
     }
     else
     {
-      /* Check if it’s the correct message */
+      /* Check if it's the correct message */
       printf("GenThread: getting the msg from queue & checking if the GEN_VALUE is reached\r\n");
       if(osQueueMsg == GEN_VALUE)
       {

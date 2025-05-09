@@ -121,7 +121,6 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_EVENTS */
 
 }
-
 /* USER CODE BEGIN Header_Thread1_Entry */
 /**
   * @brief Function implementing the Thread1 thread

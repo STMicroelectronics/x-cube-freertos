@@ -50,7 +50,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
   /* Enable TIM6 clock */
   __HAL_RCC_TIM6_CLK_ENABLE();
 
- /* Get clock configuration */
+  /* Get clock configuration */
   HAL_RCC_GetClockConfig(&clkconfig, &pFLatency);
 
   /* Compute TIM6 clock */
@@ -63,7 +63,6 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
   htim6.Instance = TIM6;
 
   /* Initialize TIMx peripheral as follow:
-
    * Period = [(TIM6CLK/1000) - 1]. to have a (1/1000) s time base.
    * Prescaler = (uwTimclock/1000000 - 1) to have a 1MHz counter clock.
    * ClockDivision = 0

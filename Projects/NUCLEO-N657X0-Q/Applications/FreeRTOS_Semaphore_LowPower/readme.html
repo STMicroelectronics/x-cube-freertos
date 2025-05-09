@@ -88,14 +88,14 @@ be executed in this mode for debugging purposes.</li>
 done by following the instructions below:</p>
 <ul>
 <li>Resort to CubeProgrammer to add a header to the generated binary
-FreeRTOS_Semaphore_LowPower.bin with the following command
+FreeRTOS_Semaphore_LowPower_FSBL.bin with the following command
 <ul>
-<li>STM32_SigningTool_CLI.exe -bin FreeRTOS_Semaphore_LowPower.bin -nk -of 0x80000000 -t
-fsbl -o FreeRTOS_Semaphore_LowPower-trusted.bin -hv 2.3 -dump FreeRTOS_Semaphore_LowPower-trusted.bin</li>
-<li>The resulting binary is FreeRTOS_Semaphore_LowPower-trusted.bin.</li>
+<li>STM32_SigningTool_CLI.exe -bin FreeRTOS_Semaphore_LowPower_FSBL.bin -nk -of 0x80000000 -t
+fsbl -o FreeRTOS_Semaphore_LowPower_FSBL-trusted.bin -hv 2.3 -dump FreeRTOS_Semaphore_LowPower_FSBL-trusted.bin</li>
+<li>The resulting binary is FreeRTOS_Semaphore_LowPower_FSBL-trusted.bin.</li>
 </ul></li>
 <li>Next, in resorting again to CubeProgrammer, load the binary and its
-header (FreeRTOS_Semaphore_LowPower-trusted.bin) in Nucleo board external Flash at address
+header (FreeRTOS_Semaphore_LowPower_FSBL-trusted.bin) in Nucleo board external Flash at address
 0x7000’0000.</li>
 <li>Set the boot mode in boot from external Flash (BOOT0 switch position
 is 1-2 and BOOT1 switch position is 1-2).</li>

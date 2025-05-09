@@ -1,3 +1,4 @@
+/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * @file    partition_stm32n657xx.h
@@ -30,6 +31,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/* USER CODE END Header */
 
 #ifndef PARTITION_STM32N657XX_H
 #define PARTITION_STM32N657XX_H
@@ -37,6 +39,7 @@
 /*
 //-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
 */
+/* USER CODE BEGIN 0 */
 #if defined(__ICCARM__)
 #pragma section="Veneer$$CMSE"
 #elif defined(__CC_ARM)
@@ -348,7 +351,7 @@ extern uint32_t _eNSCVeneer;
 //   <i> Value for SCB->AIRCR register bit SYSRESETREQS
 */
 #define SCB_AIRCR_SYSRESETREQS_VAL  0
-
+/* USER CODE END 0 */
 /*
 //   <o>Priority of Non-Secure exceptions is
 //     <0=> Not altered
@@ -368,7 +371,7 @@ extern uint32_t _eNSCVeneer;
 /*
 // </e>
 */
-
+/* USER CODE BEGIN 1 */
 /*
 // <e>Setup behaviour of Floating Point Unit
 */
@@ -409,7 +412,7 @@ extern uint32_t _eNSCVeneer;
 /*
 // </e>
 */
-
+/* USER CODE END 1 */
 /*
 // <h>Setup Interrupt Target
 */
@@ -697,7 +700,7 @@ extern uint32_t _eNSCVeneer;
 // </h>
 */
 
-
+/* USER CODE BEGIN 2 */
 
 /*
     max 8 SAU regions.
@@ -811,5 +814,5 @@ __STATIC_INLINE void TZ_SAU_Setup (void)
   #endif
 
 }
-
+/* USER CODE END 2 */
 #endif  /* PARTITION_STM32N657XX_H */

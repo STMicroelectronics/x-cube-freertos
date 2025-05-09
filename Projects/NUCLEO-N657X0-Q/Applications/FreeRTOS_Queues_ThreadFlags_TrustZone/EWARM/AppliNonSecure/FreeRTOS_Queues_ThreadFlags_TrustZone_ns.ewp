@@ -2,7 +2,7 @@
 <project>
     <fileVersion>4</fileVersion>
     <configuration>
-        <name>FreeRTOS_Queues_ThreadFlags_TrustZone_ns</name>
+        <name>FreeRTOS_Queues_ThreadFlags_TrustZone_NS</name>
         <toolchain>
             <name>ARM</name>
         </toolchain>
@@ -16,7 +16,7 @@
                 <debug>1</debug>
                 <option>
                     <name>BrowseInfoPath</name>
-                    <state>FreeRTOS_Queues_ThreadFlags_TrustZone_ns\BrowseInfo</state>
+                    <state>FreeRTOS_Queues_ThreadFlags_TrustZone_NS\BrowseInfo</state>
                 </option>
                 <option>
                     <name>TrustZone</name>
@@ -24,15 +24,15 @@
                 </option>
                 <option>
                     <name>ExePath</name>
-                    <state>FreeRTOS_Queues_ThreadFlags_TrustZone_ns\Exe</state>
+                    <state>FreeRTOS_Queues_ThreadFlags_TrustZone_NS\Exe</state>
                 </option>
                 <option>
                     <name>ObjPath</name>
-                    <state>FreeRTOS_Queues_ThreadFlags_TrustZone_ns\Obj</state>
+                    <state>FreeRTOS_Queues_ThreadFlags_TrustZone_NS\Obj</state>
                 </option>
                 <option>
                     <name>ListPath</name>
-                    <state>FreeRTOS_Queues_ThreadFlags_TrustZone_ns\List</state>
+                    <state>FreeRTOS_Queues_ThreadFlags_TrustZone_NS\List</state>
                 </option>
                 <option>
                     <name>GEndianMode</name>
@@ -201,7 +201,7 @@
                 </option>
                 <option>
                     <name>BuildFilesPath</name>
-                    <state>FreeRTOS_Queues_ThreadFlags_TrustZone_ns</state>
+                    <state>FreeRTOS_Queues_ThreadFlags_TrustZone_NS</state>
                 </option>
                 <option>
                     <name>PointerAuthentication</name>
@@ -230,6 +230,7 @@
                     <state>STM32N657xx</state>
                     <state>__TERMINAL_IO__</state>
                     <state>USE_FULL_ASSERT</state>
+                    <state>USE_HAL_DRIVER</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -290,7 +291,7 @@
                 <option>
                     <name>CCAllowList</name>
                     <version>1</version>
-                    <state>11111110</state>
+                    <state>00000000</state>
                 </option>
                 <option>
                     <name>CCDebugInfo</name>
@@ -350,15 +351,17 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>$PROJ_DIR$\..\..\AppliNonSecure\Inc</state>
-                    <state>$PROJ_DIR$\..\..\Secure_nsclib</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\..\Drivers\CMSIS\Include</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32N6xx\Include</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\include</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM55\non_secure</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM55\secure</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\..\Drivers\CMSIS\RTOS2\Include</state>
+                    <state>$PROJ_DIR$/../../AppliNonSecure/Inc</state>
+                    <state>$PROJ_DIR$/../../Secure_nsclib</state>
+                    <state>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/include/</state>
+                    <state>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/IAR/ARM_CM55/non_secure/</state>
+                    <state>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/IAR/ARM_CM55/secure/</state>
+                    <state>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/</state>
+                    <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/RTOS2/Include/</state>
+                    <state>$PROJ_DIR$/../../../../../../Drivers/STM32N6xx_HAL_Driver/Inc</state>
+                    <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/Device/ST/STM32N6xx/Include</state>
+                    <state>$PROJ_DIR$/../../../../../../Drivers/STM32N6xx_HAL_Driver/Inc/Legacy</state>
+                    <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/Include</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -630,7 +633,17 @@
                 </option>
                 <option>
                     <name>AUserIncludes</name>
-                    <state></state>
+                    <state>$PROJ_DIR$/../../AppliNonSecure/Inc</state>
+                    <state>$PROJ_DIR$/../../Secure_nsclib</state>
+                    <state>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/include/</state>
+                    <state>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/IAR/ARM_CM55/non_secure/</state>
+                    <state>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/IAR/ARM_CM55/secure/</state>
+                    <state>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/</state>
+                    <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/RTOS2/Include/</state>
+                    <state>$PROJ_DIR$/../../../../../../Drivers/STM32N6xx_HAL_Driver/Inc</state>
+                    <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/Device/ST/STM32N6xx/Include</state>
+                    <state>$PROJ_DIR$/../../../../../../Drivers/STM32N6xx_HAL_Driver/Inc/Legacy</state>
+                    <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/Include</state>
                 </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>
@@ -668,11 +681,11 @@
                 </option>
                 <option>
                     <name>OCOutputOverride</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>OOCOutputFile</name>
-                    <state>FreeRTOS_Queues_ThreadFlags_TrustZone_ns.bin</state>
+                    <state>FreeRTOS_Queues_ThreadFlags_TrustZone_NS.bin</state>
                 </option>
                 <option>
                     <name>OOCCommandLineProducer</name>
@@ -702,6 +715,14 @@
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
+                    <name>IlinkProcessor</name>
+                    <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkFpuProcessor</name>
+                    <state>1</state>
+                </option>
+                <option>
                     <name>IlinkLibIOConfig</name>
                     <state>1</state>
                 </option>
@@ -711,7 +732,7 @@
                 </option>
                 <option>
                     <name>IlinkOutputFile</name>
-                    <state>FreeRTOS_Queues_ThreadFlags_TrustZone_ns.out</state>
+                    <state>FreeRTOS_Queues_ThreadFlags_TrustZone_NS.out</state>
                 </option>
                 <option>
                     <name>IlinkDebugInfoEnable</name>
@@ -775,7 +796,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\stm32n657xx_axisram_ns.icf</state>
+                    <state>$PROJ_DIR$/stm32n657xx_LRUN_ns.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -823,7 +844,7 @@
                 </option>
                 <option>
                     <name>IlinkAdditionalLibs</name>
-                    <state>$PROJ_DIR$\..\AppliSecure\FreeRTOS_Queues_ThreadFlags_TrustZone_s\Exe\Project_import_lib.lib</state>
+                    <state>$PROJ_DIR$/../../Secure_nsclib/secure_nsclib.o</state>
                 </option>
                 <option>
                     <name>IlinkOverrideProgramEntryLabel</name>
@@ -1058,14 +1079,6 @@
                     <name>IlinkWrapperFile</name>
                     <state></state>
                 </option>
-                <option>
-                    <name>IlinkProcessor</name>
-                    <state>1</state>
-                </option>
-                <option>
-                    <name>IlinkFpuProcessor</name>
-                    <state>1</state>
-                </option>
             </data>
         </settings>
         <settings>
@@ -1101,12 +1114,45 @@
         </settings>
     </configuration>
     <group>
-        <name>Drivers</name>
+        <name>Application</name>
         <group>
-            <name>CMSIS</name>
+            <name>EWARM</name>
             <file>
                 <name>$PROJ_DIR$\startup_stm32n657xx_ns.s</name>
             </file>
+        </group>
+        <group>
+            <name>User</name>
+            <group>
+                <name>AppliNonSecure</name>
+                <file>
+                    <name>$PROJ_DIR$\..\..\AppliNonSecure\Src\app_freertos.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\AppliNonSecure\Src\main.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\AppliNonSecure\Src\stm32n6xx_hal_msp.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\AppliNonSecure\Src\stm32n6xx_hal_timebase_tim.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\AppliNonSecure\Src\stm32n6xx_it.c</name>
+                </file>
+            </group>
+        </group>
+    </group>
+    <group>
+        <name>Doc</name>
+        <file>
+            <name>$PROJ_DIR$\..\..\README.md</name>
+        </file>
+    </group>
+    <group>
+        <name>Drivers</name>
+        <group>
+            <name>CMSIS</name>
             <file>
                 <name>$PROJ_DIR$\..\..\AppliNonSecure\Src\system_stm32n6xx_ns.c</name>
             </file>
@@ -1118,6 +1164,12 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_cortex.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_dma.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_dma_ex.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_exti.c</name>
@@ -1152,24 +1204,6 @@
         </group>
     </group>
     <group>
-        <name>Example</name>
-        <file>
-            <name>$PROJ_DIR$\..\..\AppliNonSecure\Src\app_freertos.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\AppliNonSecure\Src\main.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\AppliNonSecure\Src\stm32n6xx_hal_msp.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\AppliNonSecure\Src\stm32n6xx_hal_timebase_tim.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\AppliNonSecure\Src\stm32n6xx_it.c</name>
-        </file>
-    </group>
-    <group>
         <name>Middlewares</name>
         <group>
             <name>RTOS2</name>
@@ -1192,179 +1226,6 @@
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM55\non_secure\portasm.s</name>
-                    <configuration>
-                        <name>FreeRTOS_Queues_ThreadFlags_TrustZone_ns</name>
-                        <settings>
-                            <name>AARM</name>
-                            <data>
-                                <version>12</version>
-                                <wantNonLocal>0</wantNonLocal>
-                                <debug>1</debug>
-                                <option>
-                                    <name>AObjPrefix</name>
-                                    <state>1</state>
-                                </option>
-                                <option>
-                                    <name>AEndian</name>
-                                    <state>1</state>
-                                </option>
-                                <option>
-                                    <name>ACaseSensitivity</name>
-                                    <state>1</state>
-                                </option>
-                                <option>
-                                    <name>MacroChars</name>
-                                    <version>0</version>
-                                    <state>0</state>
-                                </option>
-                                <option>
-                                    <name>AWarnEnable</name>
-                                    <state>0</state>
-                                </option>
-                                <option>
-                                    <name>AWarnWhat</name>
-                                    <state>0</state>
-                                </option>
-                                <option>
-                                    <name>AWarnOne</name>
-                                    <state></state>
-                                </option>
-                                <option>
-                                    <name>AWarnRange1</name>
-                                    <state></state>
-                                </option>
-                                <option>
-                                    <name>AWarnRange2</name>
-                                    <state></state>
-                                </option>
-                                <option>
-                                    <name>ADebug</name>
-                                    <state>1</state>
-                                </option>
-                                <option>
-                                    <name>AltRegisterNames</name>
-                                    <state>0</state>
-                                </option>
-                                <option>
-                                    <name>ADefines</name>
-                                    <state></state>
-                                </option>
-                                <option>
-                                    <name>AList</name>
-                                    <state>0</state>
-                                </option>
-                                <option>
-                                    <name>AListHeader</name>
-                                    <state>1</state>
-                                </option>
-                                <option>
-                                    <name>AListing</name>
-                                    <state>1</state>
-                                </option>
-                                <option>
-                                    <name>Includes</name>
-                                    <state>0</state>
-                                </option>
-                                <option>
-                                    <name>MacDefs</name>
-                                    <state>0</state>
-                                </option>
-                                <option>
-                                    <name>MacExps</name>
-                                    <state>1</state>
-                                </option>
-                                <option>
-                                    <name>MacExec</name>
-                                    <state>0</state>
-                                </option>
-                                <option>
-                                    <name>OnlyAssed</name>
-                                    <state>0</state>
-                                </option>
-                                <option>
-                                    <name>MultiLine</name>
-                                    <state>0</state>
-                                </option>
-                                <option>
-                                    <name>PageLengthCheck</name>
-                                    <state>0</state>
-                                </option>
-                                <option>
-                                    <name>PageLength</name>
-                                    <state>80</state>
-                                </option>
-                                <option>
-                                    <name>TabSpacing</name>
-                                    <state>8</state>
-                                </option>
-                                <option>
-                                    <name>AXRef</name>
-                                    <state>0</state>
-                                </option>
-                                <option>
-                                    <name>AXRefDefines</name>
-                                    <state>0</state>
-                                </option>
-                                <option>
-                                    <name>AXRefInternal</name>
-                                    <state>0</state>
-                                </option>
-                                <option>
-                                    <name>AXRefDual</name>
-                                    <state>0</state>
-                                </option>
-                                <option>
-                                    <name>AProcessor</name>
-                                    <state>1</state>
-                                </option>
-                                <option>
-                                    <name>AFpuProcessor</name>
-                                    <state>1</state>
-                                </option>
-                                <option>
-                                    <name>AOutputFile</name>
-                                    <state>$FILE_BNAME$.o</state>
-                                </option>
-                                <option>
-                                    <name>ALimitErrorsCheck</name>
-                                    <state>0</state>
-                                </option>
-                                <option>
-                                    <name>ALimitErrorsEdit</name>
-                                    <state>100</state>
-                                </option>
-                                <option>
-                                    <name>AIgnoreStdInclude</name>
-                                    <state>0</state>
-                                </option>
-                                <option>
-                                    <name>AUserIncludes</name>
-                                    <state>$PROJ_DIR$\..\..\AppliNonSecure\Inc</state>
-                                    <state>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\include</state>
-                                </option>
-                                <option>
-                                    <name>AExtraOptionsCheckV2</name>
-                                    <state>0</state>
-                                </option>
-                                <option>
-                                    <name>AExtraOptionsV2</name>
-                                    <state></state>
-                                </option>
-                                <option>
-                                    <name>AsmNoLiteralPool</name>
-                                    <state>0</state>
-                                </option>
-                                <option>
-                                    <name>PreInclude</name>
-                                    <state></state>
-                                </option>
-                                <option>
-                                    <name>A_32_64Device</name>
-                                    <state>1</state>
-                                </option>
-                            </data>
-                        </settings>
-                    </configuration>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\queue.c</name>

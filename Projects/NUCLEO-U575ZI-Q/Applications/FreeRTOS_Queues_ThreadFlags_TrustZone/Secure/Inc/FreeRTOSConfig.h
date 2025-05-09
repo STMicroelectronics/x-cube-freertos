@@ -62,7 +62,6 @@ void xPortSysTickHandler(void);
 #define configRUN_FREERTOS_SECURE_ONLY           0
 #define configENABLE_FPU                         0
 #define configENABLE_MPU                         0
-
 #define configUSE_PREEMPTION                     1
 #define configSUPPORT_STATIC_ALLOCATION          1
 #define configSUPPORT_DYNAMIC_ALLOCATION         1
@@ -132,10 +131,10 @@ to exclude the API function. */
 
 /* Cortex-M specific definitions. */
 #ifdef __NVIC_PRIO_BITS
-/* __BVIC_PRIO_BITS will be specified when CMSIS is being used. */
-#define configPRIO_BITS         __NVIC_PRIO_BITS
+ /* __NVIC_PRIO_BITS will be specified when CMSIS is being used. */
+ #define configPRIO_BITS         __NVIC_PRIO_BITS
 #else
-#define configPRIO_BITS         4
+ #define configPRIO_BITS         4
 #endif
 
 /* The lowest interrupt priority that can be used in a call to a "set priority"

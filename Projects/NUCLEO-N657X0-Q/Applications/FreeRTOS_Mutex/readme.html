@@ -45,7 +45,7 @@ almost the same time. This will result in either thread winning over the
 other or both threads interrupting each other.</p>
 <p>The user can observe the effect of not using a mutex to protect
 printf by setting the <code>EXAMPLE_USES_MUTEX</code> define in
-Src/app_freertos.c to 0.</p>
+FSBL/Src/app_freertos.c to 0.</p>
 <h4 id="expected-success-behavior"><b>Expected success behavior</b></h4>
 <p>If the <code>EXAMPLE_USES_MUTEX</code> is set to 0, some messages
 will not be printed, or may be corrupted.</p>
@@ -53,10 +53,10 @@ will not be printed, or may be corrupted.</p>
 display 10 messages identified by the thread name and the message number
 , for a total of 20 messages. Additional messages will be printed to
 displayed when the mutex is acquired or released.</p>
-<p>The blue LED and yellow LED will toggle every second.</p>
+<p>The blue LED and green LED will toggle every second.</p>
 <h4 id="error-behaviors"><b>Error behaviors</b></h4>
 <p>On failure, the red LED toggles every second while the blue LED and
-yellow LED are turned OFF. An Error message is printed on the
+green LED are turned OFF. An Error message is printed on the
 hyperterminal.</p>
 <h4 id="assumptions-if-any"><b>Assumptions if any</b></h4>
 <p>None</p>
@@ -107,15 +107,15 @@ be executed in this mode for debugging purposes.</li>
 done by following the instructions below:</p>
 <ul>
 <li>Resort to CubeProgrammer to add a header to the generated binary
-FreeRTOS_Mutex.bin with the following command
+FreeRTOS_Mutex_FSBL.bin with the following command
 <ul>
-<li><em>STM32MP_SigningTool_CLI.exe -bin FreeRTOS_Mutex.bin -nk -of
-0x80000000 -t fsbl -o FreeRTOS_Mutex-trusted.bin -hv 2.3 -dump
-FreeRTOS_Mutex-trusted.bin</em></li>
-<li>The resulting binary is FreeRTOS_Mutex-trusted.bin.</li>
+<li><em>STM32MP_SigningTool_CLI.exe -bin FreeRTOS_Mutex_FSBL.bin -nk -of
+0x80000000 -t fsbl -o FreeRTOS_Mutex_FSBL-trusted.bin -hv 2.3 -dump
+FreeRTOS_Mutex_FSBL-trusted.bin</em></li>
+<li>The resulting binary is FreeRTOS_Mutex_FSBL-trusted.bin.</li>
 </ul></li>
 <li>Next, in resorting again to CubeProgrammer, load the binary and its
-header (FreeRTOS_Mutex_trusted.bin) in Nucleo board external Flash at
+header (FreeRTOS_Mutex_FSBL_trusted.bin) in Nucleo board external Flash at
 address 0x7000’0000.</li>
 <li>Set the boot mode in boot from external Flash (BOOT0 switch position
 is 1-2 and BOOT1 switch position is 1-2).</li>

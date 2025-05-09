@@ -91,8 +91,7 @@ const osMessageQueueAttr_t osQueue_attributes = {
   * @param  None
   * @retval None
   */
-void MX_FREERTOS_Init(void)
-{
+void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
   printf("/************ FreeRTOS_Queues_ThreadFlags_TrustZone app started ************/\n\n");
   /* USER CODE END Init */
@@ -228,7 +227,7 @@ void Gen_Thread(void *argument)
     }
     else
     {
-      /* Check if it’s the correct message */
+      /* Check if it's the correct message */
       printf("GenThread: getting the msg from queue & checking if the GEN_VALUE is reached\n");
       if(osQueueMsg == GEN_VALUE)
       {

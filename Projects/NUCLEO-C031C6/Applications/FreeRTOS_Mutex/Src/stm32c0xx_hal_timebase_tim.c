@@ -47,13 +47,13 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 
   /*Configure the TIM17 IRQ priority */
   if (TickPriority < (1UL << __NVIC_PRIO_BITS))
-  {
+   {
      HAL_NVIC_SetPriority(TIM17_IRQn, TickPriority ,0);
 
      /* Enable the TIM17 global Interrupt */
      HAL_NVIC_EnableIRQ(TIM17_IRQn);
      uwTickPrio = TickPriority;
-   }
+    }
   else
   {
     return HAL_ERROR;
@@ -75,12 +75,11 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
   htim17.Instance = TIM17;
 
   /* Initialize TIMx peripheral as follow:
-
-  + Period = [(TIM17CLK/1000) - 1]. to have a (1/1000) s time base.
-  + Prescaler = (uwTimclock/1000000 - 1) to have a 1MHz counter clock.
-  + ClockDivision = 0
-  + Counter direction = Up
-  */
+   * Period = [(TIM17CLK/1000) - 1]. to have a (1/1000) s time base.
+   * Prescaler = (uwTimclock/1000000 - 1) to have a 1MHz counter clock.
+   * ClockDivision = 0
+   * Counter direction = Up
+   */
   htim17.Init.Period = (1000000U / 1000U) - 1U;
   htim17.Init.Prescaler = uwPrescalerValue;
   htim17.Init.ClockDivision = 0;

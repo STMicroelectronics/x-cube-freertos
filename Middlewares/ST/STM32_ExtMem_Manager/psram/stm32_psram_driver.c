@@ -81,7 +81,7 @@ EXTMEM_DRIVER_PSRAM_StatusTypeDef PSRAM_ExecuteCommand(EXTMEM_DRIVER_PSRAM_Objec
   * @{
   */
 
-EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Init(void *IP, EXTMEM_LinkConfig_TypeDef Config,
+EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Init(void *Peripheral, EXTMEM_LinkConfig_TypeDef Config,
                                                            uint32_t ClockInput,
                                                            EXTMEM_DRIVER_PSRAM_ObjectTypeDef *PsramObject)
 {
@@ -93,7 +93,7 @@ EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Init(void *IP, EXTMEM_Link
   DEBUG_STR("initialize the instance")
   
   /* Initialize XSPI low layer */
-  (void)SAL_XSPI_Init(&PsramObject->psram_private.SALObject, IP);
+  (void)SAL_XSPI_Init(&PsramObject->psram_private.SALObject, Peripheral);
 
   /* Abort any ongoing XSPI action */
   (void)SAL_XSPI_DisableMapMode(&PsramObject->psram_private.SALObject);
@@ -198,7 +198,7 @@ EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Disable_MemoryMappedMode(E
   */
 
 /**
- * @brief this function executes a command 
+ * @brief This function executes a command 
  *
  * @param PsramObject psram memory object
  * @param Index command index

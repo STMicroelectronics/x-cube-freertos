@@ -91,8 +91,7 @@ const osMessageQueueAttr_t osQueue_attributes = {
   * @param  None
   * @retval None
   */
-void MX_FREERTOS_Init(void)
-{
+void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
   printf("/************ FreeRTOS_Queues_ThreadFlags_TrustZone app started: ************/\n\n");
   /* USER CODE END Init */

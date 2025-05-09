@@ -20,13 +20,21 @@
 #include "main.h"
 #include "cmsis_os2.h"
 
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
 #if defined(__ICCARM__)
 #include <LowLevelIOInterface.h>
 #endif /* __ICCARM__ */
 
+/* USER CODE END Includes */
+
 /* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
 #if defined(__ICCARM__)
 /* New definition from EWARM V9, compatible with EWARM8 */
 int iar_fputc(int ch);
@@ -37,48 +45,66 @@ int iar_fputc(int ch);
 #elif defined(__GNUC__)
 #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
 #endif /* __ICCARM__ */
+
+/* USER CODE END PD */
+
 /* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
 /* Private variables ---------------------------------------------------------*/
-static UART_HandleTypeDef huart1;
+
+UART_HandleTypeDef huart1;
+
+/* USER CODE BEGIN PV */
+
+/* USER CODE END PV */
+
 /* Private function prototypes -----------------------------------------------*/
-static void SystemClock_Config(void);
-static void MX_GPIO_Init(void);
-static void MX_USART1_Init(void);
 void MX_FREERTOS_Init(void);
+static void MX_GPIO_Init(void);
+static void MX_USART1_UART_Init(void);
+/* USER CODE BEGIN PFP */
+
 void SecureFault_Callback(void);
 void SecureError_Callback(void);
+/* USER CODE END PFP */
 
-/* Private functions ---------------------------------------------------------*/
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+
+/* USER CODE END 0 */
 
 /**
-  * @brief  Main program
-  * @param  None
-  * @retval None
+  * @brief  The application entry point.
+  * @retval int
   */
 int main(void)
 {
-  /* Reset of all peripherals, Initializes the Flash interface and the systick. */
+
+  /* USER CODE BEGIN 1 */
+
+  /* USER CODE END 1 */
+
+  /* MCU Configuration--------------------------------------------------------*/
   HAL_Init();
 
+  /* USER CODE BEGIN Init */
   /* Register SecureFault callback defined in non-secure and to be called by secure handler */
   SECURE_RegisterCallback(SECURE_FAULT_CB_ID, (void *)SecureFault_Callback);
 
   /* Register SecureError callback defined in non-secure and to be called by secure handler */
   SECURE_RegisterCallback(IAC_ERROR_CB_ID, (void *)SecureError_Callback);
-
-  /* USER CODE BEGIN Init */
-
   /* USER CODE END Init */
 
-  /* Configure the system clock */
-  SystemClock_Config();
+  /* USER CODE BEGIN SysInit */
 
-  /* Configure GPIO pins */
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
   MX_GPIO_Init();
-
-  /* Configure UART */
-  MX_USART1_Init();
-
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -86,13 +112,14 @@ int main(void)
   /* Init scheduler */
   osKernelInitialize();
 
-  /* Call init function for freertos objects (in cmsis_os2.c) */
+  /* Call init function for freertos objects (in app_freertos.c) */
   MX_FREERTOS_Init();
 
   /* Start scheduler */
   osKernelStart();
 
   /* We should never get here as control is now taken by the scheduler */
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -103,6 +130,87 @@ int main(void)
   }
   /* USER CODE END 3 */
 }
+
+/**
+  * @brief USART1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART1_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART1_Init 0 */
+
+  /* USER CODE END USART1_Init 0 */
+
+  /* USER CODE BEGIN USART1_Init 1 */
+
+  /* USER CODE END USART1_Init 1 */
+  huart1.Instance = USART1;
+  huart1.Init.BaudRate = 115200;
+  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+  huart1.Init.StopBits = UART_STOPBITS_1;
+  huart1.Init.Parity = UART_PARITY_NONE;
+  huart1.Init.Mode = UART_MODE_TX_RX;
+  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+  huart1.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+  huart1.Init.ClockPrescaler = UART_PRESCALER_DIV1;
+  huart1.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  if (HAL_UART_Init(&huart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_SetTxFifoThreshold(&huart1, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_SetRxFifoThreshold(&huart1, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_DisableFifoMode(&huart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART1_Init 2 */
+
+  /* USER CODE END USART1_Init 2 */
+
+}
+
+/**
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_GPIO_Init(void)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+
+  /* USER CODE END MX_GPIO_Init_1 */
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOE_CLK_ENABLE();
+  __HAL_RCC_GPIOG_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOG, LED_RED_Pin|LED_BLUE_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pins : LED_RED_Pin LED_BLUE_Pin */
+  GPIO_InitStruct.Pin = LED_RED_Pin|LED_BLUE_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+
+  /* USER CODE END MX_GPIO_Init_2 */
+}
+
+/* USER CODE BEGIN 4 */
 
 /**
   * @brief  Callback called by secure code following a secure fault interrupt
@@ -133,216 +241,6 @@ void SecureError_Callback(void)
    Error_Handler();
 }
 
-/**
-  * @brief  System Clock Configuration
-  *         The system Clock is configured as follow :
-  *            CPU Clock source               = IC1_CK
-  *            System bus Clock source        = IC2_IC6_IC11_CK
-  *            CPUCLK (sysa_ck) (Hz)          = 800000000
-  *            SYSCLK AXI (sysb_ck) (Hz)      = 400000000
-  *            SYSCLK NPU (sysc_ck) (Hz)      = 800000000
-  *            SYSCLK AXISRAM3/4/5/6 (sysd_ck) (Hz) = 800000000
-  *            HCLKx(Hz)                      = 200000000
-  *            PCLKx(Hz)                      = 200000000
-  *            AHB Prescaler                  = 2
-  *            APB1 Prescaler                 = 1
-  *            APB2 Prescaler                 = 1
-  *            APB4 Prescaler                 = 1
-  *            APB5 Prescaler                 = 1
-  *            HSE Frequency(Hz)              = 48000000
-  *            PLL1 State                     = ON
-  *            PLL1 clock source              = HSI
-  *            PLL1 M                         = 6
-  *            PLL1 N                         = 100
-  *            PLL1 P1                        = 1
-  *            PLL1 P2                        = 1
-  *            PLL1 FRACN                     = 0
-  *            PLL2 State                     = BYPASS
-  *            PLL2 clock source              = HSI
-  *            PLL3 State                     = BYPASS
-  *            PLL3 clock source              = HSI
-  *            PLL4 State                     = BYPASS
-  *            PLL4 clock source              = HSI
-  * @retval None
-  */
-void SystemClock_Config(void)
-{
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-
-  /** Configure the System Power Supply
-  */
-  if (HAL_PWREx_ConfigSupply(PWR_EXTERNAL_SOURCE_SUPPLY) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  /* Enable HSI */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV1;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL1.PLLState = RCC_PLL_NONE;
-  RCC_OscInitStruct.PLL2.PLLState = RCC_PLL_NONE;
-  RCC_OscInitStruct.PLL3.PLLState = RCC_PLL_NONE;
-  RCC_OscInitStruct.PLL4.PLLState = RCC_PLL_NONE;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  /** Get current CPU/System buses clocks configuration and if necessary switch
- to intermediate HSI clock to ensure target clock can be set
-  */
-  HAL_RCC_GetClockConfig(&RCC_ClkInitStruct);
-  if ((RCC_ClkInitStruct.CPUCLKSource == RCC_CPUCLKSOURCE_IC1) ||
-     (RCC_ClkInitStruct.SYSCLKSource == RCC_SYSCLKSOURCE_IC2_IC6_IC11))
-  {
-    RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_CPUCLK | RCC_CLOCKTYPE_SYSCLK);
-    RCC_ClkInitStruct.CPUCLKSource = RCC_CPUCLKSOURCE_HSI;
-    RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
-    if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct) != HAL_OK)
-    {
-      /* Initialization Error */
-      Error_Handler();
-    }
-  }
-
-  /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_NONE;
-  RCC_OscInitStruct.PLL1.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL1.PLLSource = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL1.PLLM = 4;
-  RCC_OscInitStruct.PLL1.PLLN = 75;
-  RCC_OscInitStruct.PLL1.PLLFractional = 0;
-  RCC_OscInitStruct.PLL1.PLLP1 = 1;
-  RCC_OscInitStruct.PLL1.PLLP2 = 1;
-  RCC_OscInitStruct.PLL2.PLLState = RCC_PLL_NONE;
-  RCC_OscInitStruct.PLL3.PLLState = RCC_PLL_NONE;
-  RCC_OscInitStruct.PLL4.PLLState = RCC_PLL_NONE;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  /** Initializes the CPU, AHB and APB buses clocks
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_CPUCLK|RCC_CLOCKTYPE_HCLK
-                              |RCC_CLOCKTYPE_SYSCLK|RCC_CLOCKTYPE_PCLK1
-                              |RCC_CLOCKTYPE_PCLK2|RCC_CLOCKTYPE_PCLK5
-                              |RCC_CLOCKTYPE_PCLK4;
-  RCC_ClkInitStruct.CPUCLKSource = RCC_CPUCLKSOURCE_IC1;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_IC2_IC6_IC11;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_APB1_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV1;
-  RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV1;
-  RCC_ClkInitStruct.APB5CLKDivider = RCC_APB5_DIV1;
-  RCC_ClkInitStruct.IC1Selection.ClockSelection = RCC_ICCLKSOURCE_PLL1;
-  RCC_ClkInitStruct.IC1Selection.ClockDivider = 2;
-  RCC_ClkInitStruct.IC2Selection.ClockSelection = RCC_ICCLKSOURCE_PLL1;
-  RCC_ClkInitStruct.IC2Selection.ClockDivider = 6;
-  RCC_ClkInitStruct.IC6Selection.ClockSelection = RCC_ICCLKSOURCE_PLL1;
-  RCC_ClkInitStruct.IC6Selection.ClockDivider = 4;
-  RCC_ClkInitStruct.IC11Selection.ClockSelection = RCC_ICCLKSOURCE_PLL1;
-  RCC_ClkInitStruct.IC11Selection.ClockDivider = 3;
-
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
-}
-
-/**
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_GPIO_Init(void)
-{
-  GPIO_InitTypeDef  GPIO_InitStruct = {0};
-
-  __HAL_RCC_GPIOG_CLK_ENABLE();
-
-  /* Configure default pin levels (LEDs OFF)*/
-  HAL_GPIO_WritePin(GPIOG, LED_RED_Pin | LED_BLUE_Pin, GPIO_PIN_SET);
-
-  /* Configure the LED pins */
-  GPIO_InitStruct.Pin =  LED_RED_Pin | LED_BLUE_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
-}
-
-/**
-  * @brief USART1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USART1_Init(void)
-{
-  /* USER CODE BEGIN USART1_Init 0 */
-
-  /* USER CODE END USART1_Init 0 */
-
-  /* USER CODE BEGIN USART1_Init 1 */
-
-  /* USER CODE END USART1_Init 1 */
-  huart1.Instance          = USART1;
-  huart1.Init.BaudRate     = 86400;
-  huart1.Init.Mode         = UART_MODE_TX_RX;
-  huart1.Init.Parity       = UART_PARITY_NONE;
-  huart1.Init.StopBits     = UART_STOPBITS_1;
-  huart1.Init.WordLength   = UART_WORDLENGTH_8B;
-  huart1.Init.HwFlowCtl    = UART_HWCONTROL_NONE;
-  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
-  huart1.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
-  huart1.Init.ClockPrescaler = UART_PRESCALER_DIV1;
-  huart1.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-  if (HAL_UART_Init(&huart1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_UARTEx_SetTxFifoThreshold(&huart1, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_UARTEx_SetRxFifoThreshold(&huart1, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_UARTEx_DisableFifoMode(&huart1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-}
-
-/**
-  * @brief  Period elapsed callback in non blocking mode
-  * @note   This function is called  when TIM6 interrupt took place, inside
-  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
-  * a global variable "uwTick" used as application time base.
-  * @param  htim : TIM handle
-  * @retval None
-  */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-  /* USER CODE BEGIN Callback 0 */
-
-  /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM6) {
-    HAL_IncTick();
-  }
-  /* USER CODE BEGIN Callback 1 */
-
-  /* USER CODE END Callback 1 */
-}
-
-/* USER CODE BEGIN 4 */
 /**
   * @brief  Retargets the C library __write function to the IAR function iar_fputc.
   * @param  file: file descriptor.
@@ -379,8 +277,29 @@ PUTCHAR_PROTOTYPE
 /* USER CODE END 4 */
 
 /**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM6 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM6)
+  {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
+
+/**
   * @brief  This function is executed in case of error occurrence.
-  * @param  None
   * @retval None
   */
 void Error_Handler(void)
