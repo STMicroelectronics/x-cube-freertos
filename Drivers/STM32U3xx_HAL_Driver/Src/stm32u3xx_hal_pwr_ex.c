@@ -28,10 +28,11 @@
   [..]
    (#) Call HAL_PWREx_ControlVoltageScaling() and HAL_PWREx_GetVoltageRange() to
        set / get the voltage scaling range.
-      (+) Voltage scaling can be one of the following values :
-             (++) voltage output scale 1 :
-                  => Used when system clock frequency is up to 100 MHz
-             (++) voltage output scale 2 :
+      (++) Voltage scaling can be one of the following values :
+             (+++) voltage output scale 1 :
+                   => Used when system clock frequency is up to 96 MHz
+             (+++) voltage output scale 2 :
+                   => Used when system clock frequency is up to 48 MHz
 
    (#) Call HAL_PWREx_EnableFastSoftStart() and HAL_PWREx_DisableFastSoftStart()
        to enable / disable the fast software startup for the current regulator.
@@ -61,12 +62,14 @@
    (#) Call HAL_PWREx_EnableRAMsContentStopRetention() and
        HAL_PWREx_DisableRAMsContentStopRetention() to
        enable / disable the RAMs content retention in Stop mode (Stop 0/1/2/3).
-       (+) Retained RAM can be one of the following RAMs :
-             (++) SRAM1
-             (++) SRAM2
-             (++) ICACHE SRAM
-             (++) FDCAN & USB SRAM
-             (++) PKA SRAM
+       (++) Retained RAM can be one of the following RAMs :
+             (+++) SRAM1 (Pages 6 and 7 are not available for STM32U356xx and STM32U366xx devices.)
+             (+++) SRAM2
+             (+++) SRAM3 (only available for STM32U3B5xx and STM32U3C5xx devices)
+             (+++) SRAM4 (only available for STM32U3B5xx and STM32U3C5xx devices)
+             (+++) ICACHE SRAM
+             (+++) FDCAN & USB SRAM
+             (+++) PKA SRAM
 
    (#) Call HAL_PWREx_EnableFlashFastWakeUp() and
        HAL_PWREx_DisableFlashFastWakeUp() to enable / disable the flash memory
@@ -92,6 +95,7 @@
 
    (#) Call HAL_PWREx_EnableVddIO2() and HAL_PWREx_DisableVddIO2()
        functions to enable and disable the VDDIO2 supply valid.
+       (+) This feature is available only for STM32U375xx, STM32U385xx, STM32U3B5xx and STM32U3C5xx devices.
 
    (#) Call HAL_PWREx_EnableVddA() and HAL_PWREx_DisableVddA()
        functions to enable and disable the VDDA supply valid.
@@ -130,9 +134,9 @@
   * @{
   */
 /*!< Time out value of flags setting */
-#define PWR_VOSF_SETTING_DELAY_VALUE   (0x32U)                                 /*!< Time out value for VOSF flag setting */
-#define PWR_MODE_CHANGE_DELAY_VALUE    (0x32U)                                 /*!< Time out for step down converter operating mode */
-#define BOOSTER_TIMEOUT_VALUE          (1U)                                    /*!< Timeout for booster ready : 1ms */
+#define PWR_VOSF_SETTING_DELAY_VALUE   (0x32U)                   /*!< Time out value for VOSF flag setting            */
+#define PWR_MODE_CHANGE_DELAY_VALUE    (0x32U)                   /*!< Time out for step down converter operating mode */
+#define BOOSTER_TIMEOUT_VALUE          (1U)                      /*!< Timeout for booster ready : 1ms                 */
 
 /**
   * @}
@@ -193,9 +197,9 @@
           and can operate in Stop modes.
           Voltage scaling ranges can be one of the following values :
              (++) voltage output scale 1 :
-                  => Used when system clock frequency is up to 100 MHz
+                  => Used when system clock frequency is up to 96 MHz
              (++) voltage output scale 2 :
-                  => Used when system clock frequency is up to 16 MHz
+                  => Used when system clock frequency is up to 48 MHz
 
 
     *** VBAT charging ***
@@ -218,9 +222,9 @@
   * @param  VoltageScaling : Specifies the regulator output voltage scale.
   *                          This parameter can be one of the following values :
   *                          @arg @ref PWR_REGULATOR_VOLTAGE_SCALE1 : Regulator voltage output range 1.
-  *                                                                   Used when system clock frequency is up to 100 MHz.
+  *                                                                   Used when system clock frequency is up to 96 MHz.
   *                          @arg @ref PWR_REGULATOR_VOLTAGE_SCALE2 : Regulator voltage output range 2.
-  *                                                                   Used when system clock frequency is up to 16 MHz.
+  *                                                                   Used when system clock frequency is up to 48 MHz.
   * @note   Before moving to voltage scaling 2, it is mandatory to ensure that
   *         the system frequency is equal or below 16 MHz.
   * @retval HAL Status.
@@ -292,6 +296,7 @@ void HAL_PWREx_DisableVddUSB(void)
   CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_USV);
 }
 
+#if defined(PWR_SVMCR_IO2SV)
 /**
   * @brief  Enable VDDIO2 supply valid.
   * @note   Setting this bit is mandatory to use PG[15:2] I/Os.
@@ -310,6 +315,7 @@ void HAL_PWREx_DisableVddIO2(void)
 {
   CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_IO2SV);
 }
+#endif /* PWR_SVMCR_IO2SV */
 
 /**
   * @brief  Enable VDDA supply valid.
@@ -576,13 +582,17 @@ void HAL_PWREx_DisableUltraLowPowerMode(void)
        (+) SRAM power down are :
              (++) SRAM1
              (++) SRAM2
+             (++) SRAM3 (This feature is available only for STM32U3B5xx and STM32U3C5xx devices.)
+             (++) SRAM4 (This feature is available only for STM32U3B5xx and STM32U3C5xx devices.)
 
     [..]
       Devices RAMs are configurable to retain or lose RAMs content
       during Stop mode (Stop 0/1/2/3).
        (+) Retained content RAMs in Stop modes are :
-             (++) SRAM1
+             (++) SRAM1 (Pages 6 and 7 are not available only for STM32U356xx and STM32U366xx devices.)
              (++) SRAM2
+             (++) SRAM3 (This feature is available only for STM32U3B5xx and STM32U3C5xx devices.)
+             (++) SRAM4 (This feature is available only for STM32U3B5xx and STM32U3C5xx devices.)
              (++) ICACHE
              (++) PKA SRAM
              (++) FDCAN and USB peripherals SRAM
@@ -600,13 +610,14 @@ void HAL_PWREx_DisableUltraLowPowerMode(void)
 /**
   * @brief  Enable RAMs power down.
   * @note   This bit is used to reduce the consumption by powering off the SRAMi.
+  * @note   Parameters noted (*) are only available on STM32U3B5xx/STM32U3C5xx devices.
   * @param RAMSelection: Specifies RAMs.
   *                      This parameter can be one of the following values :
   *                      @arg PWR_SRAM1_POWERDOWN  : SRAM1 powered off.
   *                      @arg PWR_SRAM2_POWERDOWN  : SRAM2 powered off.
-#ifdef SRAM3_BASE
-  *                      @arg PWR_SRAM3_POWERDOWN  : SRAM3 powered off.
-  *                      @arg PWR_SRAM4_POWERDOWN  : SRAM4 powered off.
+#if defined(RAMCFG_SRAM3)
+  *                      @arg PWR_SRAM3_POWERDOWN  : SRAM3 powered off. (*)
+  *                      @arg PWR_SRAM4_POWERDOWN  : SRAM4 powered off. (*)
 #endif
   * @retval None.
   */
@@ -620,31 +631,11 @@ void HAL_PWREx_EnableRAMsPowerDown(uint32_t RAMSelection)
 }
 
 /**
-  * @brief  Disable RAMs power down.
-  * @note   When this bit is cleared to 0, wait for more than 1.6us before accessing the SRAM.
-  * @param RAMSelection: Specifies RAMs .
-  *                      This parameter can be one of the following values :
-  *                      @arg PWR_SRAM1_POWERDOWN  : SRAM1 powered on.
-  *                      @arg PWR_SRAM2_POWERDOWN  : SRAM2 powered on.
-#ifdef SRAM3_BASE
-  *                      @arg PWR_SRAM3_POWERDOWN  : SRAM3 powered on.
-  *                      @arg PWR_SRAM4_POWERDOWN  : SRAM4 powered on.
-#endif
-  * @retval None.
-  */
-void HAL_PWREx_DisableRAMsPowerDown(uint32_t RAMSelection)
-{
-  /* Check the parameters */
-  assert_param(IS_PWR_RAM_POWERDOWN(RAMSelection));
-
-  /* SRAMi powered on */
-  CLEAR_BIT(PWR->CR1, RAMSelection);
-}
-
-/**
-  * @brief  Enable RAMs content retention in Stop mode (Stop 0, 1, 2, 3).
-  * @note   When enabling content retention for a given ram, memory is kept powered
-  *         on in Stop mode. (Consumption is not optimized)
+  * @brief Enable RAMs content retention in Stop mode (Stop 0, 1, 2, 3).
+  * @note  When enabling content retention for a given ram, memory is kept powered
+  *        on in Stop mode. (Consumption is not optimized)
+  * @note  Parameters noted (*) are not available on STM32U356xx/STM32U366xx devices.
+  * @note  Parameters noted (**) are only available on STM32U3B5xx/STM32U3C5xx devices.
   * @param RAMSelection: Specifies RAMs content to be retained in Stop mode.
   *                      This parameter can be one or a combination of the following values :
   *                      @arg PWR_SRAM1_PAGE1_STOP_RETENTION : SRAM1 page 1 retention.
@@ -652,21 +643,23 @@ void HAL_PWREx_DisableRAMsPowerDown(uint32_t RAMSelection)
   *                      @arg PWR_SRAM1_PAGE3_STOP_RETENTION : SRAM1 page 3 retention.
   *                      @arg PWR_SRAM1_PAGE4_STOP_RETENTION : SRAM1 page 4 retention.
   *                      @arg PWR_SRAM1_PAGE5_STOP_RETENTION : SRAM1 page 5 retention.
-  *                      @arg PWR_SRAM1_PAGE6_STOP_RETENTION : SRAM1 page 6 retention.
-  *                      @arg PWR_SRAM1_PAGE7_STOP_RETENTION : SRAM1 page 7 retention.
+#if defined(PWR_CR2_SRAM1PDS6)
+  *                      @arg PWR_SRAM1_PAGE6_STOP_RETENTION : SRAM1 page 6 retention. (*)
+  *                      @arg PWR_SRAM1_PAGE7_STOP_RETENTION : SRAM1 page 7 retention. (*)
+#endif
   *                      @arg PWR_SRAM1_FULL_STOP_RETENTION  : SRAM1 full retention.
   *                      @arg PWR_SRAM2_PAGE1_STOP_RETENTION : SRAM2 page 1 retention.
   *                      @arg PWR_SRAM2_PAGE2_STOP_RETENTION : SRAM2 page 2 retention.
   *                      @arg PWR_SRAM2_PAGE3_STOP_RETENTION : SRAM2 page 3 retention.
   *                      @arg PWR_SRAM2_FULL_STOP_RETENTION  : SRAM2 full retention.
-#ifdef SRAM3_BASE
-  *                      @arg PWR_SRAM3_PAGE1_STOP_RETENTION : SRAM3 page 1 retention.
-  *                      @arg PWR_SRAM3_PAGE2_STOP_RETENTION : SRAM3 page 2 retention.
-  *                      @arg PWR_SRAM3_PAGE3_STOP_RETENTION : SRAM3 page 3 retention.
-  *                      @arg PWR_SRAM3_PAGE4_STOP_RETENTION : SRAM3 page 4 retention.
-  *                      @arg PWR_SRAM3_PAGE5_STOP_RETENTION : SRAM3 page 5 retention.
-  *                      @arg PWR_SRAM3_FULL_STOP_RETENTION  : SRAM3 full retention.
-  *                      @arg PWR_SRAM4_FULL_STOP_RETENTION  : SRAM4 full retention.
+#if defined(RAMCFG_SRAM3)
+  *                      @arg PWR_SRAM3_PAGE1_STOP_RETENTION : SRAM3 page 1 retention. (**)
+  *                      @arg PWR_SRAM3_PAGE2_STOP_RETENTION : SRAM3 page 2 retention. (**)
+  *                      @arg PWR_SRAM3_PAGE3_STOP_RETENTION : SRAM3 page 3 retention. (**)
+  *                      @arg PWR_SRAM3_PAGE4_STOP_RETENTION : SRAM3 page 4 retention. (**)
+  *                      @arg PWR_SRAM3_PAGE5_STOP_RETENTION : SRAM3 page 5 retention. (**)
+  *                      @arg PWR_SRAM3_FULL_STOP_RETENTION  : SRAM3 full retention. (**)
+  *                      @arg PWR_SRAM4_FULL_STOP_RETENTION  : SRAM4 full retention. (**)
 #endif
   *                      @arg PWR_ICACHE_STOP_RETENTION      : I-CACHE SRAM retention.
   *                      @arg PWR_FDCAN_USB_STOP_RETENTION   : FDCAN & USB SRAM retention.
@@ -686,6 +679,8 @@ void HAL_PWREx_EnableRAMsContentStopRetention(uint32_t RAMSelection)
   * @brief Disable RAMs content retention in Stop mode (Stop 0, 1, 2, 3).
   * @note  When disabling content retention for a given RAM, memory is
   *        powered down in Stop mode. (Consumption is optimized)
+  * @note  Parameters noted (*) are not available on STM32U356xx/STM32U366xx devices.
+  * @note  Parameters noted (**) are only available on STM32U3B5xx/STM32U3C5xx devices.
   * @param RAMSelection: Specifies RAMs content to be lost in Stop mode.
   *                      This parameter can be one or a combination of the following values :
   *                      @arg PWR_SRAM1_PAGE1_STOP_RETENTION : SRAM1 page 1 retention.
@@ -693,21 +688,23 @@ void HAL_PWREx_EnableRAMsContentStopRetention(uint32_t RAMSelection)
   *                      @arg PWR_SRAM1_PAGE3_STOP_RETENTION : SRAM1 page 3 retention.
   *                      @arg PWR_SRAM1_PAGE4_STOP_RETENTION : SRAM1 page 4 retention.
   *                      @arg PWR_SRAM1_PAGE5_STOP_RETENTION : SRAM1 page 5 retention.
-  *                      @arg PWR_SRAM1_PAGE6_STOP_RETENTION : SRAM1 page 6 retention.
-  *                      @arg PWR_SRAM1_PAGE7_STOP_RETENTION : SRAM1 page 7 retention.
+#if defined(PWR_CR2_SRAM1PDS6)
+  *                      @arg PWR_SRAM1_PAGE6_STOP_RETENTION : SRAM1 page 6 retention. (*)
+  *                      @arg PWR_SRAM1_PAGE7_STOP_RETENTION : SRAM1 page 7 retention. (*)
+#endif
   *                      @arg PWR_SRAM1_FULL_STOP_RETENTION  : SRAM1 full retention.
   *                      @arg PWR_SRAM2_PAGE1_STOP_RETENTION : SRAM2 page 1 retention.
   *                      @arg PWR_SRAM2_PAGE2_STOP_RETENTION : SRAM2 page 2 retention.
   *                      @arg PWR_SRAM2_PAGE3_STOP_RETENTION : SRAM2 page 3 retention.
   *                      @arg PWR_SRAM2_FULL_STOP_RETENTION  : SRAM2 full retention.
-#ifdef SRAM3_BASE
-  *                      @arg PWR_SRAM3_PAGE1_STOP_RETENTION : SRAM3 page 1 retention.
-  *                      @arg PWR_SRAM3_PAGE2_STOP_RETENTION : SRAM3 page 2 retention.
-  *                      @arg PWR_SRAM3_PAGE3_STOP_RETENTION : SRAM3 page 3 retention.
-  *                      @arg PWR_SRAM3_PAGE4_STOP_RETENTION : SRAM3 page 4 retention.
-  *                      @arg PWR_SRAM3_PAGE5_STOP_RETENTION : SRAM3 page 5 retention.
-  *                      @arg PWR_SRAM3_FULL_STOP_RETENTION  : SRAM3 full retention.
-  *                      @arg PWR_SRAM4_FULL_STOP_RETENTION  : SRAM4 full retention.
+#if defined(RAMCFG_SRAM3)
+  *                      @arg PWR_SRAM3_PAGE1_STOP_RETENTION : SRAM3 page 1 retention. (**)
+  *                      @arg PWR_SRAM3_PAGE2_STOP_RETENTION : SRAM3 page 2 retention. (**)
+  *                      @arg PWR_SRAM3_PAGE3_STOP_RETENTION : SRAM3 page 3 retention. (**)
+  *                      @arg PWR_SRAM3_PAGE4_STOP_RETENTION : SRAM3 page 4 retention. (**)
+  *                      @arg PWR_SRAM3_PAGE5_STOP_RETENTION : SRAM3 page 5 retention. (**)
+  *                      @arg PWR_SRAM3_FULL_STOP_RETENTION  : SRAM3 full retention. (**)
+  *                      @arg PWR_SRAM4_FULL_STOP_RETENTION  : SRAM4 full retention. (**)
 #endif
   *                      @arg PWR_ICACHE_STOP_RETENTION      : I-CACHE SRAM retention.
   *                      @arg PWR_FDCAN_USB_STOP_RETENTION   : FDCAN & USB SRAM retention.
@@ -880,6 +877,8 @@ void HAL_PWREx_DisablePullUpPullDownConfig(void)
   *         reserved.
   * @note   Even if a PUy bit to set is reserved, the other PUy bits entered as
   *         input parameter at the same time are set.
+  * @note   GPIO Port G is not available on STM32U356xx/STM32U366xx devices.
+  * @note   GPIO Port F is only available on STM32U3B5xx/STM32U3C5xx devices.
   * @param  GPIO_Port : Specify the IO port.
   *                     This parameter can be a value of
   *                     @ref PWREx_GPIO_Port.
@@ -922,16 +921,19 @@ HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullUp(uint32_t GPIO_Port, uint32_t GPIO_P
       CLEAR_BIT(PWR->PDCRE, GPIO_Pin);
       break;
 
-#ifdef SRAM3_BASE
+#if defined(PWR_GPIO_F)
     case PWR_GPIO_F: /* Apply Pull Up to GPIO port F */
       SET_BIT(PWR->PUCRF, GPIO_Pin);
       CLEAR_BIT(PWR->PDCRF, GPIO_Pin);
       break;
-#endif /* defined(SRAM3_BASE) */
+#endif /* defined(PWR_GPIO_F) */
+
+#if defined(PWR_GPIO_G)
     case PWR_GPIO_G: /* Apply Pull Up to GPIO port G */
       SET_BIT(PWR->PUCRG, GPIO_Pin);
       CLEAR_BIT(PWR->PDCRG, GPIO_Pin);
       break;
+#endif /* defined(PWR_GPIO_G) */
 
     case PWR_GPIO_H: /* Apply Pull Up to GPIO port H */
       SET_BIT(PWR->PUCRH, GPIO_Pin);
@@ -952,6 +954,8 @@ HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullUp(uint32_t GPIO_Port, uint32_t GPIO_P
   *         the I/O in pull-up state in Stop 3, Standby and Shutdown modes.
   * @note   Even if a PUy bit to reset is reserved, the other PUy bits entered as
   *         input parameter at the same time are reset.
+  * @note   GPIO Port G is not available on STM32U356xx/STM32U366xx devices.
+  * @note   GPIO Port F is only available on STM32U3B5xx/STM32U3C5xx devices.
   * @param  GPIO_Port : Specify the IO port.
   *                     This parameter can be a value of
   *                     @ref PWREx_GPIO_Port.
@@ -989,14 +993,17 @@ HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullUp(uint32_t GPIO_Port, uint32_t GPIO_
       CLEAR_BIT(PWR->PUCRE, GPIO_Pin);
       break;
 
-#ifdef SRAM3_BASE
+#if defined(PWR_GPIO_F)
     case PWR_GPIO_F: /* Disable Pull Up for GPIO port F */
       CLEAR_BIT(PWR->PUCRF, GPIO_Pin);
       break;
-#endif /* defined(SRAM3_BASE) */
+#endif /* defined(PWR_GPIO_F) */
+
+#if defined(PWR_GPIO_G)
     case PWR_GPIO_G: /* Disable Pull Up for GPIO port G */
       CLEAR_BIT(PWR->PUCRG, GPIO_Pin);
       break;
+#endif /* defined(PWR_GPIO_G) */
 
     case PWR_GPIO_H: /* Disable Pull Up for GPIO port H */
       CLEAR_BIT(PWR->PUCRH, GPIO_Pin);
@@ -1023,6 +1030,8 @@ HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullUp(uint32_t GPIO_Port, uint32_t GPIO_
   *         reserved.
   * @note   Even if a PDy bit to set is reserved, the other PDy bits entered as
   *         input parameter at the same time are set.
+  * @note   GPIO Port G is not available on STM32U356xx/STM32U366xx devices.
+  * @note   GPIO Port F is only available on STM32U3B5xx/STM32U3C5xx devices.
   * @param  GPIO_Port : Specify the IO port.
   *                     This parameter can be a value of
   *                     @ref PWREx_GPIO_Port.
@@ -1065,16 +1074,19 @@ HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullDown(uint32_t GPIO_Port, uint32_t GPIO
       CLEAR_BIT(PWR->PUCRE, GPIO_Pin);
       break;
 
-#ifdef SRAM3_BASE
+#if defined(PWR_GPIO_F)
     case PWR_GPIO_F: /* Apply Pull Down to GPIO port F */
       SET_BIT(PWR->PDCRF, GPIO_Pin);
       CLEAR_BIT(PWR->PUCRF, GPIO_Pin);
       break;
-#endif /* defined(SRAM3_BASE) */
+#endif /* defined(PWR_GPIO_F) */
+
+#if defined(PWR_GPIO_G)
     case PWR_GPIO_G: /* Apply Pull Down to GPIO port G */
       SET_BIT(PWR->PDCRG, GPIO_Pin);
       CLEAR_BIT(PWR->PUCRG, GPIO_Pin);
       break;
+#endif /* defined(PWR_GPIO_G) */
 
     case PWR_GPIO_H: /* Apply Pull Down to GPIO port H */
       SET_BIT(PWR->PDCRH, GPIO_Pin);
@@ -1095,6 +1107,8 @@ HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullDown(uint32_t GPIO_Port, uint32_t GPIO
   *         in pull-down state in Stop 3, Standby and Shutdown modes.
   * @note   Even if a PDy bit to reset is reserved, the other PDy bits entered as input
   *         parameter at the same time are reset.
+  * @note   GPIO Port G is not available on STM32U356xx/STM32U366xx devices.
+  * @note   GPIO Port F is only available on STM32U3B5xx/STM32U3C5xx devices.
   * @param  GPIO_Port : Specify the IO port.
   *                     This parameter can be a value of
   *                     @ref PWREx_GPIO_Port.
@@ -1132,14 +1146,17 @@ HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullDown(uint32_t GPIO_Port, uint32_t GPI
       CLEAR_BIT(PWR->PDCRE, GPIO_Pin);
       break;
 
-#ifdef SRAM3_BASE
+#if defined(PWR_GPIO_F)
     case PWR_GPIO_F: /* Disable Pull Down for GPIO port F */
       CLEAR_BIT(PWR->PDCRF, GPIO_Pin);
       break;
-#endif /* defined(SRAM3_BASE) */
+#endif /* defined(PWR_GPIO_F) */
+
+#if defined(PWR_GPIO_G)
     case PWR_GPIO_G: /* Disable Pull Down for GPIO port G */
       CLEAR_BIT(PWR->PDCRG, GPIO_Pin);
       break;
+#endif /* defined(PWR_GPIO_G) */
 
     case PWR_GPIO_H: /* Disable Pull Down for GPIO port H */
       CLEAR_BIT(PWR->PDCRH, GPIO_Pin);

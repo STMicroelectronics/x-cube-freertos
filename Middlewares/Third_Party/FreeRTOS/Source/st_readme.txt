@@ -31,6 +31,19 @@
   @endverbatim
 
 =======
+### 20-June-2025 ###
+=========================
++ FreeRTOS: Update to FreeRTOS v11.2.0
+
++ Add files to portable folder to support MPU for CM0 cortex
+  - portable/GCC/ARM_CM0/mpu_wrappers_v2_asm.c
+  - portable/GCC/ARM_CM0/portasm.h
+  - portable/GCC/ARM_CM0/portasm.c
+
++ CMSIS_RTOS_V2 update against the latest CMSIS-FreeRTOS v11.2.0 release
+  - CMSIS_RTOS_V2/cmsis_os2.c
+  - CMSIS_RTOS_V2/freertos_os2.h
+
 ### 11-October-2024 ###
 =========================
   + FreeRTOS: Update to FreeRTOS v10.6.2

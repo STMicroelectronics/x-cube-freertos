@@ -24,7 +24,7 @@ Successful operation is marked by the green LED toggling every second.
 
 #### <b>Error behaviors</b>
 
-On failure, the red LED starts toggling while the green LED is switched OFF.
+On failure, the Red LED turns ON, while the green LED is switched OFF.
 
 #### <b>Assumptions if any</b>
 

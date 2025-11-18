@@ -133,6 +133,7 @@
     [..]
      After the configuration, the XSPI will be used as soon as an access on the AHB is done on
      the address range. HAL_XSPI_TimeOutCallback() will be called when the timeout expires.
+     HAL_XSPI_IsMemoryMapped() can be used to verify whether memory-mapped mode is configured or not.
 
     *** Errors management and abort functionality ***
     =================================================
@@ -223,7 +224,7 @@
      (+) MspInitCallback    : XSPI MspInit.
      (+) MspDeInitCallback  : XSPI MspDeInit.
     [..]
-     This function) takes as parameters the HAL peripheral handle and the Callback ID.
+     This function takes as parameters the HAL peripheral handle and the Callback ID.
 
     [..]
      By default, after the HAL_XSPI_Init() and if the state is HAL_XSPI_STATE_RESET
@@ -359,7 +360,6 @@ HAL_StatusTypeDef HAL_XSPI_Init(XSPI_HandleTypeDef *hxspi)
     assert_param(IS_XSPI_WRAP_SIZE(hxspi->Init.WrapSize));
     assert_param(IS_XSPI_CLK_PRESCALER(hxspi->Init.ClockPrescaler));
     assert_param(IS_XSPI_SAMPLE_SHIFTING(hxspi->Init.SampleShifting));
-    assert_param(IS_XSPI_DHQC(hxspi->Init.DelayHoldQuarterCycle));
     assert_param(IS_XSPI_CS_BOUND(hxspi->Init.ChipSelectBoundary));
     assert_param(IS_XSPI_FIFO_THRESHOLD_BYTE(hxspi->Init.FifoThresholdByte));
     assert_param(IS_XSPI_MAXTRAN(hxspi->Init.MaxTran));
@@ -444,9 +444,8 @@ HAL_StatusTypeDef HAL_XSPI_Init(XSPI_HandleTypeDef *hxspi)
         MODIFY_REG(hxspi->Instance->CR, (XSPI_CR_DMM | XSPI_CR_CSSEL),
                    (hxspi->Init.MemoryMode | hxspi->Init.MemorySelect));
 
-        /* Configure sample shifting and delay hold quarter cycle */
-        MODIFY_REG(hxspi->Instance->TCR, (XSPI_TCR_SSHIFT | XSPI_TCR_DHQC),
-                   (hxspi->Init.SampleShifting | hxspi->Init.DelayHoldQuarterCycle));
+        /* Configure sample shifting */
+        MODIFY_REG(hxspi->Instance->TCR, (XSPI_TCR_SSHIFT), hxspi->Init.SampleShifting);
 
         /* Enable XSPI */
         HAL_XSPI_ENABLE(hxspi);
@@ -2045,6 +2044,29 @@ HAL_StatusTypeDef HAL_XSPI_MemoryMapped(XSPI_HandleTypeDef *hxspi, const XSPI_Me
 }
 
 /**
+  * @brief  Check whether the XSPI is configured in Memory-mapped mode or not.
+  * @param  hxspi   : XSPI handle
+  * @retval Status (0: Memory-mapped disabled or XSPI not initialized, 1: Memory-mapped enabled)
+  */
+uint32_t HAL_XSPI_IsMemoryMapped(XSPI_HandleTypeDef *hxspi)
+{
+  /* Check the XSPI handle allocation */
+  if (hxspi == NULL)
+  {
+    return (0UL);
+  }
+  /* Check if driver is in Reset state */
+  else if (hxspi->State == HAL_XSPI_STATE_RESET)
+  {
+    return (0UL);
+  }
+  else
+  {
+    return ((READ_BIT(hxspi->Instance->CR, XSPI_CR_FMODE) == XSPI_CR_FMODE) ? 1UL : 0UL);
+  }
+}
+
+/**
   * @brief  Transfer Error callback.
   * @param  hxspi : XSPI handle
   * @retval None
@@ -2826,7 +2848,7 @@ HAL_StatusTypeDef HAL_XSPIM_Config(XSPI_HandleTypeDef *hxspi, const XSPIM_CfgTyp
   {
     if ((XSPI3->CR & XSPI_CR_EN) != 0U)
     {
-      CLEAR_BIT(XSPI2->CR, XSPI_CR_EN);
+      CLEAR_BIT(XSPI3->CR, XSPI_CR_EN);
       xspi_enabled |= 0x4U;
     }
   }
@@ -3259,7 +3281,7 @@ static HAL_StatusTypeDef XSPI_ConfigCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Re
     abr_reg = &(hxspi->Instance->ABR);
   }
 
-  /* Configure the CCR register with DQS and SIOO modes */
+  /* Configure the CCR register with DQS mode */
   *ccr_reg = pCmd->DQSMode;
 
   if (pCmd->AlternateBytesMode != HAL_XSPI_ALT_BYTES_NONE)
@@ -3328,19 +3350,18 @@ static HAL_StatusTypeDef XSPI_ConfigCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Re
                                 XSPI_CCR_ADMODE | XSPI_CCR_ADDTR | XSPI_CCR_ADSIZE),
                    (pCmd->InstructionMode | pCmd->InstructionDTRMode | pCmd->InstructionWidth |
                     pCmd->AddressMode     | pCmd->AddressDTRMode     | pCmd->AddressWidth));
-
-        /* The DHQC bit is linked with DDTR bit which should be activated */
-        if ((hxspi->Init.DelayHoldQuarterCycle == HAL_XSPI_DHQC_ENABLE) &&
-            (pCmd->InstructionDTRMode == HAL_XSPI_INSTRUCTION_DTR_ENABLE))
-        {
-          MODIFY_REG((*ccr_reg), XSPI_CCR_DDTR, HAL_XSPI_DATA_DTR_ENABLE);
-        }
       }
       /* Configure the IR register with the instruction value */
       *ir_reg = pCmd->Instruction;
 
       /* Configure the AR register with the address value */
       hxspi->Instance->AR = pCmd->Address;
+
+      if (pCmd->OperationType == HAL_XSPI_OPTYPE_COMMON_CFG)
+      {
+        /* Verify if programmed address fit with requirement of Reference Manual 28.5 chapter */
+        assert_param(IS_XSPI_PROG_ADDR(hxspi->Instance->AR, pCmd->Address));
+      }
     }
     else
     {
@@ -3361,13 +3382,6 @@ static HAL_StatusTypeDef XSPI_ConfigCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Re
         /* Configure the CCR register with all communication parameters */
         MODIFY_REG((*ccr_reg), (XSPI_CCR_IMODE | XSPI_CCR_IDTR | XSPI_CCR_ISIZE),
                    (pCmd->InstructionMode | pCmd->InstructionDTRMode | pCmd->InstructionWidth));
-
-        /* The DHQC bit is linked with DDTR bit which should be activated */
-        if ((hxspi->Init.DelayHoldQuarterCycle == HAL_XSPI_DHQC_ENABLE) &&
-            (pCmd->InstructionDTRMode == HAL_XSPI_INSTRUCTION_DTR_ENABLE))
-        {
-          MODIFY_REG((*ccr_reg), XSPI_CCR_DDTR, HAL_XSPI_DATA_DTR_ENABLE);
-        }
       }
 
       /* Configure the IR register with the instruction value */
@@ -3400,12 +3414,30 @@ static HAL_StatusTypeDef XSPI_ConfigCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Re
 
       /* Configure the AR register with the instruction value */
       hxspi->Instance->AR = pCmd->Address;
+
+      if (pCmd->OperationType == HAL_XSPI_OPTYPE_COMMON_CFG)
+      {
+        /* Verify if programmed address fit with requirement of Reference Manual 28.5 chapter */
+        assert_param(IS_XSPI_PROG_ADDR(hxspi->Instance->AR, pCmd->Address));
+      }
     }
     else
     {
       /* ---- Invalid command configuration (no instruction, no address) ---- */
       status = HAL_ERROR;
       hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_PARAM;
+    }
+  }
+
+  if (pCmd->DataMode != HAL_XSPI_DATA_NONE)
+  {
+    if (pCmd->OperationType == HAL_XSPI_OPTYPE_COMMON_CFG)
+    {
+      /* Configure the DLR register with the number of data */
+      hxspi->Instance->DLR = (pCmd->DataLength - 1U);
+
+      /* Verify if programmed data fit with requirement of Reference Manual 28.5 chapter */
+      assert_param(IS_XSPI_PROG_DATA(hxspi->Instance->DLR, (pCmd->DataLength - 1U)));
     }
   }
 

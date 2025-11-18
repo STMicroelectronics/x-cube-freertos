@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32C0xx_HAL_CONF_H
-#define __STM32C0xx_HAL_CONF_H
+#ifndef STM32C0xx_HAL_CONF_H
+#define STM32C0xx_HAL_CONF_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -267,6 +267,5 @@ void assert_failed(uint8_t *file, uint32_t line);
 }
 #endif
 
-#endif /* __STM32C0xx_HAL_CONF_H */
+#endif /* STM32C0xx_HAL_CONF_H */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

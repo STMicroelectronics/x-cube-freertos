@@ -195,6 +195,7 @@ void LL_RCC_GetSystemClocksFreq(LL_RCC_ClocksTypeDef *RCC_Clocks)
   * @brief  Return USARTx clock frequency
   * @param  USARTxSource This parameter can be one of the following values:
   *         @arg @ref LL_RCC_USART1_CLKSOURCE
+  *         @arg @ref LL_RCC_USART2_CLKSOURCE
   *         @arg @ref LL_RCC_USART3_CLKSOURCE
   * @retval USART clock frequency (in Hz)
   *         - @ref  LL_RCC_PERIPH_FREQUENCY_NO indicates that oscillator (HSI) is not ready
@@ -226,7 +227,30 @@ uint32_t LL_RCC_GetUSARTClockFreq(uint32_t USARTxSource)
         break;
     }
   }
-  else /* i.e. USARTxSource = LL_RCC_USART3_CLKSOURCE */
+#if defined(USART2)
+  else if (USARTxSource == LL_RCC_USART2_CLKSOURCE)
+  {
+    /* USART2CLK clock frequency */
+    switch (LL_RCC_GetUSARTClockSource(USARTxSource))
+    {
+      case LL_RCC_USART2_CLKSOURCE_HSI16:    /* USART2 Clock is HSI16 Osc. */
+        if (LL_RCC_HSI_IsReady() != 0U)
+        {
+          usart_frequency = HSI_VALUE;
+        }
+        break;
+
+      case LL_RCC_USART2_CLKSOURCE_PCLK1:  /* USART2 Clock is PCLK1 */
+        usart_frequency = RCC_GetPCLK1ClockFreq(RCC_GetHCLKClockFreq(RCC_GetSystemClockFreq()));
+        break;
+
+      default:
+        /* unreachable code */
+        break;
+    }
+  }
+#endif /* USART2 */
+  else /* i.e. USARTxSource == LL_RCC_USART3_CLKSOURCE */
   {
     /* USART3CLK clock frequency */
     switch (LL_RCC_GetUSARTClockSource(USARTxSource))
@@ -339,13 +363,13 @@ uint32_t LL_RCC_GetLPUARTClockFreq(uint32_t LPUARTxSource)
   return lpuart_frequency;
 }
 
-
 /**
   * @brief  Return SPIx clock frequency
   * @param  SPIxSource This parameter can be one of the following values:
   *         @arg @ref LL_RCC_SPI1_CLKSOURCE
   *         @arg @ref LL_RCC_SPI2_CLKSOURCE
   *         @arg @ref LL_RCC_SPI3_CLKSOURCE
+  *         @arg @ref LL_RCC_SPI4_CLKSOURCE
   * @retval SPI clock frequency (in Hz)
   *         - @ref  LL_RCC_PERIPH_FREQUENCY_NO indicates error
   */
@@ -378,7 +402,7 @@ uint32_t LL_RCC_GetSPIClockFreq(uint32_t SPIxSource)
   }
   else if (SPIxSource == LL_RCC_SPI2_CLKSOURCE)
   {
-    /* SPI1 CLK clock frequency */
+    /* SPI2 CLK clock frequency */
     switch (LL_RCC_GetSPIClockSource(SPIxSource))
     {
       case LL_RCC_SPI2_CLKSOURCE_MSIK: /* SPI2 Clock is MSIK */
@@ -397,7 +421,7 @@ uint32_t LL_RCC_GetSPIClockFreq(uint32_t SPIxSource)
         break;
     }
   }
-  else /* SPIxSource = LL_RCC_SPI3_CLKSOURCE */
+  else if (SPIxSource == LL_RCC_SPI3_CLKSOURCE)
   {
     /* SPI3 CLK clock frequency */
     switch (LL_RCC_GetSPIClockSource(SPIxSource))
@@ -418,7 +442,33 @@ uint32_t LL_RCC_GetSPIClockFreq(uint32_t SPIxSource)
         break;
     }
   }
+#if defined (SPI4)
+  else if (SPIxSource == LL_RCC_SPI4_CLKSOURCE)
+  {
+    /* SPI4 CLK clock frequency */
+    switch (LL_RCC_GetSPIClockSource(SPIxSource))
+    {
+      case LL_RCC_SPI4_CLKSOURCE_MSIK: /* SPI4 Clock is MSIK */
+        if (LL_RCC_MSIK_IsReady() != 0U)
+        {
+          SPI_frequency = RCC_GetMSIKClockFreq();
+        }
+        break;
 
+      case LL_RCC_SPI4_CLKSOURCE_PCLK1:  /* SPI4 Clock is PCLK1 */
+        SPI_frequency = RCC_GetPCLK1ClockFreq(RCC_GetHCLKClockFreq(RCC_GetSystemClockFreq()));
+        break;
+
+      default:
+        /* unreachable code */
+        break;
+    }
+  }
+#endif /* SPI4 */
+  else
+  {
+    /* Do nothing */
+  }
   return SPI_frequency;
 }
 
@@ -456,6 +506,7 @@ uint32_t LL_RCC_GetOCTOSPIClockFreq(uint32_t OCTOSPIxSource)
   return OCTOSPI_frequency;
 }
 
+#if defined(FDCAN1)
 /**
   * @brief  Return FDCANx clock frequency
   * @param  FDCANxSource This parameter can be one of the following values:
@@ -489,6 +540,7 @@ uint32_t LL_RCC_GetFDCANClockFreq(uint32_t FDCANxSource)
   }
   return FDCAN_frequency;
 }
+#endif /* FDCAN1 */
 
 /**
   * @brief  Return USBx clock frequency
@@ -543,6 +595,7 @@ uint32_t LL_RCC_GetUSBClockFreq(uint32_t USBxSource)
   return (usb_frequency);
 }
 
+#if defined(SDMMC1)
 /**
   * @brief  Return SDMMCx clock frequency
   * @param  SDMMCxSource This parameter can be one of the following values:
@@ -591,6 +644,7 @@ uint32_t LL_RCC_GetSDMMCClockFreq(uint32_t SDMMCxSource)
 
   return (SDMMC_frequency);
 }
+#endif /* SDMMC1 */
 
 /**
   * @brief  Return I2Cx clock frequency
@@ -598,6 +652,7 @@ uint32_t LL_RCC_GetSDMMCClockFreq(uint32_t SDMMCxSource)
   *         @arg @ref LL_RCC_I2C1_CLKSOURCE
   *         @arg @ref LL_RCC_I2C2_CLKSOURCE
   *         @arg @ref LL_RCC_I2C3_CLKSOURCE
+  *         @arg @ref LL_RCC_I2C4_CLKSOURCE
   * @retval I2C clock frequency (in Hz)
   *         - @ref  LL_RCC_PERIPH_FREQUENCY_NO indicates error
   */
@@ -609,17 +664,17 @@ uint32_t LL_RCC_GetI2CClockFreq(uint32_t I2CxSource)
 
   if (I2CxSource == LL_RCC_I2C1_CLKSOURCE)
   {
-    /* I2C3 CLK clock frequency */
+    /* I2C1 CLK clock frequency */
     switch (LL_RCC_GetI2CClockSource(I2CxSource))
     {
-      case LL_RCC_I2C1_CLKSOURCE_MSIK: /* I2C3 Clock is MSIK Clock */
+      case LL_RCC_I2C1_CLKSOURCE_MSIK: /* I2C1 Clock is MSIK Clock */
         if (LL_RCC_MSIK_IsReady() != 0U)
         {
           i2c_frequency = RCC_GetMSIKClockFreq();
         }
         break;
 
-      case LL_RCC_I2C1_CLKSOURCE_PCLK1:  /* I2C3 Clock is PCLK1 */
+      case LL_RCC_I2C1_CLKSOURCE_PCLK1:  /* I2C1 Clock is PCLK1 */
         i2c_frequency = RCC_GetPCLK1ClockFreq(RCC_GetHCLKClockFreq(RCC_GetSystemClockFreq()));
         break;
 
@@ -628,19 +683,43 @@ uint32_t LL_RCC_GetI2CClockFreq(uint32_t I2CxSource)
         break;
     }
   }
+#if defined(I2C2)
   else if (I2CxSource == LL_RCC_I2C2_CLKSOURCE)
+  {
+    /* I2C2 CLK clock frequency */
+    switch (LL_RCC_GetI2CClockSource(I2CxSource))
+    {
+      case LL_RCC_I2C2_CLKSOURCE_MSIK: /* I2C2 Clock is MSIK Clock */
+        if (LL_RCC_MSIK_IsReady() != 0U)
+        {
+          i2c_frequency = RCC_GetMSIKClockFreq();
+        }
+        break;
+
+      case LL_RCC_I2C2_CLKSOURCE_PCLK1:  /* I2C2 Clock is PCLK1 */
+        i2c_frequency = RCC_GetPCLK1ClockFreq(RCC_GetHCLKClockFreq(RCC_GetSystemClockFreq()));
+        break;
+
+      default:
+        /* unreachable code */
+        break;
+    }
+  }
+#endif /* I2C2 */
+#if defined(I2C4)
+  else if (I2CxSource == LL_RCC_I2C4_CLKSOURCE)
   {
     /* I2C3 CLK clock frequency */
     switch (LL_RCC_GetI2CClockSource(I2CxSource))
     {
-      case LL_RCC_I2C2_CLKSOURCE_MSIK: /* I2C3 Clock is MSIK Clock */
+      case LL_RCC_I2C4_CLKSOURCE_MSIK: /* I2C4 Clock is MSIK Clock */
         if (LL_RCC_MSIK_IsReady() != 0U)
         {
           i2c_frequency = RCC_GetMSIKClockFreq();
         }
         break;
 
-      case LL_RCC_I2C2_CLKSOURCE_PCLK1:  /* I2C3 Clock is PCLK1 */
+      case LL_RCC_I2C4_CLKSOURCE_PCLK1:  /* I2C4 Clock is PCLK1 */
         i2c_frequency = RCC_GetPCLK1ClockFreq(RCC_GetHCLKClockFreq(RCC_GetSystemClockFreq()));
         break;
 
@@ -649,7 +728,8 @@ uint32_t LL_RCC_GetI2CClockFreq(uint32_t I2CxSource)
         break;
     }
   }
-  else /* I2CxSource = LL_RCC_I2C3_CLKSOURCE */
+#endif /* I2C4 */
+  else /*if (I2CxSource == LL_RCC_I2C3_CLKSOURCE)*/
   {
     /* I2C3 CLK clock frequency */
     switch (LL_RCC_GetI2CClockSource(I2CxSource))
@@ -689,17 +769,17 @@ uint32_t LL_RCC_GetI3CClockFreq(uint32_t I3CxSource)
 
   if (I3CxSource == LL_RCC_I3C1_CLKSOURCE)
   {
-    /* I3C3 CLK clock frequency */
+    /* I3C1 CLK clock frequency */
     switch (LL_RCC_GetI3CClockSource(I3CxSource))
     {
-      case LL_RCC_I3C1_CLKSOURCE_MSIK: /* I3C3 Clock is MSIK Clock */
+      case LL_RCC_I3C1_CLKSOURCE_MSIK: /* I3C1 Clock is MSIK Clock */
         if (LL_RCC_MSIK_IsReady() != 0U)
         {
           I3C_frequency = RCC_GetMSIKClockFreq();
         }
         break;
 
-      case LL_RCC_I3C1_CLKSOURCE_PCLK1:  /* I3C3 Clock is PCLK1 */
+      case LL_RCC_I3C1_CLKSOURCE_PCLK1:  /* I3C1 Clock is PCLK1 */
         I3C_frequency = RCC_GetPCLK1ClockFreq(RCC_GetHCLKClockFreq(RCC_GetSystemClockFreq()));
         break;
 
@@ -708,9 +788,10 @@ uint32_t LL_RCC_GetI3CClockFreq(uint32_t I3CxSource)
         break;
     }
   }
+#if defined(I3C2)
   else /* I3CxSource = LL_RCC_I3C2_CLKSOURCE */
   {
-    /* I3C3 CLK clock frequency */
+    /* I3C2 CLK clock frequency */
     switch (LL_RCC_GetI3CClockSource(I3CxSource))
     {
       case LL_RCC_I3C2_CLKSOURCE_MSIK: /* I3C2 Clock is MSIK Clock */
@@ -729,6 +810,7 @@ uint32_t LL_RCC_GetI3CClockFreq(uint32_t I3CxSource)
         break;
     }
   }
+#endif /* I3C2 */
   return I3C_frequency;
 }
 
@@ -922,6 +1004,7 @@ uint32_t LL_RCC_GetRTCClockFreq(uint32_t RTCxSource)
   return rtc_frequency;
 }
 
+#if defined(SAI1)
 /**
   * @brief  Return SAIx clock frequency
   * @param  SAIxSource This parameter can be one of the following values:
@@ -963,7 +1046,9 @@ uint32_t LL_RCC_GetSAIClockFreq(uint32_t SAIxSource)
 
   return sai_frequency;
 }
+#endif /* SAI1 */
 
+#if defined(ADF1)
 /**
   * @brief  Return ADFx clock frequency
   * @param  ADFxSource This parameter can be one of the following values:
@@ -1002,6 +1087,7 @@ uint32_t LL_RCC_GetADFClockFreq(uint32_t ADFxSource)
 
   return adf_frequency;
 }
+#endif /* ADF1 */
 
 /**
   * @brief  Return RNGx clock frequency

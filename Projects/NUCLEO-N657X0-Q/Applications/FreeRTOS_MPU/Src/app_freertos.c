@@ -331,7 +331,31 @@ void MemManage_Recover(void)
    /* Current task yields. This forces a context switch and guarantees that
    * the Main thread will be able to take action if needed before the current
    * thread continues.*/
-  taskYIELD();
+  portYIELD_WITHIN_API();
+}
+
+void vApplicationGetIdleTaskMemory( StaticTask_t ** ppxIdleTaskTCBBuffer,
+                                    StackType_t ** ppxIdleTaskStackBuffer,
+                                    configSTACK_DEPTH_TYPE * puxIdleTaskStackSize )
+{
+  static StaticTask_t xIdleTaskTCB;
+  static StackType_t uxIdleTaskStack[ configMINIMAL_STACK_SIZE ];
+
+  *ppxIdleTaskTCBBuffer = &( xIdleTaskTCB );
+  *ppxIdleTaskStackBuffer = &( uxIdleTaskStack[ 0 ] );
+  *puxIdleTaskStackSize = configMINIMAL_STACK_SIZE;
+}
+
+void vApplicationGetTimerTaskMemory( StaticTask_t ** ppxTimerTaskTCBBuffer,
+                                     StackType_t ** ppxTimerTaskStackBuffer,
+                                     configSTACK_DEPTH_TYPE * puxTimerTaskStackSize )
+{
+  static StaticTask_t xTimerTaskTCB;
+  static StackType_t uxTimerTaskStack[ configTIMER_TASK_STACK_DEPTH ];
+
+  *ppxTimerTaskTCBBuffer = &( xTimerTaskTCB );
+  *ppxTimerTaskStackBuffer = &( uxTimerTaskStack[ 0 ] );
+  *puxTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
 }
 
 /* USER CODE END Application */

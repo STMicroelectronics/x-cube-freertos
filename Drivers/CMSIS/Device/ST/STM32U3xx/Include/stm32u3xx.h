@@ -77,7 +77,7 @@
   * @brief CMSIS Device version number
   */
 #define __STM32U3_CMSIS_VERSION_MAIN   (0x01U) /*!< [31:24] main version */
-#define __STM32U3_CMSIS_VERSION_SUB1   (0x00U) /*!< [23:16] sub1 version */
+#define __STM32U3_CMSIS_VERSION_SUB1   (0x02U) /*!< [23:16] sub1 version */
 #define __STM32U3_CMSIS_VERSION_SUB2   (0x00U) /*!< [15:8]  sub2 version */
 #define __STM32U3_CMSIS_VERSION_RC     (0x00U) /*!< [7:0]  release candidate */
 #define __STM32U3_CMSIS_VERSION        ((__STM32U3_CMSIS_VERSION_MAIN << 24U)\
@@ -92,13 +92,12 @@
 /** @addtogroup Device_Included
   * @{
   */
-
 #if defined(STM32U375xx)
   #include "stm32u375xx.h"
 #elif defined(STM32U385xx)
   #include "stm32u385xx.h"
 #else
- #error "Please select first the target STM32U3xx device used in your application (in stm32u3xx.h file)"
+  #error "Please select first the target STM32U3xx device used in your application (in stm32u3xx.h file)"
 #endif
 
 /**

@@ -266,9 +266,11 @@ typedef struct __DMA_HandleTypeDef
 #define GPDMA1_REQUEST_I2C1_RX      12U    /*!< GPDMA1 HW request is I2C1_RX      */
 #define GPDMA1_REQUEST_I2C1_TX      13U    /*!< GPDMA1 HW request is I2C1_TX      */
 #define GPDMA1_REQUEST_I2C1_EVC     14U    /*!< GPDMA1 HW request is I2C1_EVC     */
+#if defined (I2C2)
 #define GPDMA1_REQUEST_I2C2_RX      15U    /*!< GPDMA1 HW request is I2C2_RX      */
 #define GPDMA1_REQUEST_I2C2_TX      16U    /*!< GPDMA1 HW request is I2C2_TX      */
 #define GPDMA1_REQUEST_I2C2_EVC     17U    /*!< GPDMA1 HW request is I2C2_EVC     */
+#endif /* I2C2 */
 #define GPDMA1_REQUEST_I2C3_RX      18U    /*!< GPDMA1 HW request is I2C3_RX      */
 #define GPDMA1_REQUEST_I2C3_TX      19U    /*!< GPDMA1 HW request is I2C3_TX      */
 #define GPDMA1_REQUEST_I2C3_EVC     20U    /*!< GPDMA1 HW request is I2C3_EVC     */
@@ -291,8 +293,10 @@ typedef struct __DMA_HandleTypeDef
 #define GPDMA1_REQUEST_UART5_TX     33U    /*!< GPDMA1 HW request is UART5_TX     */
 #define GPDMA1_REQUEST_LPUART1_RX   34U    /*!< GPDMA1 HW request is LPUART1_RX   */
 #define GPDMA1_REQUEST_LPUART1_TX   35U    /*!< GPDMA1 HW request is LPUART1_TX   */
+#if defined (SAI1)
 #define GPDMA1_REQUEST_SAI1_A       36U    /*!< GPDMA1 HW request is SAI1_A       */
 #define GPDMA1_REQUEST_SAI1_B       37U    /*!< GPDMA1 HW request is SAI1_B       */
+#endif /* SAI1 */
 /*  Reserved                        38U                                           */
 /*  Reserved                        39U                                           */
 #define GPDMA1_REQUEST_OCTOSPI1     40U    /*!< GPDMA1 HW request is OCTOSPI1     */
@@ -327,10 +331,12 @@ typedef struct __DMA_HandleTypeDef
 #define GPDMA1_REQUEST_TIM4_CH3     69U    /*!< GPDMA1 HW request is TIM4_CH3     */
 #define GPDMA1_REQUEST_TIM4_CH4     70U    /*!< GPDMA1 HW request is TIM4_CH4     */
 #define GPDMA1_REQUEST_TIM4_UP      71U    /*!< GPDMA1 HW request is TIM4_UP      */
+#if defined (I3C2)
 #define GPDMA1_REQUEST_I3C2_RX      72U    /*!< GPDMA1 HW request is I3C2_RX      */
 #define GPDMA1_REQUEST_I3C2_TX      73U    /*!< GPDMA1 HW request is I3C2_TX      */
 #define GPDMA1_REQUEST_I3C2_TC      74U    /*!< GPDMA1 HW request is I3C2_TC      */
 #define GPDMA1_REQUEST_I3C2_RS      75U    /*!< GPDMA1 HW request is I3C2_RS      */
+#endif /* I3C2 */
 #if defined (SPI4)
 #define GPDMA1_REQUEST_SPI4_RX      76U    /*!< GPDMA1 HW request is SPI4_RX      */
 #define GPDMA1_REQUEST_SPI4_TX      77U    /*!< GPDMA1 HW request is SPI4_TX      */
@@ -357,7 +363,9 @@ typedef struct __DMA_HandleTypeDef
 #define GPDMA1_REQUEST_TIM8_TRIG    96U    /*!< GPDMA1 HW request is TIM8_TRIG    */
 #define GPDMA1_REQUEST_TIM8_COM     97U    /*!< GPDMA1 HW request is TIM8_COM     */
 #endif /* TIM8 */
+#if defined (ADF1)
 #define GPDMA1_REQUEST_ADF1_FLT0    98U    /*!< GPDMA1 HW request is ADF1_FLT0    */
+#endif /* ADF1 */
 /*  Reserved                        99U                                           */
 /*  Reserved                        100U                                          */
 /*  Reserved                        101U                                          */

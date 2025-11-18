@@ -70,6 +70,7 @@ __unprivileged_flash_end__            = __FLASH_segment_end__;
 /* Sections */
 SECTIONS
 {
+
   /* The startup code and FreeRTOS kernel code are placed into privileged
    * flash. */
   .privileged_functions :

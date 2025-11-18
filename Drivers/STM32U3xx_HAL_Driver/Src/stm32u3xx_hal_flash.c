@@ -190,7 +190,7 @@ HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address, uint
     pFlash.ProcedureOnGoing = TypeProgram;
 
     /* Access to SCR or CR depends on operation type */
-    reg_cr = (IS_FLASH_SECURE_OPERATION() == 1U) ? &(FLASH->SCR) : &(FLASH_NS->CR);
+    reg_cr = (IS_FLASH_SECURE_OPERATION() != 0U) ? &(FLASH->SCR) : &(FLASH_NS->CR);
 
     if ((TypeProgram & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEPROGRAM_DOUBLEWORD)
     {
@@ -259,7 +259,7 @@ HAL_StatusTypeDef HAL_FLASH_Program_IT(uint32_t TypeProgram, uint32_t Address, u
     pFlash.Address = Address;
 
     /* Access to SCR or CR depends on operation type */
-    reg_cr = (IS_FLASH_SECURE_OPERATION() == 1U) ? &(FLASH->SCR) : &(FLASH_NS->CR);
+    reg_cr = (IS_FLASH_SECURE_OPERATION() != 0U) ? &(FLASH->SCR) : &(FLASH_NS->CR);
 
     /* Enable End of Operation and Error interrupts */
     (*reg_cr) |= (FLASH_IT_EOP | FLASH_IT_OPERR);
@@ -295,8 +295,8 @@ void HAL_FLASH_IRQHandler(void)
 
   type = (pFlash.ProcedureOnGoing & ~(FLASH_NON_SECURE_MASK));
   /* Access to CR and SR registers depends on operation type */
-  reg_cr = (IS_FLASH_SECURE_OPERATION() == 1U) ? &(FLASH->SCR) : &(FLASH_NS->CR);
-  reg_sr = (IS_FLASH_SECURE_OPERATION() == 1U) ? &(FLASH->SSR) : &(FLASH_NS->SR);
+  reg_cr = (IS_FLASH_SECURE_OPERATION() != 0U) ? &(FLASH->SCR) : &(FLASH_NS->CR);
+  reg_sr = (IS_FLASH_SECURE_OPERATION() != 0U) ? &(FLASH->SSR) : &(FLASH_NS->SR);
 
   /* Save Flash errors */
   error = (*reg_sr) & FLASH_FLAG_SR_ERRORS;
@@ -660,18 +660,18 @@ HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout)
   /* Wait for the FLASH operation to complete by polling on BUSY and WDW flags to be reset.
      Even if the FLASH operation fails, the BUSY & WDW flags will be reset, and an error flag will be set */
 
-  uint32_t timeout = HAL_GetTick() + Timeout;
+  uint32_t timeout = HAL_GetTick();
   uint32_t error;
   __IO uint32_t *reg_sr;
 
   /* Access to SECSR or NSSR registers depends on operation type */
-  reg_sr = (IS_FLASH_SECURE_OPERATION() == 1U) ? &(FLASH->SSR) : &(FLASH_NS->SR);
+  reg_sr = (IS_FLASH_SECURE_OPERATION() != 0U) ? &(FLASH->SSR) : &(FLASH_NS->SR);
 
   while (((*reg_sr) & (FLASH_FLAG_BSY | FLASH_FLAG_WDW)) != 0U)
   {
     if (Timeout != HAL_MAX_DELAY)
     {
-      if (HAL_GetTick() >= timeout)
+      if ((HAL_GetTick() - timeout) >= Timeout)
       {
         return HAL_TIMEOUT;
       }
@@ -729,7 +729,7 @@ static void FLASH_Program_DoubleWord(uint32_t Address, uint32_t DataAddress)
   assert_param(IS_FLASH_PROGRAM_ADDRESS(Address));
 
   /* Access to SCR or CR registers depends on operation type */
-  reg_cr = (IS_FLASH_SECURE_OPERATION() == 1U) ? &(FLASH->SCR) : &(FLASH_NS->CR);
+  reg_cr = (IS_FLASH_SECURE_OPERATION() != 0U) ? &(FLASH->SCR) : &(FLASH_NS->CR);
 
   /* Set PG bit */
   SET_BIT((*reg_cr), FLASH_CR_PG);
@@ -769,7 +769,7 @@ static void FLASH_Program_Burst(uint32_t Address, uint32_t DataAddress)
   assert_param(IS_FLASH_MAIN_MEM_ADDRESS(Address));
 
   /* Access to SCR or CR registers depends on operation type */
-  reg_cr = (IS_FLASH_SECURE_OPERATION() == 1U) ? &(FLASH->SCR) : &(FLASH_NS->CR);
+  reg_cr = (IS_FLASH_SECURE_OPERATION() != 0U) ? &(FLASH->SCR) : &(FLASH_NS->CR);
 
   /* Set PG and BWR bits */
   SET_BIT((*reg_cr), (FLASH_CR_PG | FLASH_CR_BWR));

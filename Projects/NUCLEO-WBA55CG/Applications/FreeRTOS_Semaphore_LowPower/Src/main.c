@@ -107,7 +107,6 @@ int main(void)
 
   /* Init scheduler */
   osKernelInitialize();
-
   /* Call init function for freertos objects (in app_freertos.c) */
   MX_FREERTOS_Init();
 
@@ -327,15 +326,14 @@ void Error_Handler(void)
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
   HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_SET);
+
+  HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_RESET);
   while (1)
   {
-    HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-    HAL_Delay(200);
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.

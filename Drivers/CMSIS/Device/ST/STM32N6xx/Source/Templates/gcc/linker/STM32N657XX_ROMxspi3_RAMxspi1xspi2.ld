@@ -43,10 +43,10 @@ _sstack = _estack - _Min_Stack_Size;
 /* Memories definition */
 MEMORY
 {
-  ROM    (xrw)    : ORIGIN = 0x80100400,   LENGTH = 511K
-  RAM    (xrw)    : ORIGIN = 0x34000000,   LENGTH = 2048K
-  EXTRAM (rw)     : ORIGIN = 0x74000000,   LENGTH = 0x04000000
-  EXTRAM (rw)     : ORIGIN = 0x90000000,   LENGTH = 0x04000000    
+  ROM     (xrw)    : ORIGIN = 0x80100400,   LENGTH = 511K
+  RAM     (xrw)    : ORIGIN = 0x34000000,   LENGTH = 2048K
+  EXTRAM1 (rw)     : ORIGIN = 0x74000000,   LENGTH = 0x04000000
+  EXTRAM2 (rw)     : ORIGIN = 0x90000000,   LENGTH = 0x04000000    
 }
 
 /* Sections */
@@ -158,10 +158,12 @@ SECTIONS
 
   .gnu.sgstubs :
   {
+    _sNSCVeneer = .;
     . = ALIGN(4);
     *(.gnu.sgstubs*)   /* Secure Gateway stubs */
     . = ALIGN(4);
-  } >ROM 
+  } >ROM
+  _eNSCVeneer = .; 
 
   /* Uninitialized data section into "RAM" Ram type memory */
   . = ALIGN(4);

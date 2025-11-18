@@ -10,15 +10,15 @@
       <TargetName>FreeRTOS_Mutex</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6140001::V6.14.1::ARMCLANG</pCCUsed>
+      <pCCUsed>6210000::V6.21::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32WBA55CGUx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32WBAxx_DFP.1.5.0</PackID>
+          <PackID>Keil.STM32WBAxx_DFP.2.1.0</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
-          <Cpu>IRAM(0x20000000-0x2001FFFF) IROM(0x8000000-0x80FFFFF) CLOCK(8000000) FPU3(SFPU) CPUTYPE("Cortex-M33") ELITTLE TZ</Cpu>
+          <Cpu>IRAM(0x20000000-0x2001FFFF) IROM(0x8000000-0x80FFFFF)  CLOCK(8000000) FPU3(SFPU) CPUTYPE("Cortex-M33") ELITTLE TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
           <FlashDriverDll></FlashDriverDll>

@@ -52,17 +52,17 @@ extern "C" {
   * @brief    Flags defines which can be used with LL_PWR_WriteReg function
   * @{
   */
-#define LL_PWR_SR_CSSF                 PWR_SR_CSSF                             /*!< Clear Stop and Standby flags */
-#define LL_PWR_WUSCR_CWUF1             PWR_WUSCR_CWUF1                         /*!< Clear Wakeup flag 1          */
-#define LL_PWR_WUSCR_CWUF2             PWR_WUSCR_CWUF2                         /*!< Clear Wakeup flag 2          */
-#define LL_PWR_WUSCR_CWUF3             PWR_WUSCR_CWUF3                         /*!< Clear Wakeup flag 3          */
-#define LL_PWR_WUSCR_CWUF4             PWR_WUSCR_CWUF4                         /*!< Clear Wakeup flag 4          */
-#define LL_PWR_WUSCR_CWUF5             PWR_WUSCR_CWUF5                         /*!< Clear Wakeup flag 5          */
-#define LL_PWR_WUSCR_CWUF6             PWR_WUSCR_CWUF6                         /*!< Clear Wakeup flag 6          */
-#define LL_PWR_WUSCR_CWUF7             PWR_WUSCR_CWUF7                         /*!< Clear Wakeup flag 7          */
-#define LL_PWR_WUSCR_CWUF8             PWR_WUSCR_CWUF8                         /*!< Clear Wakeup flag 8          */
-#define LL_PWR_WUSCR_CWUF9             PWR_WUSCR_CWUF9                         /*!< Clear Wakeup flag 9          */
-#define LL_PWR_WUSCR_CWUF10            PWR_WUSCR_CWUF10                        /*!< Clear Wakeup flag 10         */
+#define LL_PWR_SR_CSSF                 PWR_SR_CSSF                   /*!< Clear Stop and Standby flags */
+#define LL_PWR_WUSCR_CWUF1             PWR_WUSCR_CWUF1               /*!< Clear Wakeup flag 1          */
+#define LL_PWR_WUSCR_CWUF2             PWR_WUSCR_CWUF2               /*!< Clear Wakeup flag 2          */
+#define LL_PWR_WUSCR_CWUF3             PWR_WUSCR_CWUF3               /*!< Clear Wakeup flag 3          */
+#define LL_PWR_WUSCR_CWUF4             PWR_WUSCR_CWUF4               /*!< Clear Wakeup flag 4          */
+#define LL_PWR_WUSCR_CWUF5             PWR_WUSCR_CWUF5               /*!< Clear Wakeup flag 5          */
+#define LL_PWR_WUSCR_CWUF6             PWR_WUSCR_CWUF6               /*!< Clear Wakeup flag 6          */
+#define LL_PWR_WUSCR_CWUF7             PWR_WUSCR_CWUF7               /*!< Clear Wakeup flag 7          */
+#define LL_PWR_WUSCR_CWUF8             PWR_WUSCR_CWUF8               /*!< Clear Wakeup flag 8          */
+#define LL_PWR_WUSCR_CWUF9             PWR_WUSCR_CWUF9               /*!< Clear Wakeup flag 9          */
+#define LL_PWR_WUSCR_CWUF10            PWR_WUSCR_CWUF10              /*!< Clear Wakeup flag 10         */
 #define LL_PWR_WUSCR_CWUF_ALL         (PWR_WUSCR_CWUF1 | PWR_WUSCR_CWUF2 | PWR_WUSCR_CWUF3 | PWR_WUSCR_CWUF4 |\
                                        PWR_WUSCR_CWUF5 | PWR_WUSCR_CWUF6 | PWR_WUSCR_CWUF7 | PWR_WUSCR_CWUF8 |\
                                        PWR_WUSCR_CWUF9 | PWR_WUSCR_CWUF10)
@@ -75,28 +75,30 @@ extern "C" {
   * @brief    Flags defines which can be used with LL_PWR_ReadReg function
   * @{
   */
-#define LL_PWR_FLAG_STOPF              PWR_SR_STOPF                            /*!< Stop flag                                   */
-#define LL_PWR_FLAG_SBF                PWR_SR_SBF                              /*!< Standby flag                                */
-#define LL_PWR_FLAG_R1RDY              PWR_VOSR_R1RDY                          /*!< Voltage range 1 selection ready flag        */
-#define LL_PWR_FLAG_R2RDY              PWR_VOSR_R2RDY                          /*!< Voltage range 2 selection ready flag        */
-#define LL_PWR_FLAG_BOOSTRDY           PWR_VOSR_BOOSTRDY                       /*!< EPOD booster ready flag                     */
-#define LL_PWR_FLAG_PVDO               PWR_SVMSR_PVDO                          /*!< VDD voltage detector output flag            */
-#define LL_PWR_FLAG_REGS               PWR_SVMSR_REGS                          /*!< Regulator selection flag                    */
-#define LL_PWR_FLAG_VDDA1RDY           PWR_SVMSR_VDDA1RDY                      /*!< VDDA ready versus 1.6V voltage monitor flag */
-#define LL_PWR_FLAG_VDDA2RDY           PWR_SVMSR_VDDA2RDY                      /*!< VDDA ready versus 1.8V voltage monitor flag */
-#define LL_PWR_FLAG_VDDIO2RDY          PWR_SVMSR_VDDIO2RDY                     /*!< VDDIO2 ready voltage monito flag            */
-#define LL_PWR_FLAG_VDDUSBRDY          PWR_SVMSR_VDDUSBRDY                     /*!< VDDUSB ready voltage monito flag            */
+#define LL_PWR_FLAG_STOPF              PWR_SR_STOPF                  /*!< Stop flag                                   */
+#define LL_PWR_FLAG_SBF                PWR_SR_SBF                    /*!< Standby flag                                */
+#define LL_PWR_FLAG_R1RDY              PWR_VOSR_R1RDY                /*!< Voltage range 1 selection ready flag        */
+#define LL_PWR_FLAG_R2RDY              PWR_VOSR_R2RDY                /*!< Voltage range 2 selection ready flag        */
+#define LL_PWR_FLAG_BOOSTRDY           PWR_VOSR_BOOSTRDY             /*!< EPOD booster ready flag                     */
+#define LL_PWR_FLAG_PVDO               PWR_SVMSR_PVDO                /*!< VDD voltage detector output flag            */
+#define LL_PWR_FLAG_REGS               PWR_SVMSR_REGS                /*!< Regulator selection flag                    */
+#define LL_PWR_FLAG_VDDA1RDY           PWR_SVMSR_VDDA1RDY            /*!< VDDA ready versus 1.6V voltage monitor flag */
+#define LL_PWR_FLAG_VDDA2RDY           PWR_SVMSR_VDDA2RDY            /*!< VDDA ready versus 1.8V voltage monitor flag */
+#if defined(PWR_SVMCR_IO2VMEN)
+#define LL_PWR_FLAG_VDDIO2RDY          PWR_SVMSR_VDDIO2RDY           /*!< VDDIO2 ready voltage monitor flag           */
+#endif /* PWR_SVMCR_IO2VMEN */
+#define LL_PWR_FLAG_VDDUSBRDY          PWR_SVMSR_VDDUSBRDY           /*!< VDDUSB ready voltage monitor flag           */
 
-#define LL_PWR_WAKEUP_FLAG1            PWR_WUSR_WUF1                           /*!< Wakeup flag 1  */
-#define LL_PWR_WAKEUP_FLAG2            PWR_WUSR_WUF2                           /*!< Wakeup flag 2  */
-#define LL_PWR_WAKEUP_FLAG3            PWR_WUSR_WUF3                           /*!< Wakeup flag 3  */
-#define LL_PWR_WAKEUP_FLAG4            PWR_WUSR_WUF4                           /*!< Wakeup flag 4  */
-#define LL_PWR_WAKEUP_FLAG5            PWR_WUSR_WUF5                           /*!< Wakeup flag 5  */
-#define LL_PWR_WAKEUP_FLAG6            PWR_WUSR_WUF6                           /*!< Wakeup flag 6  */
-#define LL_PWR_WAKEUP_FLAG7            PWR_WUSR_WUF7                           /*!< Wakeup flag 7  */
-#define LL_PWR_WAKEUP_FLAG8            PWR_WUSR_WUF8                           /*!< Wakeup flag 8  */
-#define LL_PWR_WAKEUP_FLAG9            PWR_WUSR_WUF9                           /*!< Wakeup flag 9  */
-#define LL_PWR_WAKEUP_FLAG10           PWR_WUSR_WUF10                          /*!< Wakeup flag 10 */
+#define LL_PWR_WAKEUP_FLAG1            PWR_WUSR_WUF1                 /*!< Wakeup flag 1  */
+#define LL_PWR_WAKEUP_FLAG2            PWR_WUSR_WUF2                 /*!< Wakeup flag 2  */
+#define LL_PWR_WAKEUP_FLAG3            PWR_WUSR_WUF3                 /*!< Wakeup flag 3  */
+#define LL_PWR_WAKEUP_FLAG4            PWR_WUSR_WUF4                 /*!< Wakeup flag 4  */
+#define LL_PWR_WAKEUP_FLAG5            PWR_WUSR_WUF5                 /*!< Wakeup flag 5  */
+#define LL_PWR_WAKEUP_FLAG6            PWR_WUSR_WUF6                 /*!< Wakeup flag 6  */
+#define LL_PWR_WAKEUP_FLAG7            PWR_WUSR_WUF7                 /*!< Wakeup flag 7  */
+#define LL_PWR_WAKEUP_FLAG8            PWR_WUSR_WUF8                 /*!< Wakeup flag 8  */
+#define LL_PWR_WAKEUP_FLAG9            PWR_WUSR_WUF9                 /*!< Wakeup flag 9  */
+#define LL_PWR_WAKEUP_FLAG10           PWR_WUSR_WUF10                /*!< Wakeup flag 10 */
 /**
   * @}
   */
@@ -147,10 +149,10 @@ extern "C" {
   */
 #define LL_PWR_SRAM1_POWERDOWN         PWR_CR1_SRAM1PD                         /*!< SRAM1 power down */
 #define LL_PWR_SRAM2_POWERDOWN         PWR_CR1_SRAM2PD                         /*!< SRAM2 power down */
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
 #define LL_PWR_SRAM3_POWERDOWN         PWR_CR1_SRAM3PD                         /*!< SRAM3 power down */
 #define LL_PWR_SRAM4_POWERDOWN         PWR_CR1_SRAM4PD                         /*!< SRAM4 power down */
-#endif /* defined (SRAM3_BASE) */
+#endif /* RAMCFG_SRAM3 */
 /**
   * @}
   */
@@ -158,10 +160,10 @@ extern "C" {
 /** @defgroup PWR_LL_EC_SRAM2_SB_CONTENTS_RETENTION PWR SRAM2 Content Retention in Standby Mode
   * @{
   */
-#define LL_PWR_SRAM2_SB_NO_RETENTION     (0U)                                  /*!< SRAM2 no retention in Standby mode     */
-#define LL_PWR_SRAM2_SB_PAGE1_RETENTION  PWR_CR1_RRSB1                         /*!< SRAM2 page 1 retention in Standby mode */
-#define LL_PWR_SRAM2_SB_PAGE2_RETENTION  PWR_CR1_RRSB2                         /*!< SRAM2 page 2 retention in Standby mode */
-#define LL_PWR_SRAM2_SB_PAGE3_RETENTION  PWR_CR1_RRSB3                         /*!< SRAM2 page 3 retention in Standby mode */
+#define LL_PWR_SRAM2_SB_NO_RETENTION     (0U)          /*!< SRAM2 no retention in Standby mode     */
+#define LL_PWR_SRAM2_SB_PAGE1_RETENTION  PWR_CR1_RRSB1 /*!< SRAM2 page 1 retention in Standby mode */
+#define LL_PWR_SRAM2_SB_PAGE2_RETENTION  PWR_CR1_RRSB2 /*!< SRAM2 page 2 retention in Standby mode */
+#define LL_PWR_SRAM2_SB_PAGE3_RETENTION  PWR_CR1_RRSB3 /*!< SRAM2 page 3 retention in Standby mode */
 #define LL_PWR_SRAM2_SB_FULL_RETENTION   (PWR_CR1_RRSB1 | PWR_CR1_RRSB2 | PWR_CR1_RRSB3)
 /*!< SRAM2 all pages retention in Standby mode      */
 /**
@@ -171,18 +173,24 @@ extern "C" {
 /** @defgroup PWR_LL_EC_SRAM1_STOP_CONTENTS_RETENTION PWR SRAM1 Content Retention in Stop Mode
   * @{
   */
-#define LL_PWR_SRAM1_STOP_NO_RETENTION     (0U)                                /*!< SRAM1 no retention in Stop modes (Stop 0, 1, 2, 3)  */
-#define LL_PWR_SRAM1_STOP_PAGE1_RETENTION  PWR_CR2_SRAM1PDS1                   /*!< SRAM1 page 1 retention Stop modes (Stop 0, 1, 2, 3) */
-#define LL_PWR_SRAM1_STOP_PAGE2_RETENTION  PWR_CR2_SRAM1PDS2                   /*!< SRAM1 page 2 retention Stop modes (Stop 0, 1, 2, 3) */
-#define LL_PWR_SRAM1_STOP_PAGE3_RETENTION  PWR_CR2_SRAM1PDS3                   /*!< SRAM1 page 3 retention Stop modes (Stop 0, 1, 2, 3) */
-#define LL_PWR_SRAM1_STOP_PAGE4_RETENTION  PWR_CR2_SRAM1PDS4                   /*!< SRAM1 page 4 retention Stop modes (Stop 0, 1, 2, 3) */
-#define LL_PWR_SRAM1_STOP_PAGE5_RETENTION  PWR_CR2_SRAM1PDS5                   /*!< SRAM1 page 5 retention Stop modes (Stop 0, 1, 2, 3) */
-#define LL_PWR_SRAM1_STOP_PAGE6_RETENTION  PWR_CR2_SRAM1PDS6                   /*!< SRAM1 page 6 retention Stop modes (Stop 0, 1, 2, 3) */
-#define LL_PWR_SRAM1_STOP_PAGE7_RETENTION  PWR_CR2_SRAM1PDS7                   /*!< SRAM1 page 7 retention Stop modes (Stop 0, 1, 2, 3) */
+#define LL_PWR_SRAM1_STOP_NO_RETENTION     (0U)              /*!< SRAM1 no retention in Stop modes (Stop 0, 1, 2, 3)  */
+#define LL_PWR_SRAM1_STOP_PAGE1_RETENTION  PWR_CR2_SRAM1PDS1 /*!< SRAM1 page 1 retention Stop modes (Stop 0, 1, 2, 3) */
+#define LL_PWR_SRAM1_STOP_PAGE2_RETENTION  PWR_CR2_SRAM1PDS2 /*!< SRAM1 page 2 retention Stop modes (Stop 0, 1, 2, 3) */
+#define LL_PWR_SRAM1_STOP_PAGE3_RETENTION  PWR_CR2_SRAM1PDS3 /*!< SRAM1 page 3 retention Stop modes (Stop 0, 1, 2, 3) */
+#define LL_PWR_SRAM1_STOP_PAGE4_RETENTION  PWR_CR2_SRAM1PDS4 /*!< SRAM1 page 4 retention Stop modes (Stop 0, 1, 2, 3) */
+#define LL_PWR_SRAM1_STOP_PAGE5_RETENTION  PWR_CR2_SRAM1PDS5 /*!< SRAM1 page 5 retention Stop modes (Stop 0, 1, 2, 3) */
+#if defined(PWR_CR2_SRAM1PDS6)
+#define LL_PWR_SRAM1_STOP_PAGE6_RETENTION  PWR_CR2_SRAM1PDS6 /*!< SRAM1 page 6 retention Stop modes (Stop 0, 1, 2, 3) */
+#define LL_PWR_SRAM1_STOP_PAGE7_RETENTION  PWR_CR2_SRAM1PDS7 /*!< SRAM1 page 7 retention Stop modes (Stop 0, 1, 2, 3) */
 #define LL_PWR_SRAM1_STOP_FULL_RETENTION   (PWR_CR2_SRAM1PDS1 | PWR_CR2_SRAM1PDS2 | PWR_CR2_SRAM1PDS3 |\
                                             PWR_CR2_SRAM1PDS4 | PWR_CR2_SRAM1PDS5 | PWR_CR2_SRAM1PDS6 |\
                                             PWR_CR2_SRAM1PDS7)
 /*!< SRAM1 all pages retention in Stop modes (Stop 0, 1, 2, 3) */
+#else
+#define LL_PWR_SRAM1_STOP_FULL_RETENTION   (PWR_CR2_SRAM1PDS1 | PWR_CR2_SRAM1PDS2 | PWR_CR2_SRAM1PDS3 |\
+                                            PWR_CR2_SRAM1PDS4 | PWR_CR2_SRAM1PDS5)
+/*!< SRAM1 all pages retention in Stop modes (Stop 0, 1, 2, 3) */
+#endif /* PWR_CR2_SRAM1PDS6 */
 /**
   * @}
   */
@@ -190,26 +198,26 @@ extern "C" {
 /** @defgroup PWR_LL_EC_SRAM2_STOP_CONTENTS_RETENTION PWR SRAM2 Content Retention in Stop Mode
   * @{
   */
-#define LL_PWR_SRAM2_STOP_NO_RETENTION     (0U)                                /*!< SRAM2 no retention in Stop modes (Stop 0, 1, 2, 3)  */
-#define LL_PWR_SRAM2_STOP_PAGE1_RETENTION  PWR_CR2_SRAM2PDS1                   /*!< SRAM2 page 1 retention Stop modes (Stop 0, 1, 2, 3) */
-#define LL_PWR_SRAM2_STOP_PAGE2_RETENTION  PWR_CR2_SRAM2PDS2                   /*!< SRAM2 page 2 retention Stop modes (Stop 0, 1, 2, 3) */
-#define LL_PWR_SRAM2_STOP_PAGE3_RETENTION  PWR_CR2_SRAM2PDS3                   /*!< SRAM2 page 3 retention Stop modes (Stop 0, 1, 2, 3) */
+#define LL_PWR_SRAM2_STOP_NO_RETENTION     (0U)              /*!< SRAM2 no retention in Stop modes (Stop 0, 1, 2, 3)  */
+#define LL_PWR_SRAM2_STOP_PAGE1_RETENTION  PWR_CR2_SRAM2PDS1 /*!< SRAM2 page 1 retention Stop modes (Stop 0, 1, 2, 3) */
+#define LL_PWR_SRAM2_STOP_PAGE2_RETENTION  PWR_CR2_SRAM2PDS2 /*!< SRAM2 page 2 retention Stop modes (Stop 0, 1, 2, 3) */
+#define LL_PWR_SRAM2_STOP_PAGE3_RETENTION  PWR_CR2_SRAM2PDS3 /*!< SRAM2 page 3 retention Stop modes (Stop 0, 1, 2, 3) */
 #define LL_PWR_SRAM2_STOP_FULL_RETENTION   (PWR_CR2_SRAM2PDS1 | PWR_CR2_SRAM2PDS2 | PWR_CR2_SRAM2PDS3)
 /*!< SRAM2 all pages retention in Stop modes (Stop 0, 1, 2, 3) */
 /**
   * @}
   */
 
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
 /** @defgroup PWR_LL_EC_SRAM3_STOP_CONTENTS_RETENTION PWR SRAM3 Content Retention in Stop Mode
   * @{
   */
-#define LL_PWR_SRAM3_STOP_NO_RETENTION     (0U)                                /*!< SRAM3 no retention in Stop modes (Stop 0, 1, 2, 3)  */
-#define LL_PWR_SRAM3_STOP_PAGE1_RETENTION  PWR_CR2_SRAM3PDS1                   /*!< SRAM3 page 1 retention Stop modes (Stop 0, 1, 2, 3) */
-#define LL_PWR_SRAM3_STOP_PAGE2_RETENTION  PWR_CR2_SRAM3PDS2                   /*!< SRAM3 page 2 retention Stop modes (Stop 0, 1, 2, 3) */
-#define LL_PWR_SRAM3_STOP_PAGE3_RETENTION  PWR_CR2_SRAM3PDS3                   /*!< SRAM3 page 3 retention Stop modes (Stop 0, 1, 2, 3) */
-#define LL_PWR_SRAM3_STOP_PAGE4_RETENTION  PWR_CR2_SRAM3PDS4                   /*!< SRAM3 page 4 retention Stop modes (Stop 0, 1, 2, 3) */
-#define LL_PWR_SRAM3_STOP_PAGE5_RETENTION  PWR_CR2_SRAM3PDS5                   /*!< SRAM3 page 5 retention Stop modes (Stop 0, 1, 2, 3) */
+#define LL_PWR_SRAM3_STOP_NO_RETENTION     (0U)              /*!< SRAM3 no retention in Stop modes (Stop 0, 1, 2, 3)  */
+#define LL_PWR_SRAM3_STOP_PAGE1_RETENTION  PWR_CR2_SRAM3PDS1 /*!< SRAM3 page 1 retention Stop modes (Stop 0, 1, 2, 3) */
+#define LL_PWR_SRAM3_STOP_PAGE2_RETENTION  PWR_CR2_SRAM3PDS2 /*!< SRAM3 page 2 retention Stop modes (Stop 0, 1, 2, 3) */
+#define LL_PWR_SRAM3_STOP_PAGE3_RETENTION  PWR_CR2_SRAM3PDS3 /*!< SRAM3 page 3 retention Stop modes (Stop 0, 1, 2, 3) */
+#define LL_PWR_SRAM3_STOP_PAGE4_RETENTION  PWR_CR2_SRAM3PDS4 /*!< SRAM3 page 4 retention Stop modes (Stop 0, 1, 2, 3) */
+#define LL_PWR_SRAM3_STOP_PAGE5_RETENTION  PWR_CR2_SRAM3PDS5 /*!< SRAM3 page 5 retention Stop modes (Stop 0, 1, 2, 3) */
 #define LL_PWR_SRAM3_STOP_FULL_RETENTION   (PWR_CR2_SRAM3PDS1 | PWR_CR2_SRAM3PDS2 | PWR_CR2_SRAM3PDS3 |\
                                             PWR_CR2_SRAM3PDS4 | PWR_CR2_SRAM3PDS5)
 /*!< SRAM3 all pages retention in Stop modes (Stop 0, 1, 2, 3) */
@@ -220,18 +228,19 @@ extern "C" {
 /** @defgroup PWR_LL_EC_SRAM4_STOP_CONTENTS_RETENTION PWR SRAM4 Content Retention in Stop Mode
   * @{
   */
-#define LL_PWR_SRAM4_STOP_NO_RETENTION     (0U)                                 /*!< SRAM4 no retention in Stop modes (Stop 0, 1, 2, 3)  */
-#define LL_PWR_SRAM4_STOP_FULL_RETENTION   PWR_CR2_SRAM4PDS                    /*!< SRAM4 full retention in Stop modes (Stop 0, 1, 2, 3)  */
+#define LL_PWR_SRAM4_STOP_NO_RETENTION     (0U)             /*!< SRAM4 no retention in Stop modes (Stop 0, 1, 2, 3)   */
+#define LL_PWR_SRAM4_STOP_FULL_RETENTION   PWR_CR2_SRAM4PDS /*!< SRAM4 full retention in Stop modes (Stop 0, 1, 2, 3) */
 /**
   * @}
   */
-#endif /* SRAM3_BASE */
+#endif /* RAMCFG_SRAM3 */
 
 /** @defgroup PWR_LL_EC_PKARAM_STOP_CONTENTS_RETENTION PWR PKA SRAM Content Retention in Stop Mode
   * @{
   */
-#define LL_PWR_PKARAM_STOP_NO_RETENTION  (0U)                                  /*!< PKA SRAM no retention in Stop modes (Stop 0, 1, 2, 3)      */
-#define LL_PWR_PKARAM_STOP_RETENTION     PWR_CR2_PKARAMPDS                     /*!< PKA SRAM content retained in Stop modes (Stop 0, 1, 2, 3)  */
+#define LL_PWR_PKARAM_STOP_NO_RETENTION  (0U)              /*!< PKA SRAM no retention in Stop modes (Stop 0, 1, 2, 3) */
+#define LL_PWR_PKARAM_STOP_RETENTION     PWR_CR2_PKARAMPDS /*!< PKA SRAM content retained in Stop modes
+                                                                (Stop 0, 1, 2, 3) */
 /**
   * @}
   */
@@ -239,8 +248,10 @@ extern "C" {
 /** @defgroup PWR_LL_EC_FDCANUSBRAM_STOP_CONTENTS_RETENTION PWR FDCAN & USB SRAM Content Retention in Stop Mode
   * @{
   */
-#define LL_PWR_FDCANUSBRAM_STOP_NO_RETENTION  (0U)                             /*!< FDCAN & USB SRAM no retention in Stop modes (Stop 0, 1, 2, 3)     */
-#define LL_PWR_FDCANUSBRAM_STOP_RETENTION     PWR_CR2_PRAMPDS                  /*!< FDCAN & USB SRAM content retained in Stop modes (Stop 0, 1, 2, 3) */
+#define LL_PWR_FDCANUSBRAM_STOP_NO_RETENTION  (0U)            /*!< FDCAN & USB SRAM no retention in Stop modes
+                                                                    (Stop 0, 1, 2, 3) */
+#define LL_PWR_FDCANUSBRAM_STOP_RETENTION     PWR_CR2_PRAMPDS /*!< FDCAN & USB SRAM content retained in Stop modes
+                                                                    (Stop 0, 1, 2, 3) */
 /**
   * @}
   */
@@ -248,8 +259,10 @@ extern "C" {
 /** @defgroup PWR_LL_EC_ICACHERAM_STOP_CONTENTS_RETENTION PWR ICACHE SRAM Content Retention in Stop Mode
   * @{
   */
-#define LL_PWR_ICACHERAM_STOP_NO_RETENTION  (0U)                               /*!< ICACHE SRAM no retention in Stop modes (Stop 0, 1, 2, 3)      */
-#define LL_PWR_ICACHERAM_STOP_RETENTION     PWR_CR2_ICRAMPDS                   /*!< ICACHE SRAM content retained in Stop modes (Stop 0, 1, 2, 3)  */
+#define LL_PWR_ICACHERAM_STOP_NO_RETENTION  (0U)             /*!< ICACHE SRAM no retention in Stop modes
+                                                                  (Stop 0, 1, 2, 3)      */
+#define LL_PWR_ICACHERAM_STOP_RETENTION     PWR_CR2_ICRAMPDS /*!< ICACHE SRAM content retained in Stop modes
+                                                                  (Stop 0, 1, 2, 3)  */
 /**
   * @}
   */
@@ -257,8 +270,8 @@ extern "C" {
 /** @defgroup PWR_LL_EC_REGULATOR_SUPPLY_SELECTION PWR Regulator Supply Selection
   * @{
   */
-#define LL_PWR_LDO_SUPPLY              (0U)                                    /*!< LDO regulator supply  */
-#define LL_PWR_SMPS_SUPPLY             PWR_CR3_REGSEL                          /*!< SMPS regulator supply */
+#define LL_PWR_LDO_SUPPLY              (0U)           /*!< LDO regulator supply  */
+#define LL_PWR_SMPS_SUPPLY             PWR_CR3_REGSEL /*!< SMPS regulator supply */
 /**
   * @}
   */
@@ -266,8 +279,8 @@ extern "C" {
 /** @defgroup PWR_LL_EC_VOLTAGE_SCALING_RANGE_SELECTION PWR Voltage scaling range selection
   * @{
   */
-#define LL_PWR_REGU_VOLTAGE_SCALE1     PWR_VOSR_R1EN                           /*!< Voltage scaling range 1 (highest frequency) */
-#define LL_PWR_REGU_VOLTAGE_SCALE2     PWR_VOSR_R2EN                           /*!< Voltage scaling range 2 (lowest power)      */
+#define LL_PWR_REGU_VOLTAGE_SCALE1     PWR_VOSR_R1EN /*!< Voltage scaling range 1 (highest frequency) */
+#define LL_PWR_REGU_VOLTAGE_SCALE2     PWR_VOSR_R2EN /*!< Voltage scaling range 2 (lowest power)      */
 /**
   * @}
   */
@@ -275,14 +288,14 @@ extern "C" {
 /** @defgroup PWR_LL_EC_PVD_LEVEL_SELECTION PWR Power Voltage Detector Level Selection
   * @{
   */
-#define LL_PWR_PVDLEVEL_0              (0U)                                    /*!< Voltage threshold detected by PVD 2.0 V  */
-#define LL_PWR_PVDLEVEL_1              PWR_SVMCR_PVDLS_0                       /*!< Voltage threshold detected by PVD 2.2 V  */
-#define LL_PWR_PVDLEVEL_2              PWR_SVMCR_PVDLS_1                       /*!< Voltage threshold detected by PVD 2.4 V  */
-#define LL_PWR_PVDLEVEL_3              (PWR_SVMCR_PVDLS_0 | PWR_SVMCR_PVDLS_1) /*!< Voltage threshold detected by PVD 2.5 V  */
-#define LL_PWR_PVDLEVEL_4              PWR_SVMCR_PVDLS_2                       /*!< Voltage threshold detected by PVD 2.6 V  */
-#define LL_PWR_PVDLEVEL_5              (PWR_SVMCR_PVDLS_0 | PWR_SVMCR_PVDLS_2) /*!< Voltage threshold detected by PVD 2.8 V  */
-#define LL_PWR_PVDLEVEL_6              (PWR_SVMCR_PVDLS_1 | PWR_SVMCR_PVDLS_2) /*!< Voltage threshold detected by PVD 2.9 V  */
-#define LL_PWR_PVDLEVEL_7              PWR_SVMCR_PVDLS
+#define LL_PWR_PVDLEVEL_0       (0U)                                    /*!< Voltage threshold detected by PVD 2.0 V  */
+#define LL_PWR_PVDLEVEL_1       PWR_SVMCR_PVDLS_0                       /*!< Voltage threshold detected by PVD 2.2 V  */
+#define LL_PWR_PVDLEVEL_2       PWR_SVMCR_PVDLS_1                       /*!< Voltage threshold detected by PVD 2.4 V  */
+#define LL_PWR_PVDLEVEL_3       (PWR_SVMCR_PVDLS_0 | PWR_SVMCR_PVDLS_1) /*!< Voltage threshold detected by PVD 2.5 V  */
+#define LL_PWR_PVDLEVEL_4       PWR_SVMCR_PVDLS_2                       /*!< Voltage threshold detected by PVD 2.6 V  */
+#define LL_PWR_PVDLEVEL_5       (PWR_SVMCR_PVDLS_0 | PWR_SVMCR_PVDLS_2) /*!< Voltage threshold detected by PVD 2.8 V  */
+#define LL_PWR_PVDLEVEL_6       (PWR_SVMCR_PVDLS_1 | PWR_SVMCR_PVDLS_2) /*!< Voltage threshold detected by PVD 2.9 V  */
+#define LL_PWR_PVDLEVEL_7       PWR_SVMCR_PVDLS
 /*!< External input analog voltage on PVD_IN pin, compared to internal VREFINT level  */
 /**
   * @}
@@ -291,8 +304,8 @@ extern "C" {
 /** @defgroup PWR_LL_EC_CHARGING_RESISTOR_SELECTION PWR VBAT Charging Resistor Selection
   * @{
   */
-#define LL_PWR_BATT_CHARG_RESISTOR_5K    (0U)                                  /*!< Charge the battery through a 5 kO resistor   */
-#define LL_PWR_BATT_CHARG_RESISTOR_1_5K  PWR_BDCR_VBRS                         /*!< Charge the battery through a 1.5 kO resistor */
+#define LL_PWR_BATT_CHARG_RESISTOR_5K    (0U)          /*!< Charge the battery through a 5 kO resistor   */
+#define LL_PWR_BATT_CHARG_RESISTOR_1_5K  PWR_BDCR_VBRS /*!< Charge the battery through a 1.5 kO resistor */
 /**
   * @}
   */
@@ -305,9 +318,9 @@ extern "C" {
 #define LL_PWR_GPIO_PORTC              ((uint32_t)(&(PWR->PUCRC)))             /*!< GPIO port C */
 #define LL_PWR_GPIO_PORTD              ((uint32_t)(&(PWR->PUCRD)))             /*!< GPIO port D */
 #define LL_PWR_GPIO_PORTE              ((uint32_t)(&(PWR->PUCRE)))             /*!< GPIO port E */
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
 #define LL_PWR_GPIO_PORTF              ((uint32_t)(&(PWR->PUCRF)))             /*!< GPIO port F */
-#endif /* defined (SRAM3_BASE) */
+#endif /* RAMCFG_SRAM3 */
 #define LL_PWR_GPIO_PORTG              ((uint32_t)(&(PWR->PUCRG)))             /*!< GPIO port G */
 #define LL_PWR_GPIO_PORTH              ((uint32_t)(&(PWR->PUCRH)))             /*!< GPIO port H */
 /**
@@ -345,26 +358,34 @@ extern "C" {
 #define LL_PWR_I3CPUCR1_PA7            PWR_I3CPUCR1_PA7_I3CPU                  /*!< I3C pull-up on PA7  */
 #define LL_PWR_I3CPUCR1_PB2            PWR_I3CPUCR1_PB2_I3CPU                  /*!< I3C pull-up on PB2  */
 #define LL_PWR_I3CPUCR1_PB6            PWR_I3CPUCR1_PB6_I3CPU                  /*!< I3C pull-up on PB6  */
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
 #define LL_PWR_I3CPUCR1_PB7            PWR_I3CPUCR1_PB7_I3CPU                  /*!< I3C pull-up on PB7  */
-#endif /* defined(SRAM3_BASE) */
+#endif /* defined(RAMCFG_SRAM3) */
+#if defined(PWR_I3CPUCR1_PB8_I3CPU)
 #define LL_PWR_I3CPUCR1_PB8            PWR_I3CPUCR1_PB8_I3CPU                  /*!< I3C pull-up on PB8  */
 #define LL_PWR_I3CPUCR1_PB9            PWR_I3CPUCR1_PB9_I3CPU                  /*!< I3C pull-up on PB9  */
+#endif /* PWR_I3CPUCR1_PB8_I3CPU */
 #define LL_PWR_I3CPUCR1_PB10           PWR_I3CPUCR1_PB10_I3CPU                 /*!< I3C pull-up on PB10 */
 #define LL_PWR_I3CPUCR1_PB12           PWR_I3CPUCR1_PB12_I3CPU                 /*!< I3C pull-up on PB12 */
 #define LL_PWR_I3CPUCR1_PB13           PWR_I3CPUCR1_PB13_I3CPU                 /*!< I3C pull-up on PB13 */
+#if defined(PWR_I3CPUCR1_PB8_I3CPU)
 #define LL_PWR_I3CPUCR1_PB14           PWR_I3CPUCR1_PB14_I3CPU                 /*!< I3C pull-up on PB14 */
-#ifdef SRAM3_BASE
+#endif /* PWR_I3CPUCR1_PB8_I3CPU */
+#if defined(LL_PWR_I3CPUCR1_PB7)
 #define LL_PWR_I3CPUCR1_ALL            (LL_PWR_I3CPUCR1_PA1  | LL_PWR_I3CPUCR1_PA6  | LL_PWR_I3CPUCR1_PA7  |\
                                         LL_PWR_I3CPUCR1_PB2  | LL_PWR_I3CPUCR1_PB6  | LL_PWR_I3CPUCR1_PB7  |\
                                         LL_PWR_I3CPUCR1_PB8  | LL_PWR_I3CPUCR1_PB9  | LL_PWR_I3CPUCR1_PB10 |\
                                         LL_PWR_I3CPUCR1_PB12 | LL_PWR_I3CPUCR1_PB13 | LL_PWR_I3CPUCR1_PB14)
-#else
+#elif defined(PWR_I3CPUCR1_PB8_I3CPU)
 #define LL_PWR_I3CPUCR1_ALL            (LL_PWR_I3CPUCR1_PA1  | LL_PWR_I3CPUCR1_PA6  | LL_PWR_I3CPUCR1_PA7  |\
                                         LL_PWR_I3CPUCR1_PB2  | LL_PWR_I3CPUCR1_PB6  | LL_PWR_I3CPUCR1_PB8  |\
                                         LL_PWR_I3CPUCR1_PB9  | LL_PWR_I3CPUCR1_PB10 | LL_PWR_I3CPUCR1_PB12 |\
                                         LL_PWR_I3CPUCR1_PB13 | LL_PWR_I3CPUCR1_PB14)
-#endif /* defined-SRAM3_BASE) */
+#else
+#define LL_PWR_I3CPUCR1_ALL            (LL_PWR_I3CPUCR1_PA1  | LL_PWR_I3CPUCR1_PA6  | LL_PWR_I3CPUCR1_PA7  |\
+                                        LL_PWR_I3CPUCR1_PB2  | LL_PWR_I3CPUCR1_PB6  | LL_PWR_I3CPUCR1_PB10 |\
+                                        LL_PWR_I3CPUCR1_PB12 | LL_PWR_I3CPUCR1_PB13)
+#endif /* defined-LL_PWR_I3CPUCR1_PB7) */
 /*!<  I3C pull-up all for port A-B */
 /**
   * @}
@@ -373,18 +394,26 @@ extern "C" {
 /** @defgroup PWR_LL_EC_I3C_PULLUP_CONFIG2 PWR I3C PULL-UP Configuration Port C-D-G-H
   * @{
   */
+#if defined(PWR_I3CPUCR2_PC0_I3CPU)
 #define LL_PWR_I3CPUCR2_PC0            PWR_I3CPUCR2_PC0_I3CPU                  /*!< I3C pull-up on PC0  */
+#endif /* defined(PWR_I3CPUCR2_PC0_I3CPU) */
 #define LL_PWR_I3CPUCR2_PC1            PWR_I3CPUCR2_PC1_I3CPU                  /*!< I3C pull-up on PC1  */
 #define LL_PWR_I3CPUCR2_PD12           PWR_I3CPUCR2_PD12_I3CPU                 /*!< I3C pull-up on PD12 */
 #define LL_PWR_I3CPUCR2_PD13           PWR_I3CPUCR2_PD13_I3CPU                 /*!< I3C pull-up on PD13 */
+#if defined(PWR_I3CPUCR2_PC0_I3CPU)
 #define LL_PWR_I3CPUCR2_PG7            PWR_I3CPUCR2_PG7_I3CPU                  /*!< I3C pull-up on PG7  */
 #define LL_PWR_I3CPUCR2_PG8            PWR_I3CPUCR2_PG8_I3CPU                  /*!< I3C pull-up on PG8  */
 #define LL_PWR_I3CPUCR2_PG13           PWR_I3CPUCR2_PG13_I3CPU                 /*!< I3C pull-up on PG13 */
 #define LL_PWR_I3CPUCR2_PG14           PWR_I3CPUCR2_PG14_I3CPU                 /*!< I3C pull-up on PG14 */
+#endif /* defined(PWR_I3CPUCR2_PC0_I3CPU) */
 #define LL_PWR_I3CPUCR2_PH3            PWR_I3CPUCR2_PH3_I3CPU                  /*!< I3C pull-up on PH3  */
+#if defined(PWR_I3CPUCR2_PC0_I3CPU)
 #define LL_PWR_I3CPUCR2_ALL            (LL_PWR_I3CPUCR2_PC0  | LL_PWR_I3CPUCR2_PC1  | LL_PWR_I3CPUCR2_PD12 |\
                                         LL_PWR_I3CPUCR2_PD13 | LL_PWR_I3CPUCR2_PG7  | LL_PWR_I3CPUCR2_PG8  |\
                                         LL_PWR_I3CPUCR2_PG13 | LL_PWR_I3CPUCR2_PG14 | LL_PWR_I3CPUCR2_PH3)
+#else
+#define LL_PWR_I3CPUCR2_ALL            (LL_PWR_I3CPUCR2_PC1  | LL_PWR_I3CPUCR2_PD12 | LL_PWR_I3CPUCR2_PH3)
+#endif /* defined(PWR_I3CPUCR2_PC0_I3CPU) */
 /*!<  I3C pull-up all for port C-D-G-H */
 /**
   * @}
@@ -393,34 +422,34 @@ extern "C" {
 /** @defgroup PWR_LL_EC_ITEMS_SECURE_ATTRIBUTE PWR Items Secure Attribute
   * @{
   */
-#define LL_PWR_WAKEUP_LINE1_NSEC       (0U)                                    /*!< Wake up line 1 nsecure mode                   */
-#define LL_PWR_WAKEUP_LINE1_SEC        PWR_SECCFGR_WUP1SEC                     /*!< Wake up line 1 secure mode                    */
-#define LL_PWR_WAKEUP_LINE2_NSEC       (0U)                                    /*!< Wake up line 2 nsecure mode                   */
-#define LL_PWR_WAKEUP_LINE2_SEC        PWR_SECCFGR_WUP2SEC                     /*!< Wake up line 2 secure mode                    */
-#define LL_PWR_WAKEUP_LINE3_NSEC       (0U)                                    /*!< Wake up line 3 nsecure mode                   */
-#define LL_PWR_WAKEUP_LINE3_SEC        PWR_SECCFGR_WUP3SEC                     /*!< Wake up line 3 secure mode                    */
-#define LL_PWR_WAKEUP_LINE4_NSEC       (0U)                                    /*!< Wake up line 4 nsecure mode                   */
-#define LL_PWR_WAKEUP_LINE4_SEC        PWR_SECCFGR_WUP4SEC                     /*!< Wake up line 4 secure mode                    */
-#define LL_PWR_WAKEUP_LINE5_NSEC       (0U)                                    /*!< Wake up line 5 nsecure mode                   */
-#define LL_PWR_WAKEUP_LINE5_SEC        PWR_SECCFGR_WUP5SEC                     /*!< Wake up line 5 secure mode                    */
-#define LL_PWR_WAKEUP_LINE6_NSEC       (0U)                                    /*!< Wake up line 6 nsecure mode                   */
-#define LL_PWR_WAKEUP_LINE6_SEC        PWR_SECCFGR_WUP6SEC                     /*!< Wake up line 6 secure mode                    */
-#define LL_PWR_WAKEUP_LINE7_NSEC       (0U)                                    /*!< Wake up line 7 nsecure mode                   */
-#define LL_PWR_WAKEUP_LINE7_SEC        PWR_SECCFGR_WUP7SEC                     /*!< Wake up line 7 secure mode                    */
-#define LL_PWR_WAKEUP_LINE8_NSEC       (0U)                                    /*!< Wake up line 8 nsecure mode                   */
-#define LL_PWR_WAKEUP_LINE8_SEC        PWR_SECCFGR_WUP8SEC                     /*!< Wake up line 8 secure mode                    */
-#define LL_PWR_WAKEUP_LINE9_NSEC       (0U)                                    /*!< Wake up line 9 nsecure mode                   */
-#define LL_PWR_WAKEUP_LINE9_SEC        PWR_SECCFGR_WUP9SEC                     /*!< Wake up line 9 secure mode                    */
-#define LL_PWR_WAKEUP_LINE10_NSEC      (0U)                                    /*!< Wake up line 10 nsecure mode                  */
-#define LL_PWR_WAKEUP_LINE10_SEC       PWR_SECCFGR_WUP10SEC                    /*!< Wake up line 10 secure mode                   */
-#define LL_PWR_LPM_NSEC                (0U)                                    /*!< Low-power modes nsecure mode                  */
-#define LL_PWR_LPM_SEC                 PWR_SECCFGR_LPMSEC                      /*!< Low-power modes secure mode                   */
-#define LL_PWR_VDM_NSEC                (0U)                                    /*!< Voltage detection and monitoring nsecure mode */
-#define LL_PWR_VDM_SEC                 PWR_SECCFGR_VDMSEC                      /*!< Voltage detection and monitoring secure mode  */
-#define LL_PWR_VB_NSEC                 (0U)                                    /*!< Backup domain nsecure mode                    */
-#define LL_PWR_VB_SEC                  PWR_SECCFGR_VBSEC                       /*!< Backup domain secure mode                     */
-#define LL_PWR_APC_NSEC                (0U)                                    /*!< Pull-up/pull-down nsecure mode                */
-#define LL_PWR_APC_SEC                 PWR_SECCFGR_APCSEC                      /*!< Pull-up/pull-down secure mode                  */
+#define LL_PWR_WAKEUP_LINE1_NSEC       (0U)                 /*!< Wake up line 1 nsecure mode                   */
+#define LL_PWR_WAKEUP_LINE1_SEC        PWR_SECCFGR_WUP1SEC  /*!< Wake up line 1 secure mode                    */
+#define LL_PWR_WAKEUP_LINE2_NSEC       (0U)                 /*!< Wake up line 2 nsecure mode                   */
+#define LL_PWR_WAKEUP_LINE2_SEC        PWR_SECCFGR_WUP2SEC  /*!< Wake up line 2 secure mode                    */
+#define LL_PWR_WAKEUP_LINE3_NSEC       (0U)                 /*!< Wake up line 3 nsecure mode                   */
+#define LL_PWR_WAKEUP_LINE3_SEC        PWR_SECCFGR_WUP3SEC  /*!< Wake up line 3 secure mode                    */
+#define LL_PWR_WAKEUP_LINE4_NSEC       (0U)                 /*!< Wake up line 4 nsecure mode                   */
+#define LL_PWR_WAKEUP_LINE4_SEC        PWR_SECCFGR_WUP4SEC  /*!< Wake up line 4 secure mode                    */
+#define LL_PWR_WAKEUP_LINE5_NSEC       (0U)                 /*!< Wake up line 5 nsecure mode                   */
+#define LL_PWR_WAKEUP_LINE5_SEC        PWR_SECCFGR_WUP5SEC  /*!< Wake up line 5 secure mode                    */
+#define LL_PWR_WAKEUP_LINE6_NSEC       (0U)                 /*!< Wake up line 6 nsecure mode                   */
+#define LL_PWR_WAKEUP_LINE6_SEC        PWR_SECCFGR_WUP6SEC  /*!< Wake up line 6 secure mode                    */
+#define LL_PWR_WAKEUP_LINE7_NSEC       (0U)                 /*!< Wake up line 7 nsecure mode                   */
+#define LL_PWR_WAKEUP_LINE7_SEC        PWR_SECCFGR_WUP7SEC  /*!< Wake up line 7 secure mode                    */
+#define LL_PWR_WAKEUP_LINE8_NSEC       (0U)                 /*!< Wake up line 8 nsecure mode                   */
+#define LL_PWR_WAKEUP_LINE8_SEC        PWR_SECCFGR_WUP8SEC  /*!< Wake up line 8 secure mode                    */
+#define LL_PWR_WAKEUP_LINE9_NSEC       (0U)                 /*!< Wake up line 9 nsecure mode                   */
+#define LL_PWR_WAKEUP_LINE9_SEC        PWR_SECCFGR_WUP9SEC  /*!< Wake up line 9 secure mode                    */
+#define LL_PWR_WAKEUP_LINE10_NSEC      (0U)                 /*!< Wake up line 10 nsecure mode                  */
+#define LL_PWR_WAKEUP_LINE10_SEC       PWR_SECCFGR_WUP10SEC /*!< Wake up line 10 secure mode                   */
+#define LL_PWR_LPM_NSEC                (0U)                 /*!< Low-power modes nsecure mode                  */
+#define LL_PWR_LPM_SEC                 PWR_SECCFGR_LPMSEC   /*!< Low-power modes secure mode                   */
+#define LL_PWR_VDM_NSEC                (0U)                 /*!< Voltage detection and monitoring nsecure mode */
+#define LL_PWR_VDM_SEC                 PWR_SECCFGR_VDMSEC   /*!< Voltage detection and monitoring secure mode  */
+#define LL_PWR_VB_NSEC                 (0U)                 /*!< Backup domain nsecure mode                    */
+#define LL_PWR_VB_SEC                  PWR_SECCFGR_VBSEC    /*!< Backup domain secure mode                     */
+#define LL_PWR_APC_NSEC                (0U)                 /*!< Pull-up/pull-down nsecure mode                */
+#define LL_PWR_APC_SEC                 PWR_SECCFGR_APCSEC   /*!< Pull-up/pull-down secure mode                 */
 /**
   * @}
   */
@@ -517,18 +546,6 @@ __STATIC_INLINE void LL_PWR_EnableSRAM1PowerDown(void)
 }
 
 /**
-  * @brief  Disable SRAM1 power down.
-  * @rmtoll CR1          SRAM1PD        LL_PWR_DisableSRAM1PowerDown
-  * @retval None
-  * @retval None
-  */
-__STATIC_INLINE void LL_PWR_DisableSRAM1PowerDown(void)
-{
-  /* SRAM1 powered on */
-  CLEAR_BIT(PWR->CR1, PWR_CR1_SRAM1PD);
-}
-
-/**
   * @brief  Check if SRAM1 power down is enabled.
   * @rmtoll CR1          SRAM1PD        LL_PWR_IsEnabledSRAM1PowerDown
   * @retval State of bit (1 or 0).
@@ -548,17 +565,6 @@ __STATIC_INLINE void LL_PWR_EnableSRAM2PowerDown(void)
 {
   /* SRAM2 powered off */
   SET_BIT(PWR->CR1, PWR_CR1_SRAM2PD);
-}
-
-/**
-  * @brief  Disable SRAM2 power down.
-  * @rmtoll CR1          SRAM2PD        LL_PWR_DisableSRAM2PowerDown
-  * @retval None
-  */
-__STATIC_INLINE void LL_PWR_DisableSRAM2PowerDown(void)
-{
-  /* SRAM2 powered on */
-  CLEAR_BIT(PWR->CR1, PWR_CR1_SRAM2PD);
 }
 
 /**
@@ -603,7 +609,7 @@ __STATIC_INLINE uint32_t LL_PWR_GetSRAM2SBRetention(void)
   return (READ_BIT(PWR->CR1, PWR_CR1_RRSB1 | PWR_CR1_RRSB2 | PWR_CR1_RRSB3));
 }
 
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
 #if defined(PWR_CR1_SRAM3PD)
 /**
   * @brief  Enable SRAM3 power down.
@@ -615,17 +621,6 @@ __STATIC_INLINE void LL_PWR_EnableSRAM3PowerDown(void)
 {
   /* SRAM3 powered off */
   SET_BIT(PWR->CR1, PWR_CR1_SRAM3PD);
-}
-
-/**
-  * @brief  Disable SRAM3 power down.
-  * @rmtoll CR1          SRAM3PD        LL_PWR_DisableSRAM3PowerDown
-  * @retval None
-  */
-__STATIC_INLINE void LL_PWR_DisableSRAM3PowerDown(void)
-{
-  /* SRAM3 powered on */
-  CLEAR_BIT(PWR->CR1, PWR_CR1_SRAM3PD);
 }
 
 /**
@@ -653,17 +648,6 @@ __STATIC_INLINE void LL_PWR_EnableSRAM4PowerDown(void)
 }
 
 /**
-  * @brief  Disable SRAM4 power down.
-  * @rmtoll CR1          SRAM4PD        LL_PWR_DisableSRAM4PowerDown
-  * @retval None
-  */
-__STATIC_INLINE void LL_PWR_DisableSRAM4PowerDown(void)
-{
-  /* SRAM4 powered on */
-  CLEAR_BIT(PWR->CR1, PWR_CR1_SRAM4PD);
-}
-
-/**
   * @brief  Check if SRAM4 power down is enabled.
   * @rmtoll CR1          SRAM4PD        LL_PWR_IsEnabledSRAM4PowerDown
   * @retval State of bit (1 or 0).
@@ -673,7 +657,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledSRAM4PowerDown(void)
   return ((READ_BIT(PWR->CR1, PWR_CR1_SRAM4PD) == (PWR_CR1_SRAM4PD)) ? 1UL : 0UL);
 }
 #endif /* defined(PWR_CR1_SRAM4PD) */
-#endif /* defined (SRAM3_BASE) */
+#endif /* RAMCFG_SRAM3 */
 
 /**
   * @brief  Enable BOR ultra low power mode.
@@ -708,6 +692,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledUltraLowPowerMode(void)
 /**
   * @brief  Set the SRAM1 page(s) retention in Stop modes (Stop 0, 1, 2, 3).
   * @rmtoll CR2    SRAM1PDSi       LL_PWR_SetSRAM1StopRetention
+  * @note   Parameters noted (*) are not available on STM32U356xx/STM32U366xx devices.
   * @param  SRAM1PageRetention  This parameter can be a combination of the following values:
   *         @arg @ref LL_PWR_SRAM1_STOP_NO_RETENTION
   *         @arg @ref LL_PWR_SRAM1_STOP_PAGE1_RETENTION
@@ -715,8 +700,8 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledUltraLowPowerMode(void)
   *         @arg @ref LL_PWR_SRAM1_STOP_PAGE3_RETENTION
   *         @arg @ref LL_PWR_SRAM1_STOP_PAGE4_RETENTION
   *         @arg @ref LL_PWR_SRAM1_STOP_PAGE5_RETENTION
-  *         @arg @ref LL_PWR_SRAM1_STOP_PAGE6_RETENTION
-  *         @arg @ref LL_PWR_SRAM1_STOP_PAGE7_RETENTION
+  *         @arg @ref LL_PWR_SRAM1_STOP_PAGE6_RETENTION (*)
+  *         @arg @ref LL_PWR_SRAM1_STOP_PAGE7_RETENTION (*)
   *         @arg @ref LL_PWR_SRAM1_STOP_FULL_RETENTION
   * @retval None
   */
@@ -728,6 +713,7 @@ __STATIC_INLINE void LL_PWR_SetSRAM1StopRetention(uint32_t SRAM1PageRetention)
 /**
   * @brief  Get the SRAM1 page(s) retention in Stop modes (Stop 0, 1, 2, 3).
   * @rmtoll CR2    SRAM1PDSi       LL_PWR_GetSRAM1StopRetention
+  * @note   Returned values noted (*) are not available on STM32U356xx/STM32U366xx devices.
   * @retval Returned value can be a combination of the following values:
   *         @arg @ref LL_PWR_SRAM1_STOP_NO_RETENTION
   *         @arg @ref LL_PWR_SRAM1_STOP_PAGE1_RETENTION
@@ -735,8 +721,8 @@ __STATIC_INLINE void LL_PWR_SetSRAM1StopRetention(uint32_t SRAM1PageRetention)
   *         @arg @ref LL_PWR_SRAM1_STOP_PAGE3_RETENTION
   *         @arg @ref LL_PWR_SRAM1_STOP_PAGE4_RETENTION
   *         @arg @ref LL_PWR_SRAM1_STOP_PAGE5_RETENTION
-  *         @arg @ref LL_PWR_SRAM1_STOP_PAGE6_RETENTION
-  *         @arg @ref LL_PWR_SRAM1_STOP_PAGE7_RETENTION
+  *         @arg @ref LL_PWR_SRAM1_STOP_PAGE6_RETENTION (*)
+  *         @arg @ref LL_PWR_SRAM1_STOP_PAGE7_RETENTION (*)
   *         @arg @ref LL_PWR_SRAM1_STOP_FULL_RETENTION
   */
 __STATIC_INLINE uint32_t LL_PWR_GetSRAM1StopRetention(void)
@@ -775,7 +761,7 @@ __STATIC_INLINE uint32_t LL_PWR_GetSRAM2StopRetention(void)
   return ((~(READ_BIT(PWR->CR2, LL_PWR_SRAM2_STOP_FULL_RETENTION))) & LL_PWR_SRAM2_STOP_FULL_RETENTION);
 }
 
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
 /**
   * @brief  Set the SRAM3 page(s) retention in Stop modes (Stop 0, 1, 2, 3).
   * @rmtoll CR2    SRAM3PDS       LL_PWR_SetSRAM3StopRetention
@@ -835,7 +821,7 @@ __STATIC_INLINE uint32_t LL_PWR_GetSRAM4StopRetention(void)
 {
   return ((~(READ_BIT(PWR->CR2, LL_PWR_SRAM4_STOP_FULL_RETENTION))) & LL_PWR_SRAM4_STOP_FULL_RETENTION);
 }
-#endif /* SRAM3_BASE */
+#endif /* RAMCFG_SRAM3 */
 
 /**
   * @brief  Set the PKA SRAM retention in Stop modes (Stop 0, 1, 2, 3).
@@ -1206,6 +1192,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledVDDUSB(void)
   return ((READ_BIT(PWR->SVMCR, PWR_SVMCR_USV) == (PWR_SVMCR_USV)) ? 1UL : 0UL);
 }
 
+#if defined(PWR_SVMCR_IO2SV)
 /**
   * @brief  Enable the independent I/Os supply.
   * @rmtoll SVMCR    IO2SV       LL_PWR_EnableVDDIO2
@@ -1235,6 +1222,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledVDDIO2(void)
 {
   return ((READ_BIT(PWR->SVMCR, PWR_SVMCR_IO2SV) == (PWR_SVMCR_IO2SV)) ? 1UL : 0UL);
 }
+#endif /* PWR_SVMCR_IO2SV */
 
 /**
   * @brief  Enable the independent analog supply.
@@ -1296,6 +1284,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledVDDUSBMonitor(void)
   return ((READ_BIT(PWR->SVMCR, PWR_SVMCR_UVMEN) == (PWR_SVMCR_UVMEN)) ? 1UL : 0UL);
 }
 
+#if defined(PWR_SVMCR_IO2SV)
 /**
   * @brief  Enable the independent I/Os supply monitor.
   * @rmtoll SVMCR    IO2VMEN       LL_PWR_EnableVDDIO2Monitor
@@ -1325,6 +1314,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledVDDIO2Monitor(void)
 {
   return ((READ_BIT(PWR->SVMCR, PWR_SVMCR_IO2VMEN) == (PWR_SVMCR_IO2VMEN)) ? 1UL : 0UL);
 }
+#endif /* PWR_SVMCR_IO2SV */
 
 /**
   * @brief  Enable the independent analog supply monitor 1.
@@ -1721,7 +1711,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPUPDConfig(void)
 
 /**
   * @brief  Enable GPIO pull-up in Standby and Shutdown modes
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
   * @note   Parameters noted (*) are only available on STM32U3B5xx/STM32U3C5xx devices.
 #endif
   * @rmtoll PUCRx        PUx        LL_PWR_EnableGPIOPullUp
@@ -1731,7 +1721,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPUPDConfig(void)
   *         @arg @ref LL_PWR_GPIO_PORTC
   *         @arg @ref LL_PWR_GPIO_PORTD
   *         @arg @ref LL_PWR_GPIO_PORTE
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
   *         @arg @ref LL_PWR_GPIO_PORTF (*)
 #endif
   *         @arg @ref LL_PWR_GPIO_PORTG
@@ -1762,7 +1752,7 @@ __STATIC_INLINE void LL_PWR_EnableGPIOPullUp(uint32_t GPIOPort, uint32_t GPIOPin
 
 /**
   * @brief  Disable GPIO pull-up in Standby and Shutdown modes
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
   * @note   Parameters noted (*) are only available on STM32U3B5xx/STM32U3C5xx devices.
 #endif
   * @rmtoll PUCRx        PUx        LL_PWR_DisableGPIOPullUp
@@ -1772,7 +1762,7 @@ __STATIC_INLINE void LL_PWR_EnableGPIOPullUp(uint32_t GPIOPort, uint32_t GPIOPin
   *         @arg @ref LL_PWR_GPIO_PORTC
   *         @arg @ref LL_PWR_GPIO_PORTD
   *         @arg @ref LL_PWR_GPIO_PORTE
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
   *         @arg @ref LL_PWR_GPIO_PORTF (*)
 #endif
   *         @arg @ref LL_PWR_GPIO_PORTG
@@ -1803,7 +1793,7 @@ __STATIC_INLINE void LL_PWR_DisableGPIOPullUp(uint32_t GPIOPort, uint32_t GPIOPi
 
 /**
   * @brief  Check if GPIO pull-up in Standby and Shutdown modes is enabled
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
   * @note   Parameters noted (*) are only available on STM32U3B5xx/STM32U3C5xx devices.
 #endif
   * @rmtoll PUCRx        PUx        LL_PWR_IsEnabledGPIOPullUp
@@ -1813,7 +1803,7 @@ __STATIC_INLINE void LL_PWR_DisableGPIOPullUp(uint32_t GPIOPort, uint32_t GPIOPi
   *         @arg @ref LL_PWR_GPIO_PORTC
   *         @arg @ref LL_PWR_GPIO_PORTD
   *         @arg @ref LL_PWR_GPIO_PORTE
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
   *         @arg @ref LL_PWR_GPIO_PORTF (*)
 #endif
   *         @arg @ref LL_PWR_GPIO_PORTG
@@ -1844,7 +1834,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledGPIOPullUp(uint32_t GPIOPort, uint32_t 
 
 /**
   * @brief  Enable GPIO pull-down in Standby and Shutdown modes.
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
   * @note   Parameters noted (*) are only available on STM32U3B5xx/STM32U3C5xx devices.
 #endif
   * @rmtoll PDCRx        PDx        LL_PWR_EnableGPIOPullDown
@@ -1854,7 +1844,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledGPIOPullUp(uint32_t GPIOPort, uint32_t 
   *         @arg @ref LL_PWR_GPIO_PORTC
   *         @arg @ref LL_PWR_GPIO_PORTD
   *         @arg @ref LL_PWR_GPIO_PORTE
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
   *         @arg @ref LL_PWR_GPIO_PORTF (*)
 #endif
   *         @arg @ref LL_PWR_GPIO_PORTG
@@ -1885,7 +1875,7 @@ __STATIC_INLINE void LL_PWR_EnableGPIOPullDown(uint32_t GPIOPort, uint32_t GPIOP
 
 /**
   * @brief  Disable GPIO pull-down in Standby and Shutdown modes.
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
   * @note   Parameters noted (*) are only available on STM32U3B5xx/STM32U3C5xx devices.
 #endif
   * @rmtoll PDCRx        PDx        LL_PWR_DisableGPIOPullDown
@@ -1895,7 +1885,7 @@ __STATIC_INLINE void LL_PWR_EnableGPIOPullDown(uint32_t GPIOPort, uint32_t GPIOP
   *         @arg @ref LL_PWR_GPIO_PORTC
   *         @arg @ref LL_PWR_GPIO_PORTD
   *         @arg @ref LL_PWR_GPIO_PORTE
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
   *         @arg @ref LL_PWR_GPIO_PORTF (*)
 #endif
   *         @arg @ref LL_PWR_GPIO_PORTG
@@ -1926,7 +1916,7 @@ __STATIC_INLINE void LL_PWR_DisableGPIOPullDown(uint32_t GPIOPort, uint32_t GPIO
 
 /**
   * @brief  Check if GPIO pull-down in Standby and Shutdown modes is enabled
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
   * @note   Parameters noted (*) are only available on STM32U3B5xx/STM32U3C5xx devices.
 #endif
   * @rmtoll PDCRx        PDx        LL_PWR_IsEnabledGPIOPullDown
@@ -1936,7 +1926,7 @@ __STATIC_INLINE void LL_PWR_DisableGPIOPullDown(uint32_t GPIOPort, uint32_t GPIO
   *         @arg @ref LL_PWR_GPIO_PORTC
   *         @arg @ref LL_PWR_GPIO_PORTD
   *         @arg @ref LL_PWR_GPIO_PORTE
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
   *         @arg @ref LL_PWR_GPIO_PORTF (*)
 #endif
   *         @arg @ref LL_PWR_GPIO_PORTG
@@ -1967,7 +1957,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledGPIOPullDown(uint32_t GPIOPort, uint32_
 
 /**
   * @brief  Set I3C pull-up configuration for GPIO on port A-B.
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
   * @note   Parameters noted (*) are only available on STM32U3B5xx/STM32U3C5xx devices.
 #endif
   * @rmtoll I3CPUCR1     PAx_I3CPU        LL_PWR_SetI3CPullUpConfig1
@@ -1978,7 +1968,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledGPIOPullDown(uint32_t GPIOPort, uint32_
   *         @arg @ref LL_PWR_I3CPUCR1_PA7
   *         @arg @ref LL_PWR_I3CPUCR1_PB2
   *         @arg @ref LL_PWR_I3CPUCR1_PB6
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
   *         @arg @ref LL_PWR_I3CPUCR1_PB7 (*)
 #endif
   *         @arg @ref LL_PWR_I3CPUCR1_PB8
@@ -1997,7 +1987,7 @@ __STATIC_INLINE void LL_PWR_SetI3CPullUpConfig1(uint32_t Gpio)
 
 /**
   * @brief  Get I3C pull-up configuration for GPIO on port A-B.
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
   * @note   Parameters noted (*) are only available on STM32U3B5xx/STM32U3C5xx devices.
 #endif
   * @rmtoll I3CPUCR1     PAx_I3CPU        LL_PWR_GetI3CPullUpConfig1
@@ -2008,7 +1998,7 @@ __STATIC_INLINE void LL_PWR_SetI3CPullUpConfig1(uint32_t Gpio)
   *         @arg @ref LL_PWR_I3CPUCR1_PA7
   *         @arg @ref LL_PWR_I3CPUCR1_PB2
   *         @arg @ref LL_PWR_I3CPUCR1_PB6
-#ifdef SRAM3_BASE
+#if defined(RAMCFG_SRAM3)
   *         @arg @ref LL_PWR_I3CPUCR1_PB7 (*)
 #endif
   *         @arg @ref LL_PWR_I3CPUCR1_PB8
@@ -2055,18 +2045,16 @@ __STATIC_INLINE void LL_PWR_SetI3CPullUpConfig2(uint32_t Gpio)
   * @rmtoll I3CPUCR2     PGx_I3CPU        LL_PWR_GetI3CPullUpConfig2
   * @rmtoll I3CPUCR2     PHx_I3CPU        LL_PWR_GetI3CPullUpConfig2
   * @retval Returned value can be a combination of the following values:
-  *         @arg @ref LL_PWR_I3CPUCR1_PA1
-  *         @arg @ref LL_PWR_I3CPUCR1_PA6
-  *         @arg @ref LL_PWR_I3CPUCR1_PA7
-  *         @arg @ref LL_PWR_I3CPUCR1_PB2
-  *         @arg @ref LL_PWR_I3CPUCR1_PB6
-  *         @arg @ref LL_PWR_I3CPUCR1_PB8
-  *         @arg @ref LL_PWR_I3CPUCR1_PB9
-  *         @arg @ref LL_PWR_I3CPUCR1_PB10
-  *         @arg @ref LL_PWR_I3CPUCR1_PB12
-  *         @arg @ref LL_PWR_I3CPUCR1_PB13
-  *         @arg @ref LL_PWR_I3CPUCR1_PB14
-  *         @arg @ref LL_PWR_I3CPUCR1_ALL
+  *         @arg @ref LL_PWR_I3CPUCR2_PC0
+  *         @arg @ref LL_PWR_I3CPUCR2_PC1
+  *         @arg @ref LL_PWR_I3CPUCR2_PD12
+  *         @arg @ref LL_PWR_I3CPUCR2_PD13
+  *         @arg @ref LL_PWR_I3CPUCR2_PG7
+  *         @arg @ref LL_PWR_I3CPUCR2_PG8
+  *         @arg @ref LL_PWR_I3CPUCR2_PG13
+  *         @arg @ref LL_PWR_I3CPUCR2_PG14
+  *         @arg @ref LL_PWR_I3CPUCR2_PH3
+  *         @arg @ref LL_PWR_I3CPUCR2_ALL
   */
 __STATIC_INLINE uint32_t LL_PWR_GetI3CPullUpConfig2(void)
 {
@@ -2143,6 +2131,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_VDDUSB(void)
   return ((READ_BIT(PWR->SVMSR, PWR_SVMSR_VDDUSBRDY) == (PWR_SVMSR_VDDUSBRDY)) ? 1UL : 0UL);
 }
 
+#if defined(PWR_SVMSR_VDDIO2RDY)
 /**
   * @brief  Indicate whether the VDDIO2 is below the threshold of monitor or not.
   * @rmtoll SVMSR          VDDIO2RDY          LL_PWR_IsActiveFlag_VDDIO2
@@ -2152,6 +2141,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_VDDIO2(void)
 {
   return ((READ_BIT(PWR->SVMSR, PWR_SVMSR_VDDIO2RDY) == (PWR_SVMSR_VDDIO2RDY)) ? 1UL : 0UL);
 }
+#endif /* PWR_SVMSR_VDDIO2RDY */
 
 /**
   * @brief  Indicate whether the VDDA1 is below the threshold of monitor 1 or

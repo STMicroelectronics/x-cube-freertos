@@ -136,12 +136,20 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
   /** Configure the System Power Supply
   */
   if (HAL_PWREx_ConfigSupply(PWR_EXTERNAL_SOURCE_SUPPLY) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure the main internal regulator output voltage
+  */
+  if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -156,6 +164,15 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL3.PLLState = RCC_PLL_NONE;
   RCC_OscInitStruct.PLL4.PLLState = RCC_PLL_NONE;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Initializes TIMPRE when TIM is used as Systick Clock Source
+  */
+  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_TIM;
+  PeriphClkInitStruct.TIMPresSelection = RCC_TIMPRES_DIV1;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
   {
     Error_Handler();
   }
@@ -400,8 +417,7 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.

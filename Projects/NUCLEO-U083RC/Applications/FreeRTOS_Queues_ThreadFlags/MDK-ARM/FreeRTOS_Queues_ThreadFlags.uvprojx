@@ -358,7 +358,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc</IncludePath>
+              <IncludePath>../Inc;../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -573,6 +573,11 @@
               <FileName>port.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c</FilePath>
+            </File>
+            <File>
+              <FileName>portasm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/portasm.c</FilePath>
             </File>
           </Files>
         </Group>

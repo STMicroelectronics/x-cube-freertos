@@ -611,7 +611,16 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/../../NonSecure/Inc</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\include</state>
+          <state>$PROJ_DIR$/../../Secure_nsclib</state>
+          <state>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/include/</state>
+          <state>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/IAR/ARM_CM33/non_secure/</state>
+          <state>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/IAR/ARM_CM33/secure/</state>
+          <state>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/</state>
+          <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/RTOS2/Include/</state>
+          <state>$PROJ_DIR$/../../../../../../Drivers/STM32U3xx_HAL_Driver/Inc</state>
+          <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/Device/ST/STM32U3xx/Include</state>
+          <state>$PROJ_DIR$/../../../../../../Drivers/STM32U3xx_HAL_Driver/Inc/Legacy</state>
+          <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/Include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>

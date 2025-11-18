@@ -151,7 +151,7 @@ typedef struct
   * @{
   */
 #define HAL_CCB_STATE_RESET                 (0x00000000U)  /*!< CCB not yet initialized or disabled                */
-#define HAL_CCB_STATE_READY                 (0x00000001U)  /*!< CCB is ready for operation                         */
+#define HAL_CCB_STATE_READY                 (0xDA5DA605U) /*!< CCB is ready for operation                         */
 #define HAL_CCB_STATE_BUSY                  (0x00000002U)  /*!< CCB BUSY, internal processing is ongoing           */
 #define HAL_CCB_STATE_ERROR                 (0x00000003U)  /*!< Blocking error, driver should be re-initialized    */
 
@@ -236,8 +236,15 @@ uint32_t HAL_CCB_GetOperationError(const CCB_HandleTypeDef *hccb);
 /** @addtogroup CCB_Exported_Functions_Group3
   * @{
   */
+HAL_StatusTypeDef HAL_CCB_ECDSA_WrapSymmetricKey(CCB_HandleTypeDef *hccb, const uint32_t *pClearAESKey,
+                                                 CCB_WrappingKeyTypeDef *pWrappingKey);
+HAL_StatusTypeDef HAL_CCB_ECC_WrapSymmetricKey(CCB_HandleTypeDef *hccb, const uint32_t *pClearAESKey,
+                                               CCB_WrappingKeyTypeDef *pWrappingKey);
+HAL_StatusTypeDef HAL_CCB_RSA_WrapSymmetricKey(CCB_HandleTypeDef *hccb, const uint32_t *pClearAESKey,
+                                               CCB_WrappingKeyTypeDef *pWrappingKey);
+
 HAL_StatusTypeDef HAL_CCB_ECDSA_WrapPrivateKey(CCB_HandleTypeDef *hccb, CCB_ECDSACurveParamTypeDef *pCurveParam,
-                                               uint8_t *pClearPrivateKey,
+                                               const uint8_t *pClearPrivateKey,
                                                CCB_WrappingKeyTypeDef *pWrappingKey,
                                                const CCB_ECDSAKeyBlobTypeDef *pWrappedPrivateKeyBlob);
 
@@ -248,7 +255,7 @@ HAL_StatusTypeDef HAL_CCB_ECDSA_GenerateWrapPrivateKey(CCB_HandleTypeDef *hccb,
 
 HAL_StatusTypeDef HAL_CCB_ECDSA_Sign(CCB_HandleTypeDef *hccb, CCB_ECDSACurveParamTypeDef *pCurveParam,
                                      CCB_WrappingKeyTypeDef *pWrappingKey,
-                                     CCB_ECDSAKeyBlobTypeDef *pWrappedPrivateKeyBlob, uint8_t *pHash,
+                                     CCB_ECDSAKeyBlobTypeDef *pWrappedPrivateKeyBlob, const uint8_t *pHash,
                                      CCB_ECDSASignTypeDef *pSignature);
 HAL_StatusTypeDef HAL_CCB_ECDSA_ComputePublicKey(CCB_HandleTypeDef *hccb, CCB_ECDSACurveParamTypeDef *pCurveParam,
                                                  CCB_WrappingKeyTypeDef *pWrappingKey,
@@ -256,7 +263,7 @@ HAL_StatusTypeDef HAL_CCB_ECDSA_ComputePublicKey(CCB_HandleTypeDef *hccb, CCB_EC
                                                  CCB_ECCMulPointTypeDef *pPublicKey);
 
 HAL_StatusTypeDef HAL_CCB_ECC_WrapPrivateKey(CCB_HandleTypeDef *hccb, CCB_ECCMulCurveParamTypeDef *pCurveParam,
-                                             uint8_t *pClearPrivateKey,
+                                             const uint8_t *pClearPrivateKey,
                                              CCB_WrappingKeyTypeDef *pWrappingKey,
                                              CCB_ECCMulKeyBlobTypeDef *pWrappedPrivateKeyBlob);
 
@@ -272,13 +279,16 @@ HAL_StatusTypeDef HAL_CCB_ECC_ComputeScalarMul(CCB_HandleTypeDef *hccb, CCB_ECCM
                                                CCB_ECCMulPointTypeDef *pOutputPoint);
 
 HAL_StatusTypeDef HAL_CCB_RSA_WrapPrivateKey(CCB_HandleTypeDef *hccb, CCB_RSAParamTypeDef *pParam,
-                                             CCB_RSAClearKeyTypeDef *pRSAClearPrivateKey,
+                                             const CCB_RSAClearKeyTypeDef *pRSAClearPrivateKey,
                                              CCB_WrappingKeyTypeDef *pWrappingKey,
                                              CCB_RSAKeyBlobTypeDef *pWrappedPrivateKeyBlob);
 HAL_StatusTypeDef HAL_CCB_RSA_ComputeModularExp(CCB_HandleTypeDef *hccb, CCB_RSAParamTypeDef *pParam,
                                                 CCB_WrappingKeyTypeDef *pWrappingKey,
-                                                CCB_RSAKeyBlobTypeDef *pWrappedPrivateKeyBlob, uint8_t *pOperand,
-                                                uint8_t *pModularExp);
+                                                CCB_RSAKeyBlobTypeDef *pWrappedPrivateKeyBlob,
+                                                const uint8_t *pOperand, uint8_t *pModularExp);
+
+/* Callback functions in non-blocking modes ***********************************/
+void HAL_CCB_IntrusionCallback(CCB_HandleTypeDef *hccb);
 
 /**
   * @}

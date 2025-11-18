@@ -1,6 +1,8 @@
 /*
- * FreeRTOS Kernel V10.6.2
- * Copyright (C) 2021 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel V11.2.0
+ * Copyright (C) 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2024 Arm Limited and/or its affiliates
+ * <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: MIT
  *
@@ -117,7 +119,7 @@ extern uint32_t ulSetInterruptMask( void ) /* __attribute__(( naked )) PRIVILEGE
 extern void vClearInterruptMask( uint32_t ulMask ) /* __attribute__(( naked )) PRIVILEGED_FUNCTION */;
 
 #if ( configENABLE_TRUSTZONE == 1 )
-    extern void vPortAllocateSecureContext( uint32_t ulSecureStackSize );     /* __attribute__ (( naked )) */
+    extern void vPortAllocateSecureContext( uint32_t ulSecureStackSize ); /* __attribute__ (( naked )) */
     extern void vPortFreeSecureContext( uint32_t * pulTCB ) /* __attribute__ (( naked )) PRIVILEGED_FUNCTION */;
 #endif /* configENABLE_TRUSTZONE */
 
@@ -125,6 +127,18 @@ extern void vClearInterruptMask( uint32_t ulMask ) /* __attribute__(( naked )) P
     extern BaseType_t xIsPrivileged( void ) /* __attribute__ (( naked )) */;
     extern void vResetPrivilege( void ) /* __attribute__ (( naked )) */;
 #endif /* configENABLE_MPU */
+
+#if ( configENABLE_PAC == 1 )
+
+    /**
+     * @brief Generates 128-bit task's random PAC key.
+     *
+     * @param[out] pulTaskPacKey Pointer to a 4-word (128-bits) array to be
+     *             filled with a 128-bit random number.
+     */
+    void vApplicationGenerateTaskRandomPacKey( uint32_t * pulTaskPacKey );
+
+#endif /* configENABLE_PAC */
 /*-----------------------------------------------------------*/
 
 /**
@@ -137,7 +151,7 @@ extern void vClearInterruptMask( uint32_t ulMask ) /* __attribute__(( naked )) P
     #define portPRIVILEGE_BIT         ( 0x0UL )
 #endif /* configENABLE_MPU */
 
-/* MPU settings that can be overriden in FreeRTOSConfig.h. */
+/* MPU settings that can be overridden in FreeRTOSConfig.h. */
 #ifndef configTOTAL_MPU_REGIONS
     /* Define to 8 for backward compatibility. */
     #define configTOTAL_MPU_REGIONS    ( 8UL )
@@ -193,8 +207,8 @@ extern void vClearInterruptMask( uint32_t ulMask ) /* __attribute__(( naked )) P
      */
     typedef struct MPURegionSettings
     {
-        uint32_t ulRBAR;     /**< RBAR for the region. */
-        uint32_t ulRLAR;     /**< RLAR for the region. */
+        uint32_t ulRBAR; /**< RBAR for the region. */
+        uint32_t ulRLAR; /**< RLAR for the region. */
     } MPURegionSettings_t;
 
     #if ( configUSE_MPU_WRAPPERS_V1 == 0 )
@@ -223,7 +237,20 @@ extern void vClearInterruptMask( uint32_t ulMask ) /* __attribute__(( naked )) P
      */
     #if ( ( configENABLE_FPU == 1 ) || ( configENABLE_MVE == 1 ) )
 
-        #if( configENABLE_TRUSTZONE == 1 )
+        #if ( ( configENABLE_TRUSTZONE == 1 ) && ( configENABLE_PAC == 1 ) )
+
+            /*
+             * +-----------+---------------+----------+-----------------+------------------------------+------------+-----+
+             * |  s16-s31  | s0-s15, FPSCR |  r4-r11  | r0-r3, r12, LR, | xSecureContext, PSP, PSPLIM, | TaskPacKey |     |
+             * |           |               |          | PC, xPSR        | CONTROL, EXC_RETURN          |            |     |
+             * +-----------+---------------+----------+-----------------+------------------------------+------------+-----+
+             *
+             * <-----------><--------------><---------><----------------><-----------------------------><-----------><---->
+             *      16             17            8               8                     5                     16         1
+             */
+            #define MAX_CONTEXT_SIZE    71
+
+        #elif ( ( configENABLE_TRUSTZONE == 1 ) && ( configENABLE_PAC == 0 ) )
 
             /*
              * +-----------+---------------+----------+-----------------+------------------------------+-----+
@@ -232,11 +259,24 @@ extern void vClearInterruptMask( uint32_t ulMask ) /* __attribute__(( naked )) P
              * +-----------+---------------+----------+-----------------+------------------------------+-----+
              *
              * <-----------><--------------><---------><----------------><-----------------------------><---->
-             *      16             16            8               8                     5                   1
+             *      16             17            8               8                     5                   1
              */
-            #define MAX_CONTEXT_SIZE 54
+            #define MAX_CONTEXT_SIZE    55
 
-        #else /* #if( configENABLE_TRUSTZONE == 1 ) */
+        #elif ( ( configENABLE_TRUSTZONE == 0 ) && ( configENABLE_PAC == 1 ) )
+
+            /*
+             * +-----------+---------------+----------+-----------------+----------------------+------------+-----+
+             * |  s16-s31  | s0-s15, FPSCR |  r4-r11  | r0-r3, r12, LR, | PSP, PSPLIM, CONTROL | TaskPacKey |     |
+             * |           |               |          | PC, xPSR        | EXC_RETURN           |            |     |
+             * +-----------+---------------+----------+-----------------+----------------------+------------+-----+
+             *
+             * <-----------><--------------><---------><----------------><---------------------><-----------><---->
+             *      16             17            8               8                  4                16         1
+             */
+            #define MAX_CONTEXT_SIZE    70
+
+        #else /* if ( ( configENABLE_TRUSTZONE == 1 ) && ( configENABLE_PAC == 1 ) ) */
 
             /*
              * +-----------+---------------+----------+-----------------+----------------------+-----+
@@ -245,15 +285,28 @@ extern void vClearInterruptMask( uint32_t ulMask ) /* __attribute__(( naked )) P
              * +-----------+---------------+----------+-----------------+----------------------+-----+
              *
              * <-----------><--------------><---------><----------------><---------------------><---->
-             *      16             16            8               8                  4              1
+             *      16             17            8               8                  4              1
              */
-            #define MAX_CONTEXT_SIZE 53
+            #define MAX_CONTEXT_SIZE    54
 
-        #endif /* #if( configENABLE_TRUSTZONE == 1 ) */
+        #endif /* #if ( ( configENABLE_TRUSTZONE == 1 ) && ( configENABLE_PAC == 1 ) ) */
 
     #else /* #if ( ( configENABLE_FPU == 1 ) || ( configENABLE_MVE == 1 ) ) */
 
-        #if( configENABLE_TRUSTZONE == 1 )
+        #if ( ( configENABLE_TRUSTZONE == 1 ) && ( configENABLE_PAC == 1 ) )
+
+            /*
+             * +----------+-----------------+------------------------------+------------+-----+
+             * |  r4-r11  | r0-r3, r12, LR, | xSecureContext, PSP, PSPLIM, | TaskPacKey |     |
+             * |          | PC, xPSR        | CONTROL, EXC_RETURN          |            |     |
+             * +----------+-----------------+------------------------------+------------+-----+
+             *
+             * <---------><----------------><------------------------------><-----------><---->
+             *     8               8                      5                      16         1
+             */
+            #define MAX_CONTEXT_SIZE    38
+
+        #elif ( ( configENABLE_TRUSTZONE == 1 ) && ( configENABLE_PAC == 0 ) )
 
             /*
              * +----------+-----------------+------------------------------+-----+
@@ -264,7 +317,20 @@ extern void vClearInterruptMask( uint32_t ulMask ) /* __attribute__(( naked )) P
              * <---------><----------------><------------------------------><---->
              *     8               8                      5                   1
              */
-            #define MAX_CONTEXT_SIZE 22
+            #define MAX_CONTEXT_SIZE    22
+
+        #elif ( ( configENABLE_TRUSTZONE == 0 ) && ( configENABLE_PAC == 1 ) )
+
+            /*
+             * +----------+-----------------+----------------------+------------+-----+
+             * |  r4-r11  | r0-r3, r12, LR, | PSP, PSPLIM, CONTROL | TaskPacKey |     |
+             * |          | PC, xPSR        | EXC_RETURN           |            |     |
+             * +----------+-----------------+----------------------+------------+-----+
+             *
+             * <---------><----------------><----------------------><-----------><---->
+             *     8               8                  4                  16         1
+             */
+            #define MAX_CONTEXT_SIZE    37
 
         #else /* #if( configENABLE_TRUSTZONE == 1 ) */
 
@@ -277,17 +343,17 @@ extern void vClearInterruptMask( uint32_t ulMask ) /* __attribute__(( naked )) P
              * <---------><----------------><----------------------><---->
              *     8               8                  4              1
              */
-            #define MAX_CONTEXT_SIZE 21
+            #define MAX_CONTEXT_SIZE    21
 
-        #endif /* #if( configENABLE_TRUSTZONE == 1 ) */
+        #endif /* #if ( ( configENABLE_TRUSTZONE == 1 ) && ( configENABLE_PAC == 1 ) ) */
 
     #endif /* #if ( ( configENABLE_FPU == 1 ) || ( configENABLE_MVE == 1 ) ) */
 
     /* Flags used for xMPU_SETTINGS.ulTaskFlags member. */
-    #define portSTACK_FRAME_HAS_PADDING_FLAG     ( 1UL << 0UL )
-    #define portTASK_IS_PRIVILEGED_FLAG          ( 1UL << 1UL )
+    #define portSTACK_FRAME_HAS_PADDING_FLAG    ( 1UL << 0UL )
+    #define portTASK_IS_PRIVILEGED_FLAG         ( 1UL << 1UL )
 
-/* Size of an Access Control List (ACL) entry in bits. */
+    /* Size of an Access Control List (ACL) entry in bits. */
     #define portACL_ENTRY_SIZE_BITS             ( 32U )
 
     typedef struct MPU_SETTINGS
@@ -312,8 +378,8 @@ extern void vClearInterruptMask( uint32_t ulMask ) /* __attribute__(( naked )) P
  * @brief Validate priority of ISRs that are allowed to call FreeRTOS
  * system calls.
  */
-#ifdef configASSERT
-    #if ( portHAS_BASEPRI == 1 )
+#if ( configASSERT_DEFINED == 1 )
+    #if ( portHAS_ARMV8M_MAIN_EXTENSION == 1 )
         void vPortValidateInterruptPriority( void );
         #define portASSERT_IF_INTERRUPT_PRIORITY_INVALID()    vPortValidateInterruptPriority()
     #endif
@@ -333,12 +399,29 @@ extern void vClearInterruptMask( uint32_t ulMask ) /* __attribute__(( naked )) P
 /**
  * @brief Scheduler utilities.
  */
-#define portYIELD()    vPortYield()
+#if ( configENABLE_MPU == 1 )
+    #define portYIELD()               __asm volatile ( "svc %0" ::"i" ( portSVC_YIELD ) : "memory" )
+    #define portYIELD_WITHIN_API()    vPortYield()
+#else
+    #define portYIELD()               vPortYield()
+    #define portYIELD_WITHIN_API()    vPortYield()
+#endif
+
 #define portNVIC_INT_CTRL_REG     ( *( ( volatile uint32_t * ) 0xe000ed04 ) )
 #define portNVIC_PENDSVSET_BIT    ( 1UL << 28UL )
-#define portEND_SWITCHING_ISR( xSwitchRequired )                                 \
-    do { if( xSwitchRequired ) portNVIC_INT_CTRL_REG = portNVIC_PENDSVSET_BIT; } \
-    while( 0 )
+#define portEND_SWITCHING_ISR( xSwitchRequired )            \
+    do                                                      \
+    {                                                       \
+        if( xSwitchRequired )                               \
+        {                                                   \
+            traceISR_EXIT_TO_SCHEDULER();                   \
+            portNVIC_INT_CTRL_REG = portNVIC_PENDSVSET_BIT; \
+        }                                                   \
+        else                                                \
+        {                                                   \
+            traceISR_EXIT();                                \
+        }                                                   \
+    } while( 0 )
 #define portYIELD_FROM_ISR( x )    portEND_SWITCHING_ISR( x )
 /*-----------------------------------------------------------*/
 
@@ -424,12 +507,12 @@ extern void vClearInterruptMask( uint32_t ulMask ) /* __attribute__(( naked )) P
 
     extern BaseType_t xPortIsTaskPrivileged( void );
 
-    /**
-     * @brief Checks whether or not the calling task is privileged.
-     *
-     * @return pdTRUE if the calling task is privileged, pdFALSE otherwise.
-     */
-    #define portIS_TASK_PRIVILEGED()      xPortIsTaskPrivileged()
+/**
+ * @brief Checks whether or not the calling task is privileged.
+ *
+ * @return pdTRUE if the calling task is privileged, pdFALSE otherwise.
+ */
+    #define portIS_TASK_PRIVILEGED()    xPortIsTaskPrivileged()
 
 #endif /* configENABLE_MPU == 1 */
 /*-----------------------------------------------------------*/
@@ -438,6 +521,56 @@ extern void vClearInterruptMask( uint32_t ulMask ) /* __attribute__(( naked )) P
  * @brief Barriers.
  */
 #define portMEMORY_BARRIER()    __asm volatile ( "" ::: "memory" )
+/*-----------------------------------------------------------*/
+
+/* Select correct value of configUSE_PORT_OPTIMISED_TASK_SELECTION
+ * based on whether or not Mainline extension is implemented. */
+#ifndef configUSE_PORT_OPTIMISED_TASK_SELECTION
+    #if ( portHAS_ARMV8M_MAIN_EXTENSION == 1 )
+        #define configUSE_PORT_OPTIMISED_TASK_SELECTION    1
+    #else
+        #define configUSE_PORT_OPTIMISED_TASK_SELECTION    0
+    #endif
+#endif /* #ifndef configUSE_PORT_OPTIMISED_TASK_SELECTION */
+
+/**
+ * @brief Port-optimised task selection.
+ */
+#if ( configUSE_PORT_OPTIMISED_TASK_SELECTION == 1 )
+
+/**
+ * @brief Count the number of leading zeros in a 32-bit value.
+ */
+    static portFORCE_INLINE uint32_t ulPortCountLeadingZeros( uint32_t ulBitmap )
+    {
+        uint32_t ulReturn;
+
+        __asm volatile ( "clz %0, %1" : "=r" ( ulReturn ) : "r" ( ulBitmap ) : "memory" );
+
+        return ulReturn;
+    }
+
+/* Check the configuration. */
+    #if ( configMAX_PRIORITIES > 32 )
+        #error configUSE_PORT_OPTIMISED_TASK_SELECTION can only be set to 1 when configMAX_PRIORITIES is less than or equal to 32.  It is very rare that a system requires more than 10 to 15 different priorities as tasks that share a priority will time slice.
+    #endif
+
+    #if ( portHAS_ARMV8M_MAIN_EXTENSION == 0 )
+        #error ARMv8-M baseline implementations (such as Cortex-M23) do not support port-optimised task selection.  Please set configUSE_PORT_OPTIMISED_TASK_SELECTION to 0 or leave it undefined.
+    #endif
+
+/**
+ * @brief Store/clear the ready priorities in a bit map.
+ */
+    #define portRECORD_READY_PRIORITY( uxPriority, uxReadyPriorities )      ( uxReadyPriorities ) |= ( 1UL << ( uxPriority ) )
+    #define portRESET_READY_PRIORITY( uxPriority, uxReadyPriorities )       ( uxReadyPriorities ) &= ~( 1UL << ( uxPriority ) )
+
+/**
+ * @brief Get the priority of the highest-priority task that is ready to execute.
+ */
+    #define portGET_HIGHEST_PRIORITY( uxTopPriority, uxReadyPriorities )    uxTopPriority = ( 31UL - ulPortCountLeadingZeros( ( uxReadyPriorities ) ) )
+
+#endif /* configUSE_PORT_OPTIMISED_TASK_SELECTION */
 /*-----------------------------------------------------------*/
 
 /* *INDENT-OFF* */

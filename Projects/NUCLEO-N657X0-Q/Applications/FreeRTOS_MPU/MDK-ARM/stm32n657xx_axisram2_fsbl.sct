@@ -95,7 +95,7 @@ LR_IROM1 0x34180400 0x0003FC00      ; load region size_region
 		
     }
 
-    ER_IROM_UNPRIVILEGED +0
+    ER_IROM_UNPRIVILEGED 0x34189400 FIXED
     {
         .ANY (+RO)
         .ANY (+XO)

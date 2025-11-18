@@ -196,6 +196,11 @@
 			<locationURI>PARENT-5-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/RTOS2/CMSIS/RTOS2/Core/TZ_Non_Supported/portasm.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/portasm.c</locationURI>
+		</link>
+		<link>
 			<name>Middlewares/RTOS2/CMSIS/RTOS2/Core/TZ_Non_Supported/queue.c</name>
 			<type>1</type>
 			<locationURI>PARENT-5-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/queue.c</locationURI>

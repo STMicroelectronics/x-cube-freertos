@@ -150,14 +150,14 @@
         the end of a Frame, and HAL_I3C_Ctrl_GetConfigResetPattern() to retrieve reset pattern configuration.
 
     (#) To set or get or clear the autonomous mode configuration, use these functions :
-          (+) HAL_I3C_SetConfigAutonomousMode()
-          (+) HAL_I3C_GetConfigAutonomousMode()
-          (+) HAL_I3C_ClearConfigAutonomousMode()
+        (++) HAL_I3C_SetConfigAutonomousMode()
+        (++) HAL_I3C_GetConfigAutonomousMode()
+        (++) HAL_I3C_ClearConfigAutonomousMode()
 
     (#) To set or get the configuration for automatic treatment of the FC flag at the end of a Frame,
         use these functions:
-          (+) HAL_I3C_SetConfigEndOfFrame()
-          (+) HAL_I3C_GetConfigEndOfFrame()
+        (++) HAL_I3C_SetConfigEndOfFrame()
+        (++) HAL_I3C_GetConfigEndOfFrame()
 
     (#) For I3C IO operations, three operation modes are available within this driver :
 
@@ -7015,7 +7015,7 @@ HAL_StatusTypeDef HAL_I3C_Tgt_IBIReq(I3C_HandleTypeDef *hi3c, const uint8_t *pPa
     else
     {
       /* Verify if IBI request feature is enabled*/
-      if ((LL_I3C_IsEnabledIBI(hi3c->Instance) != 1U))
+      if (LL_I3C_IsEnabledIBI(hi3c->Instance) != 1U)
       {
         hi3c->ErrorCode = HAL_I3C_ERROR_NOT_ALLOWED;
         status = HAL_ERROR;

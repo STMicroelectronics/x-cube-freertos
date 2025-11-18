@@ -1154,46 +1154,46 @@
     <group>
       <name>STM32N6xx_HAL_Driver</name>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_tim.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_tim.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_tim_ex.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_tim_ex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_cortex.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_cortex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_rcc.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_rcc.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_rcc_ex.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_rcc_ex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_gpio.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_gpio.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_dma.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_dma.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_dma_ex.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_dma_ex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_pwr.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_pwr.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_pwr_ex.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_pwr_ex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_exti.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_exti.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_uart.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_uart.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_uart_ex.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_uart_ex.c</name>
       </file>
     </group>
   </group>

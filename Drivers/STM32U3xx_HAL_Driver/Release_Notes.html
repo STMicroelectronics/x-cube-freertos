@@ -68,16 +68,173 @@ drivers)</li>
 <section id="update-history" class="col-sm-12 col-lg-8">
 <h1>Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section1" checked aria-hidden="true">
-<label for="collapse-section1" checked aria-hidden="true"><strong>V1.0.0
-/ 30-October-2024</strong></label>
+<input type="checkbox" id="collapse-section3" checked aria-hidden="true">
+<label for="collapse-section3" checked aria-hidden="true"><strong>V1.2.0
+/ 04-June-2025</strong></label>
+<div>
+<h2 id="maintenance-release">Maintenance release</h2>
+<ul>
+<li>Maintenance Release of STM32CubeU3 HAL/LL Drivers supporting
+STM32U375xx/STM32U385xx devices</li>
+</ul>
+<h2 id="contents">Contents</h2>
+<h3 id="hal-drivers-updates"><strong>HAL Drivers</strong> updates</h3>
+<ul>
+<li><strong>HAL FLASH</strong> driver
+<ul>
+<li>Fix usage of IS_FLASH_SECURE_OPERATION()</li>
+<li>Fix FLASH_WaitForLastOperation timeout issue</li>
+</ul></li>
+<li><strong>HAL GPIO</strong> driver
+<ul>
+<li>Fix Pull down capability missing in analog mode</li>
+</ul></li>
+<li><strong>HAL GTZC</strong> driver
+<ul>
+<li>Add preprocessors for crypto PN</li>
+</ul></li>
+<li><strong>HAL PWR</strong> driver
+<ul>
+<li>Removed SRAM powerdown disable APIs</li>
+<li>Comments enhancement</li>
+</ul></li>
+<li><strong>HAL RCC</strong> driver
+<ul>
+<li>Fix the inversion between RCC_DAC1SHCLKSOURCE_LSE and
+RCC_DAC1SHCLKSOURCE_LSI</li>
+<li>Comments enhancement</li>
+</ul></li>
+</ul>
+<h3 id="ll-drivers-updates"><strong>LL Drivers</strong> updates</h3>
+<ul>
+<li><strong>LL PWR</strong> driver
+<ul>
+<li>Comments enhancement</li>
+</ul></li>
+<li><strong>LL RCC</strong> driver
+<ul>
+<li>Comments enhancement</li>
+</ul></li>
+</ul>
+<h2 id="backward-compatibility">Backward compatibility</h2>
+<ul>
+<li>Not applicable</li>
+</ul>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>Not applicable</li>
+</ul>
+<p><br />
+</p>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section2"  aria-hidden="true">
+<label for="collapse-section2"  aria-hidden="true"><strong>V1.1.0 /
+05-February-2025</strong></label>
+<div>
+<h2 id="maintenance-release-1">Maintenance release</h2>
+<ul>
+<li>Maintenance Release of STM32CubeU3 HAL/LL Drivers supporting
+STM32U375xx/STM32U385xx devices</li>
+</ul>
+<h2 id="contents-1">Contents</h2>
+<h3 id="hal-drivers-updates-1"><strong>HAL Drivers</strong> updates</h3>
+<ul>
+<li><strong>HAL CCB</strong> driver
+<ul>
+<li>Update related to wrap/unwrap symmetric key algo</li>
+</ul></li>
+<li><strong>HAL DMA</strong> driver
+<ul>
+<li>DMA Callbacks to be initialized to NULL in RESET state</li>
+</ul></li>
+<li><strong>HAL GPIO</strong> driver
+<ul>
+<li>Add pull down capability missing in analog mode</li>
+</ul></li>
+<li><strong>HAL I3C</strong> driver
+<ul>
+<li>Remove extra parenthesis in function HAL_I3C_Tgt_IBIReq</li>
+</ul></li>
+<li><strong>HAL IWDG</strong> driver
+<ul>
+<li>Fix Timeout computation method</li>
+</ul></li>
+<li><strong>HAL PWR</strong> driver
+<ul>
+<li>Fix doxygen comments<br />
+</li>
+</ul></li>
+<li><strong>HAL SPI</strong> driver
+<ul>
+<li>Add protection against wrong transfer size during transmission</li>
+<li>Check coherence between data size and DMA TX configuration<br />
+</li>
+<li>Clear auto suspend flag in HAL_SPI_Receive()</li>
+<li>Ensure DMA RX aborts after DMA TX in HAL_SPI_Abort_IT()</li>
+<li>Fix CRC computation to fit with standard CRC16-CCITT (XMODEM)</li>
+<li>Fix a bug reception when FIFO threshold is set</li>
+<li>Improve file aspect</li>
+</ul></li>
+<li><strong>HAL TIM</strong> driver
+<ul>
+<li>Fix update flag (UIF) clearing in TIM_Base_SetConfig.</li>
+</ul></li>
+<li><strong>HAL UART</strong> driver
+<ul>
+<li>Correct references to HAL_UARTEx_WakeupCallback and to
+HAL_UART_WAKEUP_CB_ID define, according to series capabilities</li>
+<li>Provide accurate position in RxEventCallback when ReceptionToIdle
+mode is used with DMA, when UART and DMA interrupts process is
+delayed.</li>
+</ul></li>
+<li><strong>HAL USB</strong>
+<ul>
+<li>Fix SA0035</li>
+</ul></li>
+<li><strong>HAL XSPI</strong> driver
+<ul>
+<li>Check BUSY flag instead of TC flag in indirect mode to be sure that
+command is well completed (FIFO flush)</li>
+</ul></li>
+</ul>
+<h3 id="ll-drivers-updates-1"><strong>LL Drivers</strong> updates</h3>
+<ul>
+<li><strong>LL LPUART</strong> driver
+<ul>
+<li>Solve Coverity out-of-bound memory access warning in use of
+LPUART_PRESCALER_TAB array</li>
+</ul></li>
+<li><strong>LL USART</strong> driver
+<ul>
+<li>Solve Coverity out-of-bound memory access warning in use of
+USART_PRESCALER_TAB array</li>
+</ul></li>
+</ul>
+<h2 id="backward-compatibility-1">Backward compatibility</h2>
+<ul>
+<li>Not applicable</li>
+</ul>
+<h2 id="known-limitations-1">Known Limitations</h2>
+<ul>
+<li>Not applicable</li>
+</ul>
+<p><br />
+</p>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section1"  aria-hidden="true">
+<label for="collapse-section1"  aria-hidden="true"><strong>V1.0.0 /
+30-October-2024</strong></label>
 <div>
 <h2 id="first-release">First Release</h2>
 <ul>
 <li>First Official Release of STM32CubeU3 HAL/LL Drivers supporting
 STM32U375xx/STM32U385xx devices</li>
 </ul>
-<h2 id="contents">Contents</h2>
+<h2 id="contents-2">Contents</h2>
 <ul>
 <li>STM32CubeU3 HAL/LL Drivers supporting STM32U375xx/STM32U385xx
 devices :
@@ -97,11 +254,11 @@ SDMMC, SPI, TIM, USART, UTILS</p></li>
 <li>STM32U375xx/STM32U385xx devices</li>
 <li>NUCLEO-U385RG-Q (Rev.E) board</li>
 </ul>
-<h2 id="backward-compatibility">Backward compatibility</h2>
+<h2 id="backward-compatibility-2">Backward compatibility</h2>
 <ul>
 <li>Not applicable</li>
 </ul>
-<h2 id="known-limitations">Known Limitations</h2>
+<h2 id="known-limitations-2">Known Limitations</h2>
 <ul>
 <li>None</li>
 </ul>

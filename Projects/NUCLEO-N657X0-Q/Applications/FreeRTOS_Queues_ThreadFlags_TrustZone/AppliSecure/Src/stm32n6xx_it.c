@@ -207,11 +207,12 @@ void DebugMon_Handler(void)
 /******************************************************************************/
 
 /**
-  * @brief  This function handles IAC interrupt request.
-  * @retval None
+  * @brief This function handles IAC interrupt.
   */
 void IAC_IRQHandler(void)
 {
+  /* USER CODE BEGIN IAC_IRQn 0 */
+
   funcptr_NS callback_NS; // non-secure callback function pointer
 
   if(pSecureError_Callback != (funcptr_NS)NULL)
@@ -225,6 +226,11 @@ void IAC_IRQHandler(void)
   {
     while(1);  /* Something went wrong */
   }
+
+  /* USER CODE END IAC_IRQn 0 */
+  /* USER CODE BEGIN IAC_IRQn 1 */
+
+  /* USER CODE END IAC_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

@@ -32,7 +32,7 @@ Information about the faults will be printed to the serial port.
 
 #### <b>Error behaviors</b>
 
-On failure, the red LED starts toggling while the green LED and blue LED are switched OFF.
+On failure, the Red LED turns ON, while the Blue and Green LEDs are switched OFF.
 
 #### <b>Assumptions if any</b>
 

@@ -5872,10 +5872,15 @@ HAL_StatusTypeDef HAL_TIM_ConfigClockSource(TIM_HandleTypeDef *htim, const TIM_C
     case TIM_CLOCKSOURCE_ITR1:
     case TIM_CLOCKSOURCE_ITR2:
     case TIM_CLOCKSOURCE_ITR3:
+#if defined(TIM8)
+    case TIM_CLOCKSOURCE_ITR5:
+#endif /* TIM8 */
     case TIM_CLOCKSOURCE_ITR6:
     case TIM_CLOCKSOURCE_ITR7:
     case TIM_CLOCKSOURCE_ITR8:
-    case TIM_CLOCKSOURCE_ITR11:
+#if defined(TIM12)
+    case TIM_CLOCKSOURCE_ITR9:
+#endif /* TIM12 */
     {
       /* Check whether or not the timer instance supports internal trigger input */
       assert_param(IS_TIM_CLOCKSOURCE_INSTANCE((htim->Instance), sClockSourceConfig->ClockSource));
@@ -7292,8 +7297,6 @@ void TIM_Base_SetConfig(TIM_TypeDef *TIMx, const TIM_Base_InitTypeDef *Structure
   /* Set the auto-reload preload */
   MODIFY_REG(tmpcr1, TIM_CR1_ARPE, Structure->AutoReloadPreload);
 
-  TIMx->CR1 = tmpcr1;
-
   /* Set the Autoreload value */
   TIMx->ARR = (uint32_t)Structure->Period ;
 
@@ -7306,16 +7309,15 @@ void TIM_Base_SetConfig(TIM_TypeDef *TIMx, const TIM_Base_InitTypeDef *Structure
     TIMx->RCR = Structure->RepetitionCounter;
   }
 
+  /* Disable Update Event (UEV) with Update Generation (UG)
+     by changing Update Request Source (URS) to avoid Update flag (UIF) */
+  SET_BIT(TIMx->CR1, TIM_CR1_URS);
+
   /* Generate an update event to reload the Prescaler
      and the repetition counter (only for advanced timer) value immediately */
   TIMx->EGR = TIM_EGR_UG;
 
-  /* Check if the update flag is set after the Update Generation, if so clear the UIF flag */
-  if (HAL_IS_BIT_SET(TIMx->SR, TIM_FLAG_UPDATE))
-  {
-    /* Clear the update flag */
-    CLEAR_BIT(TIMx->SR, TIM_FLAG_UPDATE);
-  }
+  TIMx->CR1 = tmpcr1;
 }
 
 /**
@@ -7839,10 +7841,15 @@ static HAL_StatusTypeDef TIM_SlaveTimer_SetConfig(TIM_HandleTypeDef *htim,
     case TIM_TS_ITR1:
     case TIM_TS_ITR2:
     case TIM_TS_ITR3:
+#if defined(TIM8)
+    case TIM_TS_ITR5:
+#endif /* TIM8 */
     case TIM_TS_ITR6:
     case TIM_TS_ITR7:
     case TIM_TS_ITR8:
-    case TIM_TS_ITR11:
+#if defined(TIM12)
+    case TIM_TS_ITR9:
+#endif /* TIM12 */
     {
       /* Check the parameter */
       assert_param(IS_TIM_INTERNAL_TRIGGEREVENT_INSTANCE((htim->Instance), sSlaveConfig->InputTrigger));
@@ -8135,14 +8142,18 @@ static void TIM_TI4_SetConfig(TIM_TypeDef *TIMx, uint32_t TIM_ICPolarity, uint32
   *            @arg TIM_TS_ITR1: Internal Trigger 1
   *            @arg TIM_TS_ITR2: Internal Trigger 2
   *            @arg TIM_TS_ITR3: Internal Trigger 3
+  *            @arg TIM_TS_ITR5: Internal Trigger 5 (*)
   *            @arg TIM_TS_ITR6: Internal Trigger 6
   *            @arg TIM_TS_ITR7: Internal Trigger 7
   *            @arg TIM_TS_ITR8: Internal Trigger 8
-  *            @arg TIM_TS_ITR11: Internal Trigger 11
+  *            @arg TIM_TS_ITR9: Internal Trigger 9 (*)
   *            @arg TIM_TS_TI1F_ED: TI1 Edge Detector
   *            @arg TIM_TS_TI1FP1: Filtered Timer Input 1
   *            @arg TIM_TS_TI2FP2: Filtered Timer Input 2
   *            @arg TIM_TS_ETRF: External Trigger input
+  *
+  *       (*)  Value not defined in all devices.
+  *
   * @retval None
   */
 static void TIM_ITRx_SetConfig(TIM_TypeDef *TIMx, uint32_t InputTriggerSource)

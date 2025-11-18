@@ -1,6 +1,6 @@
 /*
- * FreeRTOS Kernel V10.6.2
- * Copyright (C) 2021 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel V11.2.0
+ * Copyright (C) 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * SPDX-License-Identifier: MIT
  *
@@ -352,12 +352,18 @@ void xPortSysTickHandler( void )
     uint32_t ulPreviousMask;
 
     ulPreviousMask = portSET_INTERRUPT_MASK_FROM_ISR();
+    traceISR_ENTER();
     {
         /* Increment the RTOS tick. */
         if( xTaskIncrementTick() != pdFALSE )
         {
+            traceISR_EXIT_TO_SCHEDULER();
             /* Pend a context switch. */
             portNVIC_INT_CTRL_REG = portNVIC_PENDSVSET_BIT;
+        }
+        else
+        {
+            traceISR_EXIT();
         }
     }
     portCLEAR_INTERRUPT_MASK_FROM_ISR( ulPreviousMask );

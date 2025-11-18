@@ -1,6 +1,6 @@
 /*
- * FreeRTOS Kernel V10.6.2
- * Copyright (C) 2021 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel V11.2.0
+ * Copyright (C) 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * SPDX-License-Identifier: MIT
  *
@@ -92,16 +92,16 @@
 /**
  * @brief Checks whether an external index is valid or not.
  */
-    #define IS_EXTERNAL_INDEX_VALID( lIndex ) \
-    ( ( ( lIndex ) >= INDEX_OFFSET ) &&       \
-      ( ( lIndex ) < ( configPROTECTED_KERNEL_OBJECT_POOL_SIZE + INDEX_OFFSET ) ) )
+    #define IS_EXTERNAL_INDEX_VALID( lIndex )   \
+    ( ( ( ( lIndex ) >= INDEX_OFFSET ) &&       \
+        ( ( lIndex ) < ( configPROTECTED_KERNEL_OBJECT_POOL_SIZE + INDEX_OFFSET ) ) ) ? pdTRUE : pdFALSE )
 
 /**
  * @brief Checks whether an internal index is valid or not.
  */
-    #define IS_INTERNAL_INDEX_VALID( lIndex ) \
-    ( ( ( lIndex ) >= 0 ) &&                  \
-      ( ( lIndex ) < ( configPROTECTED_KERNEL_OBJECT_POOL_SIZE ) ) )
+    #define IS_INTERNAL_INDEX_VALID( lIndex )   \
+    ( ( ( ( lIndex ) >= 0 ) &&                  \
+        ( ( lIndex ) < ( configPROTECTED_KERNEL_OBJECT_POOL_SIZE ) ) ) ? pdTRUE : pdFALSE )
 
 /**
  * @brief Converts an internal index into external.
@@ -197,46 +197,51 @@
 /*
  * Wrappers to keep all the casting in one place.
  */
-    #define MPU_StoreQueueHandleAtIndex( lIndex, xHandle )                 MPU_StoreHandleAndDataAtIndex( lIndex, ( OpaqueObjectHandle_t ) xHandle, NULL, KERNEL_OBJECT_TYPE_QUEUE )
-    #define MPU_GetQueueHandleAtIndex( lIndex )                            ( QueueHandle_t ) MPU_GetHandleAtIndex( lIndex, KERNEL_OBJECT_TYPE_QUEUE )
+    #define MPU_StoreQueueHandleAtIndex( lIndex, xHandle )                 MPU_StoreHandleAndDataAtIndex( ( lIndex ), ( OpaqueObjectHandle_t ) ( xHandle ), NULL, KERNEL_OBJECT_TYPE_QUEUE )
+    #define MPU_GetQueueHandleAtIndex( lIndex )                            ( QueueHandle_t ) MPU_GetHandleAtIndex( ( lIndex ), KERNEL_OBJECT_TYPE_QUEUE )
 
     #if ( configUSE_QUEUE_SETS == 1 )
-        #define MPU_StoreQueueSetHandleAtIndex( lIndex, xHandle )          MPU_StoreHandleAndDataAtIndex( lIndex, ( OpaqueObjectHandle_t ) xHandle, NULL, KERNEL_OBJECT_TYPE_QUEUE )
-        #define MPU_GetQueueSetHandleAtIndex( lIndex )                     ( QueueSetHandle_t ) MPU_GetHandleAtIndex( lIndex, KERNEL_OBJECT_TYPE_QUEUE )
-        #define MPU_StoreQueueSetMemberHandleAtIndex( lIndex, xHandle )    MPU_StoreHandleAndDataAtIndex( lIndex, ( OpaqueObjectHandle_t ) xHandle, NULL, KERNEL_OBJECT_TYPE_QUEUE )
-        #define MPU_GetQueueSetMemberHandleAtIndex( lIndex )               ( QueueSetMemberHandle_t ) MPU_GetHandleAtIndex( lIndex, KERNEL_OBJECT_TYPE_QUEUE )
-        #define MPU_GetIndexForQueueSetMemberHandle( xHandle )             MPU_GetIndexForHandle( ( OpaqueObjectHandle_t ) xHandle, KERNEL_OBJECT_TYPE_QUEUE )
+        #define MPU_StoreQueueSetHandleAtIndex( lIndex, xHandle )          MPU_StoreHandleAndDataAtIndex( ( lIndex ), ( OpaqueObjectHandle_t ) ( xHandle ), NULL, KERNEL_OBJECT_TYPE_QUEUE )
+        #define MPU_GetQueueSetHandleAtIndex( lIndex )                     ( QueueSetHandle_t ) MPU_GetHandleAtIndex( ( lIndex ), KERNEL_OBJECT_TYPE_QUEUE )
+        #define MPU_StoreQueueSetMemberHandleAtIndex( lIndex, xHandle )    MPU_StoreHandleAndDataAtIndex( ( lIndex ), ( OpaqueObjectHandle_t ) ( xHandle ), NULL, KERNEL_OBJECT_TYPE_QUEUE )
+        #define MPU_GetQueueSetMemberHandleAtIndex( lIndex )               ( QueueSetMemberHandle_t ) MPU_GetHandleAtIndex( ( lIndex ), KERNEL_OBJECT_TYPE_QUEUE )
+        #define MPU_GetIndexForQueueSetMemberHandle( xHandle )             MPU_GetIndexForHandle( ( OpaqueObjectHandle_t ) ( xHandle ), KERNEL_OBJECT_TYPE_QUEUE )
     #endif
 
 /*
  * Wrappers to keep all the casting in one place for Task APIs.
  */
-    #define MPU_StoreTaskHandleAtIndex( lIndex, xHandle )            MPU_StoreHandleAndDataAtIndex( lIndex, ( OpaqueObjectHandle_t ) xHandle, NULL, KERNEL_OBJECT_TYPE_TASK )
-    #define MPU_GetTaskHandleAtIndex( lIndex )                       ( TaskHandle_t ) MPU_GetHandleAtIndex( lIndex, KERNEL_OBJECT_TYPE_TASK )
-    #define MPU_GetIndexForTaskHandle( xHandle )                     MPU_GetIndexForHandle( ( OpaqueObjectHandle_t ) xHandle, KERNEL_OBJECT_TYPE_TASK )
+    #define MPU_StoreTaskHandleAtIndex( lIndex, xHandle )            MPU_StoreHandleAndDataAtIndex( ( lIndex ), ( OpaqueObjectHandle_t ) ( xHandle ), NULL, KERNEL_OBJECT_TYPE_TASK )
+    #define MPU_GetTaskHandleAtIndex( lIndex )                       ( TaskHandle_t ) MPU_GetHandleAtIndex( ( lIndex ), KERNEL_OBJECT_TYPE_TASK )
+    #define MPU_GetIndexForTaskHandle( xHandle )                     MPU_GetIndexForHandle( ( OpaqueObjectHandle_t ) ( xHandle ), KERNEL_OBJECT_TYPE_TASK )
 
+    #if ( configUSE_EVENT_GROUPS == 1 )
 /*
  * Wrappers to keep all the casting in one place for Event Group APIs.
  */
-    #define MPU_StoreEventGroupHandleAtIndex( lIndex, xHandle )      MPU_StoreHandleAndDataAtIndex( lIndex, ( OpaqueObjectHandle_t ) xHandle, NULL, KERNEL_OBJECT_TYPE_EVENT_GROUP )
-    #define MPU_GetEventGroupHandleAtIndex( lIndex )                 ( EventGroupHandle_t ) MPU_GetHandleAtIndex( lIndex, KERNEL_OBJECT_TYPE_EVENT_GROUP )
-    #define MPU_GetIndexForEventGroupHandle( xHandle )               MPU_GetIndexForHandle( ( OpaqueObjectHandle_t ) xHandle, KERNEL_OBJECT_TYPE_EVENT_GROUP )
+        #define MPU_StoreEventGroupHandleAtIndex( lIndex, xHandle )      MPU_StoreHandleAndDataAtIndex( ( lIndex ), ( OpaqueObjectHandle_t ) ( xHandle ), NULL, KERNEL_OBJECT_TYPE_EVENT_GROUP )
+        #define MPU_GetEventGroupHandleAtIndex( lIndex )                 ( EventGroupHandle_t ) MPU_GetHandleAtIndex( ( lIndex ), KERNEL_OBJECT_TYPE_EVENT_GROUP )
+        #define MPU_GetIndexForEventGroupHandle( xHandle )               MPU_GetIndexForHandle( ( OpaqueObjectHandle_t ) ( xHandle ), KERNEL_OBJECT_TYPE_EVENT_GROUP )
 
+    #endif /* #if ( configUSE_EVENT_GROUPS == 1 ) */
+
+    #if ( configUSE_STREAM_BUFFERS == 1 )
 /*
  * Wrappers to keep all the casting in one place for Stream Buffer APIs.
  */
-    #define MPU_StoreStreamBufferHandleAtIndex( lIndex, xHandle )    MPU_StoreHandleAndDataAtIndex( lIndex, ( OpaqueObjectHandle_t ) xHandle, NULL, KERNEL_OBJECT_TYPE_STREAM_BUFFER )
-    #define MPU_GetStreamBufferHandleAtIndex( lIndex )               ( StreamBufferHandle_t ) MPU_GetHandleAtIndex( lIndex, KERNEL_OBJECT_TYPE_STREAM_BUFFER )
-    #define MPU_GetIndexForStreamBufferHandle( xHandle )             MPU_GetIndexForHandle( ( OpaqueObjectHandle_t ) xHandle, KERNEL_OBJECT_TYPE_STREAM_BUFFER )
+        #define MPU_StoreStreamBufferHandleAtIndex( lIndex, xHandle )    MPU_StoreHandleAndDataAtIndex( ( lIndex ), ( OpaqueObjectHandle_t ) ( xHandle), NULL, KERNEL_OBJECT_TYPE_STREAM_BUFFER )
+        #define MPU_GetStreamBufferHandleAtIndex( lIndex )               ( StreamBufferHandle_t ) MPU_GetHandleAtIndex( ( lIndex ), KERNEL_OBJECT_TYPE_STREAM_BUFFER )
+        #define MPU_GetIndexForStreamBufferHandle( xHandle )             MPU_GetIndexForHandle( ( OpaqueObjectHandle_t ) ( xHandle ), KERNEL_OBJECT_TYPE_STREAM_BUFFER )
+
+    #endif /* #if ( configUSE_STREAM_BUFFERS == 1 ) */
 
     #if ( configUSE_TIMERS == 1 )
-
 /*
  * Wrappers to keep all the casting in one place for Timer APIs.
  */
-        #define MPU_StoreTimerHandleAtIndex( lIndex, xHandle, pxApplicationCallback )    MPU_StoreHandleAndDataAtIndex( lIndex, ( OpaqueObjectHandle_t ) xHandle, ( void * ) pxApplicationCallback, KERNEL_OBJECT_TYPE_TIMER )
-        #define MPU_GetTimerHandleAtIndex( lIndex )                                      ( TimerHandle_t ) MPU_GetHandleAtIndex( lIndex, KERNEL_OBJECT_TYPE_TIMER )
-        #define MPU_GetIndexForTimerHandle( xHandle )                                    MPU_GetIndexForHandle( ( OpaqueObjectHandle_t ) xHandle, KERNEL_OBJECT_TYPE_TIMER )
+        #define MPU_StoreTimerHandleAtIndex( lIndex, xHandle, pxApplicationCallback )    MPU_StoreHandleAndDataAtIndex( ( lIndex ), ( OpaqueObjectHandle_t ) ( xHandle ), ( void * ) ( pxApplicationCallback ), KERNEL_OBJECT_TYPE_TIMER )
+        #define MPU_GetTimerHandleAtIndex( lIndex )                                      ( TimerHandle_t ) MPU_GetHandleAtIndex( ( lIndex ), KERNEL_OBJECT_TYPE_TIMER )
+        #define MPU_GetIndexForTimerHandle( xHandle )                                    MPU_GetIndexForHandle( ( OpaqueObjectHandle_t ) ( xHandle ), KERNEL_OBJECT_TYPE_TIMER )
 
     #endif /* #if ( configUSE_TIMERS == 1 ) */
 
@@ -245,7 +250,7 @@
 /**
  * @brief Kernel object pool.
  */
-    PRIVILEGED_DATA static KernelObject_t xKernelObjectPool[ configPROTECTED_KERNEL_OBJECT_POOL_SIZE ] = { NULL };
+    PRIVILEGED_DATA static KernelObject_t xKernelObjectPool[ configPROTECTED_KERNEL_OBJECT_POOL_SIZE ] = { 0 };
 /*-----------------------------------------------------------*/
 
     static int32_t MPU_GetFreeIndexInKernelObjectPool( void ) /* PRIVILEGED_FUNCTION */
@@ -263,13 +268,13 @@
                 if( xKernelObjectPool[ i ].xInternalObjectHandle == NULL )
                 {
                     /* Mark this index as not free. */
-                    xKernelObjectPool[ i ].xInternalObjectHandle = ( OpaqueObjectHandle_t ) ( ~0 );
+                    xKernelObjectPool[ i ].xInternalObjectHandle = ( OpaqueObjectHandle_t ) ( ~0U );
                     lFreeIndex = i;
                     break;
                 }
             }
         }
-        xTaskResumeAll();
+        ( void ) xTaskResumeAll();
 
         return lFreeIndex;
     }
@@ -763,37 +768,6 @@
     }
 /*-----------------------------------------------------------*/
 
-    char * MPU_pcTaskGetNameImpl( TaskHandle_t xTaskToQuery ) PRIVILEGED_FUNCTION;
-
-    char * MPU_pcTaskGetNameImpl( TaskHandle_t xTaskToQuery ) /* PRIVILEGED_FUNCTION */
-    {
-        char * pcReturn = NULL;
-        int32_t lIndex;
-        TaskHandle_t xInternalTaskHandle = NULL;
-
-        if( xTaskToQuery == NULL )
-        {
-            pcReturn = pcTaskGetName( xTaskToQuery );
-        }
-        else
-        {
-            lIndex = ( int32_t ) xTaskToQuery;
-
-            if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
-            {
-                xInternalTaskHandle = MPU_GetTaskHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
-
-                if( xInternalTaskHandle != NULL )
-                {
-                    pcReturn = pcTaskGetName( xInternalTaskHandle );
-                }
-            }
-        }
-
-        return pcReturn;
-    }
-/*-----------------------------------------------------------*/
-
     #if ( configGENERATE_RUN_TIME_STATS == 1 )
 
         configRUN_TIME_COUNTER_TYPE MPU_ulTaskGetRunTimeCounterImpl( const TaskHandle_t xTask ) PRIVILEGED_FUNCTION;
@@ -1198,7 +1172,7 @@
     #endif /* if ( INCLUDE_uxTaskGetStackHighWaterMark2 == 1 ) */
 /*-----------------------------------------------------------*/
 
-    #if ( ( INCLUDE_xTaskGetCurrentTaskHandle == 1 ) || ( configUSE_MUTEXES == 1 ) )
+    #if ( ( INCLUDE_xTaskGetCurrentTaskHandle == 1 ) || ( configUSE_RECURSIVE_MUTEXES == 1 ) )
 
         TaskHandle_t MPU_xTaskGetCurrentTaskHandleImpl( void ) PRIVILEGED_FUNCTION;
 
@@ -1223,7 +1197,7 @@
             return xExternalTaskHandle;
         }
 
-    #endif /* if ( ( INCLUDE_xTaskGetCurrentTaskHandle == 1 ) || ( configUSE_MUTEXES == 1 ) ) */
+    #endif /* if ( ( INCLUDE_xTaskGetCurrentTaskHandle == 1 ) || ( configUSE_RECURSIVE_MUTEXES == 1 ) ) */
 /*-----------------------------------------------------------*/
 
     #if ( INCLUDE_xTaskGetSchedulerState == 1 )
@@ -1572,7 +1546,7 @@
 
         BaseType_t MPU_xTaskCreate( TaskFunction_t pvTaskCode,
                                     const char * const pcName,
-                                    uint16_t usStackDepth,
+                                    const configSTACK_DEPTH_TYPE uxStackDepth,
                                     void * pvParameters,
                                     UBaseType_t uxPriority,
                                     TaskHandle_t * pxCreatedTask ) /* PRIVILEGED_FUNCTION */
@@ -1588,7 +1562,7 @@
                 /* xTaskCreate() can only be used to create privileged tasks in MPU port. */
                 if( ( uxPriority & portPRIVILEGE_BIT ) != 0 )
                 {
-                    xReturn = xTaskCreate( pvTaskCode, pcName, usStackDepth, pvParameters, uxPriority, &( xInternalTaskHandle ) );
+                    xReturn = xTaskCreate( pvTaskCode, pcName, uxStackDepth, pvParameters, uxPriority, &( xInternalTaskHandle ) );
 
                     if( ( xReturn == pdPASS ) && ( xInternalTaskHandle != NULL ) )
                     {
@@ -1616,7 +1590,7 @@
 
         TaskHandle_t MPU_xTaskCreateStatic( TaskFunction_t pxTaskCode,
                                             const char * const pcName,
-                                            const uint32_t ulStackDepth,
+                                            const configSTACK_DEPTH_TYPE uxStackDepth,
                                             void * const pvParameters,
                                             UBaseType_t uxPriority,
                                             StackType_t * const puxStackBuffer,
@@ -1630,7 +1604,7 @@
 
             if( lIndex != -1 )
             {
-                xInternalTaskHandle = xTaskCreateStatic( pxTaskCode, pcName, ulStackDepth, pvParameters, uxPriority, puxStackBuffer, pxTaskBuffer );
+                xInternalTaskHandle = xTaskCreateStatic( pxTaskCode, pcName, uxStackDepth, pvParameters, uxPriority, puxStackBuffer, pxTaskBuffer );
 
                 if( xInternalTaskHandle != NULL )
                 {
@@ -1672,12 +1646,12 @@
                 xInternalTaskHandle = xTaskGetCurrentTaskHandle();
                 lIndex = MPU_GetIndexForTaskHandle( xInternalTaskHandle );
 
-                vTaskDelete( xInternalTaskHandle );
-
                 if( lIndex != -1 )
                 {
                     MPU_SetIndexFreeInKernelObjectPool( lIndex );
                 }
+
+                vTaskDelete( xInternalTaskHandle );
             }
             else
             {
@@ -1689,8 +1663,8 @@
 
                     if( xInternalTaskHandle != NULL )
                     {
-                        vTaskDelete( xInternalTaskHandle );
                         MPU_SetIndexFreeInKernelObjectPool( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+                        vTaskDelete( xInternalTaskHandle );
                     }
                 }
             }
@@ -1947,6 +1921,35 @@
     #endif /* if ( configSUPPORT_STATIC_ALLOCATION == 1 ) */
 /*-----------------------------------------------------------*/
 
+    char * MPU_pcTaskGetName( TaskHandle_t xTaskToQuery ) /* PRIVILEGED_FUNCTION */
+    {
+        char * pcReturn = NULL;
+        int32_t lIndex;
+        TaskHandle_t xInternalTaskHandle = NULL;
+
+        if( xTaskToQuery == NULL )
+        {
+            pcReturn = pcTaskGetName( xTaskToQuery );
+        }
+        else
+        {
+            lIndex = ( int32_t ) xTaskToQuery;
+
+            if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+            {
+                xInternalTaskHandle = MPU_GetTaskHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                if( xInternalTaskHandle != NULL )
+                {
+                    pcReturn = pcTaskGetName( xInternalTaskHandle );
+                }
+            }
+        }
+
+        return pcReturn;
+    }
+/*-----------------------------------------------------------*/
+
     #if ( INCLUDE_uxTaskPriorityGet == 1 )
 
         UBaseType_t MPU_uxTaskPriorityGetFromISR( const TaskHandle_t xTask ) /* PRIVILEGED_FUNCTION */
@@ -1978,6 +1981,72 @@
         }
 
     #endif /* #if ( INCLUDE_uxTaskPriorityGet == 1 ) */
+/*-----------------------------------------------------------*/
+
+    #if ( ( INCLUDE_uxTaskPriorityGet == 1 ) && ( configUSE_MUTEXES == 1 ) )
+
+        UBaseType_t MPU_uxTaskBasePriorityGet( const TaskHandle_t xTask ) /* PRIVILEGED_FUNCTION */
+        {
+            UBaseType_t uxReturn = configMAX_PRIORITIES;
+            int32_t lIndex;
+            TaskHandle_t xInternalTaskHandle = NULL;
+
+            if( xTask == NULL )
+            {
+                uxReturn = uxTaskBasePriorityGet( xTask );
+            }
+            else
+            {
+                lIndex = ( int32_t ) xTask;
+
+                if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+                {
+                    xInternalTaskHandle = MPU_GetTaskHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                    if( xInternalTaskHandle != NULL )
+                    {
+                        uxReturn = uxTaskBasePriorityGet( xInternalTaskHandle );
+                    }
+                }
+            }
+
+            return uxReturn;
+        }
+
+    #endif /* #if ( ( INCLUDE_uxTaskPriorityGet == 1 ) && ( configUSE_MUTEXES == 1 ) ) */
+/*-----------------------------------------------------------*/
+
+    #if ( ( INCLUDE_uxTaskPriorityGet == 1 ) && ( configUSE_MUTEXES == 1 ) )
+
+        UBaseType_t MPU_uxTaskBasePriorityGetFromISR( const TaskHandle_t xTask ) /* PRIVILEGED_FUNCTION */
+        {
+            UBaseType_t uxReturn = configMAX_PRIORITIES;
+            int32_t lIndex;
+            TaskHandle_t xInternalTaskHandle = NULL;
+
+            if( xTask == NULL )
+            {
+                uxReturn = uxTaskBasePriorityGetFromISR( xTask );
+            }
+            else
+            {
+                lIndex = ( int32_t ) xTask;
+
+                if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+                {
+                    xInternalTaskHandle = MPU_GetTaskHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                    if( xInternalTaskHandle != NULL )
+                    {
+                        uxReturn = uxTaskBasePriorityGetFromISR( xInternalTaskHandle );
+                    }
+                }
+            }
+
+            return uxReturn;
+        }
+
+    #endif /* #if ( ( INCLUDE_uxTaskPriorityGet == 1 ) && ( configUSE_MUTEXES == 1 ) ) */
 /*-----------------------------------------------------------*/
 
     #if ( ( INCLUDE_xTaskResumeFromISR == 1 ) && ( INCLUDE_vTaskSuspend == 1 ) )
@@ -2133,14 +2202,14 @@
                     if( ( !( ( pvItemToQueue == NULL ) && ( uxQueueItemSize != ( UBaseType_t ) 0U ) ) ) &&
                         ( !( ( xCopyPosition == queueOVERWRITE ) && ( uxQueueLength != ( UBaseType_t ) 1U ) ) )
                         #if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
-                            && ( !( ( xTaskGetSchedulerState() == taskSCHEDULER_SUSPENDED ) && ( xTicksToWait != 0 ) ) )
+                            && ( !( ( xTaskGetSchedulerState() == taskSCHEDULER_SUSPENDED ) && ( xTicksToWait != 0U ) ) )
                         #endif
                         )
                     {
                         if( pvItemToQueue != NULL )
                         {
                             xIsItemToQueueReadable = xPortIsAuthorizedToAccessBuffer( pvItemToQueue,
-                                                                                      uxQueueGetQueueItemSize( xInternalQueueHandle ),
+                                                                                      uxQueueItemSize,
                                                                                       tskMPU_READ_PERMISSION );
                         }
 
@@ -2248,12 +2317,12 @@
 
                     if( ( !( ( ( pvBuffer ) == NULL ) && ( uxQueueItemSize != ( UBaseType_t ) 0U ) ) )
                         #if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
-                            && ( !( ( xTaskGetSchedulerState() == taskSCHEDULER_SUSPENDED ) && ( xTicksToWait != 0 ) ) )
+                            && ( !( ( xTaskGetSchedulerState() == taskSCHEDULER_SUSPENDED ) && ( xTicksToWait != 0U ) ) )
                         #endif
                         )
                     {
                         xIsReceiveBufferWritable = xPortIsAuthorizedToAccessBuffer( pvBuffer,
-                                                                                    uxQueueGetQueueItemSize( xInternalQueueHandle ),
+                                                                                    uxQueueItemSize,
                                                                                     tskMPU_WRITE_PERMISSION );
 
                         if( xIsReceiveBufferWritable == pdTRUE )
@@ -2300,12 +2369,12 @@
 
                     if( ( !( ( ( pvBuffer ) == NULL ) && ( uxQueueItemSize != ( UBaseType_t ) 0U ) ) )
                         #if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
-                            && ( !( ( xTaskGetSchedulerState() == taskSCHEDULER_SUSPENDED ) && ( xTicksToWait != 0 ) ) )
+                            && ( !( ( xTaskGetSchedulerState() == taskSCHEDULER_SUSPENDED ) && ( xTicksToWait != 0U ) ) )
                         #endif
                         )
                     {
                         xIsReceiveBufferWritable = xPortIsAuthorizedToAccessBuffer( pvBuffer,
-                                                                                    uxQueueGetQueueItemSize( xInternalQueueHandle ),
+                                                                                    uxQueueItemSize,
                                                                                     tskMPU_WRITE_PERMISSION );
 
                         if( xIsReceiveBufferWritable == pdTRUE )
@@ -2347,9 +2416,9 @@
                 {
                     uxQueueItemSize = uxQueueGetQueueItemSize( xInternalQueueHandle );
 
-                    if( ( uxQueueItemSize == 0 )
+                    if( ( uxQueueItemSize == 0U )
                         #if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
-                            && ( !( ( xTaskGetSchedulerState() == taskSCHEDULER_SUSPENDED ) && ( xTicksToWait != 0 ) ) )
+                            && ( !( ( xTaskGetSchedulerState() == taskSCHEDULER_SUSPENDED ) && ( xTicksToWait != 0U ) ) )
                         #endif
                         )
                     {
@@ -2900,7 +2969,7 @@
         QueueHandle_t xInternalQueueHandle = NULL;
         BaseType_t xReturn = pdFAIL;
 
-        lIndex = ( uint32_t ) xQueue;
+        lIndex = ( int32_t ) xQueue;
 
         if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
         {
@@ -2945,6 +3014,39 @@
         }
 
     #endif /* if ( ( configUSE_QUEUE_SETS == 1 ) && ( configSUPPORT_DYNAMIC_ALLOCATION == 1 ) ) */
+/*-----------------------------------------------------------*/
+
+    #if ( ( configUSE_QUEUE_SETS == 1 ) && ( configSUPPORT_STATIC_ALLOCATION == 1 ) )
+
+        QueueSetHandle_t MPU_xQueueCreateSetStatic( const UBaseType_t uxEventQueueLength,
+                                                    uint8_t * pucQueueStorage,
+                                                    StaticQueue_t * pxStaticQueue ) /* PRIVILEGED_FUNCTION */
+        {
+            QueueSetHandle_t xInternalQueueSetHandle = NULL;
+            QueueSetHandle_t xExternalQueueSetHandle = NULL;
+            int32_t lIndex;
+
+            lIndex = MPU_GetFreeIndexInKernelObjectPool();
+
+            if( lIndex != -1 )
+            {
+                xInternalQueueSetHandle = xQueueCreateSetStatic( uxEventQueueLength, pucQueueStorage, pxStaticQueue );
+
+                if( xInternalQueueSetHandle != NULL )
+                {
+                    MPU_StoreQueueSetHandleAtIndex( lIndex, xInternalQueueSetHandle );
+                    xExternalQueueSetHandle = ( QueueSetHandle_t ) CONVERT_TO_EXTERNAL_INDEX( lIndex );
+                }
+                else
+                {
+                    MPU_SetIndexFreeInKernelObjectPool( lIndex );
+                }
+            }
+
+            return xExternalQueueSetHandle;
+        }
+
+    #endif /* if ( ( configUSE_QUEUE_SETS == 1 ) && ( configSUPPORT_STATIC_ALLOCATION == 1 ) ) */
 /*-----------------------------------------------------------*/
 
     #if ( configUSE_QUEUE_SETS == 1 )
@@ -3370,14 +3472,14 @@
 
     #if ( configUSE_TIMERS == 1 )
 
-        BaseType_t MPU_xTimerGenericCommand( TimerHandle_t xTimer,
-                                             const BaseType_t xCommandID,
-                                             const TickType_t xOptionalValue,
-                                             BaseType_t * const pxHigherPriorityTaskWoken,
-                                             const TickType_t xTicksToWait ) /* FREERTOS_SYSTEM_CALL */
+        BaseType_t MPU_xTimerGenericCommandFromTask( TimerHandle_t xTimer,
+                                                     const BaseType_t xCommandID,
+                                                     const TickType_t xOptionalValue,
+                                                     BaseType_t * const pxHigherPriorityTaskWoken,
+                                                     const TickType_t xTicksToWait ) /* FREERTOS_SYSTEM_CALL */
         {
             BaseType_t xReturn = pdFALSE;
-            xTimerGenericCommandParams_t xParams;
+            xTimerGenericCommandFromTaskParams_t xParams;
 
             xParams.xTimer = xTimer;
             xParams.xCommandID = xCommandID;
@@ -3385,14 +3487,14 @@
             xParams.pxHigherPriorityTaskWoken = pxHigherPriorityTaskWoken;
             xParams.xTicksToWait = xTicksToWait;
 
-            xReturn = MPU_xTimerGenericCommandEntry( &( xParams ) );
+            xReturn = MPU_xTimerGenericCommandFromTaskEntry( &( xParams ) );
 
             return xReturn;
         }
 
-        BaseType_t MPU_xTimerGenericCommandImpl( const xTimerGenericCommandParams_t * pxParams ) PRIVILEGED_FUNCTION;
+        BaseType_t MPU_xTimerGenericCommandFromTaskImpl( const xTimerGenericCommandFromTaskParams_t * pxParams ) PRIVILEGED_FUNCTION;
 
-        BaseType_t MPU_xTimerGenericCommandImpl( const xTimerGenericCommandParams_t * pxParams ) /* PRIVILEGED_FUNCTION */
+        BaseType_t MPU_xTimerGenericCommandFromTaskImpl( const xTimerGenericCommandFromTaskParams_t * pxParams ) /* PRIVILEGED_FUNCTION */
         {
             BaseType_t xReturn = pdFALSE;
             TimerHandle_t xInternalTimerHandle = NULL;
@@ -3404,71 +3506,44 @@
             if( pxParams != NULL )
             {
                 xAreParamsReadable = xPortIsAuthorizedToAccessBuffer( pxParams,
-                                                                      sizeof( xTimerGenericCommandParams_t ),
+                                                                      sizeof( xTimerGenericCommandFromTaskParams_t ),
                                                                       tskMPU_READ_PERMISSION );
             }
 
             if( xAreParamsReadable == pdTRUE )
             {
-                if( pxParams->pxHigherPriorityTaskWoken != NULL )
+                if( pxParams->xCommandID < tmrFIRST_FROM_ISR_COMMAND )
                 {
-                    xIsHigherPriorityTaskWokenWriteable = xPortIsAuthorizedToAccessBuffer( pxParams->pxHigherPriorityTaskWoken,
-                                                                                           sizeof( BaseType_t ),
-                                                                                           tskMPU_WRITE_PERMISSION );
-                }
-
-                if( ( pxParams->pxHigherPriorityTaskWoken == NULL ) ||
-                    ( xIsHigherPriorityTaskWokenWriteable == pdTRUE ) )
-                {
-                    lIndex = ( int32_t ) ( pxParams->xTimer );
-
-                    if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+                    if( pxParams->pxHigherPriorityTaskWoken != NULL )
                     {
-                        xCallingTaskIsAuthorizedToAccessTimer = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+                        xIsHigherPriorityTaskWokenWriteable = xPortIsAuthorizedToAccessBuffer( pxParams->pxHigherPriorityTaskWoken,
+                                                                                               sizeof( BaseType_t ),
+                                                                                               tskMPU_WRITE_PERMISSION );
+                    }
 
-                        if( xCallingTaskIsAuthorizedToAccessTimer == pdTRUE )
+                    if( ( pxParams->pxHigherPriorityTaskWoken == NULL ) ||
+                        ( xIsHigherPriorityTaskWokenWriteable == pdTRUE ) )
+                    {
+                        lIndex = ( int32_t ) ( pxParams->xTimer );
+
+                        if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
                         {
-                            xInternalTimerHandle = MPU_GetTimerHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+                            xCallingTaskIsAuthorizedToAccessTimer = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
 
-                            if( xInternalTimerHandle != NULL )
+                            if( xCallingTaskIsAuthorizedToAccessTimer == pdTRUE )
                             {
-                                xReturn = xTimerGenericCommand( xInternalTimerHandle,
-                                                                pxParams->xCommandID,
-                                                                pxParams->xOptionalValue,
-                                                                pxParams->pxHigherPriorityTaskWoken,
-                                                                pxParams->xTicksToWait );
+                                xInternalTimerHandle = MPU_GetTimerHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                                if( xInternalTimerHandle != NULL )
+                                {
+                                    xReturn = xTimerGenericCommandFromTask( xInternalTimerHandle,
+                                                                            pxParams->xCommandID,
+                                                                            pxParams->xOptionalValue,
+                                                                            pxParams->pxHigherPriorityTaskWoken,
+                                                                            pxParams->xTicksToWait );
+                                }
                             }
                         }
-                    }
-                }
-            }
-
-            return xReturn;
-        }
-
-        BaseType_t MPU_xTimerGenericCommandPrivImpl( const xTimerGenericCommandParams_t * pxParams ) PRIVILEGED_FUNCTION;
-
-        BaseType_t MPU_xTimerGenericCommandPrivImpl( const xTimerGenericCommandParams_t * pxParams ) /* PRIVILEGED_FUNCTION */
-        {
-            BaseType_t xReturn = pdFALSE;
-            TimerHandle_t xInternalTimerHandle = NULL;
-            int32_t lIndex;
-
-            if( pxParams != NULL )
-            {
-                lIndex = ( int32_t ) ( pxParams->xTimer );
-
-                if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
-                {
-                    xInternalTimerHandle = MPU_GetTimerHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
-
-                    if( xInternalTimerHandle != NULL )
-                    {
-                        xReturn = xTimerGenericCommand( xInternalTimerHandle,
-                                                        pxParams->xCommandID,
-                                                        pxParams->xOptionalValue,
-                                                        pxParams->pxHigherPriorityTaskWoken,
-                                                        pxParams->xTicksToWait );
                     }
                 }
             }
@@ -3516,10 +3591,10 @@
     #if ( configUSE_TIMERS == 1 )
 
         void MPU_vTimerSetReloadModeImpl( TimerHandle_t xTimer,
-                                          const UBaseType_t uxAutoReload ) PRIVILEGED_FUNCTION;
+                                          const BaseType_t xAutoReload ) PRIVILEGED_FUNCTION;
 
         void MPU_vTimerSetReloadModeImpl( TimerHandle_t xTimer,
-                                          const UBaseType_t uxAutoReload ) /* PRIVILEGED_FUNCTION */
+                                          const BaseType_t xAutoReload ) /* PRIVILEGED_FUNCTION */
         {
             TimerHandle_t xInternalTimerHandle = NULL;
             int32_t lIndex;
@@ -3537,7 +3612,7 @@
 
                     if( xInternalTimerHandle != NULL )
                     {
-                        vTimerSetReloadMode( xInternalTimerHandle, uxAutoReload );
+                        vTimerSetReloadMode( xInternalTimerHandle, xAutoReload );
                     }
                 }
             }
@@ -3691,7 +3766,7 @@
 
         TimerHandle_t MPU_xTimerCreate( const char * const pcTimerName,
                                         const TickType_t xTimerPeriodInTicks,
-                                        const UBaseType_t uxAutoReload,
+                                        const BaseType_t xAutoReload,
                                         void * const pvTimerID,
                                         TimerCallbackFunction_t pxCallbackFunction ) /* PRIVILEGED_FUNCTION */
         {
@@ -3703,7 +3778,7 @@
 
             if( lIndex != -1 )
             {
-                xInternalTimerHandle = xTimerCreate( pcTimerName, xTimerPeriodInTicks, uxAutoReload, pvTimerID, MPU_TimerCallback );
+                xInternalTimerHandle = xTimerCreate( pcTimerName, xTimerPeriodInTicks, xAutoReload, pvTimerID, MPU_TimerCallback );
 
                 if( xInternalTimerHandle != NULL )
                 {
@@ -3726,7 +3801,7 @@
 
         TimerHandle_t MPU_xTimerCreateStatic( const char * const pcTimerName,
                                               const TickType_t xTimerPeriodInTicks,
-                                              const UBaseType_t uxAutoReload,
+                                              const BaseType_t xAutoReload,
                                               void * const pvTimerID,
                                               TimerCallbackFunction_t pxCallbackFunction,
                                               StaticTimer_t * pxTimerBuffer ) /* PRIVILEGED_FUNCTION */
@@ -3739,7 +3814,7 @@
 
             if( lIndex != -1 )
             {
-                xInternalTimerHandle = xTimerCreateStatic( pcTimerName, xTimerPeriodInTicks, uxAutoReload, pvTimerID, MPU_TimerCallback, pxTimerBuffer );
+                xInternalTimerHandle = xTimerCreateStatic( pcTimerName, xTimerPeriodInTicks, xAutoReload, pvTimerID, MPU_TimerCallback, pxTimerBuffer );
 
                 if( xInternalTimerHandle != NULL )
                 {
@@ -3785,57 +3860,133 @@
     #endif /* if ( configSUPPORT_STATIC_ALLOCATION == 1 ) && ( configUSE_TIMERS == 1 ) */
 /*-----------------------------------------------------------*/
 
+    #if ( configUSE_TIMERS == 1 )
+
+        BaseType_t MPU_xTimerGenericCommandFromISR( TimerHandle_t xTimer,
+                                                    const BaseType_t xCommandID,
+                                                    const TickType_t xOptionalValue,
+                                                    BaseType_t * const pxHigherPriorityTaskWoken,
+                                                    const TickType_t xTicksToWait ) /* PRIVILEGED_FUNCTION */
+        {
+            BaseType_t xReturn = pdFALSE;
+            TimerHandle_t xInternalTimerHandle = NULL;
+            int32_t lIndex;
+
+            lIndex = ( int32_t ) xTimer;
+
+            if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+            {
+                xInternalTimerHandle = MPU_GetTimerHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                if( xInternalTimerHandle != NULL )
+                {
+                    xReturn = xTimerGenericCommandFromISR( xInternalTimerHandle, xCommandID, xOptionalValue, pxHigherPriorityTaskWoken, xTicksToWait );
+                }
+            }
+
+            return xReturn;
+        }
+
+    #endif /* if ( configUSE_TIMERS == 1 ) */
+/*-----------------------------------------------------------*/
+
 /*-----------------------------------------------------------*/
 /*           MPU wrappers for event group APIs.              */
 /*-----------------------------------------------------------*/
 
-    EventBits_t MPU_xEventGroupWaitBits( EventGroupHandle_t xEventGroup,
-                                         const EventBits_t uxBitsToWaitFor,
-                                         const BaseType_t xClearOnExit,
-                                         const BaseType_t xWaitForAllBits,
-                                         TickType_t xTicksToWait ) /* FREERTOS_SYSTEM_CALL */
-    {
-        EventBits_t xReturn = 0;
-        xEventGroupWaitBitsParams_t xParams;
+    #if ( configUSE_EVENT_GROUPS == 1 )
 
-        xParams.xEventGroup = xEventGroup;
-        xParams.uxBitsToWaitFor = uxBitsToWaitFor;
-        xParams.xClearOnExit = xClearOnExit;
-        xParams.xWaitForAllBits = xWaitForAllBits;
-        xParams.xTicksToWait = xTicksToWait;
-
-        xReturn = MPU_xEventGroupWaitBitsEntry( &( xParams ) );
-
-        return xReturn;
-    }
-
-    EventBits_t MPU_xEventGroupWaitBitsImpl( const xEventGroupWaitBitsParams_t * pxParams ) PRIVILEGED_FUNCTION;
-
-    EventBits_t MPU_xEventGroupWaitBitsImpl( const xEventGroupWaitBitsParams_t * pxParams ) /* PRIVILEGED_FUNCTION */
-    {
-        EventBits_t xReturn = 0;
-        EventGroupHandle_t xInternalEventGroupHandle = NULL;
-        int32_t lIndex;
-        BaseType_t xCallingTaskIsAuthorizedToAccessEventGroup = pdFALSE;
-        BaseType_t xAreParamsReadable = pdFALSE;
-
-        if( pxParams != NULL )
+        EventBits_t MPU_xEventGroupWaitBits( EventGroupHandle_t xEventGroup,
+                                             const EventBits_t uxBitsToWaitFor,
+                                             const BaseType_t xClearOnExit,
+                                             const BaseType_t xWaitForAllBits,
+                                             TickType_t xTicksToWait ) /* FREERTOS_SYSTEM_CALL */
         {
-            xAreParamsReadable = xPortIsAuthorizedToAccessBuffer( pxParams,
-                                                                  sizeof( xEventGroupWaitBitsParams_t ),
-                                                                  tskMPU_READ_PERMISSION );
+            EventBits_t xReturn = 0;
+            xEventGroupWaitBitsParams_t xParams;
+
+            xParams.xEventGroup = xEventGroup;
+            xParams.uxBitsToWaitFor = uxBitsToWaitFor;
+            xParams.xClearOnExit = xClearOnExit;
+            xParams.xWaitForAllBits = xWaitForAllBits;
+            xParams.xTicksToWait = xTicksToWait;
+
+            xReturn = MPU_xEventGroupWaitBitsEntry( &( xParams ) );
+
+            return xReturn;
         }
 
-        if( xAreParamsReadable == pdTRUE )
+        EventBits_t MPU_xEventGroupWaitBitsImpl( const xEventGroupWaitBitsParams_t * pxParams ) PRIVILEGED_FUNCTION;
+
+        EventBits_t MPU_xEventGroupWaitBitsImpl( const xEventGroupWaitBitsParams_t * pxParams ) /* PRIVILEGED_FUNCTION */
         {
-            if( ( ( pxParams->uxBitsToWaitFor & eventEVENT_BITS_CONTROL_BYTES ) == 0 ) &&
-                ( pxParams->uxBitsToWaitFor != 0 )
-                #if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
-                    && ( !( ( xTaskGetSchedulerState() == taskSCHEDULER_SUSPENDED ) && ( pxParams->xTicksToWait != 0 ) ) )
-                #endif
-                )
+            EventBits_t xReturn = 0;
+            EventGroupHandle_t xInternalEventGroupHandle = NULL;
+            int32_t lIndex;
+            BaseType_t xCallingTaskIsAuthorizedToAccessEventGroup = pdFALSE;
+            BaseType_t xAreParamsReadable = pdFALSE;
+
+            if( pxParams != NULL )
             {
-                lIndex = ( int32_t ) ( pxParams->xEventGroup );
+                xAreParamsReadable = xPortIsAuthorizedToAccessBuffer( pxParams,
+                                                                      sizeof( xEventGroupWaitBitsParams_t ),
+                                                                      tskMPU_READ_PERMISSION );
+            }
+
+            if( xAreParamsReadable == pdTRUE )
+            {
+                if( ( ( pxParams->uxBitsToWaitFor & eventEVENT_BITS_CONTROL_BYTES ) == 0U ) &&
+                    ( pxParams->uxBitsToWaitFor != 0U )
+                    #if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
+                        && ( !( ( xTaskGetSchedulerState() == taskSCHEDULER_SUSPENDED ) && ( pxParams->xTicksToWait != 0U ) ) )
+                    #endif
+                    )
+                {
+                    lIndex = ( int32_t ) ( pxParams->xEventGroup );
+
+                    if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+                    {
+                        xCallingTaskIsAuthorizedToAccessEventGroup = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                        if( xCallingTaskIsAuthorizedToAccessEventGroup == pdTRUE )
+                        {
+                            xInternalEventGroupHandle = MPU_GetEventGroupHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                            if( xInternalEventGroupHandle != NULL )
+                            {
+                                xReturn = xEventGroupWaitBits( xInternalEventGroupHandle,
+                                                               pxParams->uxBitsToWaitFor,
+                                                               pxParams->xClearOnExit,
+                                                               pxParams->xWaitForAllBits,
+                                                               pxParams->xTicksToWait );
+                            }
+                        }
+                    }
+                }
+            }
+
+            return xReturn;
+        }
+
+    #endif /* #if ( configUSE_EVENT_GROUPS == 1 ) */
+/*-----------------------------------------------------------*/
+
+    #if ( configUSE_EVENT_GROUPS == 1 )
+
+        EventBits_t MPU_xEventGroupClearBitsImpl( EventGroupHandle_t xEventGroup,
+                                                  const EventBits_t uxBitsToClear ) PRIVILEGED_FUNCTION;
+
+        EventBits_t MPU_xEventGroupClearBitsImpl( EventGroupHandle_t xEventGroup,
+                                                  const EventBits_t uxBitsToClear ) /* PRIVILEGED_FUNCTION */
+        {
+            EventBits_t xReturn = 0;
+            EventGroupHandle_t xInternalEventGroupHandle = NULL;
+            int32_t lIndex;
+            BaseType_t xCallingTaskIsAuthorizedToAccessEventGroup = pdFALSE;
+
+            if( ( uxBitsToClear & eventEVENT_BITS_CONTROL_BYTES ) == 0U )
+            {
+                lIndex = ( int32_t ) xEventGroup;
 
                 if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
                 {
@@ -3847,136 +3998,106 @@
 
                         if( xInternalEventGroupHandle != NULL )
                         {
-                            xReturn = xEventGroupWaitBits( xInternalEventGroupHandle,
-                                                           pxParams->uxBitsToWaitFor,
-                                                           pxParams->xClearOnExit,
-                                                           pxParams->xWaitForAllBits,
-                                                           pxParams->xTicksToWait );
+                            xReturn = xEventGroupClearBits( xInternalEventGroupHandle, uxBitsToClear );
                         }
                     }
                 }
             }
+
+            return xReturn;
         }
 
-        return xReturn;
-    }
+    #endif /* #if ( configUSE_EVENT_GROUPS == 1 ) */
 /*-----------------------------------------------------------*/
 
-    EventBits_t MPU_xEventGroupClearBitsImpl( EventGroupHandle_t xEventGroup,
-                                              const EventBits_t uxBitsToClear ) PRIVILEGED_FUNCTION;
+    #if ( configUSE_EVENT_GROUPS == 1 )
 
-    EventBits_t MPU_xEventGroupClearBitsImpl( EventGroupHandle_t xEventGroup,
-                                              const EventBits_t uxBitsToClear ) /* PRIVILEGED_FUNCTION */
-    {
-        EventBits_t xReturn = 0;
-        EventGroupHandle_t xInternalEventGroupHandle = NULL;
-        int32_t lIndex;
-        BaseType_t xCallingTaskIsAuthorizedToAccessEventGroup = pdFALSE;
+        EventBits_t MPU_xEventGroupSetBitsImpl( EventGroupHandle_t xEventGroup,
+                                                const EventBits_t uxBitsToSet ) PRIVILEGED_FUNCTION;
 
-        if( ( uxBitsToClear & eventEVENT_BITS_CONTROL_BYTES ) == 0 )
+        EventBits_t MPU_xEventGroupSetBitsImpl( EventGroupHandle_t xEventGroup,
+                                                const EventBits_t uxBitsToSet ) /* PRIVILEGED_FUNCTION */
         {
-            lIndex = ( int32_t ) xEventGroup;
+            EventBits_t xReturn = 0;
+            EventGroupHandle_t xInternalEventGroupHandle = NULL;
+            int32_t lIndex;
+            BaseType_t xCallingTaskIsAuthorizedToAccessEventGroup = pdFALSE;
 
-            if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+            if( ( uxBitsToSet & eventEVENT_BITS_CONTROL_BYTES ) == 0U )
             {
-                xCallingTaskIsAuthorizedToAccessEventGroup = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+                lIndex = ( int32_t ) xEventGroup;
 
-                if( xCallingTaskIsAuthorizedToAccessEventGroup == pdTRUE )
+                if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
                 {
-                    xInternalEventGroupHandle = MPU_GetEventGroupHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+                    xCallingTaskIsAuthorizedToAccessEventGroup = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
 
-                    if( xInternalEventGroupHandle != NULL )
+                    if( xCallingTaskIsAuthorizedToAccessEventGroup == pdTRUE )
                     {
-                        xReturn = xEventGroupClearBits( xInternalEventGroupHandle, uxBitsToClear );
+                        xInternalEventGroupHandle = MPU_GetEventGroupHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                        if( xInternalEventGroupHandle != NULL )
+                        {
+                            xReturn = xEventGroupSetBits( xInternalEventGroupHandle, uxBitsToSet );
+                        }
                     }
                 }
             }
+
+            return xReturn;
         }
 
-        return xReturn;
-    }
+    #endif /* #if ( configUSE_EVENT_GROUPS == 1 ) */
 /*-----------------------------------------------------------*/
 
-    EventBits_t MPU_xEventGroupSetBitsImpl( EventGroupHandle_t xEventGroup,
-                                            const EventBits_t uxBitsToSet ) PRIVILEGED_FUNCTION;
+    #if ( configUSE_EVENT_GROUPS == 1 )
 
-    EventBits_t MPU_xEventGroupSetBitsImpl( EventGroupHandle_t xEventGroup,
-                                            const EventBits_t uxBitsToSet ) /* PRIVILEGED_FUNCTION */
-    {
-        EventBits_t xReturn = 0;
-        EventGroupHandle_t xInternalEventGroupHandle = NULL;
-        int32_t lIndex;
-        BaseType_t xCallingTaskIsAuthorizedToAccessEventGroup = pdFALSE;
+        EventBits_t MPU_xEventGroupSyncImpl( EventGroupHandle_t xEventGroup,
+                                             const EventBits_t uxBitsToSet,
+                                             const EventBits_t uxBitsToWaitFor,
+                                             TickType_t xTicksToWait ) PRIVILEGED_FUNCTION;
 
-        if( ( uxBitsToSet & eventEVENT_BITS_CONTROL_BYTES ) == 0 )
+        EventBits_t MPU_xEventGroupSyncImpl( EventGroupHandle_t xEventGroup,
+                                             const EventBits_t uxBitsToSet,
+                                             const EventBits_t uxBitsToWaitFor,
+                                             TickType_t xTicksToWait ) /* PRIVILEGED_FUNCTION */
         {
-            lIndex = ( int32_t ) xEventGroup;
+            EventBits_t xReturn = 0;
+            EventGroupHandle_t xInternalEventGroupHandle = NULL;
+            int32_t lIndex;
+            BaseType_t xCallingTaskIsAuthorizedToAccessEventGroup = pdFALSE;
 
-            if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+            if( ( ( uxBitsToWaitFor & eventEVENT_BITS_CONTROL_BYTES ) == 0U ) &&
+                ( uxBitsToWaitFor != 0U )
+                #if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
+                    && ( !( ( xTaskGetSchedulerState() == taskSCHEDULER_SUSPENDED ) && ( xTicksToWait != 0U ) ) )
+                #endif
+                )
             {
-                xCallingTaskIsAuthorizedToAccessEventGroup = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+                lIndex = ( int32_t ) xEventGroup;
 
-                if( xCallingTaskIsAuthorizedToAccessEventGroup == pdTRUE )
+                if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
                 {
-                    xInternalEventGroupHandle = MPU_GetEventGroupHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+                    xCallingTaskIsAuthorizedToAccessEventGroup = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
 
-                    if( xInternalEventGroupHandle != NULL )
+                    if( xCallingTaskIsAuthorizedToAccessEventGroup == pdTRUE )
                     {
-                        xReturn = xEventGroupSetBits( xInternalEventGroupHandle, uxBitsToSet );
+                        xInternalEventGroupHandle = MPU_GetEventGroupHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                        if( xInternalEventGroupHandle != NULL )
+                        {
+                            xReturn = xEventGroupSync( xInternalEventGroupHandle, uxBitsToSet, uxBitsToWaitFor, xTicksToWait );
+                        }
                     }
                 }
             }
+
+            return xReturn;
         }
 
-        return xReturn;
-    }
+    #endif /* #if ( configUSE_EVENT_GROUPS == 1 ) */
 /*-----------------------------------------------------------*/
 
-    EventBits_t MPU_xEventGroupSyncImpl( EventGroupHandle_t xEventGroup,
-                                         const EventBits_t uxBitsToSet,
-                                         const EventBits_t uxBitsToWaitFor,
-                                         TickType_t xTicksToWait ) PRIVILEGED_FUNCTION;
-
-    EventBits_t MPU_xEventGroupSyncImpl( EventGroupHandle_t xEventGroup,
-                                         const EventBits_t uxBitsToSet,
-                                         const EventBits_t uxBitsToWaitFor,
-                                         TickType_t xTicksToWait ) /* PRIVILEGED_FUNCTION */
-    {
-        EventBits_t xReturn = 0;
-        EventGroupHandle_t xInternalEventGroupHandle = NULL;
-        int32_t lIndex;
-        BaseType_t xCallingTaskIsAuthorizedToAccessEventGroup = pdFALSE;
-
-        if( ( ( uxBitsToWaitFor & eventEVENT_BITS_CONTROL_BYTES ) == 0 ) &&
-            ( uxBitsToWaitFor != 0 )
-            #if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
-                && ( !( ( xTaskGetSchedulerState() == taskSCHEDULER_SUSPENDED ) && ( xTicksToWait != 0 ) ) )
-            #endif
-            )
-        {
-            lIndex = ( int32_t ) xEventGroup;
-
-            if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
-            {
-                xCallingTaskIsAuthorizedToAccessEventGroup = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
-
-                if( xCallingTaskIsAuthorizedToAccessEventGroup == pdTRUE )
-                {
-                    xInternalEventGroupHandle = MPU_GetEventGroupHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
-
-                    if( xInternalEventGroupHandle != NULL )
-                    {
-                        xReturn = xEventGroupSync( xInternalEventGroupHandle, uxBitsToSet, uxBitsToWaitFor, xTicksToWait );
-                    }
-                }
-            }
-        }
-
-        return xReturn;
-    }
-/*-----------------------------------------------------------*/
-
-    #if ( configUSE_TRACE_FACILITY == 1 )
+    #if ( ( configUSE_EVENT_GROUPS == 1 ) && ( configUSE_TRACE_FACILITY == 1 ) )
 
         UBaseType_t MPU_uxEventGroupGetNumberImpl( void * xEventGroup ) PRIVILEGED_FUNCTION;
 
@@ -4007,10 +4128,10 @@
             return xReturn;
         }
 
-    #endif /*( configUSE_TRACE_FACILITY == 1 )*/
+    #endif /* #if ( ( configUSE_EVENT_GROUPS == 1 ) && ( configUSE_TRACE_FACILITY == 1 ) ) */
 /*-----------------------------------------------------------*/
 
-    #if ( configUSE_TRACE_FACILITY == 1 )
+    #if ( ( configUSE_EVENT_GROUPS == 1 ) && ( configUSE_TRACE_FACILITY == 1 ) )
 
         void MPU_vEventGroupSetNumberImpl( void * xEventGroup,
                                            UBaseType_t uxEventGroupNumber ) PRIVILEGED_FUNCTION;
@@ -4040,7 +4161,7 @@
             }
         }
 
-    #endif /*( configUSE_TRACE_FACILITY == 1 )*/
+    #endif /* #if ( ( configUSE_EVENT_GROUPS == 1 ) && ( configUSE_TRACE_FACILITY == 1 ) ) */
 /*-----------------------------------------------------------*/
 
 /* Privileged only wrappers for Event Group APIs. These are needed so that
@@ -4048,7 +4169,7 @@
  * with all the APIs. */
 /*-----------------------------------------------------------*/
 
-    #if ( configSUPPORT_DYNAMIC_ALLOCATION == 1 )
+    #if ( ( configSUPPORT_DYNAMIC_ALLOCATION == 1 ) && ( configUSE_EVENT_GROUPS == 1 ) )
 
         EventGroupHandle_t MPU_xEventGroupCreate( void ) /* PRIVILEGED_FUNCTION */
         {
@@ -4076,10 +4197,10 @@
             return xExternalEventGroupHandle;
         }
 
-    #endif /* if ( configSUPPORT_DYNAMIC_ALLOCATION == 1 ) */
+    #endif /* #if ( ( configSUPPORT_DYNAMIC_ALLOCATION == 1 ) && ( configUSE_EVENT_GROUPS == 1 ) ) */
 /*-----------------------------------------------------------*/
 
-    #if ( configSUPPORT_STATIC_ALLOCATION == 1 )
+    #if ( ( configSUPPORT_STATIC_ALLOCATION == 1 ) && ( configUSE_EVENT_GROUPS == 1 ) )
 
         EventGroupHandle_t MPU_xEventGroupCreateStatic( StaticEventGroup_t * pxEventGroupBuffer ) /* PRIVILEGED_FUNCTION */
         {
@@ -4107,30 +4228,34 @@
             return xExternalEventGroupHandle;
         }
 
-    #endif /* if ( configSUPPORT_STATIC_ALLOCATION == 1 ) */
+    #endif /* #if ( ( configSUPPORT_STATIC_ALLOCATION == 1 ) && ( configUSE_EVENT_GROUPS == 1 ) ) */
 /*-----------------------------------------------------------*/
 
-    void MPU_vEventGroupDelete( EventGroupHandle_t xEventGroup ) /* PRIVILEGED_FUNCTION */
-    {
-        EventGroupHandle_t xInternalEventGroupHandle = NULL;
-        int32_t lIndex;
+    #if ( configUSE_EVENT_GROUPS == 1 )
 
-        lIndex = ( int32_t ) xEventGroup;
-
-        if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+        void MPU_vEventGroupDelete( EventGroupHandle_t xEventGroup ) /* PRIVILEGED_FUNCTION */
         {
-            xInternalEventGroupHandle = MPU_GetEventGroupHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+            EventGroupHandle_t xInternalEventGroupHandle = NULL;
+            int32_t lIndex;
 
-            if( xInternalEventGroupHandle != NULL )
+            lIndex = ( int32_t ) xEventGroup;
+
+            if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
             {
-                vEventGroupDelete( xInternalEventGroupHandle );
-                MPU_SetIndexFreeInKernelObjectPool( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+                xInternalEventGroupHandle = MPU_GetEventGroupHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                if( xInternalEventGroupHandle != NULL )
+                {
+                    vEventGroupDelete( xInternalEventGroupHandle );
+                    MPU_SetIndexFreeInKernelObjectPool( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+                }
             }
         }
-    }
+
+    #endif /* #if ( configUSE_EVENT_GROUPS == 1 ) */
 /*-----------------------------------------------------------*/
 
-    #if ( configSUPPORT_STATIC_ALLOCATION == 1 )
+    #if ( ( configSUPPORT_STATIC_ALLOCATION == 1 ) && ( configUSE_EVENT_GROUPS == 1 ) )
 
         BaseType_t MPU_xEventGroupGetStaticBuffer( EventGroupHandle_t xEventGroup,
                                                    StaticEventGroup_t ** ppxEventGroupBuffer ) /* PRIVILEGED_FUNCTION */
@@ -4154,10 +4279,10 @@
             return xReturn;
         }
 
-    #endif /* if ( configSUPPORT_STATIC_ALLOCATION == 1 ) */
+    #endif /* #if ( ( configSUPPORT_STATIC_ALLOCATION == 1 ) && ( configUSE_EVENT_GROUPS == 1 ) ) */
 /*-----------------------------------------------------------*/
 
-    #if ( ( configUSE_TRACE_FACILITY == 1 ) && ( INCLUDE_xTimerPendFunctionCall == 1 ) && ( configUSE_TIMERS == 1 ) )
+    #if ( ( configUSE_EVENT_GROUPS == 1 ) && ( configUSE_TRACE_FACILITY == 1 ) && ( INCLUDE_xTimerPendFunctionCall == 1 ) && ( configUSE_TIMERS == 1 ) )
 
         BaseType_t MPU_xEventGroupClearBitsFromISR( EventGroupHandle_t xEventGroup,
                                                     const EventBits_t uxBitsToClear ) /* PRIVILEGED_FUNCTION */
@@ -4181,10 +4306,10 @@
             return xReturn;
         }
 
-    #endif /* #if ( ( configUSE_TRACE_FACILITY == 1 ) && ( INCLUDE_xTimerPendFunctionCall == 1 ) && ( configUSE_TIMERS == 1 ) ) */
+    #endif /* #if ( ( configUSE_EVENT_GROUPS == 1 ) && ( configUSE_TRACE_FACILITY == 1 ) && ( INCLUDE_xTimerPendFunctionCall == 1 ) && ( configUSE_TIMERS == 1 ) ) */
 /*-----------------------------------------------------------*/
 
-    #if ( ( configUSE_TRACE_FACILITY == 1 ) && ( INCLUDE_xTimerPendFunctionCall == 1 ) && ( configUSE_TIMERS == 1 ) )
+    #if ( ( configUSE_EVENT_GROUPS == 1 ) && ( configUSE_TRACE_FACILITY == 1 ) && ( INCLUDE_xTimerPendFunctionCall == 1 ) && ( configUSE_TIMERS == 1 ) )
 
         BaseType_t MPU_xEventGroupSetBitsFromISR( EventGroupHandle_t xEventGroup,
                                                   const EventBits_t uxBitsToSet,
@@ -4209,309 +4334,345 @@
             return xReturn;
         }
 
-    #endif /* #if ( ( configUSE_TRACE_FACILITY == 1 ) && ( INCLUDE_xTimerPendFunctionCall == 1 ) && ( configUSE_TIMERS == 1 ) ) */
+    #endif /* #if ( ( configUSE_EVENT_GROUPS == 1 ) && ( configUSE_TRACE_FACILITY == 1 ) && ( INCLUDE_xTimerPendFunctionCall == 1 ) && ( configUSE_TIMERS == 1 ) ) */
 /*-----------------------------------------------------------*/
 
-    EventBits_t MPU_xEventGroupGetBitsFromISR( EventGroupHandle_t xEventGroup ) /* PRIVILEGED_FUNCTION */
-    {
-        EventBits_t xReturn = 0;
-        EventGroupHandle_t xInternalEventGroupHandle = NULL;
-        int32_t lIndex;
+    #if ( configUSE_EVENT_GROUPS == 1 )
 
-        lIndex = ( int32_t ) xEventGroup;
-
-        if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+        EventBits_t MPU_xEventGroupGetBitsFromISR( EventGroupHandle_t xEventGroup ) /* PRIVILEGED_FUNCTION */
         {
-            xInternalEventGroupHandle = MPU_GetEventGroupHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+            EventBits_t xReturn = 0;
+            EventGroupHandle_t xInternalEventGroupHandle = NULL;
+            int32_t lIndex;
 
-            if( xInternalEventGroupHandle != NULL )
+            lIndex = ( int32_t ) xEventGroup;
+
+            if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
             {
-                xReturn = xEventGroupGetBitsFromISR( xInternalEventGroupHandle );
+                xInternalEventGroupHandle = MPU_GetEventGroupHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                if( xInternalEventGroupHandle != NULL )
+                {
+                    xReturn = xEventGroupGetBitsFromISR( xInternalEventGroupHandle );
+                }
             }
+
+            return xReturn;
         }
 
-        return xReturn;
-    }
+    #endif /* #if ( configUSE_EVENT_GROUPS == 1 ) */
 /*-----------------------------------------------------------*/
 
 /*-----------------------------------------------------------*/
 /*           MPU wrappers for stream buffer APIs.            */
 /*-----------------------------------------------------------*/
 
-    size_t MPU_xStreamBufferSendImpl( StreamBufferHandle_t xStreamBuffer,
-                                      const void * pvTxData,
-                                      size_t xDataLengthBytes,
-                                      TickType_t xTicksToWait ) PRIVILEGED_FUNCTION;
+    #if ( configUSE_STREAM_BUFFERS == 1 )
 
-    size_t MPU_xStreamBufferSendImpl( StreamBufferHandle_t xStreamBuffer,
-                                      const void * pvTxData,
-                                      size_t xDataLengthBytes,
-                                      TickType_t xTicksToWait ) /* PRIVILEGED_FUNCTION */
-    {
-        size_t xReturn = 0;
-        StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
-        int32_t lIndex;
-        BaseType_t xIsTxDataBufferReadable = pdFALSE;
-        BaseType_t xCallingTaskIsAuthorizedToAccessStreamBuffer = pdFALSE;
+        size_t MPU_xStreamBufferSendImpl( StreamBufferHandle_t xStreamBuffer,
+                                          const void * pvTxData,
+                                          size_t xDataLengthBytes,
+                                          TickType_t xTicksToWait ) PRIVILEGED_FUNCTION;
 
-        if( pvTxData != NULL )
+        size_t MPU_xStreamBufferSendImpl( StreamBufferHandle_t xStreamBuffer,
+                                          const void * pvTxData,
+                                          size_t xDataLengthBytes,
+                                          TickType_t xTicksToWait ) /* PRIVILEGED_FUNCTION */
         {
-            xIsTxDataBufferReadable = xPortIsAuthorizedToAccessBuffer( pvTxData,
-                                                                       xDataLengthBytes,
-                                                                       tskMPU_READ_PERMISSION );
+            size_t xReturn = 0;
+            StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
+            int32_t lIndex;
+            BaseType_t xIsTxDataBufferReadable = pdFALSE;
+            BaseType_t xCallingTaskIsAuthorizedToAccessStreamBuffer = pdFALSE;
 
-            if( xIsTxDataBufferReadable == pdTRUE )
+            if( pvTxData != NULL )
             {
-                lIndex = ( int32_t ) xStreamBuffer;
+                xIsTxDataBufferReadable = xPortIsAuthorizedToAccessBuffer( pvTxData,
+                                                                           xDataLengthBytes,
+                                                                           tskMPU_READ_PERMISSION );
 
-                if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+                if( xIsTxDataBufferReadable == pdTRUE )
                 {
-                    xCallingTaskIsAuthorizedToAccessStreamBuffer = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+                    lIndex = ( int32_t ) xStreamBuffer;
 
-                    if( xCallingTaskIsAuthorizedToAccessStreamBuffer == pdTRUE )
+                    if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
                     {
-                        xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+                        xCallingTaskIsAuthorizedToAccessStreamBuffer = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
 
-                        if( xInternalStreamBufferHandle != NULL )
+                        if( xCallingTaskIsAuthorizedToAccessStreamBuffer == pdTRUE )
                         {
-                            xReturn = xStreamBufferSend( xInternalStreamBufferHandle, pvTxData, xDataLengthBytes, xTicksToWait );
+                            xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                            if( xInternalStreamBufferHandle != NULL )
+                            {
+                                xReturn = xStreamBufferSend( xInternalStreamBufferHandle, pvTxData, xDataLengthBytes, xTicksToWait );
+                            }
                         }
                     }
                 }
             }
+
+            return xReturn;
         }
 
-        return xReturn;
-    }
+    #endif /* #if ( configUSE_STREAM_BUFFERS == 1 ) */
 /*-----------------------------------------------------------*/
 
-    size_t MPU_xStreamBufferReceiveImpl( StreamBufferHandle_t xStreamBuffer,
-                                         void * pvRxData,
-                                         size_t xBufferLengthBytes,
-                                         TickType_t xTicksToWait ) PRIVILEGED_FUNCTION;
+    #if ( configUSE_STREAM_BUFFERS == 1 )
 
-    size_t MPU_xStreamBufferReceiveImpl( StreamBufferHandle_t xStreamBuffer,
-                                         void * pvRxData,
-                                         size_t xBufferLengthBytes,
-                                         TickType_t xTicksToWait ) /* PRIVILEGED_FUNCTION */
-    {
-        size_t xReturn = 0;
-        StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
-        int32_t lIndex;
-        BaseType_t xIsRxDataBufferWriteable = pdFALSE;
-        BaseType_t xCallingTaskIsAuthorizedToAccessStreamBuffer = pdFALSE;
+        size_t MPU_xStreamBufferReceiveImpl( StreamBufferHandle_t xStreamBuffer,
+                                             void * pvRxData,
+                                             size_t xBufferLengthBytes,
+                                             TickType_t xTicksToWait ) PRIVILEGED_FUNCTION;
 
-        if( pvRxData != NULL )
+        size_t MPU_xStreamBufferReceiveImpl( StreamBufferHandle_t xStreamBuffer,
+                                             void * pvRxData,
+                                             size_t xBufferLengthBytes,
+                                             TickType_t xTicksToWait ) /* PRIVILEGED_FUNCTION */
         {
-            xIsRxDataBufferWriteable = xPortIsAuthorizedToAccessBuffer( pvRxData,
-                                                                        xBufferLengthBytes,
-                                                                        tskMPU_WRITE_PERMISSION );
+            size_t xReturn = 0;
+            StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
+            int32_t lIndex;
+            BaseType_t xIsRxDataBufferWriteable = pdFALSE;
+            BaseType_t xCallingTaskIsAuthorizedToAccessStreamBuffer = pdFALSE;
 
-            if( xIsRxDataBufferWriteable == pdTRUE )
+            if( pvRxData != NULL )
             {
-                lIndex = ( int32_t ) xStreamBuffer;
+                xIsRxDataBufferWriteable = xPortIsAuthorizedToAccessBuffer( pvRxData,
+                                                                            xBufferLengthBytes,
+                                                                            tskMPU_WRITE_PERMISSION );
 
-                if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+                if( xIsRxDataBufferWriteable == pdTRUE )
                 {
-                    xCallingTaskIsAuthorizedToAccessStreamBuffer = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+                    lIndex = ( int32_t ) xStreamBuffer;
 
-                    if( xCallingTaskIsAuthorizedToAccessStreamBuffer == pdTRUE )
+                    if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
                     {
-                        xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+                        xCallingTaskIsAuthorizedToAccessStreamBuffer = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
 
-                        if( xInternalStreamBufferHandle != NULL )
+                        if( xCallingTaskIsAuthorizedToAccessStreamBuffer == pdTRUE )
                         {
-                            xReturn = xStreamBufferReceive( xInternalStreamBufferHandle, pvRxData, xBufferLengthBytes, xTicksToWait );
+                            xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                            if( xInternalStreamBufferHandle != NULL )
+                            {
+                                xReturn = xStreamBufferReceive( xInternalStreamBufferHandle, pvRxData, xBufferLengthBytes, xTicksToWait );
+                            }
                         }
                     }
                 }
             }
+
+            return xReturn;
         }
 
-        return xReturn;
-    }
+    #endif /* #if ( configUSE_STREAM_BUFFERS == 1 ) */
 /*-----------------------------------------------------------*/
 
-    BaseType_t MPU_xStreamBufferIsFullImpl( StreamBufferHandle_t xStreamBuffer ) PRIVILEGED_FUNCTION;
+    #if ( configUSE_STREAM_BUFFERS == 1 )
 
-    BaseType_t MPU_xStreamBufferIsFullImpl( StreamBufferHandle_t xStreamBuffer ) /* PRIVILEGED_FUNCTION */
-    {
-        BaseType_t xReturn = pdFALSE;
-        StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
-        int32_t lIndex;
-        BaseType_t xCallingTaskIsAuthorizedToAccessStreamBuffer = pdFALSE;
+        BaseType_t MPU_xStreamBufferIsFullImpl( StreamBufferHandle_t xStreamBuffer ) PRIVILEGED_FUNCTION;
 
-        lIndex = ( int32_t ) xStreamBuffer;
-
-        if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+        BaseType_t MPU_xStreamBufferIsFullImpl( StreamBufferHandle_t xStreamBuffer ) /* PRIVILEGED_FUNCTION */
         {
-            xCallingTaskIsAuthorizedToAccessStreamBuffer = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+            BaseType_t xReturn = pdFALSE;
+            StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
+            int32_t lIndex;
+            BaseType_t xCallingTaskIsAuthorizedToAccessStreamBuffer = pdFALSE;
 
-            if( xCallingTaskIsAuthorizedToAccessStreamBuffer == pdTRUE )
+            lIndex = ( int32_t ) xStreamBuffer;
+
+            if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
             {
-                xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+                xCallingTaskIsAuthorizedToAccessStreamBuffer = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
 
-                if( xInternalStreamBufferHandle != NULL )
+                if( xCallingTaskIsAuthorizedToAccessStreamBuffer == pdTRUE )
                 {
-                    xReturn = xStreamBufferIsFull( xInternalStreamBufferHandle );
+                    xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                    if( xInternalStreamBufferHandle != NULL )
+                    {
+                        xReturn = xStreamBufferIsFull( xInternalStreamBufferHandle );
+                    }
                 }
             }
+
+            return xReturn;
         }
 
-        return xReturn;
-    }
+    #endif /* #if ( configUSE_STREAM_BUFFERS == 1 ) */
 /*-----------------------------------------------------------*/
 
-    BaseType_t MPU_xStreamBufferIsEmptyImpl( StreamBufferHandle_t xStreamBuffer ) PRIVILEGED_FUNCTION;
+    #if ( configUSE_STREAM_BUFFERS == 1 )
 
-    BaseType_t MPU_xStreamBufferIsEmptyImpl( StreamBufferHandle_t xStreamBuffer ) /* PRIVILEGED_FUNCTION */
-    {
-        BaseType_t xReturn = pdFALSE;
-        StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
-        int32_t lIndex;
-        BaseType_t xCallingTaskIsAuthorizedToAccessStreamBuffer = pdFALSE;
+        BaseType_t MPU_xStreamBufferIsEmptyImpl( StreamBufferHandle_t xStreamBuffer ) PRIVILEGED_FUNCTION;
 
-        lIndex = ( int32_t ) xStreamBuffer;
-
-        if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+        BaseType_t MPU_xStreamBufferIsEmptyImpl( StreamBufferHandle_t xStreamBuffer ) /* PRIVILEGED_FUNCTION */
         {
-            xCallingTaskIsAuthorizedToAccessStreamBuffer = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+            BaseType_t xReturn = pdFALSE;
+            StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
+            int32_t lIndex;
+            BaseType_t xCallingTaskIsAuthorizedToAccessStreamBuffer = pdFALSE;
 
-            if( xCallingTaskIsAuthorizedToAccessStreamBuffer == pdTRUE )
+            lIndex = ( int32_t ) xStreamBuffer;
+
+            if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
             {
-                xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+                xCallingTaskIsAuthorizedToAccessStreamBuffer = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
 
-                if( xInternalStreamBufferHandle != NULL )
+                if( xCallingTaskIsAuthorizedToAccessStreamBuffer == pdTRUE )
                 {
-                    xReturn = xStreamBufferIsEmpty( xInternalStreamBufferHandle );
+                    xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                    if( xInternalStreamBufferHandle != NULL )
+                    {
+                        xReturn = xStreamBufferIsEmpty( xInternalStreamBufferHandle );
+                    }
                 }
             }
+
+            return xReturn;
         }
 
-        return xReturn;
-    }
+    #endif /* #if ( configUSE_STREAM_BUFFERS == 1 ) */
 /*-----------------------------------------------------------*/
 
-    size_t MPU_xStreamBufferSpacesAvailableImpl( StreamBufferHandle_t xStreamBuffer ) PRIVILEGED_FUNCTION;
+    #if ( configUSE_STREAM_BUFFERS == 1 )
 
-    size_t MPU_xStreamBufferSpacesAvailableImpl( StreamBufferHandle_t xStreamBuffer ) /* PRIVILEGED_FUNCTION */
-    {
-        size_t xReturn = 0;
-        StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
-        int32_t lIndex;
-        BaseType_t xCallingTaskIsAuthorizedToAccessStreamBuffer = pdFALSE;
+        size_t MPU_xStreamBufferSpacesAvailableImpl( StreamBufferHandle_t xStreamBuffer ) PRIVILEGED_FUNCTION;
 
-        lIndex = ( int32_t ) xStreamBuffer;
-
-        if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+        size_t MPU_xStreamBufferSpacesAvailableImpl( StreamBufferHandle_t xStreamBuffer ) /* PRIVILEGED_FUNCTION */
         {
-            xCallingTaskIsAuthorizedToAccessStreamBuffer = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+            size_t xReturn = 0;
+            StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
+            int32_t lIndex;
+            BaseType_t xCallingTaskIsAuthorizedToAccessStreamBuffer = pdFALSE;
 
-            if( xCallingTaskIsAuthorizedToAccessStreamBuffer == pdTRUE )
+            lIndex = ( int32_t ) xStreamBuffer;
+
+            if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
             {
-                xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+                xCallingTaskIsAuthorizedToAccessStreamBuffer = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
 
-                if( xInternalStreamBufferHandle != NULL )
+                if( xCallingTaskIsAuthorizedToAccessStreamBuffer == pdTRUE )
                 {
-                    xReturn = xStreamBufferSpacesAvailable( xInternalStreamBufferHandle );
+                    xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                    if( xInternalStreamBufferHandle != NULL )
+                    {
+                        xReturn = xStreamBufferSpacesAvailable( xInternalStreamBufferHandle );
+                    }
                 }
             }
+
+            return xReturn;
         }
 
-        return xReturn;
-    }
+    #endif /* #if ( configUSE_STREAM_BUFFERS == 1 ) */
 /*-----------------------------------------------------------*/
 
-    size_t MPU_xStreamBufferBytesAvailableImpl( StreamBufferHandle_t xStreamBuffer ) PRIVILEGED_FUNCTION;
+    #if ( configUSE_STREAM_BUFFERS == 1 )
 
-    size_t MPU_xStreamBufferBytesAvailableImpl( StreamBufferHandle_t xStreamBuffer ) /* PRIVILEGED_FUNCTION */
-    {
-        size_t xReturn = 0;
-        StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
-        int32_t lIndex;
-        BaseType_t xCallingTaskIsAuthorizedToAccessStreamBuffer = pdFALSE;
+        size_t MPU_xStreamBufferBytesAvailableImpl( StreamBufferHandle_t xStreamBuffer ) PRIVILEGED_FUNCTION;
 
-        lIndex = ( int32_t ) xStreamBuffer;
-
-        if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+        size_t MPU_xStreamBufferBytesAvailableImpl( StreamBufferHandle_t xStreamBuffer ) /* PRIVILEGED_FUNCTION */
         {
-            xCallingTaskIsAuthorizedToAccessStreamBuffer = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+            size_t xReturn = 0;
+            StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
+            int32_t lIndex;
+            BaseType_t xCallingTaskIsAuthorizedToAccessStreamBuffer = pdFALSE;
 
-            if( xCallingTaskIsAuthorizedToAccessStreamBuffer == pdTRUE )
+            lIndex = ( int32_t ) xStreamBuffer;
+
+            if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
             {
-                xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+                xCallingTaskIsAuthorizedToAccessStreamBuffer = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
 
-                if( xInternalStreamBufferHandle != NULL )
+                if( xCallingTaskIsAuthorizedToAccessStreamBuffer == pdTRUE )
                 {
-                    xReturn = xStreamBufferBytesAvailable( xInternalStreamBufferHandle );
+                    xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                    if( xInternalStreamBufferHandle != NULL )
+                    {
+                        xReturn = xStreamBufferBytesAvailable( xInternalStreamBufferHandle );
+                    }
                 }
             }
+
+            return xReturn;
         }
 
-        return xReturn;
-    }
+    #endif /* #if ( configUSE_STREAM_BUFFERS == 1 ) */
 /*-----------------------------------------------------------*/
 
-    BaseType_t MPU_xStreamBufferSetTriggerLevelImpl( StreamBufferHandle_t xStreamBuffer,
-                                                     size_t xTriggerLevel ) PRIVILEGED_FUNCTION;
+    #if ( configUSE_STREAM_BUFFERS == 1 )
 
-    BaseType_t MPU_xStreamBufferSetTriggerLevelImpl( StreamBufferHandle_t xStreamBuffer,
-                                                     size_t xTriggerLevel ) /* PRIVILEGED_FUNCTION */
-    {
-        BaseType_t xReturn = pdFALSE;
-        StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
-        int32_t lIndex;
-        BaseType_t xCallingTaskIsAuthorizedToAccessStreamBuffer = pdFALSE;
+        BaseType_t MPU_xStreamBufferSetTriggerLevelImpl( StreamBufferHandle_t xStreamBuffer,
+                                                         size_t xTriggerLevel ) PRIVILEGED_FUNCTION;
 
-        lIndex = ( int32_t ) xStreamBuffer;
-
-        if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+        BaseType_t MPU_xStreamBufferSetTriggerLevelImpl( StreamBufferHandle_t xStreamBuffer,
+                                                         size_t xTriggerLevel ) /* PRIVILEGED_FUNCTION */
         {
-            xCallingTaskIsAuthorizedToAccessStreamBuffer = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+            BaseType_t xReturn = pdFALSE;
+            StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
+            int32_t lIndex;
+            BaseType_t xCallingTaskIsAuthorizedToAccessStreamBuffer = pdFALSE;
 
-            if( xCallingTaskIsAuthorizedToAccessStreamBuffer == pdTRUE )
+            lIndex = ( int32_t ) xStreamBuffer;
+
+            if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
             {
-                xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+                xCallingTaskIsAuthorizedToAccessStreamBuffer = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
 
-                if( xInternalStreamBufferHandle != NULL )
+                if( xCallingTaskIsAuthorizedToAccessStreamBuffer == pdTRUE )
                 {
-                    xReturn = xStreamBufferSetTriggerLevel( xInternalStreamBufferHandle, xTriggerLevel );
+                    xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                    if( xInternalStreamBufferHandle != NULL )
+                    {
+                        xReturn = xStreamBufferSetTriggerLevel( xInternalStreamBufferHandle, xTriggerLevel );
+                    }
                 }
             }
+
+            return xReturn;
         }
 
-        return xReturn;
-    }
+    #endif /* #if ( configUSE_STREAM_BUFFERS == 1 ) */
 /*-----------------------------------------------------------*/
 
-    size_t MPU_xStreamBufferNextMessageLengthBytesImpl( StreamBufferHandle_t xStreamBuffer ) PRIVILEGED_FUNCTION;
+    #if ( configUSE_STREAM_BUFFERS == 1 )
 
-    size_t MPU_xStreamBufferNextMessageLengthBytesImpl( StreamBufferHandle_t xStreamBuffer ) /* PRIVILEGED_FUNCTION */
-    {
-        size_t xReturn = 0;
-        StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
-        int32_t lIndex;
-        BaseType_t xCallingTaskIsAuthorizedToAccessStreamBuffer = pdFALSE;
+        size_t MPU_xStreamBufferNextMessageLengthBytesImpl( StreamBufferHandle_t xStreamBuffer ) PRIVILEGED_FUNCTION;
 
-        lIndex = ( int32_t ) xStreamBuffer;
-
-        if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+        size_t MPU_xStreamBufferNextMessageLengthBytesImpl( StreamBufferHandle_t xStreamBuffer ) /* PRIVILEGED_FUNCTION */
         {
-            xCallingTaskIsAuthorizedToAccessStreamBuffer = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+            size_t xReturn = 0;
+            StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
+            int32_t lIndex;
+            BaseType_t xCallingTaskIsAuthorizedToAccessStreamBuffer = pdFALSE;
 
-            if( xCallingTaskIsAuthorizedToAccessStreamBuffer == pdTRUE )
+            lIndex = ( int32_t ) xStreamBuffer;
+
+            if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
             {
-                xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+                xCallingTaskIsAuthorizedToAccessStreamBuffer = xPortIsAuthorizedToAccessKernelObject( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
 
-                if( xInternalStreamBufferHandle != NULL )
+                if( xCallingTaskIsAuthorizedToAccessStreamBuffer == pdTRUE )
                 {
-                    xReturn = xStreamBufferNextMessageLengthBytes( xInternalStreamBufferHandle );
+                    xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                    if( xInternalStreamBufferHandle != NULL )
+                    {
+                        xReturn = xStreamBufferNextMessageLengthBytes( xInternalStreamBufferHandle );
+                    }
                 }
             }
+
+            return xReturn;
         }
 
-        return xReturn;
-    }
+    #endif /* #if ( configUSE_STREAM_BUFFERS == 1 ) */
 /*-----------------------------------------------------------*/
 
 /* Privileged only wrappers for Stream Buffer APIs. These are needed so that
@@ -4519,11 +4680,11 @@
  * with all the APIs. */
 /*-----------------------------------------------------------*/
 
-    #if ( configSUPPORT_DYNAMIC_ALLOCATION == 1 )
+    #if ( ( configSUPPORT_DYNAMIC_ALLOCATION == 1 ) && ( configUSE_STREAM_BUFFERS == 1 ) )
 
         StreamBufferHandle_t MPU_xStreamBufferGenericCreate( size_t xBufferSizeBytes,
                                                              size_t xTriggerLevelBytes,
-                                                             BaseType_t xIsMessageBuffer,
+                                                             BaseType_t xStreamBufferType,
                                                              StreamBufferCallbackFunction_t pxSendCompletedCallback,
                                                              StreamBufferCallbackFunction_t pxReceiveCompletedCallback ) /* PRIVILEGED_FUNCTION */
         {
@@ -4547,7 +4708,7 @@
                 {
                     xInternalStreamBufferHandle = xStreamBufferGenericCreate( xBufferSizeBytes,
                                                                               xTriggerLevelBytes,
-                                                                              xIsMessageBuffer,
+                                                                              xStreamBufferType,
                                                                               NULL,
                                                                               NULL );
 
@@ -4564,21 +4725,21 @@
             }
             else
             {
-                traceSTREAM_BUFFER_CREATE_FAILED( xIsMessageBuffer );
+                traceSTREAM_BUFFER_CREATE_FAILED( xStreamBufferType );
                 xExternalStreamBufferHandle = NULL;
             }
 
             return xExternalStreamBufferHandle;
         }
 
-    #endif /* configSUPPORT_DYNAMIC_ALLOCATION */
+    #endif /* #if ( ( configSUPPORT_DYNAMIC_ALLOCATION == 1 ) && ( configUSE_STREAM_BUFFERS == 1 ) ) */
 /*-----------------------------------------------------------*/
 
-    #if ( configSUPPORT_STATIC_ALLOCATION == 1 )
+    #if ( ( configSUPPORT_STATIC_ALLOCATION == 1 ) && ( configUSE_STREAM_BUFFERS == 1 ) )
 
         StreamBufferHandle_t MPU_xStreamBufferGenericCreateStatic( size_t xBufferSizeBytes,
                                                                    size_t xTriggerLevelBytes,
-                                                                   BaseType_t xIsMessageBuffer,
+                                                                   BaseType_t xStreamBufferType,
                                                                    uint8_t * const pucStreamBufferStorageArea,
                                                                    StaticStreamBuffer_t * const pxStaticStreamBuffer,
                                                                    StreamBufferCallbackFunction_t pxSendCompletedCallback,
@@ -4604,7 +4765,7 @@
                 {
                     xInternalStreamBufferHandle = xStreamBufferGenericCreateStatic( xBufferSizeBytes,
                                                                                     xTriggerLevelBytes,
-                                                                                    xIsMessageBuffer,
+                                                                                    xStreamBufferType,
                                                                                     pucStreamBufferStorageArea,
                                                                                     pxStaticStreamBuffer,
                                                                                     NULL,
@@ -4623,60 +4784,68 @@
             }
             else
             {
-                traceSTREAM_BUFFER_CREATE_STATIC_FAILED( xReturn, xIsMessageBuffer );
+                traceSTREAM_BUFFER_CREATE_STATIC_FAILED( xReturn, xStreamBufferType );
                 xExternalStreamBufferHandle = NULL;
             }
 
             return xExternalStreamBufferHandle;
         }
 
-    #endif /* configSUPPORT_STATIC_ALLOCATION */
+    #endif /* #if ( ( configSUPPORT_STATIC_ALLOCATION == 1 ) && ( configUSE_STREAM_BUFFERS == 1 ) ) */
 /*-----------------------------------------------------------*/
 
-    void MPU_vStreamBufferDelete( StreamBufferHandle_t xStreamBuffer ) /* PRIVILEGED_FUNCTION */
-    {
-        StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
-        int32_t lIndex;
+    #if ( configUSE_STREAM_BUFFERS == 1 )
 
-        lIndex = ( int32_t ) xStreamBuffer;
-
-        if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+        void MPU_vStreamBufferDelete( StreamBufferHandle_t xStreamBuffer ) /* PRIVILEGED_FUNCTION */
         {
-            xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+            StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
+            int32_t lIndex;
 
-            if( xInternalStreamBufferHandle != NULL )
+            lIndex = ( int32_t ) xStreamBuffer;
+
+            if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
             {
-                vStreamBufferDelete( xInternalStreamBufferHandle );
-            }
+                xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
 
-            MPU_SetIndexFreeInKernelObjectPool( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
-        }
-    }
-/*-----------------------------------------------------------*/
+                if( xInternalStreamBufferHandle != NULL )
+                {
+                    vStreamBufferDelete( xInternalStreamBufferHandle );
+                }
 
-    BaseType_t MPU_xStreamBufferReset( StreamBufferHandle_t xStreamBuffer ) /* PRIVILEGED_FUNCTION */
-    {
-        BaseType_t xReturn = pdFALSE;
-        StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
-        int32_t lIndex;
-
-        lIndex = ( int32_t ) xStreamBuffer;
-
-        if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
-        {
-            xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
-
-            if( xInternalStreamBufferHandle != NULL )
-            {
-                xReturn = xStreamBufferReset( xInternalStreamBufferHandle );
+                MPU_SetIndexFreeInKernelObjectPool( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
             }
         }
 
-        return xReturn;
-    }
+    #endif /* #if ( configUSE_STREAM_BUFFERS == 1 ) */
 /*-----------------------------------------------------------*/
 
-    #if ( configSUPPORT_STATIC_ALLOCATION == 1 )
+    #if ( configUSE_STREAM_BUFFERS == 1 )
+
+        BaseType_t MPU_xStreamBufferReset( StreamBufferHandle_t xStreamBuffer ) /* PRIVILEGED_FUNCTION */
+        {
+            BaseType_t xReturn = pdFALSE;
+            StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
+            int32_t lIndex;
+
+            lIndex = ( int32_t ) xStreamBuffer;
+
+            if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+            {
+                xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                if( xInternalStreamBufferHandle != NULL )
+                {
+                    xReturn = xStreamBufferReset( xInternalStreamBufferHandle );
+                }
+            }
+
+            return xReturn;
+        }
+
+    #endif /* #if ( configUSE_STREAM_BUFFERS == 1 ) */
+/*-----------------------------------------------------------*/
+
+    #if ( ( configSUPPORT_STATIC_ALLOCATION == 1 ) && ( configUSE_STREAM_BUFFERS == 1 ) )
 
         BaseType_t MPU_xStreamBufferGetStaticBuffers( StreamBufferHandle_t xStreamBuffers,
                                                       uint8_t * ppucStreamBufferStorageArea,
@@ -4701,8 +4870,10 @@
             return xReturn;
         }
 
-    #endif /* if ( configSUPPORT_STATIC_ALLOCATION == 1 ) */
+    #endif /* #if ( ( configSUPPORT_STATIC_ALLOCATION == 1 ) && ( configUSE_STREAM_BUFFERS == 1 ) ) */
 /*-----------------------------------------------------------*/
+
+    #if ( configUSE_STREAM_BUFFERS == 1 )
 
     size_t MPU_xStreamBufferSendFromISR( StreamBufferHandle_t xStreamBuffer,
                                          const void * pvTxData,
@@ -4727,7 +4898,11 @@
 
         return xReturn;
     }
+
+    #endif /* #if ( configUSE_STREAM_BUFFERS == 1 ) */
 /*-----------------------------------------------------------*/
+
+    #if ( configUSE_STREAM_BUFFERS == 1 )
 
     size_t MPU_xStreamBufferReceiveFromISR( StreamBufferHandle_t xStreamBuffer,
                                             void * pvRxData,
@@ -4752,52 +4927,89 @@
 
         return xReturn;
     }
+
+    #endif /* #if ( configUSE_STREAM_BUFFERS == 1 ) */
 /*-----------------------------------------------------------*/
 
-    BaseType_t MPU_xStreamBufferSendCompletedFromISR( StreamBufferHandle_t xStreamBuffer,
-                                                      BaseType_t * pxHigherPriorityTaskWoken ) /* PRIVILEGED_FUNCTION */
-    {
-        BaseType_t xReturn = pdFALSE;
-        StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
-        int32_t lIndex;
+    #if ( configUSE_STREAM_BUFFERS == 1 )
 
-        lIndex = ( int32_t ) xStreamBuffer;
-
-        if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+        BaseType_t MPU_xStreamBufferSendCompletedFromISR( StreamBufferHandle_t xStreamBuffer,
+                                                          BaseType_t * pxHigherPriorityTaskWoken ) /* PRIVILEGED_FUNCTION */
         {
-            xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+            BaseType_t xReturn = pdFALSE;
+            StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
+            int32_t lIndex;
 
-            if( xInternalStreamBufferHandle != NULL )
+            lIndex = ( int32_t ) xStreamBuffer;
+
+            if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
             {
-                xReturn = xStreamBufferSendCompletedFromISR( xInternalStreamBufferHandle, pxHigherPriorityTaskWoken );
+                xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                if( xInternalStreamBufferHandle != NULL )
+                {
+                    xReturn = xStreamBufferSendCompletedFromISR( xInternalStreamBufferHandle, pxHigherPriorityTaskWoken );
+                }
             }
+
+            return xReturn;
         }
 
-        return xReturn;
-    }
+    #endif /* #if ( configUSE_STREAM_BUFFERS == 1 ) */
 /*-----------------------------------------------------------*/
 
-    BaseType_t MPU_xStreamBufferReceiveCompletedFromISR( StreamBufferHandle_t xStreamBuffer,
-                                                         BaseType_t * pxHigherPriorityTaskWoken ) /*PRIVILEGED_FUNCTION */
-    {
-        BaseType_t xReturn = pdFALSE;
-        StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
-        int32_t lIndex;
+    #if ( configUSE_STREAM_BUFFERS == 1 )
 
-        lIndex = ( int32_t ) xStreamBuffer;
-
-        if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+        BaseType_t MPU_xStreamBufferReceiveCompletedFromISR( StreamBufferHandle_t xStreamBuffer,
+                                                             BaseType_t * pxHigherPriorityTaskWoken ) /*PRIVILEGED_FUNCTION */
         {
-            xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+            BaseType_t xReturn = pdFALSE;
+            StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
+            int32_t lIndex;
 
-            if( xInternalStreamBufferHandle != NULL )
+            lIndex = ( int32_t ) xStreamBuffer;
+
+            if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
             {
-                xReturn = xStreamBufferReceiveCompletedFromISR( xInternalStreamBufferHandle, pxHigherPriorityTaskWoken );
+                xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                if( xInternalStreamBufferHandle != NULL )
+                {
+                    xReturn = xStreamBufferReceiveCompletedFromISR( xInternalStreamBufferHandle, pxHigherPriorityTaskWoken );
+                }
             }
+
+            return xReturn;
         }
 
-        return xReturn;
-    }
+    #endif /* #if ( configUSE_STREAM_BUFFERS == 1 ) */
+
+/*-----------------------------------------------------------*/
+
+    #if ( configUSE_STREAM_BUFFERS == 1 )
+
+        BaseType_t MPU_xStreamBufferResetFromISR( StreamBufferHandle_t xStreamBuffer ) /*PRIVILEGED_FUNCTION */
+        {
+            BaseType_t xReturn = pdFAIL;
+            StreamBufferHandle_t xInternalStreamBufferHandle = NULL;
+            int32_t lIndex;
+
+            lIndex = ( int32_t ) xStreamBuffer;
+
+            if( IS_EXTERNAL_INDEX_VALID( lIndex ) != pdFALSE )
+            {
+                xInternalStreamBufferHandle = MPU_GetStreamBufferHandleAtIndex( CONVERT_TO_INTERNAL_INDEX( lIndex ) );
+
+                if( xInternalStreamBufferHandle != NULL )
+                {
+                    xReturn = xStreamBufferResetFromISR( xInternalStreamBufferHandle );
+                }
+            }
+
+            return xReturn;
+        }
+
+    #endif /* #if ( configUSE_STREAM_BUFFERS == 1 ) */
 
 /*-----------------------------------------------------------*/
 
@@ -4818,235 +5030,258 @@
     PRIVILEGED_DATA UBaseType_t uxSystemCallImplementations[ NUM_SYSTEM_CALLS ] =
     {
         #if ( configUSE_TASK_NOTIFICATIONS == 1 )
-            ( UBaseType_t ) MPU_xTaskGenericNotifyImpl,     /* SYSTEM_CALL_xTaskGenericNotify. */
-            ( UBaseType_t ) MPU_xTaskGenericNotifyWaitImpl, /* SYSTEM_CALL_xTaskGenericNotifyWait. */
+            ( UBaseType_t ) MPU_xTaskGenericNotifyImpl,                     /* SYSTEM_CALL_xTaskGenericNotify. */
+            ( UBaseType_t ) MPU_xTaskGenericNotifyWaitImpl,                 /* SYSTEM_CALL_xTaskGenericNotifyWait. */
         #else
-            ( UBaseType_t ) 0,                              /* SYSTEM_CALL_xTaskGenericNotify. */
-            ( UBaseType_t ) 0,                              /* SYSTEM_CALL_xTaskGenericNotifyWait. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xTaskGenericNotify. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xTaskGenericNotifyWait. */
         #endif
 
         #if ( configUSE_TIMERS == 1 )
-            ( UBaseType_t ) MPU_xTimerGenericCommandImpl, /* SYSTEM_CALL_xTimerGenericCommand. */
+            ( UBaseType_t ) MPU_xTimerGenericCommandFromTaskImpl,           /* SYSTEM_CALL_xTimerGenericCommandFromTask. */
         #else
-            ( UBaseType_t ) 0,                            /* SYSTEM_CALL_xTimerGenericCommand. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xTimerGenericCommandFromTask. */
         #endif
 
-        ( UBaseType_t ) MPU_xEventGroupWaitBitsImpl, /* SYSTEM_CALL_xEventGroupWaitBits. */
+        #if ( configUSE_EVENT_GROUPS == 1 )
+            ( UBaseType_t ) MPU_xEventGroupWaitBitsImpl,                    /* SYSTEM_CALL_xEventGroupWaitBits. */
+        #else
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xEventGroupWaitBits. */
+        #endif
 
         /* The system calls above this line take 5 parameters. */
 
         #if ( INCLUDE_xTaskDelayUntil == 1 )
-            ( UBaseType_t ) MPU_xTaskDelayUntilImpl, /* SYSTEM_CALL_xTaskDelayUntil. */
+            ( UBaseType_t ) MPU_xTaskDelayUntilImpl,                        /* SYSTEM_CALL_xTaskDelayUntil. */
         #else
-            ( UBaseType_t ) 0,                       /* SYSTEM_CALL_xTaskDelayUntil. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xTaskDelayUntil. */
         #endif
 
         #if ( INCLUDE_xTaskAbortDelay == 1 )
-            ( UBaseType_t ) MPU_xTaskAbortDelayImpl, /* SYSTEM_CALL_xTaskAbortDelay. */
+            ( UBaseType_t ) MPU_xTaskAbortDelayImpl,                        /* SYSTEM_CALL_xTaskAbortDelay. */
         #else
-            ( UBaseType_t ) 0,                       /* SYSTEM_CALL_xTaskAbortDelay. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xTaskAbortDelay. */
         #endif
 
         #if ( INCLUDE_vTaskDelay == 1 )
-            ( UBaseType_t ) MPU_vTaskDelayImpl, /* SYSTEM_CALL_vTaskDelay. */
+            ( UBaseType_t ) MPU_vTaskDelayImpl,                             /* SYSTEM_CALL_vTaskDelay. */
         #else
-            ( UBaseType_t ) 0,                  /* SYSTEM_CALL_vTaskDelay. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_vTaskDelay. */
         #endif
 
         #if ( INCLUDE_uxTaskPriorityGet == 1 )
-            ( UBaseType_t ) MPU_uxTaskPriorityGetImpl, /* SYSTEM_CALL_uxTaskPriorityGet. */
+            ( UBaseType_t ) MPU_uxTaskPriorityGetImpl,                      /* SYSTEM_CALL_uxTaskPriorityGet. */
         #else
-            ( UBaseType_t ) 0,                         /* SYSTEM_CALL_uxTaskPriorityGet. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_uxTaskPriorityGet. */
         #endif
 
         #if ( INCLUDE_eTaskGetState == 1 )
-            ( UBaseType_t ) MPU_eTaskGetStateImpl, /* SYSTEM_CALL_eTaskGetState. */
+            ( UBaseType_t ) MPU_eTaskGetStateImpl,                          /* SYSTEM_CALL_eTaskGetState. */
         #else
-            ( UBaseType_t ) 0,                     /* SYSTEM_CALL_eTaskGetState. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_eTaskGetState. */
         #endif
 
         #if ( configUSE_TRACE_FACILITY == 1 )
-            ( UBaseType_t ) MPU_vTaskGetInfoImpl, /* SYSTEM_CALL_vTaskGetInfo. */
+            ( UBaseType_t ) MPU_vTaskGetInfoImpl,                           /* SYSTEM_CALL_vTaskGetInfo. */
         #else
-            ( UBaseType_t ) 0,                    /* SYSTEM_CALL_vTaskGetInfo. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_vTaskGetInfo. */
         #endif
 
         #if ( INCLUDE_xTaskGetIdleTaskHandle == 1 )
-            ( UBaseType_t ) MPU_xTaskGetIdleTaskHandleImpl, /* SYSTEM_CALL_xTaskGetIdleTaskHandle. */
+            ( UBaseType_t ) MPU_xTaskGetIdleTaskHandleImpl,                 /* SYSTEM_CALL_xTaskGetIdleTaskHandle. */
         #else
-            ( UBaseType_t ) 0,                              /* SYSTEM_CALL_xTaskGetIdleTaskHandle. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xTaskGetIdleTaskHandle. */
         #endif
 
         #if ( INCLUDE_vTaskSuspend == 1 )
-            ( UBaseType_t ) MPU_vTaskSuspendImpl, /* SYSTEM_CALL_vTaskSuspend. */
-            ( UBaseType_t ) MPU_vTaskResumeImpl,  /* SYSTEM_CALL_vTaskResume. */
+            ( UBaseType_t ) MPU_vTaskSuspendImpl,                           /* SYSTEM_CALL_vTaskSuspend. */
+            ( UBaseType_t ) MPU_vTaskResumeImpl,                            /* SYSTEM_CALL_vTaskResume. */
         #else
-            ( UBaseType_t ) 0,                    /* SYSTEM_CALL_vTaskSuspend. */
-            ( UBaseType_t ) 0,                    /* SYSTEM_CALL_vTaskResume. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_vTaskSuspend. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_vTaskResume. */
         #endif
 
-        ( UBaseType_t ) MPU_xTaskGetTickCountImpl,      /* SYSTEM_CALL_xTaskGetTickCount. */
-        ( UBaseType_t ) MPU_uxTaskGetNumberOfTasksImpl, /* SYSTEM_CALL_uxTaskGetNumberOfTasks. */
-        ( UBaseType_t ) MPU_pcTaskGetNameImpl,          /* SYSTEM_CALL_pcTaskGetName. */
+        ( UBaseType_t ) MPU_xTaskGetTickCountImpl,                          /* SYSTEM_CALL_xTaskGetTickCount. */
+        ( UBaseType_t ) MPU_uxTaskGetNumberOfTasksImpl,                     /* SYSTEM_CALL_uxTaskGetNumberOfTasks. */
 
         #if ( configGENERATE_RUN_TIME_STATS == 1 )
-            ( UBaseType_t ) MPU_ulTaskGetRunTimeCounterImpl, /* SYSTEM_CALL_ulTaskGetRunTimeCounter. */
-            ( UBaseType_t ) MPU_ulTaskGetRunTimePercentImpl, /* SYSTEM_CALL_ulTaskGetRunTimePercent. */
+            ( UBaseType_t ) MPU_ulTaskGetRunTimeCounterImpl,                /* SYSTEM_CALL_ulTaskGetRunTimeCounter. */
+            ( UBaseType_t ) MPU_ulTaskGetRunTimePercentImpl,                /* SYSTEM_CALL_ulTaskGetRunTimePercent. */
         #else
-            ( UBaseType_t ) 0,                               /* SYSTEM_CALL_ulTaskGetRunTimeCounter. */
-            ( UBaseType_t ) 0,                               /* SYSTEM_CALL_ulTaskGetRunTimePercent. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_ulTaskGetRunTimeCounter. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_ulTaskGetRunTimePercent. */
         #endif
 
         #if ( ( configGENERATE_RUN_TIME_STATS == 1 ) && ( INCLUDE_xTaskGetIdleTaskHandle == 1 ) )
-            ( UBaseType_t ) MPU_ulTaskGetIdleRunTimePercentImpl, /* SYSTEM_CALL_ulTaskGetIdleRunTimePercent. */
-            ( UBaseType_t ) MPU_ulTaskGetIdleRunTimeCounterImpl, /* SYSTEM_CALL_ulTaskGetIdleRunTimeCounter. */
+            ( UBaseType_t ) MPU_ulTaskGetIdleRunTimePercentImpl,            /* SYSTEM_CALL_ulTaskGetIdleRunTimePercent. */
+            ( UBaseType_t ) MPU_ulTaskGetIdleRunTimeCounterImpl,            /* SYSTEM_CALL_ulTaskGetIdleRunTimeCounter. */
         #else
-            ( UBaseType_t ) 0,                                   /* SYSTEM_CALL_ulTaskGetIdleRunTimePercent. */
-            ( UBaseType_t ) 0,                                   /* SYSTEM_CALL_ulTaskGetIdleRunTimeCounter. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_ulTaskGetIdleRunTimePercent. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_ulTaskGetIdleRunTimeCounter. */
         #endif
 
         #if ( configUSE_APPLICATION_TASK_TAG == 1 )
-            ( UBaseType_t ) MPU_vTaskSetApplicationTaskTagImpl, /* SYSTEM_CALL_vTaskSetApplicationTaskTag. */
-            ( UBaseType_t ) MPU_xTaskGetApplicationTaskTagImpl, /* SYSTEM_CALL_xTaskGetApplicationTaskTag. */
+            ( UBaseType_t ) MPU_vTaskSetApplicationTaskTagImpl,             /* SYSTEM_CALL_vTaskSetApplicationTaskTag. */
+            ( UBaseType_t ) MPU_xTaskGetApplicationTaskTagImpl,             /* SYSTEM_CALL_xTaskGetApplicationTaskTag. */
         #else
-            ( UBaseType_t ) 0,                                  /* SYSTEM_CALL_vTaskSetApplicationTaskTag. */
-            ( UBaseType_t ) 0,                                  /* SYSTEM_CALL_xTaskGetApplicationTaskTag. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_vTaskSetApplicationTaskTag. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xTaskGetApplicationTaskTag. */
         #endif
 
         #if ( configNUM_THREAD_LOCAL_STORAGE_POINTERS != 0 )
-            ( UBaseType_t ) MPU_vTaskSetThreadLocalStoragePointerImpl,  /* SYSTEM_CALL_vTaskSetThreadLocalStoragePointer. */
-            ( UBaseType_t ) MPU_pvTaskGetThreadLocalStoragePointerImpl, /* SYSTEM_CALL_pvTaskGetThreadLocalStoragePointer. */
+            ( UBaseType_t ) MPU_vTaskSetThreadLocalStoragePointerImpl,      /* SYSTEM_CALL_vTaskSetThreadLocalStoragePointer. */
+            ( UBaseType_t ) MPU_pvTaskGetThreadLocalStoragePointerImpl,     /* SYSTEM_CALL_pvTaskGetThreadLocalStoragePointer. */
         #else
-            ( UBaseType_t ) 0,                                          /* SYSTEM_CALL_vTaskSetThreadLocalStoragePointer. */
-            ( UBaseType_t ) 0,                                          /* SYSTEM_CALL_pvTaskGetThreadLocalStoragePointer. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_vTaskSetThreadLocalStoragePointer. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_pvTaskGetThreadLocalStoragePointer. */
         #endif
 
         #if ( configUSE_TRACE_FACILITY == 1 )
-            ( UBaseType_t ) MPU_uxTaskGetSystemStateImpl, /* SYSTEM_CALL_uxTaskGetSystemState. */
+            ( UBaseType_t ) MPU_uxTaskGetSystemStateImpl,                   /* SYSTEM_CALL_uxTaskGetSystemState. */
         #else
-            ( UBaseType_t ) 0,                            /* SYSTEM_CALL_uxTaskGetSystemState. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_uxTaskGetSystemState. */
         #endif
 
         #if ( INCLUDE_uxTaskGetStackHighWaterMark == 1 )
-            ( UBaseType_t ) MPU_uxTaskGetStackHighWaterMarkImpl, /* SYSTEM_CALL_uxTaskGetStackHighWaterMark. */
+            ( UBaseType_t ) MPU_uxTaskGetStackHighWaterMarkImpl,            /* SYSTEM_CALL_uxTaskGetStackHighWaterMark. */
         #else
-            ( UBaseType_t ) 0,                                   /* SYSTEM_CALL_uxTaskGetStackHighWaterMark. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_uxTaskGetStackHighWaterMark. */
         #endif
 
         #if ( INCLUDE_uxTaskGetStackHighWaterMark2 == 1 )
-            ( UBaseType_t ) MPU_uxTaskGetStackHighWaterMark2Impl, /* SYSTEM_CALL_uxTaskGetStackHighWaterMark2. */
+            ( UBaseType_t ) MPU_uxTaskGetStackHighWaterMark2Impl,           /* SYSTEM_CALL_uxTaskGetStackHighWaterMark2. */
         #else
-            ( UBaseType_t ) 0,                                    /* SYSTEM_CALL_uxTaskGetStackHighWaterMark2. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_uxTaskGetStackHighWaterMark2. */
         #endif
 
         #if ( ( INCLUDE_xTaskGetCurrentTaskHandle == 1 ) || ( configUSE_MUTEXES == 1 ) )
-            ( UBaseType_t ) MPU_xTaskGetCurrentTaskHandleImpl, /* SYSTEM_CALL_xTaskGetCurrentTaskHandle. */
+            ( UBaseType_t ) MPU_xTaskGetCurrentTaskHandleImpl,              /* SYSTEM_CALL_xTaskGetCurrentTaskHandle. */
         #else
-            ( UBaseType_t ) 0,                                 /* SYSTEM_CALL_xTaskGetCurrentTaskHandle. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xTaskGetCurrentTaskHandle. */
         #endif
 
         #if ( INCLUDE_xTaskGetSchedulerState == 1 )
-            ( UBaseType_t ) MPU_xTaskGetSchedulerStateImpl, /* SYSTEM_CALL_xTaskGetSchedulerState. */
+            ( UBaseType_t ) MPU_xTaskGetSchedulerStateImpl,                 /* SYSTEM_CALL_xTaskGetSchedulerState. */
         #else
-            ( UBaseType_t ) 0,                              /* SYSTEM_CALL_xTaskGetSchedulerState. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xTaskGetSchedulerState. */
         #endif
 
-        ( UBaseType_t ) MPU_vTaskSetTimeOutStateImpl, /* SYSTEM_CALL_vTaskSetTimeOutState. */
-        ( UBaseType_t ) MPU_xTaskCheckForTimeOutImpl, /* SYSTEM_CALL_xTaskCheckForTimeOut. */
+        ( UBaseType_t ) MPU_vTaskSetTimeOutStateImpl,                       /* SYSTEM_CALL_vTaskSetTimeOutState. */
+        ( UBaseType_t ) MPU_xTaskCheckForTimeOutImpl,                       /* SYSTEM_CALL_xTaskCheckForTimeOut. */
 
         #if ( configUSE_TASK_NOTIFICATIONS == 1 )
-            ( UBaseType_t ) MPU_ulTaskGenericNotifyTakeImpl,       /* SYSTEM_CALL_ulTaskGenericNotifyTake. */
-            ( UBaseType_t ) MPU_xTaskGenericNotifyStateClearImpl,  /* SYSTEM_CALL_xTaskGenericNotifyStateClear. */
-            ( UBaseType_t ) MPU_ulTaskGenericNotifyValueClearImpl, /* SYSTEM_CALL_ulTaskGenericNotifyValueClear. */
+            ( UBaseType_t ) MPU_ulTaskGenericNotifyTakeImpl,                /* SYSTEM_CALL_ulTaskGenericNotifyTake. */
+            ( UBaseType_t ) MPU_xTaskGenericNotifyStateClearImpl,           /* SYSTEM_CALL_xTaskGenericNotifyStateClear. */
+            ( UBaseType_t ) MPU_ulTaskGenericNotifyValueClearImpl,          /* SYSTEM_CALL_ulTaskGenericNotifyValueClear. */
         #else
-            ( UBaseType_t ) 0,                                     /* SYSTEM_CALL_ulTaskGenericNotifyTake. */
-            ( UBaseType_t ) 0,                                     /* SYSTEM_CALL_xTaskGenericNotifyStateClear. */
-            ( UBaseType_t ) 0,                                     /* SYSTEM_CALL_ulTaskGenericNotifyValueClear. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_ulTaskGenericNotifyTake. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xTaskGenericNotifyStateClear. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_ulTaskGenericNotifyValueClear. */
         #endif
 
-        ( UBaseType_t ) MPU_xQueueGenericSendImpl,      /* SYSTEM_CALL_xQueueGenericSend. */
-        ( UBaseType_t ) MPU_uxQueueMessagesWaitingImpl, /* SYSTEM_CALL_uxQueueMessagesWaiting. */
-        ( UBaseType_t ) MPU_uxQueueSpacesAvailableImpl, /* SYSTEM_CALL_uxQueueSpacesAvailable. */
-        ( UBaseType_t ) MPU_xQueueReceiveImpl,          /* SYSTEM_CALL_xQueueReceive. */
-        ( UBaseType_t ) MPU_xQueuePeekImpl,             /* SYSTEM_CALL_xQueuePeek. */
-        ( UBaseType_t ) MPU_xQueueSemaphoreTakeImpl,    /* SYSTEM_CALL_xQueueSemaphoreTake. */
+        ( UBaseType_t ) MPU_xQueueGenericSendImpl,                          /* SYSTEM_CALL_xQueueGenericSend. */
+        ( UBaseType_t ) MPU_uxQueueMessagesWaitingImpl,                     /* SYSTEM_CALL_uxQueueMessagesWaiting. */
+        ( UBaseType_t ) MPU_uxQueueSpacesAvailableImpl,                     /* SYSTEM_CALL_uxQueueSpacesAvailable. */
+        ( UBaseType_t ) MPU_xQueueReceiveImpl,                              /* SYSTEM_CALL_xQueueReceive. */
+        ( UBaseType_t ) MPU_xQueuePeekImpl,                                 /* SYSTEM_CALL_xQueuePeek. */
+        ( UBaseType_t ) MPU_xQueueSemaphoreTakeImpl,                        /* SYSTEM_CALL_xQueueSemaphoreTake. */
 
         #if ( ( configUSE_MUTEXES == 1 ) && ( INCLUDE_xSemaphoreGetMutexHolder == 1 ) )
-            ( UBaseType_t ) MPU_xQueueGetMutexHolderImpl, /* SYSTEM_CALL_xQueueGetMutexHolder. */
+            ( UBaseType_t ) MPU_xQueueGetMutexHolderImpl,                   /* SYSTEM_CALL_xQueueGetMutexHolder. */
         #else
-            ( UBaseType_t ) 0,                            /* SYSTEM_CALL_xQueueGetMutexHolder. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xQueueGetMutexHolder. */
         #endif
 
         #if ( configUSE_RECURSIVE_MUTEXES == 1 )
-            ( UBaseType_t ) MPU_xQueueTakeMutexRecursiveImpl, /* SYSTEM_CALL_xQueueTakeMutexRecursive. */
-            ( UBaseType_t ) MPU_xQueueGiveMutexRecursiveImpl, /* SYSTEM_CALL_xQueueGiveMutexRecursive. */
+            ( UBaseType_t ) MPU_xQueueTakeMutexRecursiveImpl,               /* SYSTEM_CALL_xQueueTakeMutexRecursive. */
+            ( UBaseType_t ) MPU_xQueueGiveMutexRecursiveImpl,               /* SYSTEM_CALL_xQueueGiveMutexRecursive. */
         #else
-            ( UBaseType_t ) 0,                                /* SYSTEM_CALL_xQueueTakeMutexRecursive. */
-            ( UBaseType_t ) 0,                                /* SYSTEM_CALL_xQueueGiveMutexRecursive. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xQueueTakeMutexRecursive. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xQueueGiveMutexRecursive. */
         #endif
 
         #if ( configUSE_QUEUE_SETS == 1 )
-            ( UBaseType_t ) MPU_xQueueSelectFromSetImpl, /* SYSTEM_CALL_xQueueSelectFromSet. */
-            ( UBaseType_t ) MPU_xQueueAddToSetImpl,      /* SYSTEM_CALL_xQueueAddToSet. */
+            ( UBaseType_t ) MPU_xQueueSelectFromSetImpl,                    /* SYSTEM_CALL_xQueueSelectFromSet. */
+            ( UBaseType_t ) MPU_xQueueAddToSetImpl,                         /* SYSTEM_CALL_xQueueAddToSet. */
         #else
-            ( UBaseType_t ) 0,                           /* SYSTEM_CALL_xQueueSelectFromSet. */
-            ( UBaseType_t ) 0,                           /* SYSTEM_CALL_xQueueAddToSet. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xQueueSelectFromSet. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xQueueAddToSet. */
         #endif
 
         #if configQUEUE_REGISTRY_SIZE > 0
-            ( UBaseType_t ) MPU_vQueueAddToRegistryImpl,   /* SYSTEM_CALL_vQueueAddToRegistry. */
-            ( UBaseType_t ) MPU_vQueueUnregisterQueueImpl, /* SYSTEM_CALL_vQueueUnregisterQueue. */
-            ( UBaseType_t ) MPU_pcQueueGetNameImpl,        /* SYSTEM_CALL_pcQueueGetName. */
+            ( UBaseType_t ) MPU_vQueueAddToRegistryImpl,                    /* SYSTEM_CALL_vQueueAddToRegistry. */
+            ( UBaseType_t ) MPU_vQueueUnregisterQueueImpl,                  /* SYSTEM_CALL_vQueueUnregisterQueue. */
+            ( UBaseType_t ) MPU_pcQueueGetNameImpl,                         /* SYSTEM_CALL_pcQueueGetName. */
         #else
-            ( UBaseType_t ) 0,                             /* SYSTEM_CALL_vQueueAddToRegistry. */
-            ( UBaseType_t ) 0,                             /* SYSTEM_CALL_vQueueUnregisterQueue. */
-            ( UBaseType_t ) 0,                             /* SYSTEM_CALL_pcQueueGetName. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_vQueueAddToRegistry. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_vQueueUnregisterQueue. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_pcQueueGetName. */
         #endif
 
         #if ( configUSE_TIMERS == 1 )
-            ( UBaseType_t ) MPU_pvTimerGetTimerIDImpl,              /* SYSTEM_CALL_pvTimerGetTimerID. */
-            ( UBaseType_t ) MPU_vTimerSetTimerIDImpl,               /* SYSTEM_CALL_vTimerSetTimerID. */
-            ( UBaseType_t ) MPU_xTimerIsTimerActiveImpl,            /* SYSTEM_CALL_xTimerIsTimerActive. */
-            ( UBaseType_t ) MPU_xTimerGetTimerDaemonTaskHandleImpl, /* SYSTEM_CALL_xTimerGetTimerDaemonTaskHandle. */
-            ( UBaseType_t ) MPU_pcTimerGetNameImpl,                 /* SYSTEM_CALL_pcTimerGetName. */
-            ( UBaseType_t ) MPU_vTimerSetReloadModeImpl,            /* SYSTEM_CALL_vTimerSetReloadMode. */
-            ( UBaseType_t ) MPU_xTimerGetReloadModeImpl,            /* SYSTEM_CALL_xTimerGetReloadMode. */
-            ( UBaseType_t ) MPU_uxTimerGetReloadModeImpl,           /* SYSTEM_CALL_uxTimerGetReloadMode. */
-            ( UBaseType_t ) MPU_xTimerGetPeriodImpl,                /* SYSTEM_CALL_xTimerGetPeriod. */
-            ( UBaseType_t ) MPU_xTimerGetExpiryTimeImpl,            /* SYSTEM_CALL_xTimerGetExpiryTime. */
-        #else /* if ( configUSE_TIMERS == 1 ) */
-            ( UBaseType_t ) 0,                                      /* SYSTEM_CALL_pvTimerGetTimerID. */
-            ( UBaseType_t ) 0,                                      /* SYSTEM_CALL_vTimerSetTimerID. */
-            ( UBaseType_t ) 0,                                      /* SYSTEM_CALL_xTimerIsTimerActive. */
-            ( UBaseType_t ) 0,                                      /* SYSTEM_CALL_xTimerGetTimerDaemonTaskHandle. */
-            ( UBaseType_t ) 0,                                      /* SYSTEM_CALL_pcTimerGetName. */
-            ( UBaseType_t ) 0,                                      /* SYSTEM_CALL_vTimerSetReloadMode. */
-            ( UBaseType_t ) 0,                                      /* SYSTEM_CALL_xTimerGetReloadMode. */
-            ( UBaseType_t ) 0,                                      /* SYSTEM_CALL_uxTimerGetReloadMode. */
-            ( UBaseType_t ) 0,                                      /* SYSTEM_CALL_xTimerGetPeriod. */
-            ( UBaseType_t ) 0,                                      /* SYSTEM_CALL_xTimerGetExpiryTime. */
-        #endif /* if ( configUSE_TIMERS == 1 ) */
-
-        ( UBaseType_t ) MPU_xEventGroupClearBitsImpl, /* SYSTEM_CALL_xEventGroupClearBits. */
-        ( UBaseType_t ) MPU_xEventGroupSetBitsImpl,   /* SYSTEM_CALL_xEventGroupSetBits. */
-        ( UBaseType_t ) MPU_xEventGroupSyncImpl,      /* SYSTEM_CALL_xEventGroupSync. */
-
-        #if ( configUSE_TRACE_FACILITY == 1 )
-            ( UBaseType_t ) MPU_uxEventGroupGetNumberImpl, /* SYSTEM_CALL_uxEventGroupGetNumber. */
-            ( UBaseType_t ) MPU_vEventGroupSetNumberImpl,  /* SYSTEM_CALL_vEventGroupSetNumber. */
+            ( UBaseType_t ) MPU_pvTimerGetTimerIDImpl,                      /* SYSTEM_CALL_pvTimerGetTimerID. */
+            ( UBaseType_t ) MPU_vTimerSetTimerIDImpl,                       /* SYSTEM_CALL_vTimerSetTimerID. */
+            ( UBaseType_t ) MPU_xTimerIsTimerActiveImpl,                    /* SYSTEM_CALL_xTimerIsTimerActive. */
+            ( UBaseType_t ) MPU_xTimerGetTimerDaemonTaskHandleImpl,         /* SYSTEM_CALL_xTimerGetTimerDaemonTaskHandle. */
+            ( UBaseType_t ) MPU_pcTimerGetNameImpl,                         /* SYSTEM_CALL_pcTimerGetName. */
+            ( UBaseType_t ) MPU_vTimerSetReloadModeImpl,                    /* SYSTEM_CALL_vTimerSetReloadMode. */
+            ( UBaseType_t ) MPU_xTimerGetReloadModeImpl,                    /* SYSTEM_CALL_xTimerGetReloadMode. */
+            ( UBaseType_t ) MPU_uxTimerGetReloadModeImpl,                   /* SYSTEM_CALL_uxTimerGetReloadMode. */
+            ( UBaseType_t ) MPU_xTimerGetPeriodImpl,                        /* SYSTEM_CALL_xTimerGetPeriod. */
+            ( UBaseType_t ) MPU_xTimerGetExpiryTimeImpl,                    /* SYSTEM_CALL_xTimerGetExpiryTime. */
         #else
-            ( UBaseType_t ) 0,                             /* SYSTEM_CALL_uxEventGroupGetNumber. */
-            ( UBaseType_t ) 0,                             /* SYSTEM_CALL_vEventGroupSetNumber. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_pvTimerGetTimerID. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_vTimerSetTimerID. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xTimerIsTimerActive. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xTimerGetTimerDaemonTaskHandle. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_pcTimerGetName. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_vTimerSetReloadMode. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xTimerGetReloadMode. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_uxTimerGetReloadMode. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xTimerGetPeriod. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xTimerGetExpiryTime. */
         #endif
 
-        ( UBaseType_t ) MPU_xStreamBufferSendImpl,                  /* SYSTEM_CALL_xStreamBufferSend. */
-        ( UBaseType_t ) MPU_xStreamBufferReceiveImpl,               /* SYSTEM_CALL_xStreamBufferReceive. */
-        ( UBaseType_t ) MPU_xStreamBufferIsFullImpl,                /* SYSTEM_CALL_xStreamBufferIsFull. */
-        ( UBaseType_t ) MPU_xStreamBufferIsEmptyImpl,               /* SYSTEM_CALL_xStreamBufferIsEmpty. */
-        ( UBaseType_t ) MPU_xStreamBufferSpacesAvailableImpl,       /* SYSTEM_CALL_xStreamBufferSpacesAvailable. */
-        ( UBaseType_t ) MPU_xStreamBufferBytesAvailableImpl,        /* SYSTEM_CALL_xStreamBufferBytesAvailable. */
-        ( UBaseType_t ) MPU_xStreamBufferSetTriggerLevelImpl,       /* SYSTEM_CALL_xStreamBufferSetTriggerLevel. */
-        ( UBaseType_t ) MPU_xStreamBufferNextMessageLengthBytesImpl /* SYSTEM_CALL_xStreamBufferNextMessageLengthBytes. */
+        #if ( configUSE_EVENT_GROUPS == 1 )
+            ( UBaseType_t ) MPU_xEventGroupClearBitsImpl,                   /* SYSTEM_CALL_xEventGroupClearBits. */
+            ( UBaseType_t ) MPU_xEventGroupSetBitsImpl,                     /* SYSTEM_CALL_xEventGroupSetBits. */
+            ( UBaseType_t ) MPU_xEventGroupSyncImpl,                        /* SYSTEM_CALL_xEventGroupSync. */
+
+            #if ( configUSE_TRACE_FACILITY == 1 )
+                ( UBaseType_t ) MPU_uxEventGroupGetNumberImpl,              /* SYSTEM_CALL_uxEventGroupGetNumber. */
+                ( UBaseType_t ) MPU_vEventGroupSetNumberImpl,               /* SYSTEM_CALL_vEventGroupSetNumber. */
+            #else
+                ( UBaseType_t ) 0,                                          /* SYSTEM_CALL_uxEventGroupGetNumber. */
+                ( UBaseType_t ) 0,                                          /* SYSTEM_CALL_vEventGroupSetNumber. */
+            #endif
+        #else
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xEventGroupClearBits. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xEventGroupSetBits. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xEventGroupSync. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_uxEventGroupGetNumber. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_vEventGroupSetNumber. */
+        #endif
+
+        #if ( configUSE_STREAM_BUFFERS == 1 )
+            ( UBaseType_t ) MPU_xStreamBufferSendImpl,                      /* SYSTEM_CALL_xStreamBufferSend. */
+            ( UBaseType_t ) MPU_xStreamBufferReceiveImpl,                   /* SYSTEM_CALL_xStreamBufferReceive. */
+            ( UBaseType_t ) MPU_xStreamBufferIsFullImpl,                    /* SYSTEM_CALL_xStreamBufferIsFull. */
+            ( UBaseType_t ) MPU_xStreamBufferIsEmptyImpl,                   /* SYSTEM_CALL_xStreamBufferIsEmpty. */
+            ( UBaseType_t ) MPU_xStreamBufferSpacesAvailableImpl,           /* SYSTEM_CALL_xStreamBufferSpacesAvailable. */
+            ( UBaseType_t ) MPU_xStreamBufferBytesAvailableImpl,            /* SYSTEM_CALL_xStreamBufferBytesAvailable. */
+            ( UBaseType_t ) MPU_xStreamBufferSetTriggerLevelImpl,           /* SYSTEM_CALL_xStreamBufferSetTriggerLevel. */
+            ( UBaseType_t ) MPU_xStreamBufferNextMessageLengthBytesImpl     /* SYSTEM_CALL_xStreamBufferNextMessageLengthBytes. */
+        #else
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xStreamBufferSend. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xStreamBufferReceive. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xStreamBufferIsFull. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xStreamBufferIsEmpty. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xStreamBufferSpacesAvailable. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xStreamBufferBytesAvailable. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xStreamBufferSetTriggerLevel. */
+            ( UBaseType_t ) 0,                                              /* SYSTEM_CALL_xStreamBufferNextMessageLengthBytes. */
+        #endif
+
     };
 /*-----------------------------------------------------------*/
 

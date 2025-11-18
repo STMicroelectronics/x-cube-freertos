@@ -832,10 +832,15 @@ typedef  void (*pTIM_CallbackTypeDef)(TIM_HandleTypeDef *htim);  /*!< pointer to
 #define TIM_CLOCKSOURCE_ITR1        TIM_TS_ITR1          /*!< External clock source mode 1 (ITR1)                   */
 #define TIM_CLOCKSOURCE_ITR2        TIM_TS_ITR2          /*!< External clock source mode 1 (ITR2)                   */
 #define TIM_CLOCKSOURCE_ITR3        TIM_TS_ITR3          /*!< External clock source mode 1 (ITR3)                   */
+#if defined(TIM8)
+#define TIM_CLOCKSOURCE_ITR5        TIM_TS_ITR5          /*!< External clock source mode 1 (ITR5)                   */
+#endif /* TIM8 */
 #define TIM_CLOCKSOURCE_ITR6        TIM_TS_ITR6          /*!< External clock source mode 1 (ITR6)                   */
 #define TIM_CLOCKSOURCE_ITR7        TIM_TS_ITR7          /*!< External clock source mode 1 (ITR7)                   */
 #define TIM_CLOCKSOURCE_ITR8        TIM_TS_ITR8          /*!< External clock source mode 1 (ITR8)                   */
-#define TIM_CLOCKSOURCE_ITR11       TIM_TS_ITR11         /*!< External clock source mode 1 (ITR11)                  */
+#if defined(TIM12)
+#define TIM_CLOCKSOURCE_ITR9        TIM_TS_ITR9          /*!< External clock source mode 1 (ITR9)                   */
+#endif /* TIM12 */
 /**
   * @}
   */
@@ -1077,10 +1082,15 @@ typedef  void (*pTIM_CallbackTypeDef)(TIM_HandleTypeDef *htim);  /*!< pointer to
 #define TIM_TS_ITR1          TIM_SMCR_TS_0                                                     /*!< Internal Trigger 1 (ITR1)              */
 #define TIM_TS_ITR2          TIM_SMCR_TS_1                                                     /*!< Internal Trigger 2 (ITR2)              */
 #define TIM_TS_ITR3          (TIM_SMCR_TS_0 | TIM_SMCR_TS_1)                                   /*!< Internal Trigger 3 (ITR3)              */
+#if defined(TIM8)
+#define TIM_TS_ITR5          (TIM_SMCR_TS_0 | TIM_SMCR_TS_3)                                   /*!< Internal Trigger 5 (ITR5)              */
+#endif /* TIM8 */
 #define TIM_TS_ITR6          (TIM_SMCR_TS_1 | TIM_SMCR_TS_3)                                   /*!< Internal Trigger 6 (ITR6)              */
 #define TIM_TS_ITR7          (TIM_SMCR_TS_0 | TIM_SMCR_TS_1 | TIM_SMCR_TS_3)                   /*!< Internal Trigger 7 (ITR7)              */
 #define TIM_TS_ITR8          (TIM_SMCR_TS_2 | TIM_SMCR_TS_3)                                   /*!< Internal Trigger 8 (ITR8)              */
-#define TIM_TS_ITR11         (TIM_SMCR_TS_0 | TIM_SMCR_TS_1 | TIM_SMCR_TS_2 | TIM_SMCR_TS_3)   /*!< Internal Trigger 11 (ITR11)            */
+#if defined(TIM12)
+#define TIM_TS_ITR9          (TIM_SMCR_TS_0 | TIM_SMCR_TS_2 | TIM_SMCR_TS_3)                   /*!< Internal Trigger 9 (ITR9)              */
+#endif /* TIM12 */
 #define TIM_TS_TI1F_ED       TIM_SMCR_TS_2                                                     /*!< TI1 Edge Detector (TI1F_ED)            */
 #define TIM_TS_TI1FP1        (TIM_SMCR_TS_0 | TIM_SMCR_TS_2)                                   /*!< Filtered Timer Input 1 (TI1FP1)        */
 #define TIM_TS_TI2FP2        (TIM_SMCR_TS_1 | TIM_SMCR_TS_2)                                   /*!< Filtered Timer Input 2 (TI2FP2)        */
@@ -1961,6 +1971,23 @@ mode.
                                                     ((__CHANNEL__) == TIM_CHANNEL_3) || \
                                                     ((__CHANNEL__) == TIM_CHANNEL_4))
 
+#if defined(TIM8) && defined(TIM12)
+#define IS_TIM_CLOCKSOURCE(__CLOCK__) (((__CLOCK__) == TIM_CLOCKSOURCE_INTERNAL) || \
+                                       ((__CLOCK__) == TIM_CLOCKSOURCE_ETRMODE1) || \
+                                       ((__CLOCK__) == TIM_CLOCKSOURCE_ETRMODE2) || \
+                                       ((__CLOCK__) == TIM_CLOCKSOURCE_TI1ED)    || \
+                                       ((__CLOCK__) == TIM_CLOCKSOURCE_TI1)      || \
+                                       ((__CLOCK__) == TIM_CLOCKSOURCE_TI2)      || \
+                                       ((__CLOCK__) == TIM_CLOCKSOURCE_ITR0)     || \
+                                       ((__CLOCK__) == TIM_CLOCKSOURCE_ITR1)     || \
+                                       ((__CLOCK__) == TIM_CLOCKSOURCE_ITR2)     || \
+                                       ((__CLOCK__) == TIM_CLOCKSOURCE_ITR3)     || \
+                                       ((__CLOCK__) == TIM_CLOCKSOURCE_ITR5)     || \
+                                       ((__CLOCK__) == TIM_CLOCKSOURCE_ITR6)     || \
+                                       ((__CLOCK__) == TIM_CLOCKSOURCE_ITR7)     || \
+                                       ((__CLOCK__) == TIM_CLOCKSOURCE_ITR8)     || \
+                                       ((__CLOCK__) == TIM_CLOCKSOURCE_ITR9))
+#else
 #define IS_TIM_CLOCKSOURCE(__CLOCK__) (((__CLOCK__) == TIM_CLOCKSOURCE_INTERNAL) || \
                                        ((__CLOCK__) == TIM_CLOCKSOURCE_ETRMODE1) || \
                                        ((__CLOCK__) == TIM_CLOCKSOURCE_ETRMODE2) || \
@@ -1973,8 +2000,8 @@ mode.
                                        ((__CLOCK__) == TIM_CLOCKSOURCE_ITR3)     || \
                                        ((__CLOCK__) == TIM_CLOCKSOURCE_ITR6)     || \
                                        ((__CLOCK__) == TIM_CLOCKSOURCE_ITR7)     || \
-                                       ((__CLOCK__) == TIM_CLOCKSOURCE_ITR8)     || \
-                                       ((__CLOCK__) == TIM_CLOCKSOURCE_ITR11))
+                                       ((__CLOCK__) == TIM_CLOCKSOURCE_ITR8))
+#endif /* TIM8 && TIM12 */
 
 #define IS_TIM_CLOCKPOLARITY(__POLARITY__) (((__POLARITY__) == TIM_CLOCKPOLARITY_INVERTED)    || \
                                             ((__POLARITY__) == TIM_CLOCKPOLARITY_NONINVERTED) || \

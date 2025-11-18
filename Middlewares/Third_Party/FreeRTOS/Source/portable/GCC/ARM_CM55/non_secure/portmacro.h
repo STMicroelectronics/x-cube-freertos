@@ -1,6 +1,6 @@
 /*
- * FreeRTOS Kernel V10.6.2
- * Copyright (C) 2021 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel V11.2.0
+ * Copyright (C) 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * SPDX-License-Identifier: MIT
  *
@@ -53,9 +53,10 @@
 /**
  * Architecture specifics.
  */
-#define portARCH_NAME                       "Cortex-M55"
-#define portHAS_BASEPRI                     1
-#define portDONT_DISCARD                    __attribute__( ( used ) )
+#define portARCH_NAME                    "Cortex-M55"
+#define portHAS_ARMV8M_MAIN_EXTENSION    1
+#define portARMV8M_MINOR_VERSION         1
+#define portDONT_DISCARD                 __attribute__( ( used ) )
 /*-----------------------------------------------------------*/
 
 /* ARMv8-M common port configurations. */
@@ -65,8 +66,8 @@
 /**
  * @brief Critical section management.
  */
-#define portDISABLE_INTERRUPTS()            ulSetInterruptMask()
-#define portENABLE_INTERRUPTS()             vClearInterruptMask( 0 )
+#define portDISABLE_INTERRUPTS()    ulSetInterruptMask()
+#define portENABLE_INTERRUPTS()     vClearInterruptMask( 0 )
 /*-----------------------------------------------------------*/
 
 /* *INDENT-OFF* */

@@ -31,17 +31,17 @@
 
    (#) Every entity has low power mode as described below :
    (#) The CPU low power modes are :
-      (+) CPU CRun.
-      (+) CPU CSleep.
-      (+) CPU CStop.
+      (++) CPU CRun.
+      (++) CPU CSleep.
+      (++) CPU CStop.
    (#) The Core low power modes are :
-      (+) Run.
-      (+) Stop 0.
-      (+) Stop 1.
-      (+) Stop 2.
-      (+) Stop 3.
-      (+) Standby.
-      (+) Shutdown.
+      (++) Run.
+      (++) Stop 0.
+      (++) Stop 1.
+      (++) Stop 2.
+      (++) Stop 3.
+      (++) Standby.
+      (++) Shutdown.
 
   ==============================================================================
                         ##### How to use this driver #####
@@ -58,15 +58,15 @@
        mode and voltage threshold) in order to set up the Programmed Voltage
        Detector, then use HAL_PWR_EnablePVD() and  HAL_PWR_DisablePVD()
        functions to start and stop the PVD detection.
-       (+) PVD level can be one of the following values :
-             (++) 2V0
-             (++) 2V2
-             (++) 2V4
-             (++) 2V5
-             (++) 2V6
-             (++) 2V8
-             (++) 2V9
-             (++) External input analog voltage PVD_IN (compared internally to
+       (++) PVD level can be one of the following values :
+             (+++) 2V0
+             (+++) 2V2
+             (+++) 2V4
+             (+++) 2V5
+             (+++) 2V6
+             (+++) 2V8
+             (+++) 2V9
+             (+++) External input analog voltage PVD_IN (compared internally to
                   VREFINT)
 
    (#) Call HAL_PWR_EnableWakeUpLine() and HAL_PWR_DisableWakeUpLine() functions
@@ -104,10 +104,11 @@
        Use HAL_PWR_DisableVddUSBVoltageMonitor(), HAL_PWR_DisableVddIO2VoltageMonitor(),
        HAL_PWR_DisableVddA1VoltageMonitor() and HAL_PWR_DisableVddA2VoltageMonitor()
        to stop the PVM VDDx monitoring.
-       (+) PVM monitored voltages are :
-             (++) VDDUSB
-             (++) VDDIO2
-             (++) VDDA
+       (++) PVM monitored voltages are :
+             (+++) VDDUSB
+             (+++) VDDIO2 (This feature is available only for STM32U375xx, STM32U385xx, STM32U3B5xx and STM32U3C5xx
+                          devices.)
+             (+++) VDDA
 
    (#) Call HAL_PWR_PVD_IRQHandler() under PVD_PVM_IRQHandler() function to
        handle the PWR PVD & PVM interrupt request.
@@ -723,6 +724,7 @@ void HAL_PWR_DisableVddUSBVoltageMonitor(void)
   CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_UVMEN);
 }
 
+#if defined(PWR_SVMCR_IO2SV)
 /**
   * @brief  Enable the VDDIO2 independent voltage monitor.
   * @retval None.
@@ -740,6 +742,7 @@ void HAL_PWR_DisableVddIO2VoltageMonitor(void)
 {
   CLEAR_BIT(PWR->SVMCR, PWR_SVMCR_IO2VMEN);
 }
+#endif /* PWR_SVMCR_IO2SV */
 
 /**
   * @brief  Enable the VDDA independent analog supply voltage monitor 1.
@@ -829,6 +832,7 @@ HAL_StatusTypeDef HAL_PWR_ConfigPVM(const PWR_PVMTypeDef *pConfigPVM)
       }
       break;
 
+#if defined(PWR_SVMCR_IO2SV)
     case PWR_VDDIO2_VM: /* Independent I/Os voltage monitor */
 
       /* Disable EXTI IO2VM event and interrupt */
@@ -861,6 +865,7 @@ HAL_StatusTypeDef HAL_PWR_ConfigPVM(const PWR_PVMTypeDef *pConfigPVM)
         __HAL_PWR_IO2VM_EXTI_ENABLE_FALLING_EDGE();
       }
       break;
+#endif /* PWR_SVMCR_IO2SV */
 
     case PWR_VDDA_VM1: /* Independent ADC voltage monitor 1 */
 
@@ -990,6 +995,7 @@ void HAL_PWR_PVD_PVM_IRQHandler(void)
     HAL_PWR_USBVM_Falling_Callback();
   }
 
+#if defined(PWR_SVMCR_IO2SV)
   /* Check PWR PVM IO2 EXTI rising flag */
   if ((rising_flag & PWR_EXTI_LINE_PVM_VDDIO2) != 0U)
   {
@@ -1009,6 +1015,7 @@ void HAL_PWR_PVD_PVM_IRQHandler(void)
     /* PWR PVM IO2 interrupt falling user callback */
     HAL_PWR_IO2VM_Falling_Callback();
   }
+#endif /* PWR_SVMCR_IO2SV */
 
   /* Check PWR PVM ADC VM EXTI rising flag */
   if ((rising_flag & PWR_EXTI_LINE_PVM_VDDA1) != 0U)
@@ -1095,6 +1102,7 @@ __weak void HAL_PWR_USBVM_Falling_Callback(void)
    */
 }
 
+#if defined(PWR_SVMCR_IO2SV)
 /**
   * @brief  PWR IO2VM interrupt Rising callback.
   * @retval None.
@@ -1116,6 +1124,7 @@ __weak void HAL_PWR_IO2VM_Falling_Callback(void)
             HAL_PWR_IO2VM_Falling_Callback() API can be implemented in the user file
    */
 }
+#endif /* PWR_SVMCR_IO2SV */
 
 /**
   * @brief  PWR ADCVM1 interrupt Rising callback.
@@ -1357,21 +1366,21 @@ __weak void HAL_PWR_WKUP10_Callback(void)
       The PWR TrustZone security allows the following features to be secured
       through the PWR_SECCFGR register :
 
-      (++) Low-power mode.
-      (++) Wake-up (WKUP) lines.
-      (++) Voltage detection and monitoring.
-      (++) VBAT mode.
-      (++) I/Os pull-up/pull-down configuration.
+      (+) Low-power mode.
+      (+) Wake-up (WKUP) lines.
+      (+) Voltage detection and monitoring.
+      (+) VBAT mode.
+      (+) I/Os pull-up/pull-down configuration.
 
       Other PWR configuration bits are secure when :
-      (++) The system clock selection is secure in RCC: the voltage scaling
+      (++ The system clock selection is secure in RCC: the voltage scaling
            (VOS) configuration is secure.
-      (++) A GPIO is configured as secure: its corresponding bit for pull-up /
+      (+) A GPIO is configured as secure: its corresponding bit for pull-up /
            pull-down configuration in Standby mode is secure.
 
       A non-secure access to a secure-protected register bit is denied :
-      (++) The secured bits are not written (WI) with a non-secure write access.
-      (++) The secured bits are read as 0 (RAZ) with a non-secure read access.
+      (+) The secured bits are not written (WI) with a non-secure write access.
+      (+) The secured bits are read as 0 (RAZ) with a non-secure read access.
 
     [..]
       When the TrustZone security is disabled (TZEN = 0), PWR_SECCFGR is RAZ/WI
@@ -1386,12 +1395,12 @@ __weak void HAL_PWR_WKUP10_Callback(void)
       only. This bit configures the privileged access of all PWR secure
       functions (defined by PWR_SECCFGR, GTZC, RCC or GPIO).
       When the SPRIV bit is set in PWR_PRIVCFGR:
-      (++) The PWR secure bits can be written only with privileged access,
+      (+) The PWR secure bits can be written only with privileged access,
       including PWR_SECCFGR.
-      (++) The PWR secure bits can be read only with privileged access except
+      (+) The PWR secure bits can be read only with privileged access except
            PWR_SECCFGR and PWR_PRIVCFGR that can be read by privileged or
            unprivileged access.
-      (++) An unprivileged access to a privileged PWR bit or register is
+      (+) An unprivileged access to a privileged PWR bit or register is
            discarded : the bits are read as zero and the write to these bits is
            ignored (RAZ/WI).
       The NSPRIV bit of PWR_PRIVCFGR can be written with privileged access only,
@@ -1399,14 +1408,14 @@ __weak void HAL_PWR_WKUP10_Callback(void)
       securable functions that are configured as non-secure (defined by
       PWR_SECCFGR, GTZC, RCC or GPIO).
       When the NSPRIV bit is set in PWR_PRIVCFGR :
-      (++) The PWR securable bits that are configured as non-secure, can be
+      (+) The PWR securable bits that are configured as non-secure, can be
            written only with privileged access.
-      (++) The PWR securable bits that are configured as non-secure, can be read
+      (+) The PWR securable bits that are configured as non-secure, can be read
            only with privileged access except PWR_PRIVCFGR that can be read by
            privileged or unprivileged accesses.
-      (++) The VOSRDY bit in PWR_VOSR, PWR_SR, PWR_SVMSR and PWR_WUSR, can be read
+      (+) The VOSRDY bit in PWR_VOSR, PWR_SR, PWR_SVMSR and PWR_WUSR, can be read
            with privileged or unprivileged accesses.
-      (++) An unprivileged access to a privileged PWR bit or register is
+      (+) An unprivileged access to a privileged PWR bit or register is
            discarded : the bits are read as zero and the write to these bits is
            ignored (RAZ/WI).
 

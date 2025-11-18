@@ -93,8 +93,8 @@ void HAL_LPTIM_MspInit(LPTIM_HandleTypeDef* hlptim)
 
     /* USER CODE END LPTIM1_MspInit 0 */
 
-  /** Initializes the peripherals clock
-  */
+    /** Initializes the peripherals clock
+    */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_LPTIM1;
     PeriphClkInit.Lptim1ClockSelection = RCC_LPTIM1CLKSOURCE_LSI;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)

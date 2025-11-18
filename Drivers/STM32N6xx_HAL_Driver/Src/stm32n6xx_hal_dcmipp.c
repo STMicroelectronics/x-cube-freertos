@@ -1041,7 +1041,8 @@ HAL_StatusTypeDef HAL_DCMIPP_PIPE_SetConfig(DCMIPP_HandleTypeDef *hdcmipp, uint3
 
   if (hdcmipp->State == HAL_DCMIPP_STATE_READY)
   {
-    if ((pipe_state == HAL_DCMIPP_PIPE_STATE_RESET) || (pipe_state == HAL_DCMIPP_PIPE_STATE_ERROR))
+    if ((pipe_state == HAL_DCMIPP_PIPE_STATE_READY) || (pipe_state == HAL_DCMIPP_PIPE_STATE_RESET) ||
+        (pipe_state == HAL_DCMIPP_PIPE_STATE_ERROR))
     {
       /* Update the DCMIPP PIPE state */
       hdcmipp->PipeState[Pipe] = HAL_DCMIPP_PIPE_STATE_BUSY;
@@ -6302,6 +6303,78 @@ HAL_StatusTypeDef HAL_DCMIPP_PIPE_SetMemoryAddress(DCMIPP_HandleTypeDef *hdcmipp
 
 }
 /**
+  * @brief  Reconfigure the semi Planar destination memories addresses for the selected pipe
+  * @param  hdcmipp               Pointer to DCMIPP handle
+  * @param  Pipe                  Specifies the DCMIPP pipe, can be a value from @ref DCMIPP_Pipes
+  * @param  pSemiPlanarDstAddress Pointer to DCMIPP_SemiPlanarDstAddressTypeDef that contains the destination addresses
+  *                               to be changed
+  * @retval HAL status
+  */
+HAL_StatusTypeDef HAL_DCMIPP_PIPE_SetSemiPlanarMemoryAddress(DCMIPP_HandleTypeDef *hdcmipp, uint32_t Pipe,
+                                                             const DCMIPP_SemiPlanarDstAddressTypeDef
+                                                             *pSemiPlanarDstAddress)
+{
+  /* Check Parameters */
+  if (hdcmipp == NULL)
+  {
+    return HAL_ERROR;
+  }
+
+  assert_param(IS_DCMIPP_PIPE(Pipe));
+  assert_param(IS_DCMIPP_MEMORY_ADDRESS(pSemiPlanarDstAddress->UVAddress));
+  assert_param(IS_DCMIPP_MEMORY_ADDRESS(pSemiPlanarDstAddress->YAddress));
+
+  /* Request Capture for the chosen Pipe */
+  if (Pipe == DCMIPP_PIPE1)
+  {
+    WRITE_REG(hdcmipp->Instance->P1PPM0AR1, pSemiPlanarDstAddress->YAddress);
+    WRITE_REG(hdcmipp->Instance->P1PPM1AR1, pSemiPlanarDstAddress->UVAddress);
+  }
+  else
+  {
+    return HAL_ERROR;
+  }
+
+  return HAL_OK;
+}
+/**
+  * @brief  Reconfigure the full Planar destination memories addresses for the selected pipe
+  * @param  hdcmipp               Pointer to DCMIPP handle
+  * @param  Pipe                  Specifies the DCMIPP pipe, can be a value from @ref DCMIPP_Pipes
+  * @param  pFullPlanarDstAddress Pointer to DCMIPP_FullPlanarDstAddressTypeDef that contains the destination addresses
+  *                               to be changed
+  * @retval HAL status
+  */
+HAL_StatusTypeDef HAL_DCMIPP_PIPE_SetFullPlanarMemoryAddress(DCMIPP_HandleTypeDef *hdcmipp, uint32_t Pipe,
+                                                             const DCMIPP_FullPlanarDstAddressTypeDef
+                                                             *pFullPlanarDstAddress)
+{
+  /* Check Parameters */
+  if (hdcmipp == NULL)
+  {
+    return HAL_ERROR;
+  }
+
+  assert_param(IS_DCMIPP_PIPE(Pipe));
+  assert_param(IS_DCMIPP_MEMORY_ADDRESS(pFullPlanarDstAddress->UAddress));
+  assert_param(IS_DCMIPP_MEMORY_ADDRESS(pFullPlanarDstAddress->YAddress));
+  assert_param(IS_DCMIPP_MEMORY_ADDRESS(pFullPlanarDstAddress->VAddress));
+
+  /* Request Capture for the chosen Pipe */
+  if (Pipe == DCMIPP_PIPE1)
+  {
+    WRITE_REG(hdcmipp->Instance->P1PPM0AR1, pFullPlanarDstAddress->YAddress);
+    WRITE_REG(hdcmipp->Instance->P1PPM1AR1, pFullPlanarDstAddress->UAddress);
+    WRITE_REG(hdcmipp->Instance->P1PPM2AR1, pFullPlanarDstAddress->VAddress);
+  }
+  else
+  {
+    return HAL_ERROR;
+  }
+
+  return HAL_OK;
+}
+/**
   * @brief  Reconfigure the input pixel format for the selected pipe
   * @param  hdcmipp           Pointer to DCMIPP handle
   * @param  Pipe              Specifies the DCMIPP pipe, can be a value from @ref DCMIPP_Pipes
@@ -6588,7 +6661,7 @@ HAL_StatusTypeDef HAL_DCMIPP_PIPE_DisableYUVSwap(DCMIPP_HandleTypeDef *hdcmipp, 
   *     - HAL_DCMIPP_PIPE_SetLineWrappingConfig(): Configure the Line Mult Address Wrapping.
   *     - HAL_DCMIPP_PIPE_EnableLineWrapping()   : Enable the Line Mult Address Wrapping.
   *     - HAL_DCMIPP_PIPE_DisableLineWrapping()  : Disable the Line Mult Address Wrapping.
-  */
+*/
 /**
   * @brief  Configures the position of the line interrupt.
   * @param  hdcmipp  Pointer to DCMIPP handle

@@ -1,6 +1,6 @@
 /*
- * FreeRTOS Kernel V10.6.2
- * Copyright (C) 2021 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel V11.2.0
+ * Copyright (C) 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * SPDX-License-Identifier: MIT
  *
@@ -1193,7 +1193,8 @@ typedef QueueHandle_t SemaphoreHandle_t;
 /**
  * semphr.h
  * @code{c}
- * BaseType_t xSemaphoreGetStaticBuffer( SemaphoreHandle_t xSemaphore );
+ * BaseType_t xSemaphoreGetStaticBuffer( SemaphoreHandle_t xSemaphore,
+ *                                       StaticSemaphore_t ** ppxSemaphoreBuffer );
  * @endcode
  *
  * Retrieve pointer to a statically created binary semaphore, counting semaphore,

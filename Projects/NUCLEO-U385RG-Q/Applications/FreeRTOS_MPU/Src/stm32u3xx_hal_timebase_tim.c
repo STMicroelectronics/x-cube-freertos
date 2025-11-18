@@ -44,7 +44,6 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
   uint32_t              uwTimclock = 0;
   uint32_t              uwPrescalerValue = 0;
   uint32_t              pFLatency;
-
   /*Configure the TIM6 IRQ priority */
   if (TickPriority < (1UL << __NVIC_PRIO_BITS))
   {

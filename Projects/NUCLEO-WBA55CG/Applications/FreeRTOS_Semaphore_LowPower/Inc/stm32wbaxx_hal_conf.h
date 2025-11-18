@@ -19,8 +19,8 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32WBAxx_HAL_CONF_H
-#define __STM32WBAxx_HAL_CONF_H
+#ifndef STM32WBAxx_HAL_CONF_H
+#define STM32WBAxx_HAL_CONF_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -349,5 +349,5 @@ void assert_failed(uint8_t *file, uint32_t line);
 }
 #endif
 
-#endif /* __STM32WBAxx_HAL_CONF_H */
+#endif /* STM32WBAxx_HAL_CONF_H */
 

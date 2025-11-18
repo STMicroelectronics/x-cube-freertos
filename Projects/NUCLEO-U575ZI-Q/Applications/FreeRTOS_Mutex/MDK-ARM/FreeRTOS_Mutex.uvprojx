@@ -358,7 +358,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc</IncludePath>
+              <IncludePath>../Inc;../../../../../Drivers/CMSIS/RTOS2/Include/</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>

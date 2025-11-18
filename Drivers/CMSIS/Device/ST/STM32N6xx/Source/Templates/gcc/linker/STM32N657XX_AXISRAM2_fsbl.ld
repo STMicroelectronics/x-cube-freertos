@@ -160,10 +160,12 @@ SECTIONS
 
   .gnu.sgstubs :
   {
+    _sNSCVeneer = .;
     . = ALIGN(4);
     *(.gnu.sgstubs*)   /* Secure Gateway stubs */
     . = ALIGN(4);
   } >ROM
+  _eNSCVeneer = .;
   /* Uninitialized data section into "RAM" Ram type memory */
   . = ALIGN(4);
   .bss :

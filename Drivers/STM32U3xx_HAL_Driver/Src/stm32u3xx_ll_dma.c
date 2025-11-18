@@ -19,19 +19,16 @@
                         ##### LL DMA driver acronyms #####
   ==============================================================================
   [..]  Acronyms table :
-                   =========================================
-                   || Acronym ||                          ||
-                   =========================================
-                   || SRC     ||  Source                  ||
-                   || DEST    ||  Destination             ||
-                   || ADDR    ||  Address                 ||
-                   || ADDRS   ||  Addresses               ||
-                   || INC     ||  Increment / Incremented ||
-                   || DEC     ||  Decrement / Decremented ||
-                   || BLK     ||  Block                   ||
-                   || RPT     ||  Repeat / Repeated       ||
-                   || TRIG    ||  Trigger                 ||
-                   =========================================
+      (+)  SRC    Source
+      (+)  DEST   Destination
+      (+)  ADDR   Address
+      (+)  ADDRS  Addresses
+      (+)  INC    Increment / Incremented
+      (+)  DEC    Decrement / Decremented
+      (+)  BLK    Block
+      (+)  RPT    Repeat / Repeated
+      (+)  TRIG   Trigger
+
  @endverbatim
   ******************************************************************************
   */

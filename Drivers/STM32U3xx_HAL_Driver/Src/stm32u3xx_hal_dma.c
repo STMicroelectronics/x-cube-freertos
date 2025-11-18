@@ -279,6 +279,17 @@ HAL_StatusTypeDef HAL_DMA_Init(DMA_HandleTypeDef *const hdma)
   /* Allocate lock resource */
   __HAL_UNLOCK(hdma);
 
+  /* Initialize the callbacks */
+  if (hdma->State == HAL_DMA_STATE_RESET)
+  {
+    /* Clean all callbacks */
+    hdma->XferCpltCallback     = NULL;
+    hdma->XferHalfCpltCallback = NULL;
+    hdma->XferErrorCallback    = NULL;
+    hdma->XferAbortCallback    = NULL;
+    hdma->XferSuspendCallback  = NULL;
+  }
+
   /* Update the DMA channel state */
   hdma->State = HAL_DMA_STATE_BUSY;
 

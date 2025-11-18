@@ -377,10 +377,9 @@ void Error_Handler(void)
   /* User can add his own implementation to report the HAL error return state */
   HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED_BLUE_GPIO_Port, LED_BLUE_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_RESET);
   while (1)
   {
-    HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-    HAL_Delay(200);
   }
   /* USER CODE END Error_Handler_Debug */
 }

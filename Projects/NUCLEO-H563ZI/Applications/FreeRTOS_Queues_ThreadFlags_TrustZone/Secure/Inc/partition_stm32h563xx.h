@@ -34,8 +34,8 @@
   */
 /* USER CODE END Header */
 
-#ifndef __PARTITION_STM32H563XX_H
-#define __PARTITION_STM32H563XX_H
+#ifndef PARTITION_STM32H563XX_H
+#define PARTITION_STM32H563XX_H
 
 /*
 //-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
@@ -682,4 +682,4 @@ __STATIC_INLINE void TZ_SAU_Setup (void)
 
 }
 /* USER CODE END 2 */
-#endif  /* __PARTITION_STM32H563XX_H */
+#endif  /* PARTITION_STM32H563XX_H */

@@ -1903,11 +1903,15 @@ HAL_StatusTypeDef HAL_TIMEx_OnePulseN_Stop_IT(TIM_HandleTypeDef *htim, uint32_t 
   *            @arg TIM_TS_ITR1: Internal trigger 1 selected
   *            @arg TIM_TS_ITR2: Internal trigger 2 selected
   *            @arg TIM_TS_ITR3: Internal trigger 3 selected
+  *            @arg TIM_TS_ITR5: Internal trigger 5 selected (*)
   *            @arg TIM_TS_ITR6: Internal trigger 6 selected
   *            @arg TIM_TS_ITR7: Internal trigger 7 selected
   *            @arg TIM_TS_ITR8: Internal trigger 8 selected
-  *            @arg TIM_TS_ITR11: Internal trigger 11 selected
+  *            @arg TIM_TS_ITR9: Internal trigger 9 selected (*)
   *            @arg TIM_TS_NONE: No trigger is needed
+  *
+  *         (*)  Value not defined in all devices.
+  *
   * @param  CommutationSource the Commutation Event source
   *          This parameter can be one of the following values:
   *            @arg TIM_COMMUTATION_TRGI: Commutation source is the TRGI of the Interface Timer
@@ -1962,11 +1966,15 @@ HAL_StatusTypeDef HAL_TIMEx_ConfigCommutEvent(TIM_HandleTypeDef *htim, uint32_t 
   *            @arg TIM_TS_ITR1: Internal trigger 1 selected
   *            @arg TIM_TS_ITR2: Internal trigger 2 selected
   *            @arg TIM_TS_ITR3: Internal trigger 3 selected
+  *            @arg TIM_TS_ITR5: Internal trigger 5 selected (*)
   *            @arg TIM_TS_ITR6: Internal trigger 6 selected
   *            @arg TIM_TS_ITR7: Internal trigger 7 selected
   *            @arg TIM_TS_ITR8: Internal trigger 8 selected
-  *            @arg TIM_TS_ITR11: Internal trigger 11 selected
+  *            @arg TIM_TS_ITR9: Internal trigger 9 selected (*)
   *            @arg TIM_TS_NONE: No trigger is needed
+  *
+  *         (*)  Value not defined in all devices.
+  *
   * @param  CommutationSource the Commutation Event source
   *          This parameter can be one of the following values:
   *            @arg TIM_COMMUTATION_TRGI: Commutation source is the TRGI of the Interface Timer
@@ -2022,11 +2030,16 @@ HAL_StatusTypeDef HAL_TIMEx_ConfigCommutEvent_IT(TIM_HandleTypeDef *htim, uint32
   *            @arg TIM_TS_ITR1: Internal trigger 1 selected
   *            @arg TIM_TS_ITR2: Internal trigger 2 selected
   *            @arg TIM_TS_ITR3: Internal trigger 3 selected
+  *            @arg TIM_TS_ITR5: Internal trigger 5 selected (*)
   *            @arg TIM_TS_ITR6: Internal trigger 6 selected
   *            @arg TIM_TS_ITR7: Internal trigger 7 selected
   *            @arg TIM_TS_ITR8: Internal trigger 8 selected
-  *            @arg TIM_TS_ITR11: Internal trigger 11 selected
+  *            @arg TIM_TS_ITR9: Internal trigger 9 selected (*)
+
   *            @arg TIM_TS_NONE: No trigger is needed
+  *
+  *         (*)  Value not defined in all devices.
+  *
   * @param  CommutationSource the Commutation Event source
   *          This parameter can be one of the following values:
   *            @arg TIM_COMMUTATION_TRGI: Commutation source is the TRGI of the Interface Timer
@@ -2375,6 +2388,21 @@ HAL_StatusTypeDef HAL_TIMEx_ConfigBreakInput(TIM_HandleTypeDef *htim,
   *            @arg TIM_TIM4_ETR_MSIS           TIM4_ETR is connected to MSIS
   *            @arg TIM_TIM4_ETR_TIM3_ETR       TIM4_ETR is connected to TIM3_ETR
   *
+  *         For TIM8, the parameter can take one of the following values: (**)
+  *            @arg TIM_TIM8_ETR_GPIO           TIM8 ETR is connected to GPIO
+  *            @arg TIM_TIM8_ETR_COMP1          TIM8 ETR is connected to COMP1 OUT
+  *            @arg TIM_TIM8_ETR_COMP2          TIM8 ETR is connected to COMP2 OUT
+  *            @arg TIM_TIM8_ETR_MSIK           TIM8 ETR is connected to MSIK
+  *            @arg TIM_TIM8_ETR_HSI            TIM8 ETR is connected to HSI
+  *            @arg TIM_TIM8_ETR_ADC1_AWD1      TIM8 ETR is connected to ADC1 AWD1
+  *            @arg TIM_TIM8_ETR_ADC1_AWD2      TIM8 ETR is connected to ADC1 AWD2
+  *            @arg TIM_TIM8_ETR_ADC1_AWD3      TIM8 ETR is connected to ADC1 AWD3
+  *            @arg TIM_TIM8_ETR_ADC2_AWD1      TIM8 ETR is connected to ADC2 AWD1
+  *            @arg TIM_TIM8_ETR_ADC2_AWD2      TIM8 ETR is connected to ADC2 AWD2
+  *            @arg TIM_TIM8_ETR_ADC2_AWD3      TIM8 ETR is connected to ADC2 AWD3
+  *
+  *         (**) Timer instance not available on all devices. \n
+  *
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_TIMEx_RemapConfig(TIM_HandleTypeDef *htim, uint32_t Remap)
@@ -2423,7 +2451,11 @@ HAL_StatusTypeDef HAL_TIMEx_RemapConfig(TIM_HandleTypeDef *htim, uint32_t Remap)
   *            @arg TIM_TIM3_TI2_GPIO:                TIM3 TI2 is connected to GPIO
   *            @arg TIM_TIM3_TI2_COMP1:               TIM3 TI2 is connected to COMP1 OUT
   *            @arg TIM_TIM3_TI2_COMP2:               TIM3 TI2 is connected to COMP2 OUT
-
+  *
+  *         For TIM8, the parameter is one of the following values: (**)
+  *            @arg TIM_TIM8_TI1_GPIO:                TIM8 TI1 is connected to GPIO
+  *            @arg TIM_TIM8_TI1_COMP1:               TIM8 TI1 is connected to COMP1 OUT
+  *            @arg TIM_TIM8_TI1_COMP2:               TIM8 TI1 is connected to COMP2 OUT
   *
   *         For TIM4, the parameter is one of the following values:
   *            @arg TIM_TIM4_TI1_GPIO:                TIM4 TI1 is connected to GPIO
@@ -2433,6 +2465,16 @@ HAL_StatusTypeDef HAL_TIMEx_RemapConfig(TIM_HandleTypeDef *htim, uint32_t Remap)
   *            @arg TIM_TIM3_TI2_COMP1:               TIM3 TI2 is connected to COMP1 OUT
   *            @arg TIM_TIM3_TI2_COMP2:               TIM3 sTI2 is connected to COMP2 OUT
   *
+  *         For TIM12, the parameter is one of the following values: (**)
+  *            @arg TIM_TIM12_TI1_GPIO:                TIM12 TI1 is connected to GPIO
+  *            @arg TIM_TIM12_TI1_LSE                  TIM12 TI1 is connected to LSE
+  *            @arg TIM_TIM12_TI1_COMP1:               TIM12 TI1 is connected to COMP1 OUT
+  *            @arg TIM_TIM12_TI1_COMP2:               TIM12 TI1 is connected to COMP2 OUT
+  *            @arg TIM_TIM12_TI1_I3C1_IBIACK          TIM12 TI1 is connected to I3C1 IBIACK
+  *            @arg TIM_TIM12_TI2_GPIO:                TIM12 TI2 is connected to GPIO
+  *            @arg TIM_TIM12_TI2_COMP2:               TIM12 TI1 is connected to COMP2 OUT
+  *            @arg TIM_TIM12_TI2_I3C2_IBIACK:         TIM12 TI1 is connected to I3C2 IBIACK
+  *
   *         For TIM15, the parameter is one of the following values:
   *            @arg TIM_TIM15_TI1_GPIO:                TIM15 TI1 is connected to GPIO
   *            @arg TIM_TIM15_TI1_LSE                  TIM15 TI1 is connected to LSE
@@ -2441,7 +2483,7 @@ HAL_StatusTypeDef HAL_TIMEx_RemapConfig(TIM_HandleTypeDef *htim, uint32_t Remap)
   *            @arg TIM_TIM15_TI1_I3C1_IBIACK          TIM15 TI1 is connected to I3C1 IBIACK
   *            @arg TIM_TIM15_TI2_GPIO:                TIM15 TI2 is connected to GPIO
   *            @arg TIM_TIM15_TI2_COMP2:               TIM15 TI1 is connected to COMP2 OUT
-  *            @arg TIM_TIM15_TI2_I3C2:                TIM15 TI1 is connected to I3C2 IBIACK
+  *            @arg TIM_TIM15_TI2_I3C2_IBIACK:         TIM15 TI1 is connected to I3C2 IBIACK
   *
   *         For TIM16, the parameter is one of the following values:
   *            @arg TIM_TIM16_TI1_GPIO:                TIM16 TI1 is connected to GPIO
@@ -2466,6 +2508,8 @@ HAL_StatusTypeDef HAL_TIMEx_RemapConfig(TIM_HandleTypeDef *htim, uint32_t Remap)
   *            @arg TIM_TIM17_TI1_MSI_4:               TIM17 TI1 is connected to MSI DIV 4
   *            @arg TIM_TIM17_TI1_HSI_256:             TIM17 TI1 is connected to MSI DIV 256
   *            @arg TIM_TIM17_TI1_I3C2_IBIACK:         TIM17 TI1 is connected to I3C2 IBIACK
+  *
+  *         (**) Timer instance not available on all devices. \n
   * @retval HAL status
   */
 HAL_StatusTypeDef  HAL_TIMEx_TISelection(TIM_HandleTypeDef *htim, uint32_t TISelection, uint32_t Channel)

@@ -16,9 +16,9 @@
         <TargetCommonOption>
           <Device>STM32WBA55CGUx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32WBAx_DFP.1.0.0</PackID>
-          <PackURL>http://www.keil.com/pack</PackURL>
-          <Cpu>IRAM(0x20010000-0x2001FFFF) IROM(0x08080000-0x80FFFFF) IROM2(0x0C07E000-0xC07FFFF) CLOCK(8000000) FPU3(SFPU) CPUTYPE("Cortex-M33") ELITTLE TZ</Cpu>
+          <PackID>Keil.STM32WBAxx_DFP.2.1.0</PackID>
+          <PackURL>https://www.keil.com/pack/</PackURL>
+          <Cpu>IRAM(0x30000000-0x3000FFFF) IROM(0x0C000000-0xC07DFFF) IROM2(0x0C07E000-0xC07FFFF)  CLOCK(8000000) FPU3(SFPU) CPUTYPE("Cortex-M33") ELITTLE TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
           <FlashDriverDll></FlashDriverDll>
@@ -246,13 +246,13 @@
               </Ocm6>
               <IRAM>
                 <Type>0</Type>
-                <StartAddress>0x20010000</StartAddress>
+                <StartAddress>0x30000000</StartAddress>
                 <Size>0x10000</Size>
               </IRAM>
               <IROM>
                 <Type>1</Type>
-                <StartAddress>0x8080000</StartAddress>
-                <Size>0x80000</Size>
+                <StartAddress>0xc000000</StartAddress>
+                <Size>0x7e000</Size>
               </IROM>
               <XRAM>
                 <Type>0</Type>

@@ -1,6 +1,6 @@
 /* USER CODE BEGIN Header */
 /*
- * FreeRTOS Kernel V10.6.2
+ * FreeRTOS Kernel V11.2.0
  * Portion Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  * Portion Copyright (C) 2019 StMicroelectronics, Inc.  All Rights Reserved.
  *
@@ -87,6 +87,13 @@ extern uint32_t SystemCoreClock;
 #define configHEAP_CLEAR_MEMORY_ON_FREE          0
 #define configUSE_MINI_LIST_ITEM                 1
 #define configUSE_SB_COMPLETED_CALLBACK          0
+#define configKERNEL_PROVIDED_STATIC_MEMORY      1
+#define configSTATS_BUFFER_MAX_LENGTH            0xFFFF
+#define configENABLE_HEAP_PROTECTOR              0
+#define configUSE_EVENT_GROUPS                   1
+#define configUSE_STREAM_BUFFERS                 1
+#define configCHECK_HANDLER_INSTALLATION         1
+#define configVALIDATE_HEAP_BLOCK_POINTER        0
 /* USER CODE BEGIN MESSAGE_BUFFER_LENGTH_TYPE */
 /* Defaults to size_t for backward compatibility, but can be changed
    if lengths will always be less than the number of bytes in a size_t. */
@@ -94,6 +101,8 @@ extern uint32_t SystemCoreClock;
 /* USER CODE END MESSAGE_BUFFER_LENGTH_TYPE */
 
 #define configRUN_TIME_COUNTER_TYPE              size_t
+
+#define configSTACK_DEPTH_TYPE                   size_t
 
 /* Co-routine definitions. */
 #define configUSE_CO_ROUTINES                    0
@@ -129,6 +138,7 @@ to exclude the API function. */
 #define INCLUDE_uxTaskGetStackHighWaterMark  1
 #define INCLUDE_xTaskGetCurrentTaskHandle    1
 #define INCLUDE_eTaskGetState                1
+#define INCLUDE_xTaskAbortDelay              1
 
 /* Cortex-M specific definitions. */
 #ifdef __NVIC_PRIO_BITS
@@ -163,8 +173,8 @@ header file. */
 
 /* Definitions that map the FreeRTOS port interrupt handlers to their CMSIS
 standard names. */
-#define vPortSVCHandler    SVC_Handler
-#define xPortPendSVHandler PendSV_Handler
+#define vPortSVCHandler     SVC_Handler
+#define xPortPendSVHandler  PendSV_Handler
 
 /* IMPORTANT: After 10.3.1 update, Systick_Handler comes from NVIC (if SYS timebase = systick), otherwise from cmsis_os2.c */
 

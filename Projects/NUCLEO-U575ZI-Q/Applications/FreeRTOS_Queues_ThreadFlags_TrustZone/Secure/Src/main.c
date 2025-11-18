@@ -72,7 +72,7 @@ static void MX_ICACHE_Init(void);
 int main(void)
 {
   /* SAU/IDAU, FPU and interrupts secure/non-secure allocation setup done */
-/* in SystemInit() based on partition_stm32u575xx.h file's definitions. */
+  /* in SystemInit() based on partition_stm32u575xx.h file's definitions. */
 
   /* USER CODE BEGIN 1 */
   /* Enable SecureFault handler (HardFault is default) */
@@ -354,8 +354,7 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.

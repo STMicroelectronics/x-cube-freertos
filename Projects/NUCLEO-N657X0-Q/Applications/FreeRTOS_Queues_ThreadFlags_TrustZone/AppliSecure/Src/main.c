@@ -140,35 +140,8 @@ static void NonSecure_Init(void)
   * @param None
   * @retval None
   */
-static void SystemIsolation_Config(void)
+  static void SystemIsolation_Config(void)
 {
-
-  RISAF_BaseRegionConfig_t risaf_conf;
-
-  /* RISAF Config */
-  __HAL_RCC_RISAF_CLK_ENABLE();
-
-  /* set up base region configuration for AXISRAM1 and 2 */
-  risaf_conf.StartAddress = 0;
-  risaf_conf.Filtering = RISAF_FILTER_ENABLE;
-  risaf_conf.PrivWhitelist = 0;
-  risaf_conf.ReadWhitelist = RIF_CID_MASK;
-  risaf_conf.WriteWhitelist = RIF_CID_MASK;
-
-  /* FLEXRAM is secure */
-  risaf_conf.Secure = RIF_ATTRIBUTE_SEC;
-  risaf_conf.EndAddress = 0x00063FFF;
-  HAL_RIF_RISAF_ConfigBaseRegion(RISAF7, RISAF_REGION_1, &risaf_conf);
-
-  /* AXISRAM1 is secure */
-  risaf_conf.Secure = RIF_ATTRIBUTE_SEC;
-  risaf_conf.EndAddress = 0x0009BFFF;
-  HAL_RIF_RISAF_ConfigBaseRegion(RISAF2, RISAF_REGION_1, &risaf_conf);
-
-  /* AXISRAM2 is non-secure */
-  risaf_conf.Secure = RIF_ATTRIBUTE_NSEC;
-  risaf_conf.EndAddress = 0x000FFFFF;
-  HAL_RIF_RISAF_ConfigBaseRegion(RISAF3, RISAF_REGION_1, &risaf_conf);
 
   /* USER CODE BEGIN RIF_Init 0 */
 
@@ -180,6 +153,32 @@ static void SystemIsolation_Config(void)
   /*RISUP configuration*/
   HAL_RIF_RISC_SetSlaveSecureAttributes(RIF_RISC_PERIPH_INDEX_XSPI2 , RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_NPRIV);
   HAL_RIF_RISC_SetSlaveSecureAttributes(RIF_RISC_PERIPH_INDEX_XSPIM , RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_NPRIV);
+
+  /* RISAF Config */
+  RISAF_BaseRegionConfig_t risaf_base_config;
+  __HAL_RCC_RISAF_CLK_ENABLE();
+
+  /* set up base region configuration for CPUAXI_RAM1*/
+  /* region 1 is non-secure */
+  risaf_base_config.EndAddress = 0xfffff;
+  risaf_base_config.Filtering = RISAF_FILTER_ENABLE;
+  risaf_base_config.ReadWhitelist = 255;
+  risaf_base_config.WriteWhitelist = 255;
+  risaf_base_config.Secure = RIF_ATTRIBUTE_NSEC;
+  risaf_base_config.PrivWhitelist = RIF_CID_NONE;
+  risaf_base_config.StartAddress = 0x0000;
+  HAL_RIF_RISAF_ConfigBaseRegion(RISAF3, RISAF_REGION_1, &risaf_base_config);
+
+  /* set up base region configuration for CPUAXI_RAM0*/
+  /* region 1 is secure */
+  risaf_base_config.EndAddress = 0x9bfff;
+  risaf_base_config.Secure = RIF_ATTRIBUTE_SEC;
+  HAL_RIF_RISAF_ConfigBaseRegion(RISAF2, RISAF_REGION_1, &risaf_base_config);
+
+  /* set up base region configuration for FLEXRAM*/
+  /* region 1 is secure */
+  risaf_base_config.EndAddress = 0x63fff;
+  HAL_RIF_RISAF_ConfigBaseRegion(RISAF7, RISAF_REGION_1, &risaf_base_config);
 
   /* RIF-Aware IPs Config */
 
@@ -251,8 +250,7 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.

@@ -11,8 +11,11 @@
     div.columns{display: flex; gap: min(4vw, 1.5em);}
     div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
     ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
       width: 0.8em;
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
@@ -21,9 +24,6 @@
   </style>
   <link rel="stylesheet" href="_htmresc/mini-st_2020.css" />
   <link rel="icon" type="image/x-icon" href="_htmresc/favicon.png" />
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
 </head>
 <body>
 <div class="row">
@@ -46,12 +46,13 @@ STM32Cube) provides a full integration of <strong>FreeRTOS</strong> in
 the STM32Cube environment for the STM32U5, STM32H5, STM32WBA, STM32C0,
 STM32U0, STM32U3 and STM32N6 series of microcontrollers. Ready-to-run
 applicative examples are also provided for the <em>NUCLEO-H563ZI</em>,
-<em>NUCLEO-U575ZI-Q</em>, <em>NUCLEO-WBA52CG</em>,
-<em>NUCLEO-C031C6</em>, <em>NUCLEO-U083RC</em>, <em>NUCLEO-U385RG-Q</em>
-and <em>NUCLEO-N657X0-Q</em> thus <strong>reducing the learning
-curve</strong> and ensuring a <strong>smooth application development
-experience</strong> with FreeRTOS and STM32U5, STM32H5, STM32WBA,
-STM32C0, STM32U0, STM32U3 and STM32N6 MCUs.</p>
+<em>NUCLEO-U575ZI-Q</em>, <em>NUCLEO-WBA55CG</em>,
+<em>NUCLEO-WBA65RI</em>, <em>NUCLEO-C031C6</em>, <em>NUCLEO-U083RC</em>,
+<em>NUCLEO-U385RG-Q</em> and <em>NUCLEO-N657X0-Q</em> thus
+<strong>reducing the learning curve</strong> and ensuring a
+<strong>smooth application development experience</strong> with FreeRTOS
+and STM32U5, STM32H5, STM32WBA, STM32C0, STM32U0, STM32U3 and STM32N6
+MCUs.</p>
 <p><img src="_htmresc/OverviewFreeRTOS_in_STM32Cube.png" /></p>
 <h1 id="repository-structure">Repository structure</h1>
 <p>The STMicroelectronics X-CUBE-FREERTOS repository consists of the
@@ -81,24 +82,43 @@ documentation</a>.</p>
 <section id="update-history" class="col-sm-12 col-lg-8">
 <h2><strong>Update History</strong></h2>
 <div class="collapse">
-<input type="checkbox" id="collapse-section6" checked aria-hidden="true">
-<label for="collapse-section6" aria-hidden="true"><strong>V1.3.1 /
-25-April-2025</strong></label>
+<input type="checkbox" id="collapse-section7" checked aria-hidden="true">
+<label for="collapse-section7" aria-hidden="true"><strong>V1.4.0 /
+14-November-2025</strong></label>
 <div>
 <h2 id="main-changes">Main changes</h2>
 <ul>
-<li>Release of <strong>X-CUBE-FREERTOS</strong> V1.3.1 package
+<li>Maintenance Release of <strong>X-CUBE-FREERTOS</strong> V1.4.0
+package</li>
+<li>Add support for <strong>NUCLEO-WBA65RI</strong> board with the
+following applications:
 <ul>
-<li>Add support of the cortex CM55, including the STM32N6 family, into
-the X-CUBE-FREERTOS package</li>
-<li>Add ioc files for STM32N6 applications<br />
-</li>
-<li>Update the project structure of STM32N6 applications</li>
-<li>Update stm32n6xx_hal_driver version to V1.1.0 and cmsis_device_n6
-version to V1.1.0</li>
+<li>FreeRTOS_MPU</li>
+<li>FreeRTOS_Mutex</li>
+<li>FreeRTOS_Queues_ThreadFlags_TrustZone</li>
+<li>FreeRTOS_Semaphore_LowPower</li>
 </ul></li>
+<li><strong>SLA0044</strong> Legal terms updated to latest revision
+<strong>(Rev 6 / October 2025)</strong></li>
+<li><strong>SLA0048</strong> Legal terms updated to latest revision
+<strong>(Rev 5 / October 2025)</strong></li>
+<li>Upgrade FreeRTOS Kernel to version <strong>11.2.0</strong></li>
+<li>General updates to fix known defects and enhancements
+implementation</li>
+<li>Refactore project structure for STM32N6 applications, addressing
+previous known limitations</li>
+<li>Add the following projects for <strong>NUCLEO-N657X0-Q</strong> with
+<strong>STM32CubeIDE</strong>:
+<ul>
+<li>FreeRTOS_Queues_ThreadFlags_TrustZone</li>
+<li>FreeRTOS_MPU</li>
+</ul></li>
+<li>All FreeRTOS application files regenerated using STM32CubeMX V6.16.0
+and FreeRTOS pack v1.4.0</li>
 </ul>
 <h2 id="contents">Contents</h2>
+<h3 id="sbom">SBOM</h3>
+<p>Deliver SBOM in <a href="sbom_cdx.json">CycloneDX v1.5 format</a></p>
 <h3 id="applications">Applications</h3>
 <p>Provide ready-to-run applicative examples for FreeRTOS on the
 supported boards. For detailed list refer to <a
@@ -107,114 +127,114 @@ list</a></p>
 <h3 id="drivers">Drivers</h3>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: left;">Name</th>
 <th style="text-align: center;">Version</th>
 <th style="text-align: center;">Release note</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">Cortex-M CMSIS</td>
 <td style="text-align: center;">v5.9.0</td>
 <td style="text-align: center;"><a
 href="https://www.keil.com/pack/doc/CMSIS/General/html/index.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32U5xx CMSIS</td>
-<td style="text-align: center;">v1.4.1</td>
+<td style="text-align: center;"><strong>v1.4.2</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32U5xx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32U5xx HAL</td>
-<td style="text-align: center;">v1.6.1</td>
+<td style="text-align: center;"><strong>v1.6.2</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/STM32U5xx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32H5xx CMSIS</td>
-<td style="text-align: center;">v1.3.1</td>
+<td style="text-align: center;"><strong>v1.4.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32H5xx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32H5xx HAL</td>
-<td style="text-align: center;">v1.4.0</td>
+<td style="text-align: center;"><strong>v1.5.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/STM32H5xx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32WBAxx CMSIS</td>
-<td style="text-align: center;">v1.5.0</td>
+<td style="text-align: center;"><strong>v1.8.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32WBAxx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32WBAxx HAL</td>
-<td style="text-align: center;">v1.5.0</td>
+<td style="text-align: center;"><strong>v1.8.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/STM32WBAxx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32C0xx CMSIS</td>
 <td style="text-align: center;">v1.3.0</td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32C0xx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32C0xx HAL</td>
-<td style="text-align: center;">v1.3.0</td>
+<td style="text-align: center;"><strong>v1.4.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/STM32C0xx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32U0xx CMSIS</td>
-<td style="text-align: center;">v1.2.0</td>
+<td style="text-align: center;"><strong>v1.3.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32U0xx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32U0xx HAL</td>
-<td style="text-align: center;">v1.2.0</td>
+<td style="text-align: center;"><strong>v1.3.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/STM32U0xx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32U3xx CMSIS</td>
-<td style="text-align: center;">v1.0.0</td>
+<td style="text-align: center;"><strong>v1.2.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32U3xx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32U3xx HAL</td>
-<td style="text-align: center;">v1.0.0</td>
+<td style="text-align: center;"><strong>v1.2.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/STM32U3xx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32N6xx CMSIS</td>
-<td style="text-align: center;"><strong>v1.1.0</strong></td>
+<td style="text-align: center;"><strong>v1.3.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32N6xx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32N6xx HAL</td>
-<td style="text-align: center;"><strong>v1.1.0</strong></td>
+<td style="text-align: center;"><strong>v1.3.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/STM32N6xx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
@@ -224,14 +244,246 @@ notes</a></td>
 <h3 id="middlewares">Middlewares</h3>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: left;">Name</th>
 <th style="text-align: left;">Version</th>
 <th style="text-align: left;">Release note</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
+<td style="text-align: left;">FreeRTOS</td>
+<td style="text-align: left;"><strong>11.2.0</strong></td>
+<td style="text-align: left;"><a
+href="https://github.com/FreeRTOS/FreeRTOS-Kernel/releases/tag/V11.2.0">release
+notes</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations">Known limitations</h2>
+<ul>
+<li>The FreeRTOS_Semaphore_LowPower application in NUCLEO-U575ZI-Q is
+functional when the power cable is unplugged and plugged back into the
+board.</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>When generating project with TrustZone activated, end user needs to:
+<ul>
+<li>Activate the ‘CMSIS RTOS2/CORE’ component in both secure and
+non-secure contexts.</li>
+<li>Add SysTick_Handler IRQ handler to
+Secure/Src/stm32u5xx_it.c/stm32h5xx_it.c/stm32u3xx_it.c/stm32n6xx_it.c
+files.</li>
+</ul></li>
+</ul>
+<h2 id="development-toolchains-and-compilers">Development toolchains and
+compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain 9.20.1 + ST-LINKV3
+for STM32U5, STM32H5, STM32C0 and STM32U0</li>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain 9.20.4 + ST-LINKV3
+for STM32U3</li>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain 9.40.1 + ST-LINKV3
+for STM32N6</li>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain 9.60.3 + ST-LINKV3
+for STM32WBA</li>
+<li><a
+href="https://www.st.com/en/development-tools/stm32cubeide.html">STM32CubeIDE
+V2.0.0</a> + ST-LINKV3</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.39 +
+ST-LINKV3.</li>
+</ul>
+<h2 id="supported-devices-and-boards-by-applications">Supported devices
+and boards by applications</h2>
+<ul>
+<li><a
+href="https://www.st.com/en/evaluation-tools/nucleo-u575zi-q.html">NUCLEO-U575ZI-Q</a>
+<em>(MB1549C)</em></li>
+<li><a
+href="https://www.st.com/en/evaluation-tools/nucleo-h563zi.html">NUCLEO-H563ZI</a>
+<em>(MB1404-B02)</em></li>
+<li><a
+href="https://www.st.com/en/evaluation-tools/nucleo-wba55cg.html">NUCLEO-WBA55CG</a>
+<em>(MB1803)</em></li>
+<li><a
+href="https://www.st.com/en/evaluation-tools/nucleo-wba65ri.html">NUCLEO-WBA65RI</a>
+<em>(MB2130)</em></li>
+<li><a
+href="https://www.st.com/en/evaluation-tools/nucleo-c031c6.html">NUCLEO-C031C6</a>
+<em>(MB1717)</em></li>
+<li><a
+href="https://www.st.com/en/evaluation-tools/nucleo-u083rc.html">NUCLEO-U083RC</a>
+<em>(MB1932)</em></li>
+<li><a
+href="https://www.st.com/en/evaluation-tools/nucleo-n657x0-q.html">NUCLEO-N657X0-Q</a>
+<em>(MB1940)</em></li>
+<li><a
+href="https://www.st.com/en/evaluation-tools/nucleo-u385RG-q.html">NUCLEO-U385RG-Q</a>
+<em>(MB1841)</em></li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<p>This software release is compatible with:</p>
+<ul>
+<li><a
+href="https://www.st.com/en/development-tools/stm32cubemx.html">STM32CubeMX
+V6.16.0</a></li>
+<li>STM32PackCreator 4.1.0</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section6" aria-hidden="true">
+<label for="collapse-section6" aria-hidden="true"><strong>V1.3.1 /
+25-April-2025</strong></label>
+<div>
+<h2 id="main-changes-1">Main changes</h2>
+<ul>
+<li>Maintenance Release of <strong>X-CUBE-FREERTOS</strong> V1.3.1
+package
+<ul>
+<li>Add support of the cortex CM55, including the STM32N6 family, into
+the X-CUBE-FREERTOS package</li>
+<li>Add ioc files for STM32N6 applications</li>
+<li>Update the project structure of STM32N6 applications</li>
+<li>Update stm32n6xx_hal_driver version to V1.1.0 and cmsis_device_n6
+version to V1.1.0</li>
+</ul></li>
+</ul>
+<h2 id="contents-1">Contents</h2>
+<h3 id="applications-1">Applications</h3>
+<p>Provide ready-to-run applicative examples for FreeRTOS on the
+supported boards. For detailed list refer to <a
+href="Projects/X-CUBE-FREERTOS_ProjectsList.html">applications
+list</a></p>
+<h3 id="drivers-1">Drivers</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Name</th>
+<th style="text-align: center;">Version</th>
+<th style="text-align: center;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Cortex-M CMSIS</td>
+<td style="text-align: center;">v5.9.0</td>
+<td style="text-align: center;"><a
+href="https://www.keil.com/pack/doc/CMSIS/General/html/index.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32U5xx CMSIS</td>
+<td style="text-align: center;">v1.4.1</td>
+<td style="text-align: center;"><a
+href="Drivers/CMSIS/Device/ST/STM32U5xx/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32U5xx HAL</td>
+<td style="text-align: center;">v1.6.1</td>
+<td style="text-align: center;"><a
+href="Drivers/STM32U5xx_HAL_Driver/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32H5xx CMSIS</td>
+<td style="text-align: center;">v1.3.1</td>
+<td style="text-align: center;"><a
+href="Drivers/CMSIS/Device/ST/STM32H5xx/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32H5xx HAL</td>
+<td style="text-align: center;">v1.4.0</td>
+<td style="text-align: center;"><a
+href="Drivers/STM32H5xx_HAL_Driver/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32WBAxx CMSIS</td>
+<td style="text-align: center;">v1.5.0</td>
+<td style="text-align: center;"><a
+href="Drivers/CMSIS/Device/ST/STM32WBAxx/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32WBAxx HAL</td>
+<td style="text-align: center;">v1.5.0</td>
+<td style="text-align: center;"><a
+href="Drivers/STM32WBAxx_HAL_Driver/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32C0xx CMSIS</td>
+<td style="text-align: center;">v1.3.0</td>
+<td style="text-align: center;"><a
+href="Drivers/CMSIS/Device/ST/STM32C0xx/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32C0xx HAL</td>
+<td style="text-align: center;">v1.3.0</td>
+<td style="text-align: center;"><a
+href="Drivers/STM32C0xx_HAL_Driver/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32U0xx CMSIS</td>
+<td style="text-align: center;">v1.2.0</td>
+<td style="text-align: center;"><a
+href="Drivers/CMSIS/Device/ST/STM32U0xx/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32U0xx HAL</td>
+<td style="text-align: center;">v1.2.0</td>
+<td style="text-align: center;"><a
+href="Drivers/STM32U0xx_HAL_Driver/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32U3xx CMSIS</td>
+<td style="text-align: center;">v1.0.0</td>
+<td style="text-align: center;"><a
+href="Drivers/CMSIS/Device/ST/STM32U3xx/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32U3xx HAL</td>
+<td style="text-align: center;">v1.0.0</td>
+<td style="text-align: center;"><a
+href="Drivers/STM32U3xx_HAL_Driver/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32N6xx CMSIS</td>
+<td style="text-align: center;"><strong>v1.1.0</strong></td>
+<td style="text-align: center;"><a
+href="Drivers/CMSIS/Device/ST/STM32N6xx/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32N6xx HAL</td>
+<td style="text-align: center;"><strong>v1.1.0</strong></td>
+<td style="text-align: center;"><a
+href="Drivers/STM32N6xx_HAL_Driver/Release_Notes.html">release
+notes</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="middlewares-1">Middlewares</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
 <td style="text-align: left;">FreeRTOS</td>
 <td style="text-align: left;">10.6.2</td>
 <td style="text-align: left;"><a
@@ -240,7 +492,7 @@ notes</a></td>
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations">Known limitations</h2>
+<h2 id="known-limitations-1">Known limitations</h2>
 <ul>
 <li><p>When generating projects using the STM32CubeMX tool for STM32N6
 projects, the following manual steps and considerations are required
@@ -286,8 +538,8 @@ non-secure contexts.</li>
 Secure/Src/stm32u5xx_it.c/stm32h5xx_it.c/stm32u3xx_it.c files.</li>
 </ul></li>
 </ul>
-<h2 id="development-toolchains-and-compilers">Development toolchains and
-compilers</h2>
+<h2 id="development-toolchains-and-compilers-1">Development toolchains
+and compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain 9.20.1 + ST-LINKV3
 for STM32U5, STM32H5, STM32WBA, STM32C0 and STM32U0</li>
@@ -301,8 +553,8 @@ V1.18.1</a> + ST-LINKV3</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.39 +
 ST-LINKV3.</li>
 </ul>
-<h2 id="supported-devices-and-boards-by-applications">Supported devices
-and boards by applications</h2>
+<h2 id="supported-devices-and-boards-by-applications-1">Supported
+devices and boards by applications</h2>
 <ul>
 <li><a
 href="https://www.st.com/en/evaluation-tools/nucleo-u575zi-q.html">NUCLEO-U575ZI-Q</a>
@@ -326,7 +578,7 @@ href="https://www.st.com/en/evaluation-tools/nucleo-n657x0-q.html">NUCLEO-N657X0
 href="https://www.st.com/en/evaluation-tools/nucleo-u385RG-q.html">NUCLEO-U385RG-Q</a>
 <em>(MB1841)</em></li>
 </ul>
-<h2 id="dependencies">Dependencies</h2>
+<h2 id="dependencies-1">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li><a
@@ -341,9 +593,10 @@ V6.14.1</a></li>
 <label for="collapse-section5" aria-hidden="true"><strong>V1.3.0 /
 22-November-2024</strong></label>
 <div>
-<h2 id="main-changes-1">Main changes</h2>
+<h2 id="main-changes-2">Main changes</h2>
 <ul>
-<li>Release of <strong>X-CUBE-FREERTOS</strong> V1.3.0 package
+<li>Maintenance Release of <strong>X-CUBE-FREERTOS</strong> V1.3.0
+package
 <ul>
 <li>Add support for STM32N6 and STM32U3 series</li>
 <li>Update to FreeRTOS Kernel version <strong>10.6.2</strong><br />
@@ -354,121 +607,121 @@ stm32u0xx_hal_driver, cmsis_device_u5, cmsis_device_h5,
 cmsis_device_wba, cmsis_device_c0 and cmsis_device_u0.</li>
 </ul></li>
 </ul>
-<h2 id="contents-1">Contents</h2>
-<h3 id="applications-1">Applications</h3>
+<h2 id="contents-2">Contents</h2>
+<h3 id="applications-2">Applications</h3>
 <p>Provide ready-to-run applicative examples for FreeRTOS on the
 supported boards. For detailed list refer to <a
 href="Projects/X-CUBE-FREERTOS_ProjectsList.html">applications
 list</a></p>
-<h3 id="drivers-1">Drivers</h3>
+<h3 id="drivers-2">Drivers</h3>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: left;">Name</th>
 <th style="text-align: center;">Version</th>
 <th style="text-align: center;">Release note</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">Cortex-M CMSIS</td>
 <td style="text-align: center;">v5.9.0</td>
 <td style="text-align: center;"><a
 href="https://www.keil.com/pack/doc/CMSIS/General/html/index.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32U5xx CMSIS</td>
 <td style="text-align: center;"><strong>v1.4.1</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32U5xx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32U5xx HAL</td>
 <td style="text-align: center;"><strong>v1.6.1</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/STM32U5xx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32H5xx CMSIS</td>
 <td style="text-align: center;"><strong>v1.3.1</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32H5xx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32H5xx HAL</td>
 <td style="text-align: center;"><strong>v1.4.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/STM32H5xx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32WBAxx CMSIS</td>
 <td style="text-align: center;"><strong>v1.5.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32WBAxx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32WBAxx HAL</td>
 <td style="text-align: center;"><strong>v1.5.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/STM32WBAxx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32C0xx CMSIS</td>
 <td style="text-align: center;"><strong>v1.3.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32C0xx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32C0xx HAL</td>
 <td style="text-align: center;"><strong>v1.3.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/STM32C0xx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32U0xx CMSIS</td>
 <td style="text-align: center;"><strong>v1.2.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32U0xx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32U0xx HAL</td>
 <td style="text-align: center;"><strong>v1.2.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/STM32U0xx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32U3xx CMSIS</td>
 <td style="text-align: center;"><strong>v1.0.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32U3xx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32U3xx HAL</td>
 <td style="text-align: center;"><strong>v1.0.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/STM32U3xx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32N6xx CMSIS</td>
 <td style="text-align: center;"><strong>v1.0.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32N6xx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32N6xx HAL</td>
 <td style="text-align: center;"><strong>v1.0.0</strong></td>
 <td style="text-align: center;"><a
@@ -477,17 +730,17 @@ notes</a></td>
 </tr>
 </tbody>
 </table>
-<h3 id="middlewares-1">Middlewares</h3>
+<h3 id="middlewares-2">Middlewares</h3>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: left;">Name</th>
 <th style="text-align: left;">Version</th>
 <th style="text-align: left;">Release note</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">FreeRTOS</td>
 <td style="text-align: left;">10.6.2</td>
 <td style="text-align: left;"><a
@@ -496,7 +749,7 @@ notes</a></td>
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-1">Known limitations</h2>
+<h2 id="known-limitations-2">Known limitations</h2>
 <ul>
 <li><p>The X-CUBE-FREERTOS pack does not support the CM55, such as the
 STM32N6 family.</p></li>
@@ -528,7 +781,7 @@ non-secure contexts.</li>
 Secure/Src/stm32u5xx_it.c/stm32h5xx_it.c/stm32u3xx_it.c files.</li>
 </ul></li>
 </ul>
-<h2 id="development-toolchains-and-compilers-1">Development toolchains
+<h2 id="development-toolchains-and-compilers-2">Development toolchains
 and compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain 9.20.1 + ST-LINKV3,
@@ -537,193 +790,6 @@ toolchain 9.20.4 + ST-LINKV3 and toolchain 9.40.1 + ST-LINKV3</li>
 href="https://www.st.com/en/development-tools/stm32cubeide.html">STM32CubeIDE
 V1.17.0</a> + ST-LINKV3</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.39 +
-ST-LINKV3.</li>
-</ul>
-<h2 id="supported-devices-and-boards-by-applications-1">Supported
-devices and boards by applications</h2>
-<ul>
-<li><a
-href="https://www.st.com/en/evaluation-tools/nucleo-u575zi-q.html">NUCLEO-U575ZI-Q</a>
-<em>(MB1549C)</em></li>
-<li><a
-href="https://www.st.com/en/evaluation-tools/nucleo-h563zi.html">NUCLEO-H563ZI</a>
-<em>(MB1404-B02)</em></li>
-<li><a
-href="https://www.st.com/en/evaluation-tools/nucleo-wba52cg.html">NUCLEO-WBA52CG</a>
-<em>(MB1845)</em></li>
-<li><a
-href="https://www.st.com/en/evaluation-tools/nucleo-c031c6.html">NUCLEO-C031C6</a>
-<em>(MB1717)</em></li>
-<li><a
-href="https://www.st.com/en/evaluation-tools/nucleo-u083rc.html">NUCLEO-U083RC</a>
-<em>(MB1932)</em></li>
-<li>[NUCLEO-N657X0-Q] <em>(MB1940)</em></li>
-<li>[NUCLEO-U385RG-Q] <em>(MB1841)</em></li>
-</ul>
-<h2 id="dependencies-1">Dependencies</h2>
-<p>This software release is compatible with:</p>
-<ul>
-<li><a
-href="https://www.st.com/en/development-tools/stm32cubemx.html">STM32CubeMX
-V6.13.0</a></li>
-<li>STM32PackCreator 3.9.0</li>
-</ul>
-</div>
-</div>
-<div class="collapse">
-<input type="checkbox" id="collapse-section4" aria-hidden="true">
-<label for="collapse-section4" aria-hidden="true"><strong>V1.2.0 /
-05-April-2024</strong></label>
-<div>
-<h2 id="main-changes-2">Main changes</h2>
-<ul>
-<li>Release of <strong>X-CUBE-FREERTOS</strong> V1.2.0 package
-<ul>
-<li>Add support for STM32U0 series</li>
-<li>Update to latest versions of stm32u5xx_hal_driver,
-stm32h5xx_hal_driver, stm32wbaxx_hal_driver, cmsis_device_u5,
-cmsis_device_h5 and cmsis_device_wba.</li>
-<li>Add generation of app_freertos.h. The Includes and function
-prototypes of app_freertos.c are moved to this header file.</li>
-</ul></li>
-</ul>
-<h2 id="contents-2">Contents</h2>
-<h3 id="applications-2">Applications</h3>
-<p>Provide ready-to-run applicative examples for FreeRTOS on the
-supported boards. For detailed list refer to <a
-href="Projects/X-CUBE-FREERTOS_ProjectsList.html">applications
-list</a></p>
-<h3 id="drivers-2">Drivers</h3>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Name</th>
-<th style="text-align: center;">Version</th>
-<th style="text-align: center;">Release note</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Cortex-M CMSIS</td>
-<td style="text-align: center;">v5.9.0</td>
-<td style="text-align: center;"><a
-href="https://www.keil.com/pack/doc/CMSIS/General/html/index.html">release
-notes</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">STM32U5xx CMSIS</td>
-<td style="text-align: center;"><strong>v1.4.0</strong></td>
-<td style="text-align: center;"><a
-href="Drivers/CMSIS/Device/ST/STM32U5xx/Release_Notes.html">release
-notes</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">STM32U5xx HAL</td>
-<td style="text-align: center;"><strong>v1.5.0</strong></td>
-<td style="text-align: center;"><a
-href="Drivers/STM32U5xx_HAL_Driver/Release_Notes.html">release
-notes</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">STM32H5xx CMSIS</td>
-<td style="text-align: center;"><strong>v1.2.0</strong></td>
-<td style="text-align: center;"><a
-href="Drivers/CMSIS/Device/ST/STM32H5xx/Release_Notes.html">release
-notes</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">STM32H5xx HAL</td>
-<td style="text-align: center;"><strong>v1.2.0</strong></td>
-<td style="text-align: center;"><a
-href="Drivers/STM32H5xx_HAL_Driver/Release_Notes.html">release
-notes</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">STM32WBAxx CMSIS</td>
-<td style="text-align: center;"><strong>v1.3.0</strong></td>
-<td style="text-align: center;"><a
-href="Drivers/CMSIS/Device/ST/STM32WBAxx/Release_Notes.html">release
-notes</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">STM32WBAxx HAL</td>
-<td style="text-align: center;"><strong>v1.3.0</strong></td>
-<td style="text-align: center;"><a
-href="Drivers/STM32WBAxx_HAL_Driver/Release_Notes.html">release
-notes</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">STM32C0xx CMSIS</td>
-<td style="text-align: center;">v1.1.0</td>
-<td style="text-align: center;"><a
-href="Drivers/CMSIS/Device/ST/STM32C0xx/Release_Notes.html">release
-notes</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">STM32C0xx HAL</td>
-<td style="text-align: center;">v1.1.0</td>
-<td style="text-align: center;"><a
-href="Drivers/STM32C0xx_HAL_Driver/Release_Notes.html">release
-notes</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">STM32U0xx CMSIS</td>
-<td style="text-align: center;"><strong>v1.0.0</strong></td>
-<td style="text-align: center;"><a
-href="Drivers/CMSIS/Device/ST/STM32U0xx/Release_Notes.html">release
-notes</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">STM32U0xx HAL</td>
-<td style="text-align: center;"><strong>v1.0.0</strong></td>
-<td style="text-align: center;"><a
-href="Drivers/STM32U0xx_HAL_Driver/Release_Notes.html">release
-notes</a></td>
-</tr>
-</tbody>
-</table>
-<h3 id="middlewares-2">Middlewares</h3>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Name</th>
-<th style="text-align: left;">Version</th>
-<th style="text-align: left;">Release note</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">FreeRTOS</td>
-<td style="text-align: left;">10.5.1</td>
-<td style="text-align: left;"><a
-href="https://github.com/STMicroelectronics/stm32_mw_freertos">release
-notes</a></td>
-</tr>
-</tbody>
-</table>
-<h2 id="known-limitations-2">Known limitations</h2>
-<ul>
-<li>CMSIS RTOS2 configuration parameters in STM32CubeMX UI cannot be
-reset to default values.</li>
-<li>MDK-ARM Microlib option is overwritten after code generation for
-STM32H5.</li>
-<li>When generating project with TrustZone activated, end user needs to:
-<ul>
-<li>Activate the ‘CMSIS RTOS2/CORE’ component in both secure and
-non-secure contexts.</li>
-<li>Add SysTick_Handler IRQ handler to
-Secure/Src/stm32u5xx_it.c/stm32h5xx_it.c files.</li>
-</ul></li>
-</ul>
-<h2 id="development-toolchains-and-compilers-2">Development toolchains
-and compilers</h2>
-<ul>
-<li>IAR Embedded Workbench for ARM (EWARM) toolchain 9.20.1 +
-ST-LINKV3.</li>
-<li><a
-href="https://www.st.com/en/development-tools/stm32cubeide.html">STM32CubeIDE
-V1.15.0</a> + ST-LINKV3</li>
-<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.38 +
 ST-LINKV3.</li>
 </ul>
 <h2 id="supported-devices-and-boards-by-applications-2">Supported
@@ -744,31 +810,35 @@ href="https://www.st.com/en/evaluation-tools/nucleo-c031c6.html">NUCLEO-C031C6</
 <li><a
 href="https://www.st.com/en/evaluation-tools/nucleo-u083rc.html">NUCLEO-U083RC</a>
 <em>(MB1932)</em></li>
+<li>[NUCLEO-N657X0-Q] <em>(MB1940)</em></li>
+<li>[NUCLEO-U385RG-Q] <em>(MB1841)</em></li>
 </ul>
 <h2 id="dependencies-2">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li><a
 href="https://www.st.com/en/development-tools/stm32cubemx.html">STM32CubeMX
-V6.11.0</a></li>
-<li>STM32PackCreator 3.7.0</li>
+V6.13.0</a></li>
+<li>STM32PackCreator 3.9.0</li>
 </ul>
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section3" aria-hidden="true">
-<label for="collapse-section3" aria-hidden="true"><strong>V1.1.0 /
-20-June-2023</strong></label>
+<input type="checkbox" id="collapse-section4" aria-hidden="true">
+<label for="collapse-section4" aria-hidden="true"><strong>V1.2.0 /
+05-April-2024</strong></label>
 <div>
 <h2 id="main-changes-3">Main changes</h2>
 <ul>
-<li>Release of <strong>X-CUBE-FREERTOS</strong> V1.1.0 package
+<li>Maintenance Release of <strong>X-CUBE-FREERTOS</strong> V1.2.0
+package
 <ul>
-<li>Add support for STM32WBA and STM32C0 series</li>
-<li>Update to FreeRTOS Kernel version <strong>10.5.1</strong></li>
-<li>Update of Cortex-M CMSIS to version <strong>v5.9.0</strong></li>
+<li>Add support for STM32U0 series</li>
 <li>Update to latest versions of stm32u5xx_hal_driver,
-stm32h5xx_hal_driver, cmsis_device_u5 and cmsis_device_h5.</li>
+stm32h5xx_hal_driver, stm32wbaxx_hal_driver, cmsis_device_u5,
+cmsis_device_h5 and cmsis_device_wba.</li>
+<li>Add generation of app_freertos.h. The Includes and function
+prototypes of app_freertos.c are moved to this header file.</li>
 </ul></li>
 </ul>
 <h2 id="contents-3">Contents</h2>
@@ -780,74 +850,88 @@ list</a></p>
 <h3 id="drivers-3">Drivers</h3>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: left;">Name</th>
 <th style="text-align: center;">Version</th>
 <th style="text-align: center;">Release note</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">Cortex-M CMSIS</td>
-<td style="text-align: center;"><strong>v5.9.0</strong></td>
+<td style="text-align: center;">v5.9.0</td>
 <td style="text-align: center;"><a
 href="https://www.keil.com/pack/doc/CMSIS/General/html/index.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32U5xx CMSIS</td>
-<td style="text-align: center;"><strong>v1.3.0</strong></td>
+<td style="text-align: center;"><strong>v1.4.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32U5xx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32U5xx HAL</td>
-<td style="text-align: center;"><strong>v1.3.0</strong></td>
+<td style="text-align: center;"><strong>v1.5.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/STM32U5xx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32H5xx CMSIS</td>
-<td style="text-align: center;"><strong>v1.1.0</strong></td>
+<td style="text-align: center;"><strong>v1.2.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32H5xx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32H5xx HAL</td>
-<td style="text-align: center;"><strong>v1.1.0</strong></td>
+<td style="text-align: center;"><strong>v1.2.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/STM32H5xx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32WBAxx CMSIS</td>
-<td style="text-align: center;">v1.1.0</td>
+<td style="text-align: center;"><strong>v1.3.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32WBAxx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32WBAxx HAL</td>
-<td style="text-align: center;">v1.1.0</td>
+<td style="text-align: center;"><strong>v1.3.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/STM32WBAxx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32C0xx CMSIS</td>
 <td style="text-align: center;">v1.1.0</td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32C0xx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32C0xx HAL</td>
 <td style="text-align: center;">v1.1.0</td>
 <td style="text-align: center;"><a
 href="Drivers/STM32C0xx_HAL_Driver/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32U0xx CMSIS</td>
+<td style="text-align: center;"><strong>v1.0.0</strong></td>
+<td style="text-align: center;"><a
+href="Drivers/CMSIS/Device/ST/STM32U0xx/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32U0xx HAL</td>
+<td style="text-align: center;"><strong>v1.0.0</strong></td>
+<td style="text-align: center;"><a
+href="Drivers/STM32U0xx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
 </tr>
 </tbody>
@@ -855,18 +939,18 @@ notes</a></td>
 <h3 id="middlewares-3">Middlewares</h3>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: left;">Name</th>
 <th style="text-align: left;">Version</th>
 <th style="text-align: left;">Release note</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">FreeRTOS</td>
-<td style="text-align: left;"><strong>10.5.1</strong></td>
+<td style="text-align: left;">10.5.1</td>
 <td style="text-align: left;"><a
-href="https://github.com/FreeRTOS/FreeRTOS-Kernel/releases/tag/V10.5.1">release
+href="https://github.com/STMicroelectronics/stm32_mw_freertos">release
 notes</a></td>
 </tr>
 </tbody>
@@ -892,8 +976,8 @@ and compilers</h2>
 ST-LINKV3.</li>
 <li><a
 href="https://www.st.com/en/development-tools/stm32cubeide.html">STM32CubeIDE
-V1.13.0</a> + ST-LINKV3</li>
-<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.37 +
+V1.15.0</a> + ST-LINKV3</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.38 +
 ST-LINKV3.</li>
 </ul>
 <h2 id="supported-devices-and-boards-by-applications-3">Supported
@@ -911,28 +995,35 @@ href="https://www.st.com/en/evaluation-tools/nucleo-wba52cg.html">NUCLEO-WBA52CG
 <li><a
 href="https://www.st.com/en/evaluation-tools/nucleo-c031c6.html">NUCLEO-C031C6</a>
 <em>(MB1717)</em></li>
+<li><a
+href="https://www.st.com/en/evaluation-tools/nucleo-u083rc.html">NUCLEO-U083RC</a>
+<em>(MB1932)</em></li>
 </ul>
 <h2 id="dependencies-3">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li><a
 href="https://www.st.com/en/development-tools/stm32cubemx.html">STM32CubeMX
-V6.9.1</a></li>
-<li>STM32PackCreator 3.6.0</li>
+V6.11.0</a></li>
+<li>STM32PackCreator 3.7.0</li>
 </ul>
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section2">
-<label for="collapse-section2" aria-hidden="true"><strong>V1.0.1 /
-24-March-2023</strong></label>
+<input type="checkbox" id="collapse-section3" aria-hidden="true">
+<label for="collapse-section3" aria-hidden="true"><strong>V1.1.0 /
+20-June-2023</strong></label>
 <div>
 <h2 id="main-changes-4">Main changes</h2>
 <ul>
-<li>Maintenance release of <strong>X-CUBE-FREERTOS</strong> V1.0.1
-package supporting STM32U5 and STM32H5 series
+<li>Maintenance Release of <strong>X-CUBE-FREERTOS</strong> V1.1.0
+package
 <ul>
-<li>Update the tree structure of applications.</li>
+<li>Add support for STM32WBA and STM32C0 series</li>
+<li>Update to FreeRTOS Kernel version <strong>10.5.1</strong></li>
+<li>Update of Cortex-M CMSIS to version <strong>v5.9.0</strong></li>
+<li>Update to latest versions of stm32u5xx_hal_driver,
+stm32h5xx_hal_driver, cmsis_device_u5 and cmsis_device_h5.</li>
 </ul></li>
 </ul>
 <h2 id="contents-4">Contents</h2>
@@ -944,46 +1035,74 @@ list</a></p>
 <h3 id="drivers-4">Drivers</h3>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: left;">Name</th>
 <th style="text-align: center;">Version</th>
 <th style="text-align: center;">Release note</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">Cortex-M CMSIS</td>
-<td style="text-align: center;">v5.6.0</td>
+<td style="text-align: center;"><strong>v5.9.0</strong></td>
 <td style="text-align: center;"><a
 href="https://www.keil.com/pack/doc/CMSIS/General/html/index.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32U5xx CMSIS</td>
-<td style="text-align: center;">v1.2.0</td>
+<td style="text-align: center;"><strong>v1.3.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32U5xx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32U5xx HAL</td>
-<td style="text-align: center;">v1.2.0</td>
+<td style="text-align: center;"><strong>v1.3.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/STM32U5xx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32H5xx CMSIS</td>
-<td style="text-align: center;">v1.0.0</td>
+<td style="text-align: center;"><strong>v1.1.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32H5xx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32H5xx HAL</td>
-<td style="text-align: center;">v1.0.0</td>
+<td style="text-align: center;"><strong>v1.1.0</strong></td>
 <td style="text-align: center;"><a
 href="Drivers/STM32H5xx_HAL_Driver/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32WBAxx CMSIS</td>
+<td style="text-align: center;">v1.1.0</td>
+<td style="text-align: center;"><a
+href="Drivers/CMSIS/Device/ST/STM32WBAxx/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32WBAxx HAL</td>
+<td style="text-align: center;">v1.1.0</td>
+<td style="text-align: center;"><a
+href="Drivers/STM32WBAxx_HAL_Driver/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32C0xx CMSIS</td>
+<td style="text-align: center;">v1.1.0</td>
+<td style="text-align: center;"><a
+href="Drivers/CMSIS/Device/ST/STM32C0xx/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32C0xx HAL</td>
+<td style="text-align: center;">v1.1.0</td>
+<td style="text-align: center;"><a
+href="Drivers/STM32C0xx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
 </tr>
 </tbody>
@@ -991,18 +1110,18 @@ notes</a></td>
 <h3 id="middlewares-4">Middlewares</h3>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: left;">Name</th>
 <th style="text-align: left;">Version</th>
 <th style="text-align: left;">Release note</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">FreeRTOS</td>
-<td style="text-align: left;">10.4.6</td>
+<td style="text-align: left;"><strong>10.5.1</strong></td>
 <td style="text-align: left;"><a
-href="https://github.com/FreeRTOS/FreeRTOS-Kernel/releases/tag/V10.4.6">release
+href="https://github.com/FreeRTOS/FreeRTOS-Kernel/releases/tag/V10.5.1">release
 notes</a></td>
 </tr>
 </tbody>
@@ -1025,20 +1144,12 @@ Secure/Src/stm32u5xx_it.c/stm32h5xx_it.c files.</li>
 and compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain 9.20.1 +
-ST-LINKV3.Patch available here:
-<ul>
-<li><a
-href="https://github.com/STMicroelectronics/STM32CubeH5/tree/main/Utilities/PC_Software/IDEs_Patches/EWARM">Utilities_Software_Patches_STM32H5xx_V1.0.zip</a></li>
-</ul></li>
+ST-LINKV3.</li>
 <li><a
 href="https://www.st.com/en/development-tools/stm32cubeide.html">STM32CubeIDE
-V1.12.0</a> + ST-LINKV3</li>
+V1.13.0</a> + ST-LINKV3</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.37 +
-ST-LINKV3.Patch available here:
-<ul>
-<li><a
-href="https://github.com/STMicroelectronics/STM32CubeH5/tree/main/Utilities/PC_Software/IDEs_Patches/MDK-ARM">Utilities_Software_Patches-ARM.STM32H5xx_DFP.1.0.0.zip</a></li>
-</ul></li>
+ST-LINKV3.</li>
 </ul>
 <h2 id="supported-devices-and-boards-by-applications-4">Supported
 devices and boards by applications</h2>
@@ -1049,26 +1160,35 @@ href="https://www.st.com/en/evaluation-tools/nucleo-u575zi-q.html">NUCLEO-U575ZI
 <li><a
 href="https://www.st.com/en/evaluation-tools/nucleo-h563zi.html">NUCLEO-H563ZI</a>
 <em>(MB1404-B02)</em></li>
+<li><a
+href="https://www.st.com/en/evaluation-tools/nucleo-wba52cg.html">NUCLEO-WBA52CG</a>
+<em>(MB1845)</em></li>
+<li><a
+href="https://www.st.com/en/evaluation-tools/nucleo-c031c6.html">NUCLEO-C031C6</a>
+<em>(MB1717)</em></li>
 </ul>
 <h2 id="dependencies-4">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li><a
 href="https://www.st.com/en/development-tools/stm32cubemx.html">STM32CubeMX
-V6.8.0</a></li>
-<li>STM32PackCreator 3.5.0</li>
+V6.9.1</a></li>
+<li>STM32PackCreator 3.6.0</li>
 </ul>
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section1">
-<label for="collapse-section1" aria-hidden="true"><strong>V1.0.0 /
-24-February-2023</strong></label>
+<input type="checkbox" id="collapse-section2">
+<label for="collapse-section2" aria-hidden="true"><strong>V1.0.1 /
+24-March-2023</strong></label>
 <div>
 <h2 id="main-changes-5">Main changes</h2>
 <ul>
-<li>First official release of <strong>X-CUBE-FREERTOS</strong> V1.0.0
-package supporting STM32U5 and STM32H5 series</li>
+<li>Maintenance release of <strong>X-CUBE-FREERTOS</strong> V1.0.1
+package supporting STM32U5 and STM32H5 series
+<ul>
+<li>Update the tree structure of applications.</li>
+</ul></li>
 </ul>
 <h2 id="contents-5">Contents</h2>
 <h3 id="applications-5">Applications</h3>
@@ -1079,42 +1199,42 @@ list</a></p>
 <h3 id="drivers-5">Drivers</h3>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: left;">Name</th>
 <th style="text-align: center;">Version</th>
 <th style="text-align: center;">Release note</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">Cortex-M CMSIS</td>
 <td style="text-align: center;">v5.6.0</td>
 <td style="text-align: center;"><a
 href="https://www.keil.com/pack/doc/CMSIS/General/html/index.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32U5xx CMSIS</td>
 <td style="text-align: center;">v1.2.0</td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32U5xx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32U5xx HAL</td>
 <td style="text-align: center;">v1.2.0</td>
 <td style="text-align: center;"><a
 href="Drivers/STM32U5xx_HAL_Driver/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;">STM32H5xx CMSIS</td>
 <td style="text-align: center;">v1.0.0</td>
 <td style="text-align: center;"><a
 href="Drivers/CMSIS/Device/ST/STM32H5xx/Release_Notes.html">release
 notes</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">STM32H5xx HAL</td>
 <td style="text-align: center;">v1.0.0</td>
 <td style="text-align: center;"><a
@@ -1126,14 +1246,14 @@ notes</a></td>
 <h3 id="middlewares-5">Middlewares</h3>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: left;">Name</th>
 <th style="text-align: left;">Version</th>
 <th style="text-align: left;">Release note</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td style="text-align: left;">FreeRTOS</td>
 <td style="text-align: left;">10.4.6</td>
 <td style="text-align: left;"><a
@@ -1186,6 +1306,141 @@ href="https://www.st.com/en/evaluation-tools/nucleo-h563zi.html">NUCLEO-H563ZI</
 <em>(MB1404-B02)</em></li>
 </ul>
 <h2 id="dependencies-5">Dependencies</h2>
+<p>This software release is compatible with:</p>
+<ul>
+<li><a
+href="https://www.st.com/en/development-tools/stm32cubemx.html">STM32CubeMX
+V6.8.0</a></li>
+<li>STM32PackCreator 3.5.0</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section1">
+<label for="collapse-section1" aria-hidden="true"><strong>V1.0.0 /
+24-February-2023</strong></label>
+<div>
+<h2 id="main-changes-6">Main changes</h2>
+<ul>
+<li>First official release of <strong>X-CUBE-FREERTOS</strong> V1.0.0
+package supporting STM32U5 and STM32H5 series</li>
+</ul>
+<h2 id="contents-6">Contents</h2>
+<h3 id="applications-6">Applications</h3>
+<p>Provide ready-to-run applicative examples for FreeRTOS on the
+supported boards. For detailed list refer to <a
+href="Projects/X-CUBE-FREERTOS_ProjectsList.html">applications
+list</a></p>
+<h3 id="drivers-6">Drivers</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Name</th>
+<th style="text-align: center;">Version</th>
+<th style="text-align: center;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Cortex-M CMSIS</td>
+<td style="text-align: center;">v5.6.0</td>
+<td style="text-align: center;"><a
+href="https://www.keil.com/pack/doc/CMSIS/General/html/index.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32U5xx CMSIS</td>
+<td style="text-align: center;">v1.2.0</td>
+<td style="text-align: center;"><a
+href="Drivers/CMSIS/Device/ST/STM32U5xx/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32U5xx HAL</td>
+<td style="text-align: center;">v1.2.0</td>
+<td style="text-align: center;"><a
+href="Drivers/STM32U5xx_HAL_Driver/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32H5xx CMSIS</td>
+<td style="text-align: center;">v1.0.0</td>
+<td style="text-align: center;"><a
+href="Drivers/CMSIS/Device/ST/STM32H5xx/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">STM32H5xx HAL</td>
+<td style="text-align: center;">v1.0.0</td>
+<td style="text-align: center;"><a
+href="Drivers/STM32H5xx_HAL_Driver/Release_Notes.html">release
+notes</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="middlewares-6">Middlewares</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">FreeRTOS</td>
+<td style="text-align: left;">10.4.6</td>
+<td style="text-align: left;"><a
+href="https://github.com/FreeRTOS/FreeRTOS-Kernel/releases/tag/V10.4.6">release
+notes</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations-6">Known limitations</h2>
+<ul>
+<li>CMSIS RTOS2 configuration parameters in STM32CubeMX UI cannot be
+reset to default values.</li>
+<li>MDK-ARM Microlib option is overwritten after code generation for
+STM32H5.</li>
+<li>When generating project with TrustZone activated, end user needs to:
+<ul>
+<li>Activate the ‘CMSIS RTOS2/CORE’ component in both secure and
+non-secure contexts.</li>
+<li>Add SysTick_Handler IRQ handler to
+Secure/Src/stm32u5xx_it.c/stm32h5xx_it.c files.</li>
+</ul></li>
+</ul>
+<h2 id="development-toolchains-and-compilers-6">Development toolchains
+and compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain 9.20.1 +
+ST-LINKV3.Patch available here:
+<ul>
+<li><a
+href="https://github.com/STMicroelectronics/STM32CubeH5/tree/main/Utilities/PC_Software/IDEs_Patches/EWARM">Utilities_Software_Patches_STM32H5xx_V1.0.zip</a></li>
+</ul></li>
+<li><a
+href="https://www.st.com/en/development-tools/stm32cubeide.html">STM32CubeIDE
+V1.12.0</a> + ST-LINKV3</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.37 +
+ST-LINKV3.Patch available here:
+<ul>
+<li><a
+href="https://github.com/STMicroelectronics/STM32CubeH5/tree/main/Utilities/PC_Software/IDEs_Patches/MDK-ARM">Utilities_Software_Patches-ARM.STM32H5xx_DFP.1.0.0.zip</a></li>
+</ul></li>
+</ul>
+<h2 id="supported-devices-and-boards-by-applications-6">Supported
+devices and boards by applications</h2>
+<ul>
+<li><a
+href="https://www.st.com/en/evaluation-tools/nucleo-u575zi-q.html">NUCLEO-U575ZI-Q</a>
+<em>(MB1549C)</em></li>
+<li><a
+href="https://www.st.com/en/evaluation-tools/nucleo-h563zi.html">NUCLEO-H563ZI</a>
+<em>(MB1404-B02)</em></li>
+</ul>
+<h2 id="dependencies-6">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li><a

@@ -44,7 +44,6 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
   uint32_t              uwTimclock, uwAPB1Prescaler;
   uint32_t              uwPrescalerValue;
   uint32_t              pFLatency;
-
   HAL_StatusTypeDef     status;
 
   /* Enable TIM6 clock */
@@ -55,6 +54,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 
   /* Get APB1 prescaler */
   uwAPB1Prescaler = clkconfig.APB1CLKDivider;
+
   /* Compute TIM6 clock */
   if (uwAPB1Prescaler == RCC_HCLK_DIV1)
   {

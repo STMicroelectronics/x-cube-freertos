@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
- * Copyright (c) 2013-2022 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2024 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -19,6 +19,7 @@
  *      Purpose: CMSIS RTOS2 wrapper for FreeRTOS
  *
  *---------------------------------------------------------------------------*/
+
 #include <string.h>
 
 #include "FreeRTOS.h"                   // ARM.FreeRTOS::RTOS:Core
@@ -175,24 +176,6 @@ void SysTick_Handler (void) {
 #endif
 #endif /* SysTick */
 
-/*
-  Setup SVC to reset value.
-*/
-__STATIC_INLINE void SVC_Setup (void) {
-#if (__ARM_ARCH_7A__ == 0U)
-  /* Service Call interrupt might be configured before kernel start      */
-  /* and when its priority is lower or equal to BASEPRI, svc instruction */
-  /* causes a Hard Fault.                                                */
-  NVIC_SetPriority (SVCall_IRQn, 0U);
-#endif
-}
-
-/*
-  Function macro used to retrieve semaphore count from ISR
-*/
-#ifndef uxSemaphoreGetCountFromISR
-#define uxSemaphoreGetCountFromISR( xSemaphore ) uxQueueMessagesWaitingFromISR( ( QueueHandle_t ) ( xSemaphore ) )
-#endif
 
 /*
   Determine if CPU executes from interrupt context or if interrupts are masked.
@@ -362,8 +345,6 @@ osStatus_t osKernelStart (void) {
 
     /* Start scheduler if initialized and not started before */
     if ((state == taskSCHEDULER_NOT_STARTED) && (KernelState == osKernelReady)) {
-      /* Ensure SVC priority is at the reset value */
-      SVC_Setup();
       /* Change state to ensure correct API flow */
       KernelState = osKernelRunning;
       /* Start the kernel scheduler */
@@ -390,6 +371,8 @@ int32_t osKernelLock (void) {
   else {
     switch (xTaskGetSchedulerState()) {
       case taskSCHEDULER_SUSPENDED:
+        /* Suspend scheduler or increment nesting level */
+        vTaskSuspendAll();
         lock = 1;
         break;
 
@@ -422,12 +405,8 @@ int32_t osKernelUnlock (void) {
     switch (xTaskGetSchedulerState()) {
       case taskSCHEDULER_SUSPENDED:
         lock = 1;
-
-        if (xTaskResumeAll() != pdTRUE) {
-          if (xTaskGetSchedulerState() == taskSCHEDULER_SUSPENDED) {
-            lock = (int32_t)osError;
-          }
-        }
+        /* Resume scheduler or decrement nesting level */
+        (void)xTaskResumeAll();
         break;
 
       case taskSCHEDULER_RUNNING:
@@ -456,20 +435,25 @@ int32_t osKernelRestoreLock (int32_t lock) {
   else {
     switch (xTaskGetSchedulerState()) {
       case taskSCHEDULER_SUSPENDED:
+        if (lock == 0) {
+          /* Resume scheduler or decrement nesting level */
+          (void)xTaskResumeAll();
+        }
+        else {
+          if (lock != 1) {
+            lock = (int32_t)osError;
+          }
+        }
+        break;
+
       case taskSCHEDULER_RUNNING:
         if (lock == 1) {
+          /* Suspend scheduler or increment nesting level */
           vTaskSuspendAll();
         }
         else {
           if (lock != 0) {
             lock = (int32_t)osError;
-          }
-          else {
-            if (xTaskResumeAll() != pdTRUE) {
-              if (xTaskGetSchedulerState() != taskSCHEDULER_RUNNING) {
-                lock = (int32_t)osError;
-              }
-            }
           }
         }
         break;
@@ -528,7 +512,9 @@ uint32_t osKernelGetSysTimerCount (void) {
   val0 = OS_Tick_GetCount();
 #endif
 
-  __disable_irq();
+  if (irqmask == 0U) {
+    __disable_irq();
+  }
 
   ticks = xTaskGetTickCount();
   val   = OS_Tick_GetCount();
@@ -580,6 +566,9 @@ osThreadId_t osThreadNew (osThreadFunc_t func, void *argument, const osThreadAtt
   TaskHandle_t hTask;
   UBaseType_t prio;
   int32_t mem;
+#if (configUSE_OS2_CPU_AFFINITY == 1)
+  UBaseType_t core_aff = tskNO_AFFINITY;
+#endif
 
   hTask = NULL;
 
@@ -620,6 +609,12 @@ osThreadId_t osThreadNew (osThreadFunc_t func, void *argument, const osThreadAtt
           mem = 0;
         }
       }
+
+      #if (configUSE_OS2_CPU_AFFINITY == 1)
+        if (attr->affinity_mask != 0U) {
+          core_aff = attr->affinity_mask;
+        }
+      #endif
     }
     else {
       mem = 0;
@@ -627,16 +622,49 @@ osThreadId_t osThreadNew (osThreadFunc_t func, void *argument, const osThreadAtt
 
     if (mem == 1) {
       #if (configSUPPORT_STATIC_ALLOCATION == 1)
-        hTask = xTaskCreateStatic ((TaskFunction_t)func, name, stack, argument, prio, (StackType_t  *)attr->stack_mem,
-                                                                                      (StaticTask_t *)attr->cb_mem);
+        #if (configUSE_OS2_CPU_AFFINITY == 0)
+          hTask = xTaskCreateStatic ((TaskFunction_t)func,
+                                                     name,
+                                                     stack,
+                                                     argument,
+                                                     prio - 1U,
+                                     (StackType_t  *)attr->stack_mem,
+                                     (StaticTask_t *)attr->cb_mem);
+        #else
+          hTask = xTaskCreateStaticAffinitySet ((TaskFunction_t)func,
+                                                                name,
+                                                                stack,
+                                                                argument,
+                                                                prio - 1U,
+                                                (StackType_t  *)attr->stack_mem,
+                                                (StaticTask_t *)attr->cb_mem,
+                                                                core_aff);
+        #endif
       #endif
     }
     else {
       if (mem == 0) {
         #if (configSUPPORT_DYNAMIC_ALLOCATION == 1)
-          if (xTaskCreate ((TaskFunction_t)func, name, (configSTACK_DEPTH_TYPE)stack, argument, prio, &hTask) != pdPASS) {
-            hTask = NULL;
-          }
+          #if (configUSE_OS2_CPU_AFFINITY == 0)
+            if (xTaskCreate ((TaskFunction_t        )func,
+                                                     name,
+                             (configSTACK_DEPTH_TYPE)stack,
+                                                     argument,
+                                                     prio - 1U,
+                                                     &hTask) != pdPASS) {
+              hTask = NULL;
+            }
+          #else
+            if (xTaskCreateAffinitySet ((TaskFunction_t        )func,
+                                                                name,
+                                        (configSTACK_DEPTH_TYPE)stack,
+                                                                argument,
+                                                                prio - 1U,
+                                                                core_aff,
+                                                                &hTask) != pdPASS) {
+              hTask = NULL;
+            }
+          #endif
         #endif
       }
     }
@@ -653,9 +681,15 @@ const char *osThreadGetName (osThreadId_t thread_id) {
   TaskHandle_t hTask = (TaskHandle_t)thread_id;
   const char *name;
 
-  if ((IRQ_Context() != 0U) || (hTask == NULL)) {
+  if (hTask == NULL) {
     name = NULL;
-  } else {
+  }
+  else if (IRQ_Context() != 0U) {
+    /* Retrieve the name even though the function is not allowed to be called from ISR */
+    /* Function implementation allows this therefore we make an exception.             */
+    name = pcTaskGetName (hTask);
+  }
+  else {
     name = pcTaskGetName (hTask);
   }
 
@@ -733,7 +767,7 @@ osStatus_t osThreadSetPriority (osThreadId_t thread_id, osPriority_t priority) {
   }
   else {
     stat = osOK;
-    vTaskPrioritySet (hTask, (UBaseType_t)priority);
+    vTaskPrioritySet (hTask, (UBaseType_t)priority - 1U);
   }
 
   /* Return execution status */
@@ -750,7 +784,7 @@ osPriority_t osThreadGetPriority (osThreadId_t thread_id) {
   if ((IRQ_Context() != 0U) || (hTask == NULL)) {
     prio = osPriorityError;
   } else {
-    prio = (osPriority_t)((int32_t)uxTaskPriorityGet (hTask));
+    prio = (osPriority_t)(uxTaskPriorityGet (hTask) + 1U);
   }
 
   /* Return current thread priority */
@@ -803,6 +837,7 @@ osStatus_t osThreadSuspend (osThreadId_t thread_id) {
 osStatus_t osThreadResume (osThreadId_t thread_id) {
   TaskHandle_t hTask = (TaskHandle_t)thread_id;
   osStatus_t stat;
+  eTaskState tstate;
 
   if (IRQ_Context() != 0U) {
     stat = osErrorISR;
@@ -811,8 +846,22 @@ osStatus_t osThreadResume (osThreadId_t thread_id) {
     stat = osErrorParameter;
   }
   else {
-    stat = osOK;
-    vTaskResume (hTask);
+    tstate = eTaskGetState (hTask);
+
+    if (tstate == eSuspended) {
+      /* Thread is suspended */
+      stat = osOK;
+      vTaskResume (hTask);
+    } else {
+      /* Not suspended, might be blocked */
+      if (xTaskAbortDelay(hTask) == pdPASS) {
+        /* Thread was unblocked */
+        stat = osOK;
+      } else {
+        /* Thread was not blocked */
+        stat = osErrorResource;
+      }
+    }
   }
 
   /* Return execution status */
@@ -916,6 +965,50 @@ uint32_t osThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items) {
 }
 #endif /* (configUSE_OS2_THREAD_ENUMERATE == 1) */
 
+#if (configUSE_OS2_CPU_AFFINITY == 1)
+/*
+  Set processor affinity mask of a thread.
+*/
+osStatus_t osThreadSetAffinityMask (osThreadId_t thread_id, uint32_t affinity_mask) {
+  TaskHandle_t hTask = (TaskHandle_t)thread_id;
+  osStatus_t stat;
+
+  if (IRQ_Context() != 0U) {
+    stat = osErrorISR;
+  }
+  else if (hTask == NULL) {
+    stat = osErrorParameter;
+  }
+  else {
+    stat = osOK;
+    vTaskCoreAffinitySet (hTask, (UBaseType_t)affinity_mask);
+  }
+
+  /* Return execution status */
+  return (stat);
+}
+
+/*
+  Get current processor affinity mask of a thread.
+*/
+uint32_t osThreadGetAffinityMask (osThreadId_t thread_id) {
+  TaskHandle_t hTask = (TaskHandle_t)thread_id;
+  UBaseType_t affinity_mask;
+
+  if (IRQ_Context() != 0U) {
+    affinity_mask = 0U;
+  }
+  else if (hTask == NULL) {
+    affinity_mask = 0U;
+  }
+  else {
+    affinity_mask = vTaskCoreAffinityGet (hTask);
+  }
+
+  /* Return current processor affinity mask */
+  return ((uint32_t)affinity_mask);
+}
+#endif /* (configUSE_OS2_CPU_AFFINITY == 1) */
 
 /* ==== Thread Flags Functions ==== */
 
@@ -1010,10 +1103,12 @@ uint32_t osThreadFlagsGet (void) {
   Wait for one or more Thread Flags of the current running thread to become signaled.
 */
 uint32_t osThreadFlagsWait (uint32_t flags, uint32_t options, uint32_t timeout) {
+  TaskHandle_t hTask;
   uint32_t rflags, nval;
   uint32_t clear;
   TickType_t t0, td, tout;
   BaseType_t rval;
+  BaseType_t notify = pdFALSE;
 
   if (IRQ_Context() != 0U) {
     rflags = (uint32_t)osErrorISR;
@@ -1038,6 +1133,11 @@ uint32_t osThreadFlagsWait (uint32_t flags, uint32_t options, uint32_t timeout) 
       if (rval == pdPASS) {
         rflags &= flags;
         rflags |= nval;
+
+        if ((rflags & ~flags) != 0) {
+          /* Other flags already set, notify task to change its state */
+          notify = pdTRUE;
+        }
 
         if ((options & osFlagsWaitAll) == osFlagsWaitAll) {
           if ((flags & rflags) == flags) {
@@ -1078,6 +1178,15 @@ uint32_t osThreadFlagsWait (uint32_t flags, uint32_t options, uint32_t timeout) 
       }
     }
     while (rval != pdFAIL);
+  }
+
+  if (notify == pdTRUE) {
+    hTask = xTaskGetCurrentTaskHandle();
+
+    /* Ensure task is already notified without changing existing flags */
+    if (xTaskNotify(hTask, 0, eNoAction) != pdPASS) {
+      rflags = (uint32_t)osError;
+    }
   }
 
   /* Return flags before clearing */
@@ -1276,9 +1385,15 @@ const char *osTimerGetName (osTimerId_t timer_id) {
   TimerHandle_t hTimer = (TimerHandle_t)timer_id;
   const char *p;
 
-  if ((IRQ_Context() != 0U) || (hTimer == NULL)) {
+  if (hTimer == NULL) {
     p = NULL;
-  } else {
+  }
+  else if (IRQ_Context() != 0U) {
+    /* Retrieve the name even though the function is not allowed to be called from ISR */
+    /* Function implementation allows this therefore we make an exception.             */
+    p = pcTimerGetName (hTimer);
+  }
+  else {
     p = pcTimerGetName (hTimer);
   }
 
@@ -1948,7 +2063,7 @@ osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, cons
           #endif
         }
       }
-
+      
       #if (configQUEUE_REGISTRY_SIZE > 0)
       if (hSemaphore != NULL) {
         if ((attr != NULL) && (attr->name != NULL)) {
@@ -2252,14 +2367,13 @@ osStatus_t osMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *
   Get maximum number of messages in a Message Queue.
 */
 uint32_t osMessageQueueGetCapacity (osMessageQueueId_t mq_id) {
-  StaticQueue_t *mq = (StaticQueue_t *)mq_id;
+  QueueHandle_t hQueue = (QueueHandle_t)mq_id;
   uint32_t capacity;
 
-  if (mq == NULL) {
+  if (hQueue == NULL) {
     capacity = 0U;
   } else {
-    /* capacity = pxQueue->uxLength */
-    capacity = mq->uxDummy4[1];
+    capacity = uxQueueGetQueueLength (hQueue);
   }
 
   /* Return maximum number of messages */
@@ -2270,14 +2384,13 @@ uint32_t osMessageQueueGetCapacity (osMessageQueueId_t mq_id) {
   Get maximum message size in a Message Queue.
 */
 uint32_t osMessageQueueGetMsgSize (osMessageQueueId_t mq_id) {
-  StaticQueue_t *mq = (StaticQueue_t *)mq_id;
+  QueueHandle_t hQueue = (QueueHandle_t)mq_id;
   uint32_t size;
 
-  if (mq == NULL) {
+  if (hQueue == NULL) {
     size = 0U;
   } else {
-    /* size = pxQueue->uxItemSize */
-    size = mq->uxDummy4[2];
+    size = uxQueueGetQueueItemSize (hQueue);
   }
 
   /* Return maximum message size */
@@ -2309,23 +2422,22 @@ uint32_t osMessageQueueGetCount (osMessageQueueId_t mq_id) {
   Get number of available slots for messages in a Message Queue.
 */
 uint32_t osMessageQueueGetSpace (osMessageQueueId_t mq_id) {
-  StaticQueue_t *mq = (StaticQueue_t *)mq_id;
+  QueueHandle_t hQueue = (QueueHandle_t)mq_id;
   uint32_t space;
   uint32_t isrm;
 
-  if (mq == NULL) {
+  if (hQueue == NULL) {
     space = 0U;
   }
   else if (IRQ_Context() != 0U) {
     isrm = taskENTER_CRITICAL_FROM_ISR();
 
-    /* space = pxQueue->uxLength - pxQueue->uxMessagesWaiting; */
-    space = mq->uxDummy4[1] - mq->uxDummy4[0];
+    space = uxQueueGetQueueLength (hQueue) - uxQueueMessagesWaiting (hQueue);
 
     taskEXIT_CRITICAL_FROM_ISR(isrm);
   }
   else {
-    space = (uint32_t)uxQueueSpacesAvailable ((QueueHandle_t)mq);
+    space = (uint32_t)uxQueueSpacesAvailable (hQueue);
   }
 
   /* Return number of available slots */
@@ -2521,11 +2633,11 @@ const char *osMemoryPoolGetName (osMemoryPoolId_t mp_id) {
   MemPool_t *mp = (osMemoryPoolId_t)mp_id;
   const char *p;
 
-  if (IRQ_Context() != 0U) {
+  if (mp_id == NULL) {
     p = NULL;
   }
-  else if (mp_id == NULL) {
-    p = NULL;
+  else if (IRQ_Context() != 0U) {
+    p = mp->name;
   }
   else {
     p = mp->name;
@@ -2922,36 +3034,5 @@ __WEAK void vApplicationStackOverflowHook (TaskHandle_t xTask, char *pcTaskName)
 
   /* Assert when stack overflow is enabled but no application defined function exists */
   configASSERT(0);
-}
-#endif
-
-/*---------------------------------------------------------------------------*/
-#if (configSUPPORT_STATIC_ALLOCATION == 1)
-/*
-  vApplicationGetIdleTaskMemory gets called when configSUPPORT_STATIC_ALLOCATION
-  equals to 1 and is required for static memory allocation support.
-*/
-__WEAK void vApplicationGetIdleTaskMemory (StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize) {
-  /* Idle task control block and stack */
-  static StaticTask_t Idle_TCB;
-  static StackType_t  Idle_Stack[configMINIMAL_STACK_SIZE];
-
-  *ppxIdleTaskTCBBuffer   = &Idle_TCB;
-  *ppxIdleTaskStackBuffer = &Idle_Stack[0];
-  *pulIdleTaskStackSize   = (uint32_t)configMINIMAL_STACK_SIZE;
-}
-
-/*
-  vApplicationGetTimerTaskMemory gets called when configSUPPORT_STATIC_ALLOCATION
-  equals to 1 and is required for static memory allocation support.
-*/
-__WEAK void vApplicationGetTimerTaskMemory (StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize) {
-  /* Timer task control block and stack */
-  static StaticTask_t Timer_TCB;
-  static StackType_t  Timer_Stack[configTIMER_TASK_STACK_DEPTH];
-
-  *ppxTimerTaskTCBBuffer   = &Timer_TCB;
-  *ppxTimerTaskStackBuffer = &Timer_Stack[0];
-  *pulTimerTaskStackSize   = (uint32_t)configTIMER_TASK_STACK_DEPTH;
 }
 #endif

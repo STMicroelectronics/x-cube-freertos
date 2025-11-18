@@ -18,10 +18,11 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os2.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "cmsis_os2.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,10 +50,9 @@ LPTIM_HandleTypeDef hlptim2;
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-void PeriphCommonClock_Config(void);
+void MX_FREERTOS_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_LPTIM2_Init(void);
-void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -91,9 +91,6 @@ int main(void)
   /* Configure the system clock */
   SystemClock_Config();
 
-  /* Configure the peripherals common clocks */
-  PeriphCommonClock_Config();
-
   /* USER CODE BEGIN SysInit */
 
   /* USER CODE END SysInit */
@@ -106,16 +103,16 @@ int main(void)
 
   /* USER CODE END 2 */
 
-  /* Init Scheduler */
+  /* Init scheduler */
   osKernelInitialize();
-
-  /* Call init function for freertos objects (in cmsis_os2.c) */
+  /* Call init function for freertos objects (in app_freertos.c) */
   MX_FREERTOS_Init();
 
   /* Start scheduler */
   osKernelStart();
 
   /* We should never get here as control is now taken by the scheduler */
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -135,12 +132,20 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
   /** Configure the System Power Supply
   */
   if (HAL_PWREx_ConfigSupply(PWR_EXTERNAL_SOURCE_SUPPLY) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure the main internal regulator output voltage
+  */
+  if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -155,6 +160,15 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL3.PLLState = RCC_PLL_NONE;
   RCC_OscInitStruct.PLL4.PLLState = RCC_PLL_NONE;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Initializes TIMPRE when TIM is used as Systick Clock Source
+  */
+  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_TIM;
+  PeriphClkInitStruct.TIMPresSelection = RCC_TIMPRES_DIV1;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
   {
     Error_Handler();
   }
@@ -219,24 +233,6 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.IC11Selection.ClockDivider = 3;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
-}
-
-/**
-  * @brief Peripherals Common Clock Configuration
-  * @retval None
-  */
-void PeriphCommonClock_Config(void)
-{
-  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
-
-  /** Initializes the peripherals clock
-  */
-  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_TIM;
-  PeriphClkInitStruct.TIMPresSelection = RCC_TIMPRES_DIV1;
-  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
   {
     Error_Handler();
   }
@@ -347,8 +343,7 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.

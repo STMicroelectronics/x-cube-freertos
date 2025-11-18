@@ -16,9 +16,9 @@
         <TargetCommonOption>
           <Device>STM32U385RGTxQ</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32U3xx_DFP.0.2.0</PackID>
+          <PackID>Keil.STM32U3xx_DFP.1.0.0</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
-          <Cpu>IRAM(0x30000000-0x30017FFF) IRAM2(0x30030000-0x30037FFF) IROM(0x0C000000-0xC07DFFF) IROM2(0x0C07E000-0xC07FFFF)  CLOCK(8000000) FPU3(SFPU) CPUTYPE("Cortex-M33") ELITTLE TZ</Cpu>
+          <Cpu>IRAM(0x30000000-0x30017FFF) IRAM2(0x30030000-0x30037FFF) IROM(0x0C000000-0xC07DFFF) IROM2(0x0C07E000-0xC07FFFF)   CLOCK(8000000) FPU3(SFPU) CPUTYPE("Cortex-M33") ELITTLE TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
           <FlashDriverDll></FlashDriverDll>
@@ -358,7 +358,7 @@
               <MiscControls></MiscControls>
               <Define>secureconfigMAX_SECURE_CONTEXTS=8</Define>
               <Undefine></Undefine>
-              <IncludePath>..//Secure/Inc</IncludePath>
+              <IncludePath>..//Secure/Inc;../../../../../../Drivers/CMSIS/Include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>

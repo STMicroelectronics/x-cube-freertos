@@ -201,7 +201,7 @@ HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit, uint32_t
     pFlash.ProcedureOnGoing = pEraseInit->TypeErase;
 
     /* Access to SCR or CR depends on operation type */
-    reg_cr = (IS_FLASH_SECURE_OPERATION() == 1U) ? &(FLASH->SCR) : &(FLASH_NS->CR);
+    reg_cr = (IS_FLASH_SECURE_OPERATION() != 0U) ? &(FLASH->SCR) : &(FLASH_NS->CR);
 
     if ((pEraseInit->TypeErase & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEERASE_MASSERASE)
     {
@@ -279,7 +279,7 @@ HAL_StatusTypeDef HAL_FLASHEx_Erase_IT(FLASH_EraseInitTypeDef *pEraseInit)
     pFlash.ProcedureOnGoing = pEraseInit->TypeErase;
 
     /* Access to SCR or CR depends on operation type */
-    reg_cr = (IS_FLASH_SECURE_OPERATION() == 1U) ? &(FLASH->SCR) : &(FLASH_NS->CR);
+    reg_cr = (IS_FLASH_SECURE_OPERATION() != 0U) ? &(FLASH->SCR) : &(FLASH_NS->CR);
 
     /* Enable End of Operation and Error interrupts */
     (*reg_cr) |= (FLASH_IT_EOP | FLASH_IT_OPERR);
@@ -1184,7 +1184,7 @@ static void FLASH_MassErase(uint32_t Banks)
   assert_param(IS_FLASH_BANK(Banks));
 
   /* Access to SCR or CR registers depends on operation type */
-  reg_cr = (IS_FLASH_SECURE_OPERATION() == 1U) ? &(FLASH->SCR) : &(FLASH_NS->CR);
+  reg_cr = (IS_FLASH_SECURE_OPERATION() != 0U) ? &(FLASH->SCR) : &(FLASH_NS->CR);
 
   /* Set the Mass Erase Bit for the bank 1 and 2 if requested */
   SET_BIT((*reg_cr), Banks);
@@ -1214,7 +1214,7 @@ void FLASH_PageErase(uint32_t Page, uint32_t Banks)
   assert_param(IS_FLASH_BANK_EXCLUSIVE(Banks));
 
   /* Access to SCR or CR registers depends on operation type */
-  reg_cr = (IS_FLASH_SECURE_OPERATION() == 1U) ? &(FLASH->SCR) : &(FLASH_NS->CR);
+  reg_cr = (IS_FLASH_SECURE_OPERATION() != 0U) ? &(FLASH->SCR) : &(FLASH_NS->CR);
 
   if ((Banks & FLASH_BANK_1) != 0U)
   {

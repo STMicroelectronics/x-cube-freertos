@@ -1,6 +1,6 @@
 /*
- * FreeRTOS Kernel V10.6.2
- * Copyright (C) 2021 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel V11.2.0
+ * Copyright (C) 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * SPDX-License-Identifier: MIT
  *
@@ -56,14 +56,14 @@ typedef struct xTaskGenericNotifyWaitParams
     TickType_t xTicksToWait;
 } xTaskGenericNotifyWaitParams_t;
 
-typedef struct xTimerGenericCommandParams
+typedef struct xTimerGenericCommandFromTaskParams
 {
     TimerHandle_t xTimer;
     BaseType_t xCommandID;
     TickType_t xOptionalValue;
     BaseType_t * pxHigherPriorityTaskWoken;
     TickType_t xTicksToWait;
-} xTimerGenericCommandParams_t;
+} xTimerGenericCommandFromTaskParams_t;
 
 typedef struct xEventGroupWaitBitsParams
 {
@@ -89,7 +89,6 @@ void MPU_vTaskSuspend( TaskHandle_t xTaskToSuspend ) FREERTOS_SYSTEM_CALL;
 void MPU_vTaskResume( TaskHandle_t xTaskToResume ) FREERTOS_SYSTEM_CALL;
 TickType_t MPU_xTaskGetTickCount( void ) FREERTOS_SYSTEM_CALL;
 UBaseType_t MPU_uxTaskGetNumberOfTasks( void ) FREERTOS_SYSTEM_CALL;
-char * MPU_pcTaskGetName( TaskHandle_t xTaskToQuery ) FREERTOS_SYSTEM_CALL;
 UBaseType_t MPU_uxTaskGetStackHighWaterMark( TaskHandle_t xTask ) FREERTOS_SYSTEM_CALL;
 configSTACK_DEPTH_TYPE MPU_uxTaskGetStackHighWaterMark2( TaskHandle_t xTask ) FREERTOS_SYSTEM_CALL;
 void MPU_vTaskSetApplicationTaskTag( TaskHandle_t xTask,
@@ -141,25 +140,27 @@ BaseType_t MPU_xTaskGetSchedulerState( void ) FREERTOS_SYSTEM_CALL;
 
     BaseType_t MPU_xTaskCreate( TaskFunction_t pxTaskCode,
                                 const char * const pcName,
-                                const uint16_t usStackDepth,
+                                const configSTACK_DEPTH_TYPE uxStackDepth,
                                 void * const pvParameters,
                                 UBaseType_t uxPriority,
                                 TaskHandle_t * const pxCreatedTask ) FREERTOS_SYSTEM_CALL;
     TaskHandle_t MPU_xTaskCreateStatic( TaskFunction_t pxTaskCode,
                                         const char * const pcName,
-                                        const uint32_t ulStackDepth,
+                                        const configSTACK_DEPTH_TYPE uxStackDepth,
                                         void * const pvParameters,
                                         UBaseType_t uxPriority,
                                         StackType_t * const puxStackBuffer,
                                         StaticTask_t * const pxTaskBuffer ) FREERTOS_SYSTEM_CALL;
     void MPU_vTaskDelete( TaskHandle_t xTaskToDelete ) FREERTOS_SYSTEM_CALL;
     void MPU_vTaskPrioritySet( TaskHandle_t xTask,
-                            UBaseType_t uxNewPriority ) FREERTOS_SYSTEM_CALL;
+                               UBaseType_t uxNewPriority ) FREERTOS_SYSTEM_CALL;
     TaskHandle_t MPU_xTaskGetHandle( const char * pcNameToQuery ) FREERTOS_SYSTEM_CALL;
     BaseType_t MPU_xTaskCallApplicationTaskHook( TaskHandle_t xTask,
-                                                void * pvParameter ) FREERTOS_SYSTEM_CALL;
-    void MPU_vTaskGetRunTimeStats( char * pcWriteBuffer ) FREERTOS_SYSTEM_CALL;
-    void MPU_vTaskList( char * pcWriteBuffer ) FREERTOS_SYSTEM_CALL;
+                                                 void * pvParameter ) FREERTOS_SYSTEM_CALL;
+    void MPU_vTaskGetRunTimeStatistics( char * pcWriteBuffer,
+                                        size_t uxBufferLength ) FREERTOS_SYSTEM_CALL;
+    void MPU_vTaskListTasks( char * pcWriteBuffer,
+                             size_t uxBufferLength ) FREERTOS_SYSTEM_CALL;
     void MPU_vTaskSuspendAll( void ) FREERTOS_SYSTEM_CALL;
     BaseType_t MPU_xTaskCatchUpTicks( TickType_t xTicksToCatchUp ) FREERTOS_SYSTEM_CALL;
     BaseType_t MPU_xTaskResumeAll( void ) FREERTOS_SYSTEM_CALL;
@@ -168,13 +169,13 @@ BaseType_t MPU_xTaskGetSchedulerState( void ) FREERTOS_SYSTEM_CALL;
 
     BaseType_t MPU_xTaskCreate( TaskFunction_t pxTaskCode,
                                 const char * const pcName,
-                                const uint16_t usStackDepth,
+                                const configSTACK_DEPTH_TYPE uxStackDepth,
                                 void * const pvParameters,
                                 UBaseType_t uxPriority,
                                 TaskHandle_t * const pxCreatedTask ) PRIVILEGED_FUNCTION;
     TaskHandle_t MPU_xTaskCreateStatic( TaskFunction_t pxTaskCode,
                                         const char * const pcName,
-                                        const uint32_t ulStackDepth,
+                                        const configSTACK_DEPTH_TYPE uxStackDepth,
                                         void * const pvParameters,
                                         UBaseType_t uxPriority,
                                         StackType_t * const puxStackBuffer,
@@ -188,16 +189,19 @@ BaseType_t MPU_xTaskGetSchedulerState( void ) FREERTOS_SYSTEM_CALL;
 
 #endif /* #if ( configUSE_MPU_WRAPPERS_V1 == 1 ) */
 
+char * MPU_pcTaskGetName( TaskHandle_t xTaskToQuery ) PRIVILEGED_FUNCTION;
 BaseType_t MPU_xTaskCreateRestricted( const TaskParameters_t * const pxTaskDefinition,
                                       TaskHandle_t * pxCreatedTask ) PRIVILEGED_FUNCTION;
 BaseType_t MPU_xTaskCreateRestrictedStatic( const TaskParameters_t * const pxTaskDefinition,
                                             TaskHandle_t * pxCreatedTask ) PRIVILEGED_FUNCTION;
-void vTaskAllocateMPURegions( TaskHandle_t xTaskToModify,
-                              const MemoryRegion_t * const xRegions ) PRIVILEGED_FUNCTION;
+void MPU_vTaskAllocateMPURegions( TaskHandle_t xTaskToModify,
+                                  const MemoryRegion_t * const xRegions ) PRIVILEGED_FUNCTION;
 BaseType_t MPU_xTaskGetStaticBuffers( TaskHandle_t xTask,
                                       StackType_t ** ppuxStackBuffer,
                                       StaticTask_t ** ppxTaskBuffer ) PRIVILEGED_FUNCTION;
 UBaseType_t MPU_uxTaskPriorityGetFromISR( const TaskHandle_t xTask ) PRIVILEGED_FUNCTION;
+UBaseType_t MPU_uxTaskBasePriorityGet( const TaskHandle_t xTask ) PRIVILEGED_FUNCTION;
+UBaseType_t MPU_uxTaskBasePriorityGetFromISR( const TaskHandle_t xTask ) PRIVILEGED_FUNCTION;
 BaseType_t MPU_xTaskResumeFromISR( TaskHandle_t xTaskToResume ) PRIVILEGED_FUNCTION;
 TaskHookFunction_t MPU_xTaskGetApplicationTaskTagFromISR( TaskHandle_t xTask ) PRIVILEGED_FUNCTION;
 BaseType_t MPU_xTaskGenericNotifyFromISR( TaskHandle_t xTaskToNotify,
@@ -265,6 +269,9 @@ uint8_t MPU_ucQueueGetQueueType( QueueHandle_t xQueue ) FREERTOS_SYSTEM_CALL;
                                                  StaticQueue_t * pxStaticQueue,
                                                  const uint8_t ucQueueType ) FREERTOS_SYSTEM_CALL;
     QueueSetHandle_t MPU_xQueueCreateSet( const UBaseType_t uxEventQueueLength ) FREERTOS_SYSTEM_CALL;
+    QueueSetHandle_t MPU_xQueueCreateSetStatic( const UBaseType_t uxEventQueueLength,
+                                                uint8_t * pucQueueStorage,
+                                                StaticQueue_t * pxStaticQueue ) FREERTOS_SYSTEM_CALL;
     BaseType_t MPU_xQueueRemoveFromSet( QueueSetMemberHandle_t xQueueOrSemaphore,
                                         QueueSetHandle_t xQueueSet ) FREERTOS_SYSTEM_CALL;
     BaseType_t MPU_xQueueGenericReset( QueueHandle_t xQueue,
@@ -290,6 +297,9 @@ uint8_t MPU_ucQueueGetQueueType( QueueHandle_t xQueue ) FREERTOS_SYSTEM_CALL;
                                                  StaticQueue_t * pxStaticQueue,
                                                  const uint8_t ucQueueType ) PRIVILEGED_FUNCTION;
     QueueSetHandle_t MPU_xQueueCreateSet( const UBaseType_t uxEventQueueLength ) PRIVILEGED_FUNCTION;
+    QueueSetHandle_t MPU_xQueueCreateSetStatic( const UBaseType_t uxEventQueueLength,
+                                                uint8_t * pucQueueStorage,
+                                                StaticQueue_t * pxStaticQueue ) PRIVILEGED_FUNCTION;
     BaseType_t MPU_xQueueRemoveFromSet( QueueSetMemberHandle_t xQueueOrSemaphore,
                                         QueueSetHandle_t xQueueSet ) PRIVILEGED_FUNCTION;
     BaseType_t MPU_xQueueGenericReset( QueueHandle_t xQueue,
@@ -323,15 +333,15 @@ void MPU_vTimerSetTimerID( TimerHandle_t xTimer,
                            void * pvNewID ) FREERTOS_SYSTEM_CALL;
 BaseType_t MPU_xTimerIsTimerActive( TimerHandle_t xTimer ) FREERTOS_SYSTEM_CALL;
 TaskHandle_t MPU_xTimerGetTimerDaemonTaskHandle( void ) FREERTOS_SYSTEM_CALL;
-BaseType_t MPU_xTimerGenericCommand( TimerHandle_t xTimer,
-                                     const BaseType_t xCommandID,
-                                     const TickType_t xOptionalValue,
-                                     BaseType_t * const pxHigherPriorityTaskWoken,
-                                     const TickType_t xTicksToWait ) FREERTOS_SYSTEM_CALL;
-BaseType_t MPU_xTimerGenericCommandEntry( const xTimerGenericCommandParams_t * pxParams ) FREERTOS_SYSTEM_CALL;
+BaseType_t MPU_xTimerGenericCommandFromTask( TimerHandle_t xTimer,
+                                             const BaseType_t xCommandID,
+                                             const TickType_t xOptionalValue,
+                                             BaseType_t * const pxHigherPriorityTaskWoken,
+                                             const TickType_t xTicksToWait ) FREERTOS_SYSTEM_CALL;
+BaseType_t MPU_xTimerGenericCommandFromTaskEntry( const xTimerGenericCommandFromTaskParams_t * pxParams ) FREERTOS_SYSTEM_CALL;
 const char * MPU_pcTimerGetName( TimerHandle_t xTimer ) FREERTOS_SYSTEM_CALL;
 void MPU_vTimerSetReloadMode( TimerHandle_t xTimer,
-                              const BaseType_t uxAutoReload ) FREERTOS_SYSTEM_CALL;
+                              const BaseType_t xAutoReload ) FREERTOS_SYSTEM_CALL;
 BaseType_t MPU_xTimerGetReloadMode( TimerHandle_t xTimer ) FREERTOS_SYSTEM_CALL;
 UBaseType_t MPU_uxTimerGetReloadMode( TimerHandle_t xTimer ) FREERTOS_SYSTEM_CALL;
 TickType_t MPU_xTimerGetPeriod( TimerHandle_t xTimer ) FREERTOS_SYSTEM_CALL;
@@ -342,17 +352,22 @@ TickType_t MPU_xTimerGetExpiryTime( TimerHandle_t xTimer ) FREERTOS_SYSTEM_CALL;
  * with all the APIs. */
 TimerHandle_t MPU_xTimerCreate( const char * const pcTimerName,
                                 const TickType_t xTimerPeriodInTicks,
-                                const UBaseType_t uxAutoReload,
+                                const BaseType_t xAutoReload,
                                 void * const pvTimerID,
                                 TimerCallbackFunction_t pxCallbackFunction ) PRIVILEGED_FUNCTION;
 TimerHandle_t MPU_xTimerCreateStatic( const char * const pcTimerName,
                                       const TickType_t xTimerPeriodInTicks,
-                                      const UBaseType_t uxAutoReload,
+                                      const BaseType_t xAutoReload,
                                       void * const pvTimerID,
                                       TimerCallbackFunction_t pxCallbackFunction,
                                       StaticTimer_t * pxTimerBuffer ) PRIVILEGED_FUNCTION;
 BaseType_t MPU_xTimerGetStaticBuffer( TimerHandle_t xTimer,
                                       StaticTimer_t ** ppxTimerBuffer ) PRIVILEGED_FUNCTION;
+BaseType_t MPU_xTimerGenericCommandFromISR( TimerHandle_t xTimer,
+                                            const BaseType_t xCommandID,
+                                            const TickType_t xOptionalValue,
+                                            BaseType_t * const pxHigherPriorityTaskWoken,
+                                            const TickType_t xTicksToWait ) PRIVILEGED_FUNCTION;
 
 /* MPU versions of event_group.h API functions. */
 EventBits_t MPU_xEventGroupWaitBits( EventGroupHandle_t xEventGroup,
@@ -472,5 +487,6 @@ BaseType_t MPU_xStreamBufferSendCompletedFromISR( StreamBufferHandle_t xStreamBu
                                                   BaseType_t * pxHigherPriorityTaskWoken ) PRIVILEGED_FUNCTION;
 BaseType_t MPU_xStreamBufferReceiveCompletedFromISR( StreamBufferHandle_t xStreamBuffer,
                                                      BaseType_t * pxHigherPriorityTaskWoken ) PRIVILEGED_FUNCTION;
+BaseType_t MPU_xStreamBufferResetFromISR( StreamBufferHandle_t xStreamBuffer ) PRIVILEGED_FUNCTION;
 
 #endif /* MPU_PROTOTYPES_H */

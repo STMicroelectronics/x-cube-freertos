@@ -100,7 +100,6 @@ int main(void)
 
   /* Init scheduler */
   osKernelInitialize();
-
   /* Call init function for freertos objects (in app_freertos.c) */
   MX_FREERTOS_Init();
 
@@ -128,6 +127,13 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+
+  /** Configure the System Power Supply
+  */
+  if (HAL_PWREx_ConfigSupply(PWR_SMPS_SUPPLY) != HAL_OK)
+  {
+    Error_Handler();
+  }
 
   /** Enable Epod Booster
   */
@@ -317,8 +323,7 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.

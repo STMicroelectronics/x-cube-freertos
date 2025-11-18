@@ -1,0 +1,11 @@
+*.breadcrumb
+*.junit
+**/__pycache__
+Local_Release/
+CMSIS/Documentation/
+*.uvguix.*
+*.uvmpw.uvgui.*
+*.zip
+output
+#Ignore modules added by the repo script
+Device/ST/

@@ -1,11 +1,11 @@
 /*
 ******************************************************************************
 **
-** @file        : STM32N657XX_AXISRAM2_fsbl.ld
+** @file        : STM32N655XX_AXISRAM2_fsbl.ld
 **
 ** @author      : GPM Application Team
 **
-** @brief       : Linker script for STM32N657XX Device from STM32N6 series
+** @brief       : Linker script for STM32N655XX Device from STM32N6 series
 **                      512 KBytes RAM
 **
 **                Set heap size, stack size and stack location according
@@ -160,10 +160,12 @@ SECTIONS
 
   .gnu.sgstubs :
   {
+    _sNSCVeneer = .;
     . = ALIGN(4);
     *(.gnu.sgstubs*)   /* Secure Gateway stubs */
     . = ALIGN(4);
   } >ROM
+  _eNSCVeneer = .;
   /* Uninitialized data section into "RAM" Ram type memory */
   . = ALIGN(4);
   .bss :

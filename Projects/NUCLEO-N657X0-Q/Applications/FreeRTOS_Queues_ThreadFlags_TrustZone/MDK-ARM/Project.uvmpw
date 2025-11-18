@@ -15,13 +15,13 @@
   </project>
 
   <project>
-    <PathAndName>.\AppliSecure\FreeRTOS_Queues_ThreadFlags_TrustZone_S.uvprojx</PathAndName>
+    <PathAndName>.\AppliSecure\FreeRTOS_Queues_ThreadFlags_TrustZone_AppliSecure.uvprojx</PathAndName>
     <NodeIsExpanded>1</NodeIsExpanded>
     <NodeIsCheckedInBatchBuild>1</NodeIsCheckedInBatchBuild>
   </project>
 
   <project>
-    <PathAndName>.\AppliNonSecure\FreeRTOS_Queues_ThreadFlags_TrustZone_NS.uvprojx</PathAndName>
+    <PathAndName>.\AppliNonSecure\FreeRTOS_Queues_ThreadFlags_TrustZone_AppliNonSecure.uvprojx</PathAndName>
     <NodeIsExpanded>1</NodeIsExpanded>
     <NodeIsCheckedInBatchBuild>1</NodeIsCheckedInBatchBuild>
   </project>

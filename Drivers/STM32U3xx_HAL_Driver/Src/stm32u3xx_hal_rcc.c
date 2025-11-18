@@ -246,7 +246,7 @@ HAL_StatusTypeDef HAL_RCC_DeInit(void)
 
   /* Select MSIS and MSIK source and divider */
   MODIFY_REG(RCC->ICSCR1, (RCC_ICSCR1_MSISDIV | RCC_ICSCR1_MSIKDIV),
-            (RCC_ICSCR1_MSISDIV_0 | RCC_ICSCR1_MSISSEL | RCC_ICSCR1_MSIKDIV_0 | RCC_ICSCR1_MSIKSEL));
+             (RCC_ICSCR1_MSISDIV_0 | RCC_ICSCR1_MSISSEL | RCC_ICSCR1_MSIKDIV_0 | RCC_ICSCR1_MSIKSEL));
 
   /* Set MSRCx trimming default value */
   WRITE_REG(RCC->ICSCR2, (RCC_ICSCR2_MSITRIM1_5 | RCC_ICSCR2_MSITRIM0_5));
@@ -1534,7 +1534,7 @@ void HAL_RCC_ConfigAttributes(uint32_t Item, uint32_t Attributes)
 
   switch (Attributes)
   {
-#if defined (CPU_IN_SECURE_STATE)
+#if defined(CPU_IN_SECURE_STATE)
     /* Secure Privilege attribute */
     case RCC_SEC_PRIV:
       SET_BIT(RCC->SECCFGR, Item);

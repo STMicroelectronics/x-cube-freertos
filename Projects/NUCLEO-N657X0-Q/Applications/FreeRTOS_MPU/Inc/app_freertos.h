@@ -67,6 +67,14 @@ void Task2(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
+void vApplicationGetIdleTaskMemory( StaticTask_t ** ppxIdleTaskTCBBuffer,
+                                        StackType_t ** ppxIdleTaskStackBuffer,
+                                        configSTACK_DEPTH_TYPE * puxIdleTaskStackSize );
+
+void vApplicationGetTimerTaskMemory( StaticTask_t ** ppxTimerTaskTCBBuffer,
+                                         StackType_t ** ppxTimerTaskStackBuffer,
+                                         configSTACK_DEPTH_TYPE * puxTimerTaskStackSize );
+
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
 

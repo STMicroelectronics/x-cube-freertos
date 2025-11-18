@@ -19,19 +19,16 @@
                         ##### LL DMA driver acronyms #####
   ==============================================================================
   [..]  Acronyms table :
-                   =========================================
-                   || Acronym ||                          ||
-                   =========================================
-                   || SRC     ||  Source                  ||
-                   || DEST    ||  Destination             ||
-                   || ADDR    ||  Address                 ||
-                   || ADDRS   ||  Addresses               ||
-                   || INC     ||  Increment / Incremented ||
-                   || DEC     ||  Decrement / Decremented ||
-                   || BLK     ||  Block                   ||
-                   || RPT     ||  Repeat / Repeated       ||
-                   || TRIG    ||  Trigger                 ||
-                   =========================================
+      (+)  SRC    Source
+      (+)  DEST   Destination
+      (+)  ADDR   Address
+      (+)  ADDRS  Addresses
+      (+)  INC    Increment / Incremented
+      (+)  DEC    Decrement / Decremented
+      (+)  BLK    Block
+      (+)  RPT    Repeat / Repeated
+      (+)  TRIG   Trigger
+
  @endverbatim
   ******************************************************************************
   */
@@ -971,9 +968,11 @@ typedef struct
 #define LL_GPDMA1_REQUEST_I2C1_RX       12U    /*!< GPDMA1 HW request is I2C1_RX      */
 #define LL_GPDMA1_REQUEST_I2C1_TX       13U    /*!< GPDMA1 HW request is I2C1_TX      */
 #define LL_GPDMA1_REQUEST_I2C1_EVC      14U    /*!< GPDMA1 HW request is I2C1_EVC     */
+#if defined (I2C2)
 #define LL_GPDMA1_REQUEST_I2C2_RX       15U    /*!< GPDMA1 HW request is I2C2_RX      */
 #define LL_GPDMA1_REQUEST_I2C2_TX       16U    /*!< GPDMA1 HW request is I2C2_TX      */
 #define LL_GPDMA1_REQUEST_I2C2_EVC      17U    /*!< GPDMA1 HW request is I2C2_EVC     */
+#endif /* I2C2 */
 #define LL_GPDMA1_REQUEST_I2C3_RX       18U    /*!< GPDMA1 HW request is I2C3_RX      */
 #define LL_GPDMA1_REQUEST_I2C3_TX       19U    /*!< GPDMA1 HW request is I2C3_TX      */
 #define LL_GPDMA1_REQUEST_I2C3_EVC      20U    /*!< GPDMA1 HW request is I2C3_EVC     */
@@ -996,8 +995,10 @@ typedef struct
 #define LL_GPDMA1_REQUEST_UART5_TX      33U    /*!< GPDMA1 HW request is UART5_TX     */
 #define LL_GPDMA1_REQUEST_LPUART1_RX    34U    /*!< GPDMA1 HW request is LPUART1_RX   */
 #define LL_GPDMA1_REQUEST_LPUART1_TX    35U    /*!< GPDMA1 HW request is LPUART1_TX   */
+#if defined (SAI1)
 #define LL_GPDMA1_REQUEST_SAI1_A        36U    /*!< GPDMA1 HW request is SAI1_A       */
 #define LL_GPDMA1_REQUEST_SAI1_B        37U    /*!< GPDMA1 HW request is SAI1_B       */
+#endif /* SAI1 */
 /*  Reserved                            38U                                           */
 /*  Reserved                            39U                                           */
 #define LL_GPDMA1_REQUEST_OCTOSPI1      40U    /*!< GPDMA1 HW request is OCTOSPI1     */
@@ -1032,10 +1033,12 @@ typedef struct
 #define LL_GPDMA1_REQUEST_TIM4_CH3      69U    /*!< GPDMA1 HW request is TIM4_CH3     */
 #define LL_GPDMA1_REQUEST_TIM4_CH4      70U    /*!< GPDMA1 HW request is TIM4_CH4     */
 #define LL_GPDMA1_REQUEST_TIM4_UP       71U    /*!< GPDMA1 HW request is TIM4_UP      */
+#if defined (I3C2)
 #define LL_GPDMA1_REQUEST_I3C2_RX       72U    /*!< GPDMA1 HW request is I3C2_RX      */
 #define LL_GPDMA1_REQUEST_I3C2_TX       73U    /*!< GPDMA1 HW request is I3C2_TX      */
 #define LL_GPDMA1_REQUEST_I3C2_TC       74U    /*!< GPDMA1 HW request is I3C2_TC      */
 #define LL_GPDMA1_REQUEST_I3C2_RS       75U    /*!< GPDMA1 HW request is I3C2_RS      */
+#endif /* I3C2 */
 #if defined (SPI4)
 #define LL_GPDMA1_REQUEST_SPI4_RX       76U    /*!< GPDMA1 HW request is SPI4_RX      */
 #define LL_GPDMA1_REQUEST_SPI4_TX       77U    /*!< GPDMA1 HW request is SPI4_TX      */
@@ -1062,7 +1065,9 @@ typedef struct
 #define LL_GPDMA1_REQUEST_TIM8_TRIG     96U    /*!< GPDMA1 HW request is TIM8_TRIG    */
 #define LL_GPDMA1_REQUEST_TIM8_COM      97U    /*!< GPDMA1 HW request is TIM8_COM     */
 #endif /* TIM8 */
+#if defined (ADF1)
 #define LL_GPDMA1_REQUEST_ADF1_FLT0     98U    /*!< GPDMA1 HW request is ADF1_FLT0    */
+#endif /* ADF1 */
 /*  Reserved                            99U                                           */
 /*  Reserved                            100U                                          */
 /*  Reserved                            101U                                          */
@@ -3058,9 +3063,9 @@ __STATIC_INLINE uint32_t LL_DMA_GetBlkHWRequest(const DMA_TypeDef *DMAx, uint32_
   *         @arg @ref LL_GPDMA1_REQUEST_I2C2_RX
   *         @arg @ref LL_GPDMA1_REQUEST_I2C2_TX
   *         @arg @ref LL_GPDMA1_REQUEST_I2C2_EVC
-  *         @arg @ref LL_GPDMA1_REQUEST_I2C3_RX
-  *         @arg @ref LL_GPDMA1_REQUEST_I2C3_TX
-  *         @arg @ref LL_GPDMA1_REQUEST_I2C3_EVC
+  *         @arg @ref LL_GPDMA1_REQUEST_I2C3_RX (*)
+  *         @arg @ref LL_GPDMA1_REQUEST_I2C3_TX (*)
+  *         @arg @ref LL_GPDMA1_REQUEST_I2C3_EVC (*)
   *         @arg @ref LL_GPDMA1_REQUEST_I2C4_RX (*)
   *         @arg @ref LL_GPDMA1_REQUEST_I2C4_TX (*)
   *         @arg @ref LL_GPDMA1_REQUEST_I2C4_EVC (*)
@@ -3076,8 +3081,8 @@ __STATIC_INLINE uint32_t LL_DMA_GetBlkHWRequest(const DMA_TypeDef *DMAx, uint32_
   *         @arg @ref LL_GPDMA1_REQUEST_UART5_TX
   *         @arg @ref LL_GPDMA1_REQUEST_LPUART1_RX
   *         @arg @ref LL_GPDMA1_REQUEST_LPUART1_TX
-  *         @arg @ref LL_GPDMA1_REQUEST_SAI1_A
-  *         @arg @ref LL_GPDMA1_REQUEST_SAI1_B
+  *         @arg @ref LL_GPDMA1_REQUEST_SAI1_A (*)
+  *         @arg @ref LL_GPDMA1_REQUEST_SAI1_B (*)
   *         @arg @ref LL_GPDMA1_REQUEST_OCTOSPI1
   *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH1
   *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH2
@@ -3106,10 +3111,10 @@ __STATIC_INLINE uint32_t LL_DMA_GetBlkHWRequest(const DMA_TypeDef *DMAx, uint32_
   *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH3
   *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH4
   *         @arg @ref LL_GPDMA1_REQUEST_TIM4_UP
-  *         @arg @ref LL_GPDMA1_REQUEST_I3C2_RX
-  *         @arg @ref LL_GPDMA1_REQUEST_I3C2_TX
-  *         @arg @ref LL_GPDMA1_REQUEST_I3C2_TC
-  *         @arg @ref LL_GPDMA1_REQUEST_I3C2_RS
+  *         @arg @ref LL_GPDMA1_REQUEST_I3C2_RX (*)
+  *         @arg @ref LL_GPDMA1_REQUEST_I3C2_TX (*)
+  *         @arg @ref LL_GPDMA1_REQUEST_I3C2_TC (*)
+  *         @arg @ref LL_GPDMA1_REQUEST_I3C2_RS (*)
   *         @arg @ref LL_GPDMA1_REQUEST_SPI4_RX (*)
   *         @arg @ref LL_GPDMA1_REQUEST_SPI4_TX (*)
   *         @arg @ref LL_GPDMA1_REQUEST_TIM15_CH1
@@ -3130,7 +3135,7 @@ __STATIC_INLINE uint32_t LL_DMA_GetBlkHWRequest(const DMA_TypeDef *DMAx, uint32_
   *         @arg @ref LL_GPDMA1_REQUEST_TIM8_UP (*)
   *         @arg @ref LL_GPDMA1_REQUEST_TIM8_TRIG (*)
   *         @arg @ref LL_GPDMA1_REQUEST_TIM8_COM (*)
-  *         @arg @ref LL_GPDMA1_REQUEST_ADF1_FLT0
+  *         @arg @ref LL_GPDMA1_REQUEST_ADF1_FLT0 (*)
   *         @arg @ref LL_GPDMA1_REQUEST_SAES_IN
   *         @arg @ref LL_GPDMA1_REQUEST_SAES_OUT
   *         @arg @ref LL_GPDMA1_REQUEST_LPTIM1_IC1
@@ -3189,9 +3194,9 @@ __STATIC_INLINE void LL_DMA_SetPeriphRequest(const DMA_TypeDef *DMAx, uint32_t C
   *         @arg @ref LL_GPDMA1_REQUEST_I2C2_RX
   *         @arg @ref LL_GPDMA1_REQUEST_I2C2_TX
   *         @arg @ref LL_GPDMA1_REQUEST_I2C2_EVC
-  *         @arg @ref LL_GPDMA1_REQUEST_I2C3_RX
-  *         @arg @ref LL_GPDMA1_REQUEST_I2C3_TX
-  *         @arg @ref LL_GPDMA1_REQUEST_I2C3_EVC
+  *         @arg @ref LL_GPDMA1_REQUEST_I2C3_RX (*)
+  *         @arg @ref LL_GPDMA1_REQUEST_I2C3_TX (*)
+  *         @arg @ref LL_GPDMA1_REQUEST_I2C3_EVC (*)
   *         @arg @ref LL_GPDMA1_REQUEST_I2C4_RX (*)
   *         @arg @ref LL_GPDMA1_REQUEST_I2C4_TX (*)
   *         @arg @ref LL_GPDMA1_REQUEST_I2C4_EVC (*)
@@ -3207,8 +3212,8 @@ __STATIC_INLINE void LL_DMA_SetPeriphRequest(const DMA_TypeDef *DMAx, uint32_t C
   *         @arg @ref LL_GPDMA1_REQUEST_UART5_TX
   *         @arg @ref LL_GPDMA1_REQUEST_LPUART1_RX
   *         @arg @ref LL_GPDMA1_REQUEST_LPUART1_TX
-  *         @arg @ref LL_GPDMA1_REQUEST_SAI1_A
-  *         @arg @ref LL_GPDMA1_REQUEST_SAI1_B
+  *         @arg @ref LL_GPDMA1_REQUEST_SAI1_A (*)
+  *         @arg @ref LL_GPDMA1_REQUEST_SAI1_B (*)
   *         @arg @ref LL_GPDMA1_REQUEST_OCTOSPI1
   *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH1
   *         @arg @ref LL_GPDMA1_REQUEST_TIM1_CH2
@@ -3237,10 +3242,10 @@ __STATIC_INLINE void LL_DMA_SetPeriphRequest(const DMA_TypeDef *DMAx, uint32_t C
   *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH3
   *         @arg @ref LL_GPDMA1_REQUEST_TIM4_CH4
   *         @arg @ref LL_GPDMA1_REQUEST_TIM4_UP
-  *         @arg @ref LL_GPDMA1_REQUEST_I3C2_RX
-  *         @arg @ref LL_GPDMA1_REQUEST_I3C2_TX
-  *         @arg @ref LL_GPDMA1_REQUEST_I3C2_TC
-  *         @arg @ref LL_GPDMA1_REQUEST_I3C2_RS
+  *         @arg @ref LL_GPDMA1_REQUEST_I3C2_RX (*)
+  *         @arg @ref LL_GPDMA1_REQUEST_I3C2_TX (*)
+  *         @arg @ref LL_GPDMA1_REQUEST_I3C2_TC (*)
+  *         @arg @ref LL_GPDMA1_REQUEST_I3C2_RS (*)
   *         @arg @ref LL_GPDMA1_REQUEST_SPI4_RX (*)
   *         @arg @ref LL_GPDMA1_REQUEST_SPI4_TX (*)
   *         @arg @ref LL_GPDMA1_REQUEST_TIM15_CH1
@@ -3261,7 +3266,7 @@ __STATIC_INLINE void LL_DMA_SetPeriphRequest(const DMA_TypeDef *DMAx, uint32_t C
   *         @arg @ref LL_GPDMA1_REQUEST_TIM8_UP (*)
   *         @arg @ref LL_GPDMA1_REQUEST_TIM8_TRIG (*)
   *         @arg @ref LL_GPDMA1_REQUEST_TIM8_COM (*)
-  *         @arg @ref LL_GPDMA1_REQUEST_ADF1_FLT0
+  *         @arg @ref LL_GPDMA1_REQUEST_ADF1_FLT0 (*)
   *         @arg @ref LL_GPDMA1_REQUEST_SAES_IN
   *         @arg @ref LL_GPDMA1_REQUEST_SAES_OUT
   *         @arg @ref LL_GPDMA1_REQUEST_LPTIM1_IC1

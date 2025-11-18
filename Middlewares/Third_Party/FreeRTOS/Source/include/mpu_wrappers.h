@@ -1,6 +1,6 @@
 /*
- * FreeRTOS Kernel V10.6.2
- * Copyright (C) 2021 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel V11.2.0
+ * Copyright (C) 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * SPDX-License-Identifier: MIT
  *
@@ -57,7 +57,6 @@
         #define vTaskResume                           MPU_vTaskResume
         #define xTaskGetTickCount                     MPU_xTaskGetTickCount
         #define uxTaskGetNumberOfTasks                MPU_uxTaskGetNumberOfTasks
-        #define pcTaskGetName                         MPU_pcTaskGetName
         #define uxTaskGetStackHighWaterMark           MPU_uxTaskGetStackHighWaterMark
         #define uxTaskGetStackHighWaterMark2          MPU_uxTaskGetStackHighWaterMark2
         #define vTaskSetApplicationTaskTag            MPU_vTaskSetApplicationTaskTag
@@ -87,11 +86,12 @@
  * the application can use opaque handles maintained in mpu_wrappers.c
  * with all the APIs. */
         #if ( configUSE_MPU_WRAPPERS_V1 == 1 )
-            /* These are not needed in v2 because they do not take a task
-             * handle and therefore, no lookup is needed. Needed in v1 because
-             * these are available as system calls in v1. */
-            #define vTaskGetRunTimeStats                 MPU_vTaskGetRunTimeStats
-            #define vTaskList                            MPU_vTaskList
+
+/* These are not needed in v2 because they do not take a task
+ * handle and therefore, no lookup is needed. Needed in v1 because
+ * these are available as system calls in v1. */
+            #define vTaskGetRunTimeStatistics            MPU_vTaskGetRunTimeStatistics
+            #define vTaskListTasks                       MPU_vTaskListTasks
             #define vTaskSuspendAll                      MPU_vTaskSuspendAll
             #define xTaskCatchUpTicks                    MPU_xTaskCatchUpTicks
             #define xTaskResumeAll                       MPU_xTaskResumeAll
@@ -105,11 +105,14 @@
         #define xTaskCallApplicationTaskHook             MPU_xTaskCallApplicationTaskHook
 
         #if ( configUSE_MPU_WRAPPERS_V1 == 0 )
+            #define pcTaskGetName                        MPU_pcTaskGetName
             #define xTaskCreateRestricted                MPU_xTaskCreateRestricted
             #define xTaskCreateRestrictedStatic          MPU_xTaskCreateRestrictedStatic
             #define vTaskAllocateMPURegions              MPU_vTaskAllocateMPURegions
             #define xTaskGetStaticBuffers                MPU_xTaskGetStaticBuffers
             #define uxTaskPriorityGetFromISR             MPU_uxTaskPriorityGetFromISR
+            #define uxTaskBasePriorityGet                MPU_uxTaskBasePriorityGet
+            #define uxTaskBasePriorityGetFromISR         MPU_uxTaskBasePriorityGetFromISR
             #define xTaskResumeFromISR                   MPU_xTaskResumeFromISR
             #define xTaskGetApplicationTaskTagFromISR    MPU_xTaskGetApplicationTaskTagFromISR
             #define xTaskGenericNotifyFromISR            MPU_xTaskGenericNotifyFromISR
@@ -147,6 +150,7 @@
         #define xQueueGenericCreateStatic              MPU_xQueueGenericCreateStatic
         #define xQueueGenericReset                     MPU_xQueueGenericReset
         #define xQueueCreateSet                        MPU_xQueueCreateSet
+        #define xQueueCreateSetStatic                  MPU_xQueueCreateSetStatic
         #define xQueueRemoveFromSet                    MPU_xQueueRemoveFromSet
 
         #if ( configUSE_MPU_WRAPPERS_V1 == 0 )
@@ -167,7 +171,7 @@
         #define vTimerSetTimerID                  MPU_vTimerSetTimerID
         #define xTimerIsTimerActive               MPU_xTimerIsTimerActive
         #define xTimerGetTimerDaemonTaskHandle    MPU_xTimerGetTimerDaemonTaskHandle
-        #define xTimerGenericCommand              MPU_xTimerGenericCommand
+        #define xTimerGenericCommandFromTask      MPU_xTimerGenericCommandFromTask
         #define pcTimerGetName                    MPU_pcTimerGetName
         #define vTimerSetReloadMode               MPU_vTimerSetReloadMode
         #define uxTimerGetReloadMode              MPU_uxTimerGetReloadMode
@@ -182,9 +186,10 @@
  * the application can use opaque handles maintained in mpu_wrappers.c
  * with all the APIs. */
         #if ( configUSE_MPU_WRAPPERS_V1 == 0 )
-            #define xTimerCreate             MPU_xTimerCreate
-            #define xTimerCreateStatic       MPU_xTimerCreateStatic
-            #define xTimerGetStaticBuffer    MPU_xTimerGetStaticBuffer
+            #define xTimerCreate                   MPU_xTimerCreate
+            #define xTimerCreateStatic             MPU_xTimerCreateStatic
+            #define xTimerGetStaticBuffer          MPU_xTimerGetStaticBuffer
+            #define xTimerGenericCommandFromISR    MPU_xTimerGenericCommandFromISR
         #endif /* #if ( configUSE_MPU_WRAPPERS_V1 == 0 ) */
 
 /* Map standard event_group.h API functions to the MPU equivalents. */
@@ -238,15 +243,8 @@
             #define xStreamBufferReceiveFromISR             MPU_xStreamBufferReceiveFromISR
             #define xStreamBufferSendCompletedFromISR       MPU_xStreamBufferSendCompletedFromISR
             #define xStreamBufferReceiveCompletedFromISR    MPU_xStreamBufferReceiveCompletedFromISR
+            #define xStreamBufferResetFromISR               MPU_xStreamBufferResetFromISR
         #endif /* #if ( configUSE_MPU_WRAPPERS_V1 == 0 ) */
-
-/* Remove the privileged function macro, but keep the PRIVILEGED_DATA
- * macro so applications can place data in privileged access sections
- * (useful when using statically allocated objects). */
-        #define PRIVILEGED_FUNCTION
-        #define PRIVILEGED_DATA    __attribute__( ( section( "privileged_data" ) ) )
-        #define FREERTOS_SYSTEM_CALL
-
 
         #if ( ( configUSE_MPU_WRAPPERS_V1 == 0 ) && ( configENABLE_ACCESS_CONTROL_LIST == 1 ) )
 
@@ -276,14 +274,11 @@
 
         #endif /* #if ( ( configUSE_MPU_WRAPPERS_V1 == 0 ) && ( configENABLE_ACCESS_CONTROL_LIST == 1 ) ) */
 
-    #else /* MPU_WRAPPERS_INCLUDED_FROM_API_FILE */
-
-/* Ensure API functions go in the privileged execution section. */
-        #define PRIVILEGED_FUNCTION     __attribute__( ( section( "privileged_functions" ) ) )
-        #define PRIVILEGED_DATA         __attribute__( ( section( "privileged_data" ) ) )
-        #define FREERTOS_SYSTEM_CALL    __attribute__( ( section( "freertos_system_calls" ) ) )
-
     #endif /* MPU_WRAPPERS_INCLUDED_FROM_API_FILE */
+
+    #define PRIVILEGED_FUNCTION     __attribute__( ( section( "privileged_functions" ) ) )
+    #define PRIVILEGED_DATA         __attribute__( ( section( "privileged_data" ) ) )
+    #define FREERTOS_SYSTEM_CALL    __attribute__( ( section( "freertos_system_calls" ) ) )
 
 #else /* portUSING_MPU_WRAPPERS */
 

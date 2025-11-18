@@ -113,9 +113,9 @@ int main(void)
   printf("FreeRTOS MPU Application\n");
   printf("------------------------------\n");
 
-  /* Init Scheduler */
+  /* Init scheduler */
   osKernelInitialize();
-
+  /* Call init function for freertos objects (in app_freertos.c) */
   MX_FREERTOS_Init();
 
   /* Start scheduler */
@@ -124,43 +124,17 @@ int main(void)
 
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
   while (1)
   {
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
   }
-
+  /* USER CODE END 3 */
 }
-
-/**
-  * @brief  System Clock Configuration
-  *         The system Clock is configured as follows :
-  *            CPU Clock source               = IC1_CK
-  *            System bus Clock source        = IC2_IC6_IC11_CK
-  *            CPUCLK (sysa_ck) (Hz)          = 600000000
-  *            SYSCLK AXI (sysb_ck) (Hz)      = 400000000
-  *            SYSCLK NPU (sysc_ck) (Hz)      = 300000000
-  *            SYSCLK AXISRAM3/4/5/6 (sysd_ck) (Hz) = 400000000
-  *            HCLKx(Hz)                      = 200000000
-  *            PCLKx(Hz)                      = 200000000
-  *            AHB Prescaler                  = 2
-  *            APB1 Prescaler                 = 1
-  *            APB2 Prescaler                 = 1
-  *            APB4 Prescaler                 = 1
-  *            APB5 Prescaler                 = 1
-  *            PLL1 State                     = ON
-  *            PLL1 clock source              = HSI
-  *            PLL1 M                         = 4
-  *            PLL1 N                         = 75
-  *            PLL1 P1                        = 1
-  *            PLL1 P2                        = 1
-  *            PLL1 FRACN                     = 0
-  *            PLL2 State                     = BYPASS
-  *            PLL2 clock source              = HSI
-  *            PLL3 State                     = BYPASS
-  *            PLL3 clock source              = HSI
-  *            PLL4 State                     = BYPASS
-  *            PLL4 clock source              = HSI
-  * @retval None
-  */
+/* USER CODE BEGIN CLK 1 */
 /* USER CODE END CLK 1 */
 
 /**
@@ -175,6 +149,13 @@ void SystemClock_Config(void)
   /** Configure the System Power Supply
   */
   if (HAL_PWREx_ConfigSupply(PWR_EXTERNAL_SOURCE_SUPPLY) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure the main internal regulator output voltage
+  */
+  if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -402,7 +383,7 @@ void Error_Handler(void)
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.

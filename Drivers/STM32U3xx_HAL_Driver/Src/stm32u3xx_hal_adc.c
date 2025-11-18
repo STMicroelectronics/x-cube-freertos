@@ -2830,9 +2830,6 @@ HAL_StatusTypeDef HAL_ADC_ConfigChannel(ADC_HandleTypeDef *hadc, const ADC_Chann
   assert_param(IS_ADC_SAMPLING_TIME(pConfig->SamplingTime));
   assert_param(IS_ADC_OFFSET_NUMBER(pConfig->OffsetNumber));
   assert_param(IS_ADC_OFFSET(pConfig->Offset));
-  /* if ROVSE is set, the value of the OFFSETy_EN bit in ADCx_OFRy register is
-     ignored (considered as reset) */
-  assert_param(!((pConfig->OffsetNumber != ADC_OFFSET_NONE) && (hadc->Init.OversamplingMode == ENABLE)));
 
   assert_param(IS_ADC_CHANNEL(hadc, pConfig->Channel));
 

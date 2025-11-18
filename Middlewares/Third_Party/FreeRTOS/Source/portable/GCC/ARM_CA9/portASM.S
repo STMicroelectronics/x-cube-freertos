@@ -1,6 +1,6 @@
 /*
- * FreeRTOS Kernel V10.6.2
- * Copyright (C) 2021 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel V11.2.0
+ * Copyright (C) 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * SPDX-License-Identifier: MIT
  *
@@ -33,10 +33,10 @@
     .set SVC_MODE,  0x13
     .set IRQ_MODE,  0x12
 
-    /* Hardware registers. */
-    .extern ulICCIAR
-    .extern ulICCEOIR
-    .extern ulICCPMR
+    /* Hardware registers addresses. */
+    .extern ulICCIARAddress
+    .extern ulICCEOIRAddress
+    .extern ulICCPMRAddress
 
     /* Variables and functions. */
     .extern ulMaxAPIPriorityMask
@@ -75,9 +75,9 @@
 
     /* Save the floating point context, if any. */
     FMRXNE  R1,  FPSCR
+    PUSHNE  {R1}
     VPUSHNE {D0-D15}
     VPUSHNE {D16-D31}
-    PUSHNE  {R1}
 
     /* Save ulPortTaskHasFPUContext itself. */
     PUSH    {R3}
@@ -106,9 +106,9 @@
     CMP     R1, #0
 
     /* Restore the floating point context, if any. */
-    POPNE   {R0}
     VPOPNE  {D16-D31}
     VPOPNE  {D0-D15}
+    POPNE   {R0}
     VMSRNE  FPSCR, R0
 
     /* Restore the critical section nesting depth. */
@@ -145,8 +145,15 @@
 FreeRTOS_SWI_Handler:
     /* Save the context of the current task and select a new task to run. */
     portSAVE_CONTEXT
+
+    /* Ensure bit 2 of the stack pointer is clear. */
+    MOV     r2, sp
+    AND     r2, r2, #4
+    SUB     sp, sp, r2
+
     LDR R0, vTaskSwitchContextConst
     BLX R0
+
     portRESTORE_CONTEXT
 
 
@@ -239,7 +246,7 @@ exit_without_switch:
     MOVS    PC, LR
 
 switch_before_exit:
-    /* A context swtich is to be performed.  Clear the context switch pending
+    /* A context switch is to be performed.  Clear the context switch pending
     flag. */
     MOV     r0, #0
     STR     r0, [r1]
@@ -256,7 +263,13 @@ switch_before_exit:
     /* Call the function that selects the new task to execute.
     vTaskSwitchContext() if vTaskSwitchContext() uses LDRD or STRD
     instructions, or 8 byte aligned stack allocated data.  LR does not need
-    saving as a new LR will be loaded by portRESTORE_CONTEXT anyway. */
+    saving as a new LR will be loaded by portRESTORE_CONTEXT anyway.
+    Ensure bit 2 of the stack pointer is clear.  r2 holds the bit 2 value for
+    future use. */
+    MOV     r2, sp
+    AND     r2, r2, #4
+    SUB     sp, sp, r2
+
     LDR     R0, vTaskSwitchContextConst
     BLX     R0
 
@@ -289,7 +302,7 @@ switch_before_exit:
 vApplicationIRQHandler:
     PUSH    {LR}
     FMRX    R1,  FPSCR
-    VPUSH   {D0-D15}
+    VPUSH   {D0-D7}
     VPUSH   {D16-D31}
     PUSH    {R1}
 
@@ -298,15 +311,15 @@ vApplicationIRQHandler:
 
     POP     {R0}
     VPOP    {D16-D31}
-    VPOP    {D0-D15}
+    VPOP    {D0-D7}
     VMSR    FPSCR, R0
 
     POP {PC}
 
 
-ulICCIARConst:  .word ulICCIAR
-ulICCEOIRConst: .word ulICCEOIR
-ulICCPMRConst: .word ulICCPMR
+ulICCIARConst:  .word ulICCIARAddress
+ulICCEOIRConst: .word ulICCEOIRAddress
+ulICCPMRConst: .word ulICCPMRAddress
 pxCurrentTCBConst: .word pxCurrentTCB
 ulCriticalNestingConst: .word ulCriticalNesting
 ulPortTaskHasFPUContextConst: .word ulPortTaskHasFPUContext

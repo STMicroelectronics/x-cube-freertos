@@ -74,8 +74,7 @@ typedef struct
   uint32_t SampleShifting;            /*!< It allows to delay to 1/2 cycle the data sampling in order
                                            to take in account external signal delays.
                                            This parameter can be a value of @ref XSPI_SampleShifting */
-  uint32_t DelayHoldQuarterCycle;     /*!< It allows to hold to 1/4 cycle the data.
-                                           This parameter can be a value of @ref XSPI_DelayHoldQuarterCycle */
+  uint32_t DelayHoldQuarterCycle;     /*!< This parameter is deprecated and is not used on STM32N6xx devices */
   uint32_t ChipSelectBoundary;        /*!< It enables the transaction boundary feature and
                                            defines the boundary of bytes to release the chip select.
                                            This parameter can be a value of @ref XSPI_ChipSelectBoundary  */
@@ -179,6 +178,7 @@ typedef struct
   uint32_t DQSMode;                   /*!< It enables or not the data strobe management.
                                            This parameter can be a value of @ref XSPI_DQSMode */
 } XSPI_RegularCmdTypeDef;
+
 /**
   * @brief  HAL XSPI Hyperbus Configuration Structure definition
   */
@@ -458,6 +458,7 @@ typedef struct
   */
 
 /** @defgroup XSPI_DelayHoldQuarterCycle XSPI Delay Hold Quarter Cycle
+  * @note These constants are deprecated and are not expected to be used anymore.
   * @{
   */
 #define HAL_XSPI_DHQC_DISABLE                (0x00000000U)              /*!< No Delay                         */
@@ -801,21 +802,21 @@ typedef struct
   * @}
   */
 
+/** @defgroup XSPI_MaxCal XSPI Calibration Maximal Value
+  * @{
+  */
+#define HAL_XSPI_MAXCAL_NOT_REACHED        (0x00000000U)                   /*!< Memory-clock perido inside the range of DLL master                          */
+#define HAL_XSPI_MAXCAL_REACHED            ((uint32_t)XSPI_CALFCR_CALMAX)  /*!< Memory-clock period outside the range of DLL master (max delay values used) */
+/**
+  * @}
+  */
+
 /** @defgroup XSPIM_MemorySelect_Override XSPIM Memory Select Override
   * @{
   */
 #define HAL_XSPI_CSSEL_OVR_DISABLED         (0x00000000U)
 #define HAL_XSPI_CSSEL_OVR_NCS1             (0x00000010U)             /*!< The chip select signal from XSPI is sent to NCS1 */
 #define HAL_XSPI_CSSEL_OVR_NCS2             (0x00000070U)             /*!< The chip select signal from XSPI is sent to NCS2 */
-/**
-  * @}
-  */
-
-/** @defgroup XSPI_MaxCal XSPI Calibration Maximal Value
-  * @{
-  */
-#define HAL_XSPI_MAXCAL_NOT_REACHED        (0x00000000U)                   /*!< Memory-clock perido inside the range of DLL master                          */
-#define HAL_XSPI_MAXCAL_REACHED            ((uint32_t)XSPI_CALFCR_CALMAX)  /*!< Memory-clock period outside the range of DLL master (max delay values used) */
 /**
   * @}
   */
@@ -975,6 +976,7 @@ HAL_StatusTypeDef     HAL_XSPI_AutoPolling_IT(XSPI_HandleTypeDef *hxspi, const X
 
 /* XSPI memory-mapped mode functions */
 HAL_StatusTypeDef     HAL_XSPI_MemoryMapped(XSPI_HandleTypeDef *hxspi,  const XSPI_MemoryMappedTypeDef *pCfg);
+uint32_t              HAL_XSPI_IsMemoryMapped(XSPI_HandleTypeDef *hxspi);
 
 /* Callback functions in non-blocking modes ***********************************/
 void                  HAL_XSPI_ErrorCallback(XSPI_HandleTypeDef *hxspi);
@@ -1061,7 +1063,7 @@ HAL_StatusTypeDef     HAL_XSPI_SetDelayValue(XSPI_HandleTypeDef *hxspi, const XS
 
 #define IS_XSPI_MEMORY_TYPE(TYPE)                 (((TYPE) == HAL_XSPI_MEMTYPE_MICRON)       || \
                                                    ((TYPE) == HAL_XSPI_MEMTYPE_MACRONIX)     || \
-                                                   ((TYPE) == HAL_XSPI_MEMTYPE_APMEM)     || \
+                                                   ((TYPE) == HAL_XSPI_MEMTYPE_APMEM)        || \
                                                    ((TYPE) == HAL_XSPI_MEMTYPE_MACRONIX_RAM) || \
                                                    ((TYPE) == HAL_XSPI_MEMTYPE_HYPERBUS)     || \
                                                    ((TYPE) == HAL_XSPI_MEMTYPE_APMEM_16BITS))
@@ -1271,6 +1273,10 @@ HAL_StatusTypeDef     HAL_XSPI_SetDelayValue(XSPI_HandleTypeDef *hxspi, const XS
                                                    ((MODE) == HAL_XSPI_AXI_PREFETCH_DISABLE))
 
 #define IS_XSPI_TIMEOUT_PERIOD(PERIOD)            ((PERIOD) <= 0xFFFFU)
+
+#define IS_XSPI_PROG_DATA(SET_DATA, REQ_DATA)     ((SET_DATA) == (REQ_DATA))
+
+#define IS_XSPI_PROG_ADDR(SET_ADDR, REQ_ADDR)     ((SET_ADDR) == (REQ_ADDR))
 
 #define IS_XSPIM_IO_PORT(PORT)                    (((PORT) == HAL_XSPIM_IOPORT_1)   || \
                                                    ((PORT) == HAL_XSPIM_IOPORT_2))

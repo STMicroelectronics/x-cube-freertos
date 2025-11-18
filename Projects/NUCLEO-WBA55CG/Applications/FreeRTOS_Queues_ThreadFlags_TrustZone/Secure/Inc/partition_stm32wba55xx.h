@@ -37,6 +37,7 @@
 
 #ifndef PARTITION_STM32WBA55XX_H
 #define PARTITION_STM32WBA55XX_H
+
 /*
 //-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
 */
