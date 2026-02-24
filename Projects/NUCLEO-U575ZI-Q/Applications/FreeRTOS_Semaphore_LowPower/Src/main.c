@@ -99,7 +99,7 @@ int main(void)
   MX_ICACHE_Init();
   MX_LPTIM4_Init();
   /* USER CODE BEGIN 2 */
-  HAL_DBGMCU_DisableDBGStopMode();
+
   /* USER CODE END 2 */
 
   /* Init scheduler */

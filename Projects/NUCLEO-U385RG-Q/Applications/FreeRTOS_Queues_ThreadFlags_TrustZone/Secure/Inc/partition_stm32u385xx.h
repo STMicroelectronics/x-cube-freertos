@@ -1,3 +1,4 @@
+
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
@@ -436,6 +437,7 @@
 //   <o.15> TIM4_IRQn             <0=> Secure state
 //   <o.17> TIM6_IRQn             <1=> Non-Secure state
 //   <o.18> TIM7_IRQn             <0=> Secure state
+
 //   <o.21> I3C1_EV_IRQn     	  <0=> Secure state
 //   <o.22> I3C1_ER_IRQn          <0=> Secure state
 //   <o.23> I2C1_EV_IRQn          <0=> Secure state
@@ -445,6 +447,7 @@
 //   <o.27> SPI1_IRQn             <0=> Secure state
 //   <o.28> SPI2_IRQn             <0=> Secure state
 //   <o.29> USART1_IRQn           <0=> Secure state
+
 //   <o.31> USART3_IRQn           <0=> Secure state
 */
 
@@ -473,6 +476,7 @@
 //   <o.9>  USB_FS_IRQn           <0=> Secure state
 //   <o.10> CRS_IRQn              <0=> Secure state
 //   <o.12> OCTOSPI1_IRQn         <0=> Secure state
+
 //   <o.14> SDMMC1_IRQn           <0=> Secure state
 //   <o.16> GPDMA1_Channel8_IRQn  <0=> Secure state
 //   <o.17> GPDMA1_Channel9_IRQn  <0=> Secure state
@@ -506,10 +510,12 @@
 //   <o.3>  SPI3_IRQn             <0=> Secure state
 //   <o.4>  I3C2_EV_IRQn          <0=> Secure state
 //   <o.5>  I3C2_ER_IRQn          <0=> Secure state
+
 //   <o.11> ICACHE_IRQn           <0=> Secure state
 //   <o.14> LPTIM4_IRQn           <0=> Secure state
 //   <o.16> ADF1_IRQn             <0=> Secure state
 //   <o.17> ADC2_IRQn             <0=> Secure state
+
 //   <o.27> PWR_IRQn              <0=> Secure state
 //   <o.28> PWR_S_IRQn            <0=> Secure state
 */

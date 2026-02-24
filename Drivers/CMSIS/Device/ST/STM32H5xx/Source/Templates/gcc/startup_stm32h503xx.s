@@ -60,6 +60,8 @@ defined in linker script */
 	.type	Reset_Handler, %function
 Reset_Handler:
   ldr   sp, =_estack    /* set stack pointer */
+  ldr   r0, =_sstack
+  msr   MSPLIM, r0      /* set stack pointer limit */
 
 /* Copy the data segment initializers from flash to SRAM */
   movs	r1, #0

@@ -5,60 +5,499 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Release Notes for STM32CubeH5 HAL and LL drivers</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="_htmresc/mini-st_2020.css" />
+  <link rel="icon" type="image/x-icon" href="_htmresc/favicon.png" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
-  <link rel="icon" type="image/x-icon" href="_htmresc/favicon.png" />
 </head>
 <body>
 <div class="row">
 <div class="col-sm-12 col-lg-4">
 <center>
-<h1 id="release-notes-for-stm32cubeh5-hal-and-ll-drivers">Release Notes for <mark>STM32CubeH5 HAL and LL drivers</mark></h1>
+<h1 id="release-notes-for-stm32cubeh5-hal-and-ll-drivers">Release Notes
+for <mark>STM32CubeH5 HAL and LL drivers</mark></h1>
 <p>Copyright ©  2023 STMicroelectronics<br />
 </p>
-<a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo_2020.png" alt="ST logo" /></a>
+<a href="https://www.st.com" class="logo"><img
+src="_htmresc/st_logo_2020.png" alt="ST logo" /></a>
 </center>
 <h1 id="purpose">Purpose</h1>
-<p>The STM32Cube HAL and LL, an STM32 abstraction layer embedded software, ensure maximized portability across STM32 portfolio.</p>
-<p>The portable APIs layer provides a generic, multi instanced and simple set of APIs to interact with the upper layer (application, libraries and stacks). It is composed of native and extended APIs set. It is directly built around a generic architecture and allows the build-upon layers, like the middleware layer, to implement its functions without knowing in-depth the used STM32 device. This improves the library code reusability and guarantees an easy portability on other devices and STM32 families.</p>
-<p>The Low Layer (LL) drivers are part of the STM32Cube firmware HAL that provides a basic set of optimized and one-shot services. The Low layer drivers, contrary to the HAL ones are not fully portable across the STM32 families; the availability of some functions depends on the physical availability of the relative features on the product. The Low Layer (LL) drivers are designed to offer the following features:</p>
+<p>The STM32Cube HAL and LL, an STM32 abstraction layer embedded
+software, ensure maximized portability across STM32 portfolio.</p>
+<p>The portable APIs layer provides a generic, multi instanced and
+simple set of APIs to interact with the upper layer (application,
+libraries and stacks). It is composed of native and extended APIs set.
+It is directly built around a generic architecture and allows the
+build-upon layers, like the middleware layer, to implement its functions
+without knowing in-depth the used STM32 device. This improves the
+library code reusability and guarantees an easy portability on other
+devices and STM32 families.</p>
+<p>The Low Layer (LL) drivers are part of the STM32Cube firmware HAL
+that provides a basic set of optimized and one-shot services. The Low
+layer drivers, contrary to the HAL ones are not fully portable across
+the STM32 families; the availability of some functions depends on the
+physical availability of the relative features on the product. The Low
+Layer (LL) drivers are designed to offer the following features:</p>
 <ul>
-<li>New set of inline functions for direct and atomic register access</li>
-<li>One-shot operations that can be used by the HAL drivers or from application level</li>
-<li>Full independence from HAL and standalone usage (without HAL drivers)</li>
+<li>New set of inline functions for direct and atomic register
+access</li>
+<li>One-shot operations that can be used by the HAL drivers or from
+application level</li>
+<li>Full independence from HAL and standalone usage (without HAL
+drivers)</li>
 <li>Full features coverage of all the supported peripherals</li>
 </ul>
 </div>
-<div class="col-sm-12 col-lg-8">
-<h1 id="update-history">Update History</h1>
+<section id="update-history" class="col-sm-12 col-lg-8">
+<h1>Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section6" checked aria-hidden="true"> <label for="collapse-section6" checked aria-hidden="true"><strong>V1.5.0 / 05-February-2025</strong></label>
+<input type="checkbox" id="collapse-section7" checked aria-hidden="true">
+<label for="collapse-section7" checked aria-hidden="true"><strong>V1.6.0
+/ 04-February-2026</strong></label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
 <ul>
-<li>Maintenance Release V1.5.0 of <strong>HAL and LL drivers</strong> for <strong>STM32H573xx / STM32H563xx / STM32H562xx / STM32H503xx / STM32H523xx/ STM32H533xx</strong> devices</li>
-<li><strong>Add SDIO HAL driver compliant with SDIO 3.0</strong></li>
-<li>The HAL and LL drivers provided within this package are <strong>MISRA-C, MCU ASTYLE and Coverity compliant</strong>, and have been reviewed with a static analysis tool to eliminate possible run-time errors</li>
-<li><p>General updates to fix known defects and implementation enhancements</p>
+<li><p>Maintenance Release V1.6.0 of <span
+style="font-weight: bold;">STM32CubeH5</span> Firmware Package, to
+support <strong>STM32H503xx, STM32H523xx, STM32H533xx, STM32H562xx,
+STM32H563xx</strong> and <strong>STM32H573xx</strong> devices.</p></li>
+<li><p><strong>Official Release</strong> V1.6.0 of <span
+style="font-weight: bold;">STM32CubeH5</span> Firmware Package, to
+support <strong>STM32H5E4xx, STM32H5E5xx, STM32H5F4xx</strong> and
+<strong>STM32H5F5xx</strong> devices.</p></li>
+<li><p>The HAL and LL drivers provided within this package are
+<strong>MISRA-C:2012 and Coverity compliant</strong></p></li>
+<li><p>New HAL IP drivers for <strong>DMA2D</strong>,
+<strong>PLAY</strong>, <strong>JPEG</strong>, <strong>CCB</strong> and
+<strong>LTDC</strong>.</p></li>
+<li><p>General updates to fix known defects and implementation
+enhancements</p></li>
+<li><p><strong>HAL Drivers</strong> updates:</p>
+<ul>
+<li><strong>HAL ADC</strong> driver
+<ul>
+<li>Resolved issue where OPAMP internal channel was not connected on ADC
+for H5 4M devices.</li>
+<li>Fixed configuration mismatch between ChannelVddcore and
+Channel0_GPIO registers.</li>
+<li>Added support for ADF/MDF modules in the ADC driver for H5 4M
+devices.</li>
+<li>Added const qualifier to calibrated values stored in system flash to
+ensure read-only access.</li>
+<li>Updated ADC driver to fully support H5 4M devices.</li>
+<li>Fixed ADC-HAL DMA multi-mode start function to correctly use the
+length parameter as the number of transfers.</li>
+</ul></li>
+<li><strong>HAL CCB</strong> driver
+<ul>
+<li><strong>Added support for CCB HAL driver</strong>.</li>
+<li>High level operation
+<ul>
+<li>Input structure requires buffers as uint8_t array.</li>
+<li>Output structure requires buffers as uint8_t array.</li>
+<li>Proteted ECDSA Sign
+<ul>
+<li>HAL_CCB_ECDSA_WrapPrivateKey() for protected ECDSA blob creation
+when using user key.</li>
+<li>HAL_CCB_ECDSA_GenerateWrapPrivateKey() for protected ECDSA blob
+creation when using internal key.</li>
+<li>HAL_CCB_ECDSA_Sign() for protected ECDSA Signing message usage.</li>
+<li>HAL_CCB_ECDSA_ComputePublicKey() for protected ECDSA computing
+public key usage.</li>
+</ul></li>
+<li>Proteted ECC Scalar Multiplication
+<ul>
+<li>HAL_CCB_ECC_WrapPrivateKey() for protected ECC blob creation when
+using user key.</li>
+<li>HAL_CCB_ECC_GenerateWrapPrivateKey() for protected ECC blob creation
+when using internal key.</li>
+<li>HAL_CCB_ECC_ComputeScalarMul() for protected ECC scalar
+multiplication usage.</li>
+</ul></li>
+<li>Proteted RSA Modular Exponentiation
+<ul>
+<li>HAL_CCB_RSA_WrapPrivateKey() for protected RSA blob creation when
+using user key.</li>
+<li>HAL_CCB_RSA_ComputeModularExp() for protected RSA computing modular
+exponetiation usage.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><strong>HAL CRYP</strong> driver
+<ul>
+<li>Updated code to correct typo in size of mask.</li>
+<li>Prevented reading outside the boundaries of local array for all data
+types.</li>
+</ul></li>
+<li><strong>HAL DAC</strong> driver
+<ul>
+<li>Fixed MISRA-C:2012 compliance warnings.</li>
+<li>Added play trigger feature for H5 4M.</li>
+</ul></li>
+<li><strong>HAL DELAYBLOCK</strong> driver
+<ul>
+<li>Fixed inconsistency between code, comments, and reference
+manual.</li>
+</ul></li>
+<li><strong>HAL DMA</strong> driver
+<ul>
+<li>Added check modes for HAL DMA APIs.</li>
+</ul></li>
+<li><strong>HAL DMA2D</strong> driver
+<ul>
+<li><strong>DMA2D HAL driver support added</strong></li>
+<li>Alpha Position Configuration for output, foreground (FG), and
+background (BG) layers.</li>
+<li>Advanced Graphics Configurations: Support downscaling, rotation, and
+stencil buffer setup for output blender, foreground (FG), and background
+(BG) layers.</li>
+<li>Command List Mode Configuration :
+<ul>
+<li>This update enhances DMA2D capabilities by enabling efficient
+offloading of graphic operations through command lists managed in a ring
+buffer.</li>
+</ul></li>
+<li>Ring Buffer Configuration and linear command lists (LDMs)
+build.</li>
+<li>Data transfer support including register-to-memory,
+memory-to-memory, blending, and CLUT loading.</li>
+<li>Command list insertion and execution control with optional interrupt
+handling.</li>
+<li>Ability to suspend, resume, or abort command list execution.</li>
+<li>General Purpose Flags (GPFLAGs) configuration for synchronization
+and behavior control during execution.</li>
+</ul></li>
+<li><strong>HAL DTS</strong> driver
+<ul>
+<li>Fixed missing ‘input trigger selection’ list for PLAY1 in H5
+4M.</li>
+</ul></li>
+<li><strong>HAL ETH</strong> driver
+<ul>
+<li>Corrected macDefaultConf structure to include JabberTimeout
+field.</li>
+<li>Fixed Ethernet Bus Fault error for Rx Context Descriptor and removed
+CSC MACTSCR config.</li>
+<li>Made HAL_ETH_PTP_AddendUpdate call static.</li>
+<li>Fixed CHM generation.</li>
+<li>Resolved Coverity issues on H5 4M.</li>
+<li>Updated Ethernet driver for H5 4M.</li>
+</ul></li>
+<li><strong>HAL EXTI</strong> driver
+<ul>
+<li>Fixed MISRA-C:2012 compliance warnings.</li>
+<li>Fixed Doxygen documentation issues.</li>
+</ul></li>
+<li><strong>HAL FDCAN</strong> driver
+<ul>
+<li>Added support for FDCAN3 instance (H5 4M).</li>
+</ul></li>
+<li><strong>HAL FLASH</strong> driver
+<ul>
+<li>Fixed MISRA-C:2012 compliance warnings for H5.</li>
+<li>Corrected descriptions in FLASH_EraseInitTypeDef struct.</li>
+<li>Fixed ADDRESS_OFFSET_EDATA &amp; EDATA_BANK_SIZE for H5 4M.</li>
+<li>Fixed HAL_FLASHEx_GetEccInfo API.</li>
+</ul></li>
+<li><strong>HAL FMC</strong> driver
+<ul>
+<li>Added missing 32-bit data size for SDRAM in ll_fmc.h.</li>
+<li>Fixed MISRA-C:2012 Rule 12.2 violations and related warnings.</li>
+<li>Fixed HAL_NAND_Read_Page_8b and HAL_NAND_Read_SpareArea_8b
+APIs.</li>
+<li>Set FMC NAND/NOR/SRAM under bank compilation switch as not supported
+by all devices.</li>
+</ul></li>
+<li><strong>HAL GENERIC</strong> driver
+<ul>
+<li>Resolved MISRA-C:2012 issues in ll_system.h and hal.c.</li>
+<li>Added compilation flag for DMA2D Command List Mode.</li>
+<li>Added MDF driver and ism330dhcx BSP component.</li>
+<li>Added SBS_ETH_10BT1S macro.</li>
+<li>Added BSP drivers and CCB includes to stm32h5xx_hal_conf.h.</li>
+<li>Fixed Doxygen issues and typos.</li>
+<li>Updated hal_conf_template to support SDIO driver.</li>
+</ul></li>
+<li><strong>HAL GPIO</strong> driver
+<ul>
+<li>Fixed Doxygen documentation issues.</li>
+<li>Fixed missing pull-down capability in analog mode.</li>
+</ul></li>
+<li><strong>HAL HASH</strong> driver
+<ul>
+<li>Refactored DIGEST HR location after last reference manual update in
+H5.</li>
+<li>Refactored update related to undefined “DMA_CSR_FIFOL”.</li>
+</ul></li>
+<li><strong>HAL I3C</strong> driver
+<ul>
+<li>Removed deprecated register keyword from STM32H5 HAL for C++
+compatibility.</li>
+</ul></li>
+<li><strong>HAL ICACHE</strong> driver
+<ul>
+<li>Fixed MISRA-C:2012 compliance warnings for H5.</li>
+</ul></li>
+<li><strong>HAL IRDA</strong> driver
+<ul>
+<li>Added management of H5 4M devices in IRDA clock source
+computation.</li>
+</ul></li>
+<li><strong>HAL JPEG</strong> driver
+<ul>
+<li><strong>Added new HAL driver support for H5 4M</strong>.</li>
+<li>Following functionality is supported by the driver
+<ul>
+<li>Initialization and de-initialization functions</li>
+<li>JPEG processing functions encoding and decoding</li>
+<li>JPEG decoding Getting Info and encoding configuration setting</li>
+<li>JPEG enable/disable header parsing functions (for decoding)</li>
+<li>JPEG Input/Output Buffer configuration.</li>
+<li>JPEG callback functions</li>
+<li>JPEG Abort/Pause/Resume functions</li>
+<li>JPEG custom quantization tables setting functions</li>
+<li>IRQ handler management</li>
+<li>Peripheral State and Error functions</li>
+</ul></li>
+</ul></li>
+<li><strong>HAL LPTIM</strong> driver
+<ul>
+<li>Reworked interconnect-related definitions for H5 4M.</li>
+<li>Fixed LL_LPTIM_CC_SetChannelMode function to allow correct channel
+mode configuration.</li>
+</ul></li>
+<li><strong>HAL LTDC</strong> driver
+<ul>
+<li><strong>Added new HAL driver support for H5 4M</strong>.</li>
+<li>This driver can support: Layer Management, Color Formats config,
+Memory Integration and Interrupts.</li>
+</ul></li>
+<li><strong>HAL MDF</strong> driver
+<ul>
+<li><strong>Added new HAL driver support for H5 4M</strong>.</li>
+<li>Multi-function Digital Filter: Provides APIs to configure the
+digital filters, manage serial interface communication, and handle data
+processing.</li>
+</ul></li>
+<li><strong>HAL PSSI</strong> driver
+<ul>
+<li>Fixed MISRA-C:2012 compliance warnings for H5.</li>
+</ul></li>
+<li><strong>HAL RCC</strong> driver
+<ul>
+<li>Fixed missing ETH PTP and PLAY1 clock dividers in rcc_ex.h for H5
+4M.</li>
+<li>Fixed RCC_PERIPHCLOCK_ALL macro for H5 4M.</li>
+</ul></li>
+<li><strong>HAL RTC</strong> driver
+<ul>
+<li>Fixed register bitfield overwriting issues.</li>
+<li>Fixed MISRA-C:2012 compliance warnings.</li>
+</ul></li>
+<li><strong>HAL SAI</strong> driver
+<ul>
+<li>Fixed MISRA-C:2012 compliance warnings.</li>
+</ul></li>
+<li><strong>HAL SDMMC</strong> driver
+<ul>
+<li>Fixed MISRA-C:2012 compliance warnings.</li>
+</ul></li>
+<li><strong>HAL SMARTCARD</strong> driver
+<ul>
+<li>Added management of H5 4M devices in SMARTCARD clock source
+computation.</li>
+</ul></li>
+<li><strong>HAL TIM</strong> driver
+<ul>
+<li>Fixed MISRA-C:2012 compliance warnings.</li>
+<li>Fixed H5-128K and H5-512K after CMSIS device update.</li>
+</ul></li>
+<li><strong>HAL UART</strong> driver
+<ul>
+<li>Fixed transfer count and underflow issues.</li>
+<li>Added management of H5 4M devices in UART clock source
+computation.</li>
+</ul></li>
+<li><strong>HAL USART</strong> driver
+<ul>
+<li>Added management of H5 4M devices in USART clock source
+computation.</li>
+</ul></li>
+<li><strong>HAL USB</strong> driver
+<ul>
+<li>Fixed MISRA-C:2012 compliance warnings and compilation issues.</li>
+<li>Added data toggle support for control endpoint.</li>
+</ul></li>
+<li><strong>HAL XSPI</strong> driver
+<ul>
+<li>Removed SIOO bit usage from HAL drivers when not supported.</li>
+<li>Added IsMemoryMapped() API.</li>
+<li>Removed DHQC bit references when feature not present.</li>
+<li>Fixed SIOO mode issues on H5 devices supporting SIOO.</li>
+<li>Added H5 4M support in XSPI driver and XSPIM IO Manager, including
+support for STM32H5F5J-DK board.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>LL drivers</strong> :</p>
+<ul>
+<li><strong>LL ADC</strong> driver
+<ul>
+<li>Fixed MISRA-C:2012 Rule 20.6_b violations.</li>
+</ul></li>
+<li><strong>LL COMP</strong> driver
+<ul>
+<li>Integrated COMP LL driver for H5 4M platform.</li>
+</ul></li>
+<li><strong>LL CORTEX</strong> driver
+<ul>
+<li>Corrected bug related to LL_MPU_ATTRIBUTES_NUMBERx in
+ll_cortex.h.</li>
+<li>Resolved MISRA-C:2012 compliance warnings for the H5-4M version of
+the Cortex code.</li>
+</ul></li>
+<li><strong>LL DLYB</strong> driver
+<ul>
+<li>Added constant for LL_DLYB_SetDelay.</li>
+<li>Addressed Rule-8.13 MISRA-C:2012 warnings.</li>
+<li>Fixed inconsistency between code, comments, and reference
+manual.</li>
+</ul></li>
+<li><strong>LL DMA</strong> driver
+<ul>
+<li>Fixed GPDMA HAL issue allowing LL Nodes addition causing
+overflow.</li>
+<li>Fixed MISRA-C compliance warnings.</li>
+<li>Updated macros for H5 4M.</li>
+<li>Added check modes for HAL DMA APIs.</li>
+</ul></li>
+<li><strong>LL FDCAN</strong> driver
+<ul>
+<li>Added support for FDCAN3 instance (H5 4M).</li>
+</ul></li>
+<li><strong>LL FLASH</strong> driver
+<ul>
+<li>Fixed MISRA-C:2012 compliance warnings.</li>
+<li>Corrected descriptions in FLASH_EraseInitTypeDef struct.</li>
+<li>Fixed ADDRESS_OFFSET_EDATA &amp; EDATA_BANK_SIZE for H5 4M.</li>
+<li>Fixed HAL_FLASHEx_GetEccInfo API.</li>
+</ul></li>
+<li><strong>LL FMC</strong> driver
+<ul>
+<li>Added missing 32-bit data size for SDRAM in ll_fmc.h.</li>
+<li>Fixed MISRA-C:2012 Rule 12.2 violations and related warnings.</li>
+<li>Fixed HAL_NAND_Read_Page_8b and HAL_NAND_Read_SpareArea_8b
+APIs.</li>
+<li>Set FMC NAND/NOR/SRAM under bank compilation switch as not supported
+by all devices.</li>
+</ul></li>
+<li><strong>LL HASH</strong> driver
+<ul>
+<li>Refactored DIGEST HR location after last reference manual update in
+H5.</li>
+<li>Refactored update related to undefined “DMA_CSR_FIFOL”.</li>
+</ul></li>
+<li><strong>LL ICACHE</strong> driver
+<ul>
+<li>Fixed MISRA-C:2012 compliance warnings.</li>
+</ul></li>
+<li><strong>LL PSSI</strong> driver
+<ul>
+<li>Fixed MISRA-C:2012 compliance warnings.</li>
+</ul></li>
+<li><strong>LL RCC</strong> driver
+<ul>
+<li>Fixed MISRA-C:2012 compliance warnings for H5.</li>
+<li>Fixed missing ETH PTP and PLAY1 clock dividers in rcc_ex.h for H5
+4M.</li>
+<li>Fixed RCC_PERIPHCLOCK_ALL macro for H5 4M.</li>
+<li>Fixed coverity and Doxygen issues.</li>
+</ul></li>
+<li><strong>LL RTC</strong> driver
+<ul>
+<li>Fixed register bitfield overwriting issues.</li>
+<li>Fixed MISRA-C:2012 compliance warnings.</li>
+</ul></li>
+<li><strong>LL SAI</strong> driver
+<ul>
+<li>Fixed MISRA-C:2012 compliance warnings.</li>
+</ul></li>
+<li><strong>LL SDMMC</strong> driver
+<ul>
+<li>Fixed MISRA-C:2012 compliance warnings.</li>
+</ul></li>
+<li><strong>LL TIM</strong> driver
+<ul>
+<li>Fixed MISRA-C:2012 compliance warnings.</li>
+<li>Fixed H5-128K and H5-512K after CMSIS device update.</li>
+</ul></li>
+<li><strong>LL UART</strong> driver
+<ul>
+<li>Fixed transfer count and underflow issues.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Note: HAL/LL Backward compatibility ensured by legacy defines.</p>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>None</li>
+</ul>
+<h2 id="backward-compatibility">Backward compatibility</h2>
+<ul>
+<li>No compatibility break</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section6" aria-hidden="true">
+<label for="collapse-section6" aria-hidden="true"><strong>V1.5.0 /
+05-February-2025</strong></label>
+<div>
+<h2 id="main-changes-1">Main Changes</h2>
+<ul>
+<li><p>Maintenance Release V1.5.0 of <strong>HAL and LL drivers</strong>
+for <strong>STM32H573xx / STM32H563xx / STM32H562xx / STM32H503xx /
+STM32H523xx/ STM32H533xx</strong> devices</p></li>
+<li><p><strong>Add SDIO HAL driver compliant with SDIO
+3.0</strong></p></li>
+<li><p>The HAL and LL drivers provided within this package are
+<strong>MISRA-C, MCU ASTYLE and Coverity compliant</strong>, and have
+been reviewed with a static analysis tool to eliminate possible run-time
+errors</p></li>
+<li><p>General updates to fix known defects and implementation
+enhancements</p>
 <ul>
 <li><strong>HAL drivers</strong> :
 <ul>
 <li><strong>HAL</strong> driver
 <ul>
-<li>Add HAL_SDIO_MODULE_ENABLED, USE_HAL_SDIO_REGISTER_CALLBACKS, SDIO_MAX_IO_NUMBER and USE_SDIO_TRANSCEIVER defines in “hal_conf_template.h” file</li>
+<li>Add HAL_SDIO_MODULE_ENABLED, USE_HAL_SDIO_REGISTER_CALLBACKS,
+SDIO_MAX_IO_NUMBER and USE_SDIO_TRANSCEIVER defines in
+“hal_conf_template.h” file</li>
 </ul></li>
 <li><strong>HAL ETH</strong> driver
 <ul>
-<li>Add HAL_ETH_GetTxBuffersNumber define to get buffers in use number</li>
-<li>Fix context descriptor not handled properly when timestamping is enabled</li>
+<li>Add HAL_ETH_GetTxBuffersNumber define to get buffers in use
+number</li>
+<li>Fix context descriptor not handled properly when timestamping is
+enabled</li>
 </ul></li>
 <li><strong>HAL SDMMC</strong> driver
 <ul>
@@ -156,24 +595,32 @@
 </ul></li>
 </ul>
 <p>Note: HAL/LL Backward compatibility ensured by legacy defines.</p>
-<h2 id="known-limitations">Known Limitations</h2>
+<h2 id="known-limitations-1">Known Limitations</h2>
 <ul>
 <li>None</li>
 </ul>
-<h2 id="backward-compatibility">Backward compatibility</h2>
+<h2 id="backward-compatibility-1">Backward compatibility</h2>
 <ul>
 <li>No compatibility break</li>
 </ul>
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section5" aria-hidden="true"> <label for="collapse-section5" checked aria-hidden="true"><strong>V1.4.0 / 30-October-2024</strong></label>
+<input type="checkbox" id="collapse-section5" aria-hidden="true">
+<label for="collapse-section5" checked aria-hidden="true"><strong>V1.4.0
+/ 30-October-2024</strong></label>
 <div>
-<h2 id="main-changes-1">Main Changes</h2>
+<h2 id="main-changes-2">Main Changes</h2>
 <ul>
-<li>Maintenance Release V1.4.0 of <strong>HAL and LL drivers</strong> for <strong>STM32H573xx / STM32H563xx / STM32H562xx / STM32H503xx / STM32H523xx/ STM32H533xx</strong> devices</li>
-<li>The HAL and LL drivers provided within this package are <strong>MISRA-C, MCU ASTYLE and Coverity compliant</strong>, and have been reviewed with a static analysis tool to eliminate possible run-time errors</li>
-<li><p>General updates to fix known defects and implementation enhancements</p>
+<li><p>Maintenance Release V1.4.0 of <strong>HAL and LL drivers</strong>
+for <strong>STM32H573xx / STM32H563xx / STM32H562xx / STM32H503xx /
+STM32H523xx/ STM32H533xx</strong> devices</p></li>
+<li><p>The HAL and LL drivers provided within this package are
+<strong>MISRA-C, MCU ASTYLE and Coverity compliant</strong>, and have
+been reviewed with a static analysis tool to eliminate possible run-time
+errors</p></li>
+<li><p>General updates to fix known defects and implementation
+enhancements</p>
 <ul>
 <li><strong>HAL drivers</strong> :
 <ul>
@@ -183,7 +630,10 @@
 </ul></li>
 <li><strong>HAL DAC</strong> driver
 <ul>
-<li>HAL DAC calibration procedure (function HAL_DACEx_SelfCalibrate() ) fix to manage case of calibration factor equal to range maximum value (previously, in this case calibration factor was reset, leading to voltage accuracy not optimal)</li>
+<li>HAL DAC calibration procedure (function HAL_DACEx_SelfCalibrate() )
+fix to manage case of calibration factor equal to range maximum value
+(previously, in this case calibration factor was reset, leading to
+voltage accuracy not optimal)</li>
 </ul></li>
 <li><strong>HAL DMA_EX</strong> driver
 <ul>
@@ -192,7 +642,8 @@
 </ul></li>
 <li><strong>HAL FLASH</strong> driver
 <ul>
-<li>Update Flash driver to support 32 bits write operation in the EDATA area</li>
+<li>Update Flash driver to support 32 bits write operation in the EDATA
+area</li>
 </ul></li>
 <li><strong>HAL FLASH_EX</strong> driver
 <ul>
@@ -200,11 +651,14 @@
 </ul></li>
 <li><strong>HAL FMAC</strong> driver
 <ul>
-<li>Add action to abort, if configured, the DMAIn and/or the DMAOut in HAL_FMAC_FilterStop. This allows to reset the DMA State to READY</li>
+<li>Add action to abort, if configured, the DMAIn and/or the DMAOut in
+HAL_FMAC_FilterStop. This allows to reset the DMA State to READY</li>
 </ul></li>
 <li><strong>HAL GTZC</strong> driver
 <ul>
-<li>Updated HAL_GTZC_TZSC_MPCWM_ConfigMemAttributes() and HAL_GTZC_TZSC_MPCWM_GetConfigMemAttributes() for MPCWM3 and MPCWM4 to be aligned with the hardware specification</li>
+<li>Updated HAL_GTZC_TZSC_MPCWM_ConfigMemAttributes() and
+HAL_GTZC_TZSC_MPCWM_GetConfigMemAttributes() for MPCWM3 and MPCWM4 to be
+aligned with the hardware specification</li>
 </ul></li>
 <li><strong>HAL LPTIM</strong> driver
 <ul>
@@ -220,7 +674,8 @@
 </ul></li>
 <li><strong>HAL RCC driver</strong>
 <ul>
-<li>Fix incorrect HAL_RCCEx_GetPLLxClockFreq() when fractional part is enabled</li>
+<li>Fix incorrect HAL_RCCEx_GetPLLxClockFreq() when fractional part is
+enabled</li>
 <li>Add g for HAL_RCC_ConfigAttributes() API calls</li>
 </ul></li>
 <li><strong>HAL RNG driver</strong>
@@ -229,21 +684,25 @@
 </ul></li>
 <li><strong>HAL RTC_EX driver</strong>
 <ul>
-<li>Add HAL_RTCEx_EnableRemapRtcOut2 and HAL_RTCEx_DisableRemapRtcOut2 defines<br />
+<li>Add HAL_RTCEx_EnableRemapRtcOut2 and HAL_RTCEx_DisableRemapRtcOut2
+defines<br />
 </li>
 </ul></li>
 <li><strong>HAL SPI</strong> driver
 <ul>
-<li>Fix issue with HAL_SPI_Abort_IT in DMA mode to ensure DMA RX aborts after DMA TX</li>
+<li>Fix issue with HAL_SPI_Abort_IT in DMA mode to ensure DMA RX aborts
+after DMA TX</li>
 <li>HAL code quality enhancement for MISRA-C2012 Rule-8.13</li>
 </ul></li>
 <li><strong>HAL UART</strong> driver
 <ul>
-<li>Fix DMA Rx abort procedure impact on ongoing Tx transfer in polling</li>
+<li>Fix DMA Rx abort procedure impact on ongoing Tx transfer in
+polling</li>
 </ul></li>
 <li><strong>HAL XSPI</strong> driver
 <ul>
-<li>Check BUSY flag instead of TC flag in indirect mode to be sure that command is well completed (FIFO flush)</li>
+<li>Check BUSY flag instead of TC flag in indirect mode to be sure that
+command is well completed (FIFO flush)</li>
 </ul></li>
 </ul></li>
 <li><strong>LL drivers</strong> :
@@ -255,7 +714,8 @@
 </ul></li>
 <li><strong>LL RCC</strong> driver
 <ul>
-<li>Add missing definition and processing of LL_RCC_USB_CLKSOURCE_PLL2Q</li>
+<li>Add missing definition and processing of
+LL_RCC_USB_CLKSOURCE_PLL2Q</li>
 </ul></li>
 <li><strong>LL RTC</strong> driver
 <ul>
@@ -264,51 +724,6 @@
 <li><strong>LL USB</strong> driver
 <ul>
 <li>Fix added to support bulk transfer in double buffer mode</li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul>
-<p>Note: HAL/LL Backward compatibility ensured by legacy defines.</p>
-<h2 id="known-limitations-1">Known Limitations</h2>
-<ul>
-<li>None</li>
-</ul>
-<h2 id="backward-compatibility-1">Backward compatibility</h2>
-<ul>
-<li>No compatibility break</li>
-</ul>
-</div>
-</div>
-<div class="collapse">
-<input type="checkbox" id="collapse-section4" aria-hidden="true"> <label for="collapse-section4" checked aria-hidden="true"><strong>V1.3.0 / 05-June-2024</strong></label>
-<div>
-<h2 id="main-changes-2">Main Changes</h2>
-<ul>
-<li>Maintenance release V1.3.0 of <strong>HAL and LL drivers</strong> for <strong>STM32H573xx / STM32H563xx / STM32H562xx / STM32H503xx / STM32H523xx/ STM32H533xx</strong> devices</li>
-<li>The HAL and LL drivers provided within this package are <strong>MISRA-C, MCU ASTYLE and Coverity compliant</strong>, and have been reviewed with a static analysis tool to eliminate possible run-time errors</li>
-<li><p>General updates to fix known defects and implementation enhancements</p>
-<ul>
-<li><strong>HAL drivers</strong> :
-<ul>
-<li>HAL I3C driver:
-<ul>
-<li>Add HAL_I3C_TARGET_RESET_PATTERN, HAL_I3C_HDR_EXIT_PATTERN, HAL_I3C_RESET_PATTERN_DISABLE, HAL_I3C_RESET_PATTERN_ENABLE and IS_I3C_RESET_PATTERN defines</li>
-<li>Add HAL_I3C_Ctrl_SetConfigResetPattern, HAL_I3C_Ctrl_GetConfigResetPattern and HAL_I3C_Ctrl_GenerateArbitration functions</li>
-</ul></li>
-</ul></li>
-<li><strong>LL drivers</strong> :
-<ul>
-<li>LL RNG driver:
-<ul>
-<li>Add LL_RNG_SetNoiseConfig and LL_RNG_GetNoiseConfig functions</li>
-</ul></li>
-<li>LL SYSTEM driver:
-<ul>
-<li>Remove LL_SBS_SMPS_SEC and LL_SBS_SMPS_NSEC defines</li>
-</ul></li>
-<li>LL TIM driver:
-<ul>
-<li>Remove irrelevant LL_TIM_OCREF_CLR_INT_OCREF_CLR and TIM_CLEARINPUTSOURCE_OCREFCLR constants</li>
 </ul></li>
 </ul></li>
 </ul></li>
@@ -325,31 +740,97 @@
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section3" aria-hidden="true"> <label for="collapse-section3" checked aria-hidden="true"><strong>V1.2.0 / 07-February-2024</strong></label>
+<input type="checkbox" id="collapse-section4" aria-hidden="true">
+<label for="collapse-section4" checked aria-hidden="true"><strong>V1.3.0
+/ 05-June-2024</strong></label>
 <div>
 <h2 id="main-changes-3">Main Changes</h2>
 <ul>
-<li><p>First offiicial release of HAL and LL drivers to support <strong>STM32H533xx and STM32H523xx</strong> devices</p>
+<li><p>Maintenance release V1.3.0 of <strong>HAL and LL drivers</strong>
+for <strong>STM32H573xx / STM32H563xx / STM32H562xx / STM32H503xx /
+STM32H523xx/ STM32H533xx</strong> devices</p></li>
+<li><p>The HAL and LL drivers provided within this package are
+<strong>MISRA-C, MCU ASTYLE and Coverity compliant</strong>, and have
+been reviewed with a static analysis tool to eliminate possible run-time
+errors</p></li>
+<li><p>General updates to fix known defects and implementation
+enhancements</p>
+<ul>
+<li><strong>HAL drivers</strong> :
+<ul>
+<li>HAL I3C driver:
+<ul>
+<li>Add HAL_I3C_TARGET_RESET_PATTERN, HAL_I3C_HDR_EXIT_PATTERN,
+HAL_I3C_RESET_PATTERN_DISABLE, HAL_I3C_RESET_PATTERN_ENABLE and
+IS_I3C_RESET_PATTERN defines</li>
+<li>Add HAL_I3C_Ctrl_SetConfigResetPattern,
+HAL_I3C_Ctrl_GetConfigResetPattern and HAL_I3C_Ctrl_GenerateArbitration
+functions</li>
+</ul></li>
+</ul></li>
+<li><strong>LL drivers</strong> :
+<ul>
+<li>LL RNG driver:
+<ul>
+<li>Add LL_RNG_SetNoiseConfig and LL_RNG_GetNoiseConfig functions</li>
+</ul></li>
+<li>LL SYSTEM driver:
+<ul>
+<li>Remove LL_SBS_SMPS_SEC and LL_SBS_SMPS_NSEC defines</li>
+</ul></li>
+<li>LL TIM driver:
+<ul>
+<li>Remove irrelevant LL_TIM_OCREF_CLR_INT_OCREF_CLR and
+TIM_CLEARINPUTSOURCE_OCREFCLR constants</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Note: HAL/LL Backward compatibility ensured by legacy defines.</p>
+<h2 id="known-limitations-3">Known Limitations</h2>
+<ul>
+<li>None</li>
+</ul>
+<h2 id="backward-compatibility-3">Backward compatibility</h2>
+<ul>
+<li>No compatibility break</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section3" aria-hidden="true">
+<label for="collapse-section3" checked aria-hidden="true"><strong>V1.2.0
+/ 07-February-2024</strong></label>
+<div>
+<h2 id="main-changes-4">Main Changes</h2>
+<ul>
+<li><p>First offiicial release of HAL and LL drivers to support
+<strong>STM32H533xx and STM32H523xx</strong> devices</p>
 <ul>
 <li>HAL drivers :
 <ul>
 <li>HAL GENERIC driver:
 <ul>
-<li>Update HAL_InitTick() API to manage multiple SysTick clock source (Ticket 167747).</li>
+<li>Update HAL_InitTick() API to manage multiple SysTick clock source
+(Ticket 167747).</li>
 </ul></li>
 <li>HAL CORTEX driver:
 <ul>
-<li>Add new API HAL_SYSTICK_GetCLKSourceConfig() to get SysTick clock source.</li>
-<li>Update HAL_SYSTICK_Config() API to manage multiple SysTick clock source (Ticket 167747).</li>
+<li>Add new API HAL_SYSTICK_GetCLKSourceConfig() to get SysTick clock
+source.</li>
+<li>Update HAL_SYSTICK_Config() API to manage multiple SysTick clock
+source (Ticket 167747).</li>
 </ul></li>
 <li>HAL RCC driver:
 <ul>
-<li>Update HAL_RCC_NMI_IRQHandler() to clear flag before callback (Ticket 158329).</li>
+<li>Update HAL_RCC_NMI_IRQHandler() to clear flag before callback
+(Ticket 158329).</li>
 <li>Correct RCC_PERIPHCLOCK_ALL define value for H5-512K.</li>
 </ul></li>
 <li>HAL GPIO driver:
 <ul>
-<li>Add missing AFs in H5-512K : GPIO_AF2_TIM8, GPIO_AF4_SPI3 and GPIO_AF6_USART6.</li>
+<li>Add missing AFs in H5-512K : GPIO_AF2_TIM8, GPIO_AF4_SPI3 and
+GPIO_AF6_USART6.</li>
 </ul></li>
 <li>HAL EXTI driver:
 <ul>
@@ -357,26 +838,38 @@
 </ul></li>
 <li>HAL ADC driver:
 <ul>
-<li>Add new Helper macro (__HAL_ADC_CALC_DIFF_DATA_TO_VOLTAGE()) for differential mode raw data to voltage conversion (Ticket 155612).</li>
+<li>Add new Helper macro (__HAL_ADC_CALC_DIFF_DATA_TO_VOLTAGE()) for
+differential mode raw data to voltage conversion (Ticket 155612).</li>
 </ul></li>
 <li>HAL DMA driver:
 <ul>
-<li>Add peripheral flow control check PFREQ (early termination) in HAL_DMA_Init() API.</li>
+<li>Add peripheral flow control check PFREQ (early termination) in
+HAL_DMA_Init() API.</li>
 </ul></li>
 <li>HAL ETH driver:
 <ul>
 <li>Rename ETH_TxPacketConfig to ETH_TxPacketConfigTypeDef</li>
 <li>Update ETH_Start_IT sequence (Ticket 154251)</li>
 <li>Fix PTP APIs (Ticket 137427)</li>
-<li>Add condition to get the TimeStamp only when it was captured (Ticket 157128)</li>
-<li>Update ReadData() API to use real latest buffer length received instead of predefined ethernet frame length (Tickets 152028 &amp; 157139)</li>
-<li>Update HAL_ETH_SetMDIOClockRange API (Ticket 159046 &amp; 157253)</li>
-<li>Update HAL_ETH_IRQHandler API : Remove multiple volatile reads or writes (Ticket 111542)</li>
-<li>Update HAL_ETH_Init() API : Disable of unwanted interrupts section moved from HAL_ETH_Start_IT() to HAL_ETH_Init() (Ticket 159576)</li>
-<li>Update ETH_Prepare_Tx_Descriptors() API to avoid enabling unwanted global interrupts (Ticket 125056)</li>
-<li>Update ETH_UpdateDescriptor() to avoid that ETH DMA peripheral reads incorrect Rx buffer address (Ticket 159272)</li>
-<li>Update on MAC L4/L3 Set/Get Filter config functions to avoid code coverage issues</li>
-<li>Update on HAL_ETH_ReleaseTxPacket() to use the right way to increment descriptors (Ticket 155726)</li>
+<li>Add condition to get the TimeStamp only when it was captured (Ticket
+157128)</li>
+<li>Update ReadData() API to use real latest buffer length received
+instead of predefined ethernet frame length (Tickets 152028 &amp;
+157139)</li>
+<li>Update HAL_ETH_SetMDIOClockRange API (Ticket 159046 &amp;
+157253)</li>
+<li>Update HAL_ETH_IRQHandler API : Remove multiple volatile reads or
+writes (Ticket 111542)</li>
+<li>Update HAL_ETH_Init() API : Disable of unwanted interrupts section
+moved from HAL_ETH_Start_IT() to HAL_ETH_Init() (Ticket 159576)</li>
+<li>Update ETH_Prepare_Tx_Descriptors() API to avoid enabling unwanted
+global interrupts (Ticket 125056)</li>
+<li>Update ETH_UpdateDescriptor() to avoid that ETH DMA peripheral reads
+incorrect Rx buffer address (Ticket 159272)</li>
+<li>Update on MAC L4/L3 Set/Get Filter config functions to avoid code
+coverage issues</li>
+<li>Update on HAL_ETH_ReleaseTxPacket() to use the right way to
+increment descriptors (Ticket 155726)</li>
 <li>Rename PTP configuration state defines :
 <ul>
 <li>HAL_ETH_PTP_NOT_CONFIGURATED to HAL_ETH_PTP_NOT_CONFIGURED</li>
@@ -397,24 +890,32 @@
 <li>Update HAL_FLASH_IRQHandler() to handle ECC interrupt.</li>
 <li>Correct OB_BOR_LEVEL_X defines values (Ticket 158618).</li>
 <li>Add missing User OBs for USB power delivery configuration.</li>
-<li>Update FLASH_OB_GetEDATA() API to give correct EDATASize (Ticket 167670)</li>
+<li>Update FLASH_OB_GetEDATA() API to give correct EDATASize (Ticket
+167670)</li>
 </ul></li>
 <li>HAL HCD driver:
 <ul>
-<li>Update HCD_HC_IN_IRQHandler() to Prevent auto start of periodic interrupt channel during NAK (Ticket 151335).</li>
+<li>Update HCD_HC_IN_IRQHandler() to Prevent auto start of periodic
+interrupt channel during NAK (Ticket 151335).</li>
 <li>Fix in RX count formula in HCD_GET_CH_RX_CNT().</li>
 </ul></li>
 <li>HAL I2C driver:
 <ul>
-<li>Fix HAL_I2C_Slave_Transmit returning HAL error when checking the NACK flag (Ticket 162945).</li>
-<li>Move Prefetch process to function HAL_I2C_Slave_Transmit (Ticket 167073).</li>
-<li>Fix Error management during HAL_I2C_Mem_Read polling process (Ticket 155722).</li>
+<li>Fix HAL_I2C_Slave_Transmit returning HAL error when checking the
+NACK flag (Ticket 162945).</li>
+<li>Move Prefetch process to function HAL_I2C_Slave_Transmit (Ticket
+167073).</li>
+<li>Fix Error management during HAL_I2C_Mem_Read polling process (Ticket
+155722).</li>
 </ul></li>
 <li>HAL I3C driver:
 <ul>
-<li>Add HAL_I3C_Get_ENTDAA_Payload_Info() API and macro to retrieve the different part of the ENTDAA payload:</li>
-<li>Add private ISR functions to HAL to solve the “IBI or HJ or CR event notification can be lost” problem.</li>
-<li>Fix Ticket 169111 - Undefined LL TypeDefs in stm32h5xx_util_i3c.h</li>
+<li>Add HAL_I3C_Get_ENTDAA_Payload_Info() API and macro to retrieve the
+different part of the ENTDAA payload:</li>
+<li>Add private ISR functions to HAL to solve the “IBI or HJ or CR event
+notification can be lost” problem.</li>
+<li>Fix Ticket 169111 - Undefined LL TypeDefs in
+stm32h5xx_util_i3c.h</li>
 </ul></li>
 <li>HAL RAMCFG driver:
 <ul>
@@ -422,7 +923,8 @@
 </ul></li>
 <li>HAL RTC driver:
 <ul>
-<li>Remove useless RTC_ICSR_WUTWF bit polling inside HAL_RTCEx_DeactivateWakeUpTimer (Ticket 153540).</li>
+<li>Remove useless RTC_ICSR_WUTWF bit polling inside
+HAL_RTCEx_DeactivateWakeUpTimer (Ticket 153540).</li>
 </ul></li>
 <li>HAL SMBUS driver:
 <ul>
@@ -435,8 +937,10 @@
 <li>HAL TIM driver:
 <ul>
 <li>Add HSE divider control capability for TIM17 (Ticket 164073).</li>
-<li>Remove irrelevant state management in DMA callbacks (Ticket 167896).</li>
-<li>Fix typo in some macros (ASYMMETRIC instead of ASYMMETRIC) (Ticket 165438).</li>
+<li>Remove irrelevant state management in DMA callbacks (Ticket
+167896).</li>
+<li>Fix typo in some macros (ASYMMETRIC instead of ASYMMETRIC) (Ticket
+165438).</li>
 <li>Add USB related ETR defines.</li>
 </ul></li>
 <li>HAL UART driver:
@@ -452,11 +956,14 @@
 <ul>
 <li>LL CORTEX driver:
 <ul>
-<li>Replace LL_SYSTICK_CLKSOURCE_HCLK_DIV8 by LL_SYSTICK_CLKSOURCE_EXTERNAL define (Ticket 167747).</li>
+<li>Replace LL_SYSTICK_CLKSOURCE_HCLK_DIV8 by
+LL_SYSTICK_CLKSOURCE_EXTERNAL define (Ticket 167747).</li>
 </ul></li>
 <li>LL RCC Driver:
 <ul>
-<li>Update RCC_GetSystemClockFreq() and LL_RCC_GetPPPClockFreq() APIs with PPP = {UART, USART, SPI, I2C, I3C, LPUART, ADCDAC} to consider the HSI division(Ticket 161846).</li>
+<li>Update RCC_GetSystemClockFreq() and LL_RCC_GetPPPClockFreq() APIs
+with PPP = {UART, USART, SPI, I2C, I3C, LPUART, ADCDAC} to consider the
+HSI division(Ticket 161846).</li>
 </ul></li>
 <li>LL BUS Driver:
 <ul>
@@ -464,7 +971,8 @@
 </ul></li>
 <li>LL UTILS Driver:
 <ul>
-<li>Add new APIs to manage multiple SysTick clock source (Ticket 167747) :
+<li>Add new APIs to manage multiple SysTick clock source (Ticket 167747)
+:
 <ul>
 <li>LL_Init1msTick_HCLK_Div8()</li>
 <li>LL_Init1msTick_LSE()</li>
@@ -473,46 +981,56 @@
 </ul></li>
 <li>LL EXTI driver:
 <ul>
-<li>Update LL_EXTI_DeInit() with correct IMR2 reset value for H5-512K.</li>
+<li>Update LL_EXTI_DeInit() with correct IMR2 reset value for
+H5-512K.</li>
 </ul></li>
 <li>LL ADC driver:
 <ul>
-<li>Add new Helper macro (__LL_ADC_CALC_DIFF_DATA_TO_VOLTAGE()) for differential mode raw data to voltage conversion (Ticket 155612).</li>
-<li>Update LL_ADC_DeInit() to resolve conflict with RM (Ticket 157398)</li>
+<li>Add new Helper macro (__LL_ADC_CALC_DIFF_DATA_TO_VOLTAGE()) for
+differential mode raw data to voltage conversion (Ticket 155612).</li>
+<li>Update LL_ADC_DeInit() to resolve conflict with RM (Ticket
+157398)</li>
 </ul></li>
 <li>LL DMA driver:
 <ul>
-<li>Add peripheral flow control check PFREQ (early termination) in LL_DMA_Init() API.</li>
+<li>Add peripheral flow control check PFREQ (early termination) in
+LL_DMA_Init() API.</li>
 </ul></li>
 <li>LL I2C driver:
 <ul>
-<li>Update LL_I2C_HandleTransfer() to prevent writing to I2C_CR2 reserved bits (Ticket 160951)</li>
+<li>Update LL_I2C_HandleTransfer() to prevent writing to I2C_CR2
+reserved bits (Ticket 160951)</li>
 </ul></li>
 <li>LL TIM driver:
 <ul>
 <li>Add HSE divider control capability for TIM17 (Ticket 164073).</li>
-<li>Fix typo in some macros (ASYMMETRIC instead of ASYMMETRIC) (Ticket 165438).</li>
+<li>Fix typo in some macros (ASYMMETRIC instead of ASYMMETRIC) (Ticket
+165438).</li>
 </ul></li>
 </ul></li>
 </ul></li>
 </ul>
 <p>Note: HAL/LL Backward compatibility ensured by legacy defines.</p>
-<h2 id="known-limitations-3">Known Limitations</h2>
+<h2 id="known-limitations-4">Known Limitations</h2>
 <ul>
 <li>None</li>
 </ul>
-<h2 id="backward-compatibility-3">Backward compatibility</h2>
+<h2 id="backward-compatibility-4">Backward compatibility</h2>
 <ul>
 <li>No compatibility break</li>
 </ul>
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" checked aria-hidden="true"><strong>V1.1.0 / 07-June-2023</strong></label>
+<input type="checkbox" id="collapse-section2" aria-hidden="true">
+<label for="collapse-section2" checked aria-hidden="true"><strong>V1.1.0
+/ 07-June-2023</strong></label>
 <div>
-<h2 id="main-changes-4">Main Changes</h2>
+<h2 id="main-changes-5">Main Changes</h2>
 <ul>
-<li><p>Maintenance Release of <strong>HAL and LL drivers</strong> for <strong>STM32H573xx / STM32H563xx / STM32H562xx / STM32H503xx</strong> devices</p>
+<li><p>Maintenance Release of <strong>HAL and LL drivers</strong> for
+<strong>STM32H573xx / STM32H563xx / STM32H562xx / STM32H503xx</strong>
+devices</p>
 <ul>
 <li>HAL drivers :
 <ul>
@@ -537,29 +1055,38 @@
 </ul></li>
 <li>HAL I2C driver:
 <ul>
-<li>Update I2C_ITMasterCplt() to fix issue related to TX IRQ not being disabled after data transfer.</li>
+<li>Update I2C_ITMasterCplt() to fix issue related to TX IRQ not being
+disabled after data transfer.</li>
 <li>Fix issue related to HAL_I2C_IsDeviceReady().</li>
-<li>Fix issue related to switching from 10 bits to 7 bits addressing modes.</li>
+<li>Fix issue related to switching from 10 bits to 7 bits addressing
+modes.</li>
 </ul></li>
 <li>HAL I3C driver:
 <ul>
-<li>Fix arbitration header disabling when using HAL_I3C_AddDescToFrame() with successive options.</li>
-<li>Add multiple transfer for Sensor Communication and Multiple CCC RX/TX command with the same interface.</li>
-<li>Add Interface to check the availability of I2C or I3C device in the Bus.</li>
+<li>Fix arbitration header disabling when using HAL_I3C_AddDescToFrame()
+with successive options.</li>
+<li>Add multiple transfer for Sensor Communication and Multiple CCC
+RX/TX command with the same interface.</li>
+<li>Add Interface to check the availability of I2C or I3C device in the
+Bus.</li>
 </ul></li>
 <li>HAL RTC Driver:
 <ul>
-<li>Update possible values of Active tamper RTC asynchronous prescaler clock selection field.</li>
+<li>Update possible values of Active tamper RTC asynchronous prescaler
+clock selection field.</li>
 </ul></li>
 <li>HAL SAI Driver:
 <ul>
-<li>Reorder the call to SAI_Disable() to fix issue in HAL SAI abort and DMA stop functions.</li>
+<li>Reorder the call to SAI_Disable() to fix issue in HAL SAI abort and
+DMA stop functions.</li>
 </ul></li>
 <li>HAL TIMER driver:
 <ul>
-<li>Fix of issue related to channel being systematically disabled by HAL_TIM_OC_ConfigChannel() API.</li>
+<li>Fix of issue related to channel being systematically disabled by
+HAL_TIM_OC_ConfigChannel() API.</li>
 <li>Fix assert check in HAL_TIM_OC_Start_IT().</li>
-<li>Enhance performance by removing multiple volatile reads or writes in interrupt handler.</li>
+<li>Enhance performance by removing multiple volatile reads or writes in
+interrupt handler.</li>
 </ul></li>
 </ul></li>
 <li>LL drivers :
@@ -577,27 +1104,11 @@
 </ul></li>
 <li>LL RTC Driver:
 <ul>
-<li>Update possible values of Active tamper RTC asynchronous prescaler clock selection field.</li>
+<li>Update possible values of Active tamper RTC asynchronous prescaler
+clock selection field.</li>
 </ul></li>
 </ul></li>
 </ul></li>
-</ul>
-<h2 id="known-limitations-4">Known Limitations</h2>
-<ul>
-<li>None</li>
-</ul>
-<h2 id="backward-compatibility-4">Backward compatibility</h2>
-<ul>
-<li>No compatibility break</li>
-</ul>
-</div>
-</div>
-<div class="collapse">
-<input type="checkbox" id="collapse-section1" aria-hidden="true"> <label for="collapse-section1" checked aria-hidden="true"><strong>V1.0.0 / 10-February-2023</strong></label>
-<div>
-<h2 id="main-changes-5">Main Changes</h2>
-<ul>
-<li>First official release of <strong>HAL and LL drivers</strong> for <strong>STM32H573xx / STM32H563xx / STM32H562xx / STM32H503xx</strong> devices</li>
 </ul>
 <h2 id="known-limitations-5">Known Limitations</h2>
 <ul>
@@ -605,15 +1116,41 @@
 </ul>
 <h2 id="backward-compatibility-5">Backward compatibility</h2>
 <ul>
+<li>No compatibility break</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section1" aria-hidden="true">
+<label for="collapse-section1" checked aria-hidden="true"><strong>V1.0.0
+/ 10-February-2023</strong></label>
+<div>
+<h2 id="main-changes-6">Main Changes</h2>
+<ul>
+<li>First official release of <strong>HAL and LL drivers</strong> for
+<strong>STM32H573xx / STM32H563xx / STM32H562xx / STM32H503xx</strong>
+devices</li>
+</ul>
+<h2 id="known-limitations-6">Known Limitations</h2>
+<ul>
+<li>None</li>
+</ul>
+<h2 id="backward-compatibility-6">Backward compatibility</h2>
+<ul>
 <li>Not Applicable</li>
 </ul>
 </div>
 </div>
-</div>
+</section>
 </div>
 <footer class="sticky">
-<p>For complete documentation on STM32 Microcontrollers </mark> , visit: <span style="font-color: blue;"><a href="http://www.st.com/stm32">www.st.com/stm32</a></span></p>
-This release note uses up to date web standards and, for this reason, should not be opened with Internet Explorer but preferably with popular browsers such as Google Chrome, Mozilla Firefox, Opera or Microsoft Edge.
+<p>For complete documentation on STM32 Microcontrollers </mark> , visit:
+<span style="font-color: blue;"><a
+href="http://www.st.com/stm32">www.st.com/stm32</a></span></p>
+This release note uses up to date web standards and, for this reason,
+should not be opened with Internet Explorer but preferably with popular
+browsers such as Google Chrome, Mozilla Firefox, Opera or Microsoft
+Edge.
 </footer>
 </body>
 </html>

@@ -176,9 +176,9 @@ __vector_table
         DCD     SPI3_IRQHandler                  ; SPI3 global interrupt
         DCD     I3C2_EV_IRQHandler               ; I3C2 Event interrupt
         DCD     I3C2_ER_IRQHandler               ; I3C2 Error interrupt
-        DCD     TIM8_BRK_IRQHandler              ; TIM8 Break interrupt
+        DCD     TIM8_BRK_TERR_IERR_IRQHandler    ; TIM8 Break, Transition error and Index error interrupt
         DCD     TIM8_UP_IRQHandler               ; TIM8 Update interrupt
-        DCD     TIM8_TRG_COM_IRQHandler          ; TIM8 Trigger and Commutation interrupt
+        DCD     TIM8_TRG_COM_DIR_IDX_IRQHandler  ; TIM8 Trigger, Commutation, Direction change and Index interrupt
         DCD     TIM8_CC_IRQHandler               ; TIM8 Capture Compare interrupt
         DCD     0                                ; Reserved
         DCD     ICACHE_IRQHandler                ; Instruction cache global interrupt
@@ -212,6 +212,8 @@ __Vectors_Size  EQU   __Vectors_End - __Vectors
         PUBWEAK Reset_Handler
         SECTION .text:CODE:NOROOT:REORDER(2)
 Reset_Handler
+        LDR     R0, =sfb(CSTACK)
+        MSR     MSPLIM, R0               ; Set Stack Pointer Limit
         LDR     R0, =SystemInit
         BLX     R0
         LDR     R0, =__iar_program_start
@@ -682,11 +684,6 @@ SAI1_IRQHandler
 TSC_IRQHandler
         B TSC_IRQHandler
 
-        PUBWEAK AES_IRQHandler
-        SECTION .text:CODE:NOROOT:REORDER(1)
-AES_IRQHandler
-        B AES_IRQHandler
-
         PUBWEAK RNG_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 RNG_IRQHandler
@@ -722,20 +719,20 @@ I3C2_EV_IRQHandler
 I3C2_ER_IRQHandler
         B I3C2_ER_IRQHandler
 
-        PUBWEAK TIM8_BRK_IRQHandler
+        PUBWEAK TIM8_BRK_TERR_IERR_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
-TIM8_BRK_IRQHandler
-        B TIM8_BRK_IRQHandler
+TIM8_BRK_TERR_IERR_IRQHandler
+        B TIM8_BRK_TERR_IERR_IRQHandler
 
         PUBWEAK TIM8_UP_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 TIM8_UP_IRQHandler
         B TIM8_UP_IRQHandler
 
-        PUBWEAK TIM8_TRG_COM_IRQHandler
+        PUBWEAK TIM8_TRG_COM_DIR_IDX_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
-TIM8_TRG_COM_IRQHandler
-        B TIM8_TRG_COM_IRQHandler
+TIM8_TRG_COM_DIR_IDX_IRQHandler
+        B TIM8_TRG_COM_DIR_IDX_IRQHandler
 
         PUBWEAK TIM8_CC_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)

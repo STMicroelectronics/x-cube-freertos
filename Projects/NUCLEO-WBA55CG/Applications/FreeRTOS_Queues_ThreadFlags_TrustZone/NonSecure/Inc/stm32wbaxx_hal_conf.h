@@ -165,7 +165,6 @@ extern "C" {
 #define  USE_HAL_IRDA_REGISTER_CALLBACKS       0U /* IRDA register callback disabled      */
 #define  USE_HAL_IWDG_REGISTER_CALLBACKS       0U /* IWDG register callback disabled      */
 #define  USE_HAL_LPTIM_REGISTER_CALLBACKS      0U /* LPTIM register callback disabled     */
-
 #define  USE_HAL_PKA_REGISTER_CALLBACKS        0U /* PKA register callback disabled       */
 #define  USE_HAL_RAMCFG_REGISTER_CALLBACKS     0U /* RAMCFG register callback disabled    */
 #define  USE_HAL_RNG_REGISTER_CALLBACKS        0U /* RNG register callback disabled       */
@@ -203,6 +202,10 @@ extern "C" {
 #ifdef HAL_DMA_MODULE_ENABLED
 #include "stm32wbaxx_hal_dma.h"
 #endif /* HAL_DMA_MODULE_ENABLED */
+
+#ifdef HAL_RCC_MODULE_ENABLED
+#include "stm32wbaxx_hal_rcc.h"
+#endif /* HAL_RCC_MODULE_ENABLED */
 
 #ifdef HAL_ADC_MODULE_ENABLED
 #include "stm32wbaxx_hal_adc.h"
@@ -279,10 +282,6 @@ extern "C" {
 #ifdef HAL_RAMCFG_MODULE_ENABLED
 #include "stm32wbaxx_hal_ramcfg.h"
 #endif /* HAL_RAMCFG_MODULE_ENABLED */
-
-#ifdef HAL_RCC_MODULE_ENABLED
-#include "stm32wbaxx_hal_rcc.h"
-#endif /* HAL_RCC_MODULE_ENABLED */
 
 #ifdef HAL_RNG_MODULE_ENABLED
 #include "stm32wbaxx_hal_rng.h"

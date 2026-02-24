@@ -37,6 +37,7 @@ ENTRY(Reset_Handler)
 
 /* Highest address of the user mode stack */
 _estack = ORIGIN(RAM) + LENGTH(RAM); /* end of "RAM" Ram type memory */
+_sstack = _estack - _Min_Stack_Size;
 
 _Min_Heap_Size = 0x200; /* required amount of heap */
 _Min_Stack_Size = 0x400; /* required amount of stack */
@@ -46,7 +47,7 @@ _Min_Stack_Size = 0x400; /* required amount of stack */
 MEMORY
 {
   RAM       (xrw)    : ORIGIN = 0x30030000, LENGTH = 32K
-  HSP_BRAM_DATA (rw) : ORIGIN = 0x200A0000, LENGTH = 16K
+  HSP_DATA_BRAM (rw) : ORIGIN = 0x200A0000, LENGTH = 16K
   FLASH     (rx)     : ORIGIN = 0x0E000000, LENGTH = 92K
   FLASH_NSC (rx)     : ORIGIN = 0x0E017000, LENGTH = 4K
 }
@@ -174,12 +175,12 @@ SECTIONS
     __bss_end__ = _ebss;
   } >RAM
 
-  RW_HSP_BRAM_DATA :
+  .HSP_DATA_BRAM :
   {
-    __HSP_BRAM_DATA_BEGIN = .;/* create symbol for start of section */
-    KEEP(*(HSP_BRAM_DATA))
-    __HSP_BRAM_DATA_END = .;  /* create symbol for start of section */
-  } > HSP_BRAM_DATA
+    __section_static_hsp_data_bram_start__ = .;
+    *(HSP_DATA_BRAM)
+    __section_static_hsp_data_bram_end__ = .;
+  } >HSP_DATA_BRAM
 
   /* User_heap_stack section, used to check that there is enough "RAM" Ram  type memory left */
   ._user_heap_stack :

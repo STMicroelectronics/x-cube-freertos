@@ -150,7 +150,7 @@ __vector_table
         DCD     USB_FS_IRQHandler                ; USB FS global interrupt
         DCD     CRS_IRQHandler                   ; CRS global interrupt
         DCD     0                                ; Reserved
-        DCD     QUADSPI1_IRQHandler              ; QUADSPI1 global interrupt
+        DCD     OCTOSPI1_IRQHandler              ; OctoSPI1 global interrupt
         DCD     0                                ; Reserved
         DCD     0                                ; Reserved
         DCD     0                                ; Reserved
@@ -186,7 +186,7 @@ __vector_table
         DCD     0                                ; Reserved
         DCD     LPTIM4_IRQHandler                ; LPTIM4 global interrupt
         DCD     0                                ; Reserved
-        DCD     0                                ; Reserved
+        DCD     ADF1_IRQHandler                  ; ADF1 global interrupt
         DCD     0                                ; Reserved
         DCD     0                                ; Reserved
         DCD     0                                ; Reserved
@@ -212,6 +212,8 @@ __Vectors_Size  EQU   __Vectors_End - __Vectors
         PUBWEAK Reset_Handler
         SECTION .text:CODE:NOROOT:REORDER(2)
 Reset_Handler
+        LDR     R0, =sfb(CSTACK)
+        MSR     MSPLIM, R0               ; Set Stack Pointer Limit
         LDR     R0, =SystemInit
         BLX     R0
         LDR     R0, =__iar_program_start
@@ -456,7 +458,7 @@ ADC1_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 DAC1_IRQHandler
         B DAC1_IRQHandler
-        
+
         PUBWEAK FDCAN1_IT0_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 FDCAN1_IT0_IRQHandler
@@ -602,10 +604,10 @@ USB_FS_IRQHandler
 CRS_IRQHandler
         B CRS_IRQHandler
 
-        PUBWEAK QUADSPI1_IRQHandler
+        PUBWEAK OCTOSPI1_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
-QUADSPI1_IRQHandler
-        B QUADSPI1_IRQHandler
+OCTOSPI1_IRQHandler
+        B OCTOSPI1_IRQHandler
 
         PUBWEAK GPDMA1_Channel8_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
@@ -671,6 +673,11 @@ ICACHE_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 LPTIM4_IRQHandler
         B LPTIM4_IRQHandler
+
+        PUBWEAK ADF1_IRQHandler
+        SECTION .text:CODE:NOROOT:REORDER(1)
+ADF1_IRQHandler
+        B ADF1_IRQHandler
 
         PUBWEAK PWR_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)

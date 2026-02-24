@@ -1105,12 +1105,12 @@
         <settings>
             <name>BUILDACTION</name>
             <archiveVersion>2</archiveVersion>
-            <data />
+            <data></data>
         </settings>
         <settings>
             <name>Coder</name>
             <archiveVersion>0</archiveVersion>
-            <data />
+            <data></data>
         </settings>
     </configuration>
     <group>
@@ -1126,19 +1126,19 @@
             <group>
                 <name>AppliNonSecure</name>
                 <file>
+                    <name>$PROJ_DIR$\..\..\AppliNonSecure\Src\main.c</name>
+                </file>
+                <file>
                     <name>$PROJ_DIR$\..\..\AppliNonSecure\Src\app_freertos.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\AppliNonSecure\Src\main.c</name>
+                    <name>$PROJ_DIR$\..\..\AppliNonSecure\Src\stm32n6xx_it.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\AppliNonSecure\Src\stm32n6xx_hal_msp.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\AppliNonSecure\Src\stm32n6xx_hal_timebase_tim.c</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\AppliNonSecure\Src\stm32n6xx_it.c</name>
                 </file>
             </group>
         </group>
@@ -1160,10 +1160,13 @@
         <group>
             <name>STM32N6xx_HAL_Driver</name>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_rcc.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_cortex.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_rcc_ex.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_gpio.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_dma.c</name>
@@ -1172,22 +1175,19 @@
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_dma_ex.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_exti.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_gpio.c</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_pwr.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_pwr_ex.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_rcc.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_cortex.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_rcc_ex.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_exti.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_tim.c</name>
@@ -1210,7 +1210,7 @@
             <group>
                 <name>CMSIS/RTOS2/Core/TZ_Non_Secure</name>
                 <file>
-                    <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.c</name>
+                    <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM55\non_secure\portasm.s</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\croutine.c</name>
@@ -1220,12 +1220,6 @@
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\list.c</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM55\non_secure\port.c</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM55\non_secure\portasm.s</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\queue.c</name>
@@ -1239,6 +1233,12 @@
                 <file>
                     <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\timers.c</name>
                 </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM55\non_secure\port.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.c</name>
+                </file>
             </group>
             <group>
                 <name>CMSIS/RTOS2/Heap/Heap_4</name>
@@ -1249,3 +1249,4 @@
         </group>
     </group>
 </project>
+

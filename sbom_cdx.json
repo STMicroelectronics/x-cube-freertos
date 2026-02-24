@@ -1,15 +1,15 @@
 {
     "bomFormat": "CycloneDX",
     "specVersion": "1.5",
-    "serialNumber": "urn:uuid:46d8fc28-cdf8-42e0-b44f-b1b7f1b50f2c",
+    "serialNumber": "urn:uuid:ccb3310d-ce8c-439f-80e9-da80d2f03d71",
     "version": 1,
     "metadata": {
-        "timestamp": "2025-11-11T09:45:22Z",
+        "timestamp": "2026-02-16T07:22:53Z",
         "tools": [
             {
                 "vendor": "Black Duck",
                 "name": "Hub",
-                "version": "2025.1.1"
+                "version": "2025.10.0"
             },
             {
                 "vendor": "CycloneDX",
@@ -24,12 +24,12 @@
         ],
         "component": {
             "type": "application",
-            "bom-ref": "5f971efb-8147-4f3a-9ab3-a4cd3697be89",
+            "bom-ref": "6d6d9e0d-41af-43fd-9d08-5d8d2eed1a1b",
             "supplier": {
                 "name": ""
             },
             "name": "X-CUBE-FREERTOS",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "licenses": [
                 {
                     "license": {
@@ -47,7 +47,7 @@
                 },
                 {
                     "name": "BlackDuck-ComponentVersion",
-                    "value": "5f971efb-8147-4f3a-9ab3-a4cd3697be89"
+                    "value": "6d6d9e0d-41af-43fd-9d08-5d8d2eed1a1b"
                 }
             ]
         }
@@ -144,7 +144,7 @@
             "type": "library",
             "bom-ref": "b7b4d7f2-95ac-4480-93c9-ceeee76828c8",
             "supplier": {
-                "name": ""
+                "name": "Organization: freertos"
             },
             "name": "FreeRTOS Real Time Kernel",
             "version": "V11.2.0",
@@ -156,6 +156,7 @@
                 }
             ],
             "cpe": "cpe:2.3:a:amazon:aws-freertos-kernel:11.2.0:*:*:*:*:*:*:*",
+            "purl": "pkg:github/FreeRTOS/FreeRTOS-Kernel@V11.2.0",
             "pedigree": {
                 "notes": "MIT License"
             },
@@ -167,6 +168,10 @@
                 {
                     "name": "BlackDuck-ComponentVersion",
                     "value": "b7b4d7f2-95ac-4480-93c9-ceeee76828c8"
+                },
+                {
+                    "name": "BlackDuck-ComponentOrigin",
+                    "value": "9efdd2bb-848c-4c83-8d9e-f331ba338564"
                 }
             ]
         },
@@ -196,41 +201,6 @@
                 {
                     "name": "BlackDuck-ComponentVersion",
                     "value": "366876e1-c3ca-423f-953a-c1a2de988643"
-                }
-            ]
-        },
-        {
-            "type": "library",
-            "bom-ref": "cb641a37-c52a-457c-9a44-5cdc6df0a0b1",
-            "supplier": {
-                "name": ""
-            },
-            "name": "jQuery",
-            "version": "1.7.1",
-            "licenses": [
-                {
-                    "license": {
-                        "id": "GPL-2.0-only"
-                    }
-                },
-                {
-                    "license": {
-                        "id": "MIT"
-                    }
-                }
-            ],
-            "cpe": "cpe:2.3:a:jquery:jquery:1.7.1:10:*:*:*:*:*:*",
-            "pedigree": {
-                "notes": "(MIT License OR GNU General Public License v2.0 only)"
-            },
-            "properties": [
-                {
-                    "name": "BlackDuck-Component",
-                    "value": "286bed55-3d70-4402-b41f-efbec8daf3b6"
-                },
-                {
-                    "name": "BlackDuck-ComponentVersion",
-                    "value": "cb641a37-c52a-457c-9a44-5cdc6df0a0b1"
                 }
             ]
         },
@@ -300,6 +270,7 @@
             "supplier": {
                 "name": ""
             },
+            "author": "STMicroelectronics",
             "name": "STM32_ExtMem_Manager",
             "version": "1.5.0",
             "licenses": [
@@ -325,13 +296,13 @@
         },
         {
             "type": "library",
-            "bom-ref": "a67d3262-21bf-463f-a614-bdda88ab93c1",
+            "bom-ref": "c7a0bb76-43cb-4a27-a2b5-f10fb89725f0",
             "supplier": {
                 "name": ""
             },
             "author": "STMicroelectronics",
             "name": "STM32H5xx CMSIS",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "licenses": [
                 {
                     "license": {
@@ -349,19 +320,18 @@
                 },
                 {
                     "name": "BlackDuck-ComponentVersion",
-                    "value": "a67d3262-21bf-463f-a614-bdda88ab93c1"
+                    "value": "c7a0bb76-43cb-4a27-a2b5-f10fb89725f0"
                 }
             ]
         },
         {
             "type": "library",
-            "bom-ref": "01523ee8-177d-4fd6-a58b-572bf26c6b30",
+            "bom-ref": "32794a06-0454-45c4-8f34-376b2b315273",
             "supplier": {
                 "name": ""
             },
-            "author": "STMicroelectronics",
             "name": "STM32H5xx HAL Driver",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "licenses": [
                 {
                     "license": {
@@ -379,7 +349,7 @@
                 },
                 {
                     "name": "BlackDuck-ComponentVersion",
-                    "value": "01523ee8-177d-4fd6-a58b-572bf26c6b30"
+                    "value": "32794a06-0454-45c4-8f34-376b2b315273"
                 }
             ]
         },
@@ -389,6 +359,7 @@
             "supplier": {
                 "name": ""
             },
+            "author": "STMicroelectronics",
             "name": "STM32N6xx CMSIS",
             "version": "1.3.0",
             "licenses": [
@@ -418,6 +389,7 @@
             "supplier": {
                 "name": ""
             },
+            "author": "STMicroelectronics",
             "name": "STM32N6xx HAL Driver",
             "version": "1.3.0",
             "licenses": [
@@ -533,13 +505,12 @@
         },
         {
             "type": "library",
-            "bom-ref": "bbb20002-e66a-439b-a003-8c4c00bd6609",
+            "bom-ref": "3a4e0f94-7038-450b-b2e2-8afbeb80c0a2",
             "supplier": {
                 "name": ""
             },
-            "author": "STMicroelectronics",
             "name": "STM32U3xx HAL Driver",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "licenses": [
                 {
                     "license": {
@@ -557,7 +528,7 @@
                 },
                 {
                     "name": "BlackDuck-ComponentVersion",
-                    "value": "bbb20002-e66a-439b-a003-8c4c00bd6609"
+                    "value": "3a4e0f94-7038-450b-b2e2-8afbeb80c0a2"
                 }
             ]
         },
@@ -623,13 +594,13 @@
         },
         {
             "type": "library",
-            "bom-ref": "1bc062e2-0223-4cad-a3a2-7a7262f6a930",
+            "bom-ref": "c7ac354f-ace1-4768-a4d5-5b6632b6c83f",
             "supplier": {
                 "name": ""
             },
             "author": "STMicroelectronics",
             "name": "STM32WBAxx CMSIS",
-            "version": "1.8.0",
+            "version": "1.9.0",
             "licenses": [
                 {
                     "license": {
@@ -647,19 +618,18 @@
                 },
                 {
                     "name": "BlackDuck-ComponentVersion",
-                    "value": "1bc062e2-0223-4cad-a3a2-7a7262f6a930"
+                    "value": "c7ac354f-ace1-4768-a4d5-5b6632b6c83f"
                 }
             ]
         },
         {
             "type": "library",
-            "bom-ref": "2b63e621-13db-492a-94a1-8350842c48bc",
+            "bom-ref": "6cea83da-8857-4524-884d-ed985c3f324c",
             "supplier": {
                 "name": ""
             },
-            "author": "STMicroelectronics",
             "name": "STM32WBAxx HAL Driver",
-            "version": "1.8.0",
+            "version": "1.9.0",
             "licenses": [
                 {
                     "license": {
@@ -677,19 +647,19 @@
                 },
                 {
                     "name": "BlackDuck-ComponentVersion",
-                    "value": "2b63e621-13db-492a-94a1-8350842c48bc"
+                    "value": "6cea83da-8857-4524-884d-ed985c3f324c"
                 }
             ]
         },
         {
             "type": "library",
-            "bom-ref": "45f99270-95c1-44c7-92e6-9f81558d4d75",
+            "bom-ref": "43219bc0-4aa6-4701-935a-07c68d10cdc2",
             "supplier": {
                 "name": ""
             },
             "author": "STMicroelectronics",
             "name": "X-CUBE-FreeRTOS Projects",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "licenses": [
                 {
                     "license": {
@@ -707,34 +677,33 @@
                 },
                 {
                     "name": "BlackDuck-ComponentVersion",
-                    "value": "45f99270-95c1-44c7-92e6-9f81558d4d75"
+                    "value": "43219bc0-4aa6-4701-935a-07c68d10cdc2"
                 }
             ]
         }
     ],
     "dependencies": [
         {
-            "ref": "5f971efb-8147-4f3a-9ab3-a4cd3697be89",
+            "ref": "6d6d9e0d-41af-43fd-9d08-5d8d2eed1a1b",
             "dependsOn": [
                 "4978a14a-23c3-49be-89e9-a06cf6b36002",
                 "f872a562-49f7-464f-a9a6-2ceb45966850",
-                "cb641a37-c52a-457c-9a44-5cdc6df0a0b1",
                 "50de0be0-7a20-41ce-b327-0a194fbf8bca",
                 "828cd4c6-126e-4538-99a4-5fd63843dc39",
                 "f770562f-a171-4eaa-ae1a-e06fcc38683f",
-                "a67d3262-21bf-463f-a614-bdda88ab93c1",
-                "01523ee8-177d-4fd6-a58b-572bf26c6b30",
+                "c7a0bb76-43cb-4a27-a2b5-f10fb89725f0",
+                "32794a06-0454-45c4-8f34-376b2b315273",
                 "be88dab2-b6de-4bd0-a5b7-d29eab6010db",
                 "a9123042-7dcb-4fca-a6c6-d1062ae824bc",
                 "e1a2fafa-ceb2-49b6-ab74-3186d3318059",
                 "a6bbb485-8d89-4021-a383-96495c7aace2",
                 "a0da3d48-0401-4960-a3ae-ceed9e1d61e7",
-                "bbb20002-e66a-439b-a003-8c4c00bd6609",
+                "3a4e0f94-7038-450b-b2e2-8afbeb80c0a2",
                 "b63b3ebf-8ac9-4eee-b197-158f43a6db54",
                 "4639adec-e77e-42dd-9139-ad80cd6da900",
-                "1bc062e2-0223-4cad-a3a2-7a7262f6a930",
-                "2b63e621-13db-492a-94a1-8350842c48bc",
-                "45f99270-95c1-44c7-92e6-9f81558d4d75"
+                "c7ac354f-ace1-4768-a4d5-5b6632b6c83f",
+                "6cea83da-8857-4524-884d-ed985c3f324c",
+                "43219bc0-4aa6-4701-935a-07c68d10cdc2"
             ]
         },
         {

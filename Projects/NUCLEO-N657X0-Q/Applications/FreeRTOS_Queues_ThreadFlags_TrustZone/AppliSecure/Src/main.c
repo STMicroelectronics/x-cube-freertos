@@ -154,6 +154,13 @@ static void NonSecure_Init(void)
   HAL_RIF_RISC_SetSlaveSecureAttributes(RIF_RISC_PERIPH_INDEX_XSPI2 , RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_NPRIV);
   HAL_RIF_RISC_SetSlaveSecureAttributes(RIF_RISC_PERIPH_INDEX_XSPIM , RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_NPRIV);
 
+  /*IAC configuration*/
+  HAL_RIF_IAC_EnableIT(138);
+
+  /* IAC interrupt Init */
+  HAL_NVIC_SetPriority(IAC_IRQn, 0x0, 0x0);
+  HAL_NVIC_EnableIRQ(IAC_IRQn);
+
   /* RISAF Config */
   RISAF_BaseRegionConfig_t risaf_base_config;
   __HAL_RCC_RISAF_CLK_ENABLE();

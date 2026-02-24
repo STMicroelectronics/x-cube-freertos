@@ -204,6 +204,10 @@ extern "C" {
 #include "stm32wbaxx_hal_dma.h"
 #endif /* HAL_DMA_MODULE_ENABLED */
 
+#ifdef HAL_RCC_MODULE_ENABLED
+#include "stm32wbaxx_hal_rcc.h"
+#endif /* HAL_RCC_MODULE_ENABLED */
+
 #ifdef HAL_ADC_MODULE_ENABLED
 #include "stm32wbaxx_hal_adc.h"
 #endif /* HAL_ADC_MODULE_ENABLED */
@@ -280,10 +284,6 @@ extern "C" {
 #include "stm32wbaxx_hal_ramcfg.h"
 #endif /* HAL_RAMCFG_MODULE_ENABLED */
 
-#ifdef HAL_RCC_MODULE_ENABLED
-#include "stm32wbaxx_hal_rcc.h"
-#endif /* HAL_RCC_MODULE_ENABLED */
-
 #ifdef HAL_RNG_MODULE_ENABLED
 #include "stm32wbaxx_hal_rng.h"
 #endif /* HAL_RNG_MODULE_ENABLED */
@@ -350,3 +350,4 @@ void assert_failed(uint8_t *file, uint32_t line);
 #endif
 
 #endif /* STM32WBAxx_HAL_CONF_H */
+
