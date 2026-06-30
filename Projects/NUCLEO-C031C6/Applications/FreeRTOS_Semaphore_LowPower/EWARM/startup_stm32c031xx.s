@@ -116,7 +116,7 @@ Reset_Handler
         BLX     R0
         LDR     R0, =__iar_program_start
         BX      R0
-        
+
         PUBWEAK NMI_Handler
         SECTION .text:CODE:NOROOT:REORDER(1)
 NMI_Handler
@@ -151,7 +151,7 @@ WWDG_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 RTC_IRQHandler
         B RTC_IRQHandler
-        
+
         PUBWEAK FLASH_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 FLASH_IRQHandler
@@ -191,7 +191,7 @@ DMA1_Channel2_3_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 DMAMUX1_IRQHandler
         B DMAMUX1_IRQHandler
-		
+
         PUBWEAK ADC1_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 ADC1_IRQHandler

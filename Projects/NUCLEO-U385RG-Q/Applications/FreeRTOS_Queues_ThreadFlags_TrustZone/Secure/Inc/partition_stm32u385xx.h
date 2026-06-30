@@ -505,7 +505,7 @@
 /*
 // Interrupts 96..125
 //   <o.0>  HASH_IRQn             <0=> Secure state
-//   <o.1> PKA_IRQn              <0=> Secure state
+//   <o.1>  PKA_IRQn              <0=> Secure state
 //   <o.2>  LPTIM3_IRQn           <0=> Secure state
 //   <o.3>  SPI3_IRQn             <0=> Secure state
 //   <o.4>  I3C2_EV_IRQn          <0=> Secure state
@@ -636,4 +636,3 @@ __STATIC_INLINE void TZ_SAU_Setup (void)
 }
 /* USER CODE END 2 */
 #endif  /* PARTITION_STM32U385XX_H */
-

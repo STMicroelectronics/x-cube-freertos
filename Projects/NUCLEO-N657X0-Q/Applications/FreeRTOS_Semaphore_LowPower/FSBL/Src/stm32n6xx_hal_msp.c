@@ -17,7 +17,6 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 /* USER CODE BEGIN Includes */
@@ -117,7 +116,7 @@ void HAL_LPTIM_MspInit(LPTIM_HandleTypeDef* hlptim)
     HAL_NVIC_SetPriority(LPTIM2_IRQn, 5, 0);
     HAL_NVIC_EnableIRQ(LPTIM2_IRQn);
     /* USER CODE BEGIN LPTIM2_MspInit 1 */
-    /* Enable LPTIM clock during Low Power mode */    
+    /* Enable LPTIM clock during Low Power mode */
     __HAL_RCC_LPTIM2_CLK_SLEEP_ENABLE();
 
     /* USER CODE END LPTIM2_MspInit 1 */

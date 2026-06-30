@@ -19,7 +19,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "cmsis_os2.h"
+#include "app_freertos.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -75,7 +75,6 @@ const uint32_t * __syscalls_flash_end__ = ( uint32_t * ) &( Image$$ER_IROM_FREER
 #endif
 
 /* Private function prototypes -----------------------------------------------*/
-void MX_FREERTOS_Init(void);
 static void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
@@ -123,7 +122,6 @@ int main(void)
 
 
   /* We should never get here as control is now taken by the scheduler */
-  /* Infinite loop */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -245,23 +243,29 @@ void SystemClock_Config(void)
   */
 static void MX_GPIO_Init(void)
 {
-  GPIO_InitTypeDef  GPIO_InitStruct = {0};
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
 
+  /* USER CODE END MX_GPIO_Init_1 */
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOG_CLK_ENABLE();
 
-  /* Configure the LED pins */
-  GPIO_InitStruct.Pin = LED1_Pin | LED2_Pin | LED3_Pin;
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOG, GREEN_LED_Pin|RED_LED_Pin|BLUE_LED_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pins : GREEN_LED_Pin RED_LED_Pin BLUE_LED_Pin */
+  GPIO_InitStruct.Pin = GREEN_LED_Pin|RED_LED_Pin|BLUE_LED_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
-  HAL_GPIO_ConfigPinAttributes(GPIOG, LED1_Pin, GPIO_PIN_NPRIV);
-  HAL_GPIO_ConfigPinAttributes(GPIOG, LED3_Pin, GPIO_PIN_NPRIV);
-
-  /* Configure default pin levels (LEDs OFF)*/
-  HAL_GPIO_WritePin(GPIOG, LED1_Pin | LED2_Pin | LED3_Pin, GPIO_PIN_SET);
-
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+  HAL_GPIO_ConfigPinAttributes(GREEN_LED_GPIO_Port, GREEN_LED_Pin, GPIO_PIN_NPRIV);
+  HAL_GPIO_ConfigPinAttributes(BLUE_LED_GPIO_Port, BLUE_LED_Pin, GPIO_PIN_NPRIV);
+  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /**
@@ -371,13 +375,13 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User may add here some code to deal with this error */
-  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(BLUE_LED_GPIO_Port, BLUE_LED_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GREEN_LED_GPIO_Port, GREEN_LED_Pin, GPIO_PIN_SET);
   /* Error message */
   printf("** Error occurred ** \n\r");
   while (1)
   {
-    HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+    HAL_GPIO_TogglePin(RED_LED_GPIO_Port, RED_LED_Pin);
     HAL_Delay(1000);
   }
   /* USER CODE END Error_Handler_Debug */

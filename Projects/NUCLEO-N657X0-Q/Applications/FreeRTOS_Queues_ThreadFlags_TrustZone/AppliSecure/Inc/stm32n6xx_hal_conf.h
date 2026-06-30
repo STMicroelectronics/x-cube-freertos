@@ -79,7 +79,7 @@ extern "C" {
 /*#define HAL_SPDIFRX_MODULE_ENABLED   */
 /*#define HAL_SPI_MODULE_ENABLED   */
 /*#define HAL_SRAM_MODULE_ENABLED   */
-/*#define HAL_TIM_MODULE_ENABLED   */
+#define HAL_TIM_MODULE_ENABLED
 /*#define HAL_UART_MODULE_ENABLED   */
 /*#define HAL_USART_MODULE_ENABLED   */
 /*#define HAL_WWDG_MODULE_ENABLED   */
@@ -145,6 +145,15 @@ extern "C" {
 #endif /* LSI_VALUE */                     /*!< Value of the Internal Low Speed oscillator in Hz */
 /* The real value may vary depending on the variations in voltage and temperature.*/
 
+/**
+  * @brief External clock source for digital audio interfaces: SPI/I2S, SAI and ADF
+  *        This value is used by the RCC HAL module to provide the digital audio interfaces
+  *        frequency. This clock source is inserted directly through I2S_CKIN pad.
+  */
+#if !defined  (EXTERNAL_CLOCK_VALUE)
+#define EXTERNAL_CLOCK_VALUE      12288000UL /*!< Value of the external clock source in Hz */
+#endif /* EXTERNAL_CLOCK_VALUE */
+
 /* Tip: To avoid modifying this file each time you need to use different HSE,
    ===  you can define the HSE value in your toolchain compiler preprocessor. */
 
@@ -153,7 +162,7 @@ extern "C" {
   * @brief This is the HAL system configuration section
   */
 #define  VDD_VALUE                  3300UL /*!< Value of VDD in mv */
-#define  TICK_INT_PRIORITY          0U  /*!< tick interrupt priority */
+#define  TICK_INT_PRIORITY          15U  /*!< tick interrupt priority (lowest by default) */
 #define  USE_RTOS                   0U
 
 /* ########################## Assert Selection ############################## */

@@ -19,8 +19,8 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32N6xx_HAL_CONF_H
-#define __STM32N6xx_HAL_CONF_H
+#ifndef STM32N6xx_HAL_CONF_H
+#define STM32N6xx_HAL_CONF_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -144,6 +144,15 @@ extern "C" {
 #define LSI_VALUE               32000UL    /*!< LSI Typical Value in Hz */
 #endif /* LSI_VALUE */                     /*!< Value of the Internal Low Speed oscillator in Hz */
 /* The real value may vary depending on the variations in voltage and temperature.*/
+
+/**
+  * @brief External clock source for digital audio interfaces: SPI/I2S, SAI and ADF
+  *        This value is used by the RCC HAL module to provide the digital audio interfaces
+  *        frequency. This clock source is inserted directly through I2S_CKIN pad.
+  */
+#if !defined  (EXTERNAL_CLOCK_VALUE)
+#define EXTERNAL_CLOCK_VALUE      12288000UL /*!< Value of the external clock source in Hz */
+#endif /* EXTERNAL_CLOCK_VALUE */
 
 /* Tip: To avoid modifying this file each time you need to use different HSE,
    ===  you can define the HSE value in your toolchain compiler preprocessor. */
@@ -501,4 +510,4 @@ void assert_failed(uint8_t *file, uint32_t line);
 }
 #endif
 
-#endif /* __STM32N6xx_HAL_CONF_H */
+#endif /* STM32N6xx_HAL_CONF_H */

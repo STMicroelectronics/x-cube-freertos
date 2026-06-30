@@ -62,14 +62,14 @@ None
 The following sequence is needed to disable TrustZone:
 
   - Boot from user Flash memory:
-  
+
     1. Make sure that secure and non-secure applications are well loaded and executed (jump done on non-secure application).
     2. If not yet done, set RDP to level 1 through STM32CubeProgrammer. Then only Hotplug connection is possible during non-secure application execution.
     3. Use a power supply different from ST-LINK in order to be able to connect to the target.
     4. Uncheck the TZEN box and set RDP to level 0 (option byte value 0xAA), then click on Apply.
 
   - Boot from RSS:
-  
+
     1. Make sure to apply a high level on BOOT0 pin (make sure that nSWBOOT0 Option Byte is checked).
     2. If not yet done, set RDP to level 1 through STM32CubeProgrammer. Then only Hotplug connection is possible during non-secure application execution.
     3. Use a power supply different from ST-LINK in order to be able to connect to the target.

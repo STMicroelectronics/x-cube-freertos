@@ -11,7 +11,7 @@
 ;*                      After Reset the CortexM0 processor is in Thread mode,
 ;*                      priority is Privileged, and the Stack is set to Main.
 ;* <<< Use Configuration Wizard in Context Menu >>>
-;****************************************************************************** 
+;******************************************************************************
 ;* @attention
 ;*
 ;* Copyright (c) 2023 STMicroelectronics.
@@ -118,7 +118,7 @@ __Vectors_Size  EQU  __Vectors_End - __Vectors
 Reset_Handler    PROC
                  EXPORT  Reset_Handler                 [WEAK]
         IMPORT  __main
-        IMPORT  SystemInit  
+        IMPORT  SystemInit
                  LDR     R0, =SystemInit
                  BLX     R0
                  LDR     R0, =__main

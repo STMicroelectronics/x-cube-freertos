@@ -562,6 +562,7 @@
 //   <o.0>  LPTIM4_IRQn          <0=> Secure state
 //   <o.1>  LPTIM5_IRQn          <0=> Secure state
 //   <o.2>  LPTIM6_IRQn          <0=> Secure state
+
 */
 #define NVIC_INIT_ITNS4_VAL      0x00000000
 

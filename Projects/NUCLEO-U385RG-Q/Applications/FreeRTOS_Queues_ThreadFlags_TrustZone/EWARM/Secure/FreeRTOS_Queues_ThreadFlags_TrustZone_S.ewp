@@ -1095,6 +1095,9 @@
           <name>$PROJ_DIR$\..\..\Secure\Src\stm32u3xx_hal_msp.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../Secure/Src/stm32u3xx_hal_timebase_tim.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\..\..\Secure\Src\secure_nsc.c</name>
         </file>
       </group>
@@ -1116,6 +1119,12 @@
     </group>
     <group>
       <name>STM32U3xx_HAL_Driver</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32U3xx_HAL_Driver\Src\stm32u3xx_hal_tim.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32U3xx_HAL_Driver\Src\stm32u3xx_hal_tim_ex.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32U3xx_HAL_Driver\Src\stm32u3xx_hal_cortex.c</name>
       </file>
@@ -1157,12 +1166,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32U3xx_HAL_Driver\Src\stm32u3xx_hal_icache.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32U3xx_HAL_Driver\Src\stm32u3xx_hal_tim.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32U3xx_HAL_Driver\Src\stm32u3xx_hal_tim_ex.c</name>
       </file>
     </group>
   </group>

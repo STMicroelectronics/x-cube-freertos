@@ -51,7 +51,6 @@
 #if defined(__ICCARM__) || defined(__ARMCC_VERSION) || defined(__GNUC__)
 #include <stdint.h>
 extern uint32_t SystemCoreClock;
-void xPortSysTickHandler(void);
 #endif
 #ifndef CMSIS_device_header
 #define CMSIS_device_header "stm32u3xx.h"
@@ -63,6 +62,7 @@ void xPortSysTickHandler(void);
 #define configENABLE_FPU                         0
 #define configENABLE_MPU                         0
 #define configUSE_PREEMPTION                     1
+#define configUSE_TIME_SLICING                   1
 #define configSUPPORT_STATIC_ALLOCATION          1
 #define configSUPPORT_DYNAMIC_ALLOCATION         1
 #define configUSE_IDLE_HOOK                      0
@@ -109,7 +109,7 @@ void xPortSysTickHandler(void);
 
 /* Software timer definitions. */
 #define configUSE_TIMERS                         1
-#define configTIMER_TASK_PRIORITY                ( 2 )
+#define configTIMER_TASK_PRIORITY                ( 55 )
 #define configTIMER_QUEUE_LENGTH                 10
 #define configTIMER_TASK_STACK_DEPTH             128
 

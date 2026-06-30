@@ -56,6 +56,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/AppliSecure/Src/stm32n6xx_hal_msp.c</locationURI>
 		</link>
 		<link>
+			<name>Application/User/stm32n6xx_hal_timebase_tim.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/AppliSecure/Src/stm32n6xx_hal_timebase_tim.c</locationURI>
+		</link>
+		<link>
 			<name>Application/User/stm32n6xx_it.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/AppliSecure/Src/stm32n6xx_it.c</locationURI>
@@ -119,6 +124,16 @@
 			<name>Drivers/STM32N6xx_HAL_Driver/stm32n6xx_hal_rif.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_rif.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/STM32N6xx_HAL_Driver/stm32n6xx_hal_tim.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_tim.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/STM32N6xx_HAL_Driver/stm32n6xx_hal_tim_ex.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_tim_ex.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/RTOS2/CMSIS/RTOS2/Core/TZ_Secure/secure_context.c</name>

@@ -103,7 +103,7 @@ __Vectors       DCD     __initial_sp               ; Top of Stack
                 DCD     EXTI14_IRQHandler          ; EXTI Line14 interrupt
                 DCD     EXTI15_IRQHandler          ; EXTI Line15 interrupt
                 DCD     IWDG_IRQHandler            ; IWDG global interrupt
-                DCD     SAES_IRQHandler            ; Secure AES global interrupt 
+                DCD     SAES_IRQHandler            ; Secure AES global interrupt
                 DCD     GPDMA1_Channel0_IRQHandler ; GPDMA1 Channel 0 global interrupt
                 DCD     GPDMA1_Channel1_IRQHandler ; GPDMA1 Channel 1 global interrupt
                 DCD     GPDMA1_Channel2_IRQHandler ; GPDMA1 Channel 2 global interrupt

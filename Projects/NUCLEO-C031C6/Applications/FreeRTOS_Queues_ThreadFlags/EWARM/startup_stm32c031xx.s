@@ -5,7 +5,7 @@
 ;*                      This module performs:
 ;*                      - Set the initial SP
 ;*                      - Set the initial PC == __iar_program_start,
-;*                      - Set the vector table entries with the exceptions ISR 
+;*                      - Set the vector table entries with the exceptions ISR
 ;*                        address
 ;*                      - Branches to main in the C library (which eventually
 ;*                        calls main()).
@@ -116,7 +116,7 @@ Reset_Handler
         BLX     R0
         LDR     R0, =__iar_program_start
         BX      R0
-        
+
         PUBWEAK NMI_Handler
         SECTION .text:CODE:NOROOT:REORDER(1)
 NMI_Handler
@@ -151,7 +151,7 @@ WWDG_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 RTC_IRQHandler
         B RTC_IRQHandler
-        
+
         PUBWEAK FLASH_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 FLASH_IRQHandler
@@ -191,7 +191,7 @@ DMA1_Channel2_3_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 DMAMUX1_IRQHandler
         B DMAMUX1_IRQHandler
-		
+
         PUBWEAK ADC1_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 ADC1_IRQHandler

@@ -410,6 +410,11 @@
               <FilePath>../../AppliSecure/Src/stm32n6xx_hal_msp.c</FilePath>
             </File>
             <File>
+              <FileName>stm32n6xx_hal_timebase_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../AppliSecure/Src/stm32n6xx_hal_timebase_tim.c</FilePath>
+            </File>
+            <File>
               <FileName>secure_nsc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../AppliSecure/Src/secure_nsc.c</FilePath>
@@ -468,6 +473,16 @@
               <FileName>stm32n6xx_hal_exti.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_exti.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32n6xx_hal_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32n6xx_hal_tim_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_tim_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32n6xx_hal_rif.c</FileName>

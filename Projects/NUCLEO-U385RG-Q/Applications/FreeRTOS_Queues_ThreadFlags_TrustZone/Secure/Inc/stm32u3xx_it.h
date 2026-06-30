@@ -54,6 +54,7 @@ void UsageFault_Handler(void);
 void SecureFault_Handler(void);
 void DebugMon_Handler(void);
 void GTZC_IRQHandler(void);
+void TIM7_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 void SysTick_Handler(void);
 /* USER CODE END EFP */

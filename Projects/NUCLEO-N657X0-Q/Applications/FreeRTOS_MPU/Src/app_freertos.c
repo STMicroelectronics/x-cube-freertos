@@ -93,7 +93,7 @@ static const TaskParameters_t TaskParameters[NUMBER_OF_TASKS] =
       .xRegions       =   {
                               { sharedMemory      , EXAMPLE_SHARED_MEMORY_SIZE,
                               tskMPU_REGION_READ_ONLY | tskMPU_REGION_EXECUTE_NEVER },
-                              { LED1_GPIO_Port, EXAMPLE_SHARED_MEMORY_SIZE,
+                              { BLUE_LED_GPIO_Port, EXAMPLE_SHARED_MEMORY_SIZE,
                               tskMPU_REGION_READ_WRITE | tskMPU_REGION_EXECUTE_NEVER },
 
                               { 0 ,  0,  0 },
@@ -109,7 +109,7 @@ static const TaskParameters_t TaskParameters[NUMBER_OF_TASKS] =
       .xRegions       =   {
                               { sharedMemory      , EXAMPLE_SHARED_MEMORY_SIZE,
                               tskMPU_REGION_READ_ONLY | tskMPU_REGION_EXECUTE_NEVER },
-                              { LED3_GPIO_Port, EXAMPLE_SHARED_MEMORY_SIZE,
+                              { GREEN_LED_GPIO_Port, EXAMPLE_SHARED_MEMORY_SIZE,
                               tskMPU_REGION_READ_WRITE | tskMPU_REGION_EXECUTE_NEVER },
                               { 0 ,  0,  0 },
                           }
@@ -228,7 +228,7 @@ void Task1(void *argument)
 
   for(;;)
   {
-    HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+    HAL_GPIO_TogglePin(BLUE_LED_GPIO_Port, BLUE_LED_Pin);
     vTaskDelay(pdMS_TO_TICKS(1000));
 
     if(isFirstTime)
@@ -254,7 +254,7 @@ void Task2(void *argument)
   vTaskDelay(pdMS_TO_TICKS(1000));
   for(;;)
   {
-    HAL_GPIO_TogglePin(LED3_GPIO_Port, LED3_Pin);
+    HAL_GPIO_TogglePin(GREEN_LED_GPIO_Port, GREEN_LED_Pin);
     vTaskDelay(pdMS_TO_TICKS(2000));
 
     /* Try to perform an illegal write */

@@ -1,0 +1,64 @@
+[submodule "Drivers/STM32H5xx_HAL_Driver"]
+	path = Drivers/STM32H5xx_HAL_Driver
+	url = https://github.com/STMicroelectronics/stm32h5xx-hal-driver.git
+	branch = main
+[submodule "Drivers/CMSIS/Device/ST/STM32H5xx"]
+	path = Drivers/CMSIS/Device/ST/STM32H5xx
+	url = https://github.com/STMicroelectronics/cmsis-device-h5.git
+	branch = main
+[submodule "Drivers/STM32U5xx_HAL_Driver"]
+	path = Drivers/STM32U5xx_HAL_Driver
+	url = https://github.com/STMicroelectronics/stm32u5xx-hal-driver.git
+	branch = main
+[submodule "Drivers/CMSIS/Device/ST/STM32U5xx"]
+	path = Drivers/CMSIS/Device/ST/STM32U5xx
+	url = https://github.com/STMicroelectronics/cmsis-device-u5.git
+	branch = main
+[submodule "Drivers/STM32U3xx_HAL_Driver"]
+	path = Drivers/STM32U3xx_HAL_Driver
+	url = https://github.com/STMicroelectronics/stm32u3xx-hal-driver.git
+	branch = main
+[submodule "Drivers/CMSIS/Device/ST/STM32U3xx"]
+	path = Drivers/CMSIS/Device/ST/STM32U3xx
+	url = https://github.com/STMicroelectronics/cmsis-device-u3.git
+	branch = main
+[submodule "Drivers/STM32N6xx_HAL_Driver"]
+	path = Drivers/STM32N6xx_HAL_Driver
+	url = https://github.com/STMicroelectronics/stm32n6xx-hal-driver.git
+	branch = main
+[submodule "Drivers/CMSIS/Device/ST/STM32N6xx"]
+	path = Drivers/CMSIS/Device/ST/STM32N6xx
+	url = https://github.com/STMicroelectronics/cmsis-device-n6.git
+	branch = main
+[submodule "Drivers/STM32WBAxx_HAL_Driver"]
+	path = Drivers/STM32WBAxx_HAL_Driver
+	url = https://github.com/STMicroelectronics/stm32wbaxx-hal-driver.git
+	branch = main
+[submodule "Drivers/CMSIS/Device/ST/STM32WBAxx"]
+	path = Drivers/CMSIS/Device/ST/STM32WBAxx
+	url = https://github.com/STMicroelectronics/cmsis-device-wba.git
+	branch = main
+[submodule "Drivers/STM32C0xx_HAL_Driver"]
+	path = Drivers/STM32C0xx_HAL_Driver
+	url = https://github.com/STMicroelectronics/stm32c0xx-hal-driver.git
+	branch = main
+[submodule "Drivers/CMSIS/Device/ST/STM32C0xx"]
+	path = Drivers/CMSIS/Device/ST/STM32C0xx
+	url = https://github.com/STMicroelectronics/cmsis-device-c0.git
+	branch = main
+[submodule "Drivers/STM32U0xx_HAL_Driver"]
+	path = Drivers/STM32U0xx_HAL_Driver
+	url = https://github.com/STMicroelectronics/stm32u0xx-hal-driver.git
+	branch = main
+[submodule "Drivers/CMSIS/Device/ST/STM32U0xx"]
+	path = Drivers/CMSIS/Device/ST/STM32U0xx
+	url = https://github.com/STMicroelectronics/cmsis-device-u0.git
+	branch = main
+[submodule "Middlewares/ST/STM32_ExtMem_Manager"]
+	path = Middlewares/ST/STM32_ExtMem_Manager
+	url = https://github.com/STMicroelectronics/stm32-mw-extmem-mgr.git
+	branch = main
+[submodule "Middlewares/Third_Party/FreeRTOS"]
+	path = Middlewares/Third_Party/FreeRTOS
+	url = https://github.com/STMicroelectronics/stm32-mw-freertos.git
+	branch = master

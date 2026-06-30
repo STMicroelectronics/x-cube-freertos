@@ -181,7 +181,7 @@ void SystemInit(void)
   *         since the RCC peripheral may be protected with security attributes
   *         that prevent to compute the SystemCoreClock variable from the RCC
   *         peripheral registers.
-  *  
+  *
   * @note   Each time the core clock (HCLK) changes, this function must be called
   *         to update SystemCoreClock variable value. Otherwise, any configuration
   *         based on this variable will be incorrect.

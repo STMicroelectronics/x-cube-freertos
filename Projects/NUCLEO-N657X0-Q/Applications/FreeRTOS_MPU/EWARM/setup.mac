@@ -10,9 +10,9 @@ execUserSetup()
 
     __restoreSoftwareBreakpoints();
 
-     
+
      #PC = __readMemory32(0x34180404, "Memory");
-     
+
      #SP = 0x341FFD00;
-  
+
 }
